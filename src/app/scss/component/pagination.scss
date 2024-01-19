@@ -1,0 +1,25 @@
+.pagination-container {
+    @apply flex justify-center items-center mt-[42px] mb-[32px];
+    .ant-pagination {
+        li {
+            @apply hover:bg-blue-100 #{!important};
+            a, button {
+                @apply text-blue-800 font-roboto font-[500];
+            }
+        }
+        .ant-pagination-item-active {
+            @apply border-blue-800 bg-blue-800;
+            a {
+                @apply text-white font-[600];
+            }
+        }
+    }
+    .pagination-loading {
+        .ant-skeleton-content {
+            @apply flex justify-center items-center;
+            .ant-skeleton-title {
+                @apply h-[32px];
+            }
+        }
+    }
+}

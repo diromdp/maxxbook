@@ -1,0 +1,12 @@
+.header {
+    @apply flex justify-between items-center px-[16px] lg:px-0 py-[16px];
+
+    .header-logo {
+        span {
+            @apply font-montserrat;
+        }
+    }
+    .header-login {
+        @apply flex justify-center items-center gap-[8px];
+    }
+}

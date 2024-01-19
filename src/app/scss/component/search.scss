@@ -1,0 +1,6 @@
+.form-search {
+    @apply min-w-full lg:min-w-[40%] pt-[32px];
+    .label {
+        @apply mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white;
+    }
+}
