@@ -18,7 +18,7 @@ export default function result() {
     }, []);
     return (
         <div className="result-page">
-            <div className="container m-auto">
+            <div className="mx-auto w-full max-w-screen-xl">
                 <FilterComponent isLoading={isLoading} />
                 <div className="result-word">
                     {

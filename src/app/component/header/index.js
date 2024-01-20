@@ -24,10 +24,10 @@ const items = [
 const Header = () => {
     return (
         <div className="shadow-[0_6px_11px_rgba(64,68,77,.06)] fixed top-0 w-full z-[999] bg-white">
-            <div className="container m-auto">
+            <div className="mx-auto w-full max-w-screen-xl">
                 <div className="header">
                     <Link href={'/'} className="header-logo">
-                        <span className={`text-[20px] lg:text-[28px] xl:text-[40px] select-none font-montserrat font-[700]`}>Maxibook.</span>
+                        <span className={`text-[20px] lg:text-[28px] xl:text-[40px] select-none font-montserrat font-[700] outline-0`}>Maxibook.</span>
                     </Link>
                     <div className="header-login">
                         <Dropdown

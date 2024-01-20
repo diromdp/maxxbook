@@ -5,7 +5,7 @@ const Footer = () => {
                 <div class="md:flex md:justify-between">
                     <div class="mb-6 md:mb-0">
                         <a href="https://flowbite.com/" class="flex items-center">
-                            <span className={`text-[40px] select-none`}>Maxibook.</span>
+                            <span className={`text-[40px] select-none font-montserrat font-[700] outline-0`}>Maxibook.</span>
                         </a>
                     </div>
                     <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
