@@ -45,7 +45,7 @@ const FilterComponent = ({ data, font, isLoading }) => {
     return (
         <div className="filter-container">
             {
-                isLoading ?
+                !isLoading ?
                     <>
                         <div className="item-filter">
                             <Select

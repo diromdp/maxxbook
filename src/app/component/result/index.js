@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Card from "../cartItem";
+import CardLoading from "../cardLoading";
 
 const ResultShow = ({ isLoading }) => {
     const dummys = [
@@ -67,15 +68,20 @@ const ResultShow = ({ isLoading }) => {
     return (
         <div className="result-show">
             {
-               !isLoading && dummys && dummys.map(item => {
+                !isLoading ? dummys && dummys.map(item => {
                     return (
-                        <Card 
+                        <Card
                             colorImage={item.images.cover_bacground}
                             imagePath={item.images.urlPath}
                             title={item.title}
                             description={item.description} />
                     )
-                })
+                }) :
+                    <>
+                        {[...Array(8)].map((x, i) =>
+                            <CardLoading key={i} />
+                        )}
+                    </>
             }
 
         </div>
