@@ -32,7 +32,7 @@ export default function Home() {
           <div className="content">
             <h2 className="font-montserrat">Start exploring millions of fascinating documents</h2>
             <p>Find specialized knowledge on any topic, and answers you won't find anywhere else</p>
-            <button type="button" class="btn-light mt-[16px] w-[180px] font-[700] text-[16px] text-black">Let's Go</button>
+            <button type="button" className="btn-light mt-[16px] w-[180px] font-[700] text-[16px] text-black">Let's Go</button>
           </div>
         </div>
       </div>

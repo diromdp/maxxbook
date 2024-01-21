@@ -1,6 +1,8 @@
+'use client';
 import Link from "next/link";
+import PdfViewer from "../pdfViewer";
 
-const DocumentDesc = () => {
+const DocumentDesc = ({ file }) => {
     return (
         <div className="document-Desc">
             <div className="views-total-pages">
@@ -23,6 +25,9 @@ const DocumentDesc = () => {
                 <span className="info"><b>Judul Asli:</b> List of Sahaba R.A - Updated www.QuranWaHadith.com</span>
                 Attribution Non-Commercial (BY-NC)
                 Format TersediaUnduh sebagai PDF, TXT atau baca online dari Scribd
+            </div>
+            <div className="pdf-viewer">
+                <PdfViewer file={file} />
             </div>
         </div>
     );
