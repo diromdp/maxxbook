@@ -18,13 +18,14 @@ const DocumentDesc = ({ file }) => {
             <div className="content-description">
                 <p>
                     All Books From From India, Pakistan, Beirut, Saudi Arabia https://quranwahadith.com/ Call/Whatsapp: 91-9329669919 BEFORE START READING MY WORK I WOULD LIKE TO GIVE YOU SOME INFORMATION ABOUT IT. MY WORK IS TOTALLY UNBIASED AND INCLUDES WITH DETAILS ALL THE MAXIMUM POSSIBLE NAMES, AND INCLUDE THE NAMES ON WHICH SCHOLARS ALSO HAVE DIFFERENT VIEWS AND OPENION. BUT I HOPE THAT ALL THE READERES WHO HAVE GREAT INTEREST IN SAHABA WILL DEFINITELY LIKE IT. “INSHAALLAH”.
-                    
+                    Attribution Non-Commercial (BY-NC)
                 </p>
-                <span className="info"><b>Judul Asli:</b> List of Sahaba R.A - Updated www.QuranWaHadith.com</span>
-                <span className="info"><b>Hak Cipta:</b> List of Sahaba R.A - Updated www.QuranWaHadith.com</span>
-                <span className="info"><b>Judul Asli:</b> List of Sahaba R.A - Updated www.QuranWaHadith.com</span>
-                Attribution Non-Commercial (BY-NC)
-                Format TersediaUnduh sebagai PDF, TXT atau baca online dari Scribd
+                <div className="mt-[16px]">
+                    <span className="info"><b>Description Asli:</b>Format TersediaUnduh sebagai PDF, TXT atau baca online dari Scribd</span>
+                    <span className="info"><b>Judul Asli:</b> List of Sahaba R.A - Updated www.QuranWaHadith.com</span>
+                    <span className="info"><b>Hak Cipta:</b> List of Sahaba R.A - Updated www.QuranWaHadith.com</span>
+                    <span className="info"><b>Unduh:</b> List of Sahaba R.A - Updated www.QuranWaHadith.com</span>
+                </div>
             </div>
             <div className="pdf-viewer">
                 <PdfViewer file={file} />

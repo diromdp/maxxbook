@@ -68,9 +68,10 @@ const ResultShow = ({ isLoading }) => {
     return (
         <div className="result-show">
             {
-                !isLoading ? dummys && dummys.map(item => {
+                !isLoading ? dummys && dummys.map((item, index) => {
                     return (
                         <Card
+                            key={index}
                             colorImage={item.images.cover_bacground}
                             imagePath={item.images.urlPath}
                             title={item.title}

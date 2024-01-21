@@ -1,0 +1,59 @@
+.document-Desc {
+    .views-total-pages {
+        @apply flex flex-row gap-[8px] items-center;
+        .item {
+            @apply flex items-center;
+            .title {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                @apply block text-[14px] text-primarytext;
+            }
+            .separator {
+                @apply pl-[8px] font-[700] text-[16px];
+            }
+        }
+    }
+    .title-document {
+        @apply mb-[16px]; 
+        h1 {
+            display: block;
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            font-size: 42px;
+            line-height: 1em;
+            max-height: 3em;
+            line-height: normal;
+            max-height: 3.8em;
+            @apply font-[700];
+        }
+    }
+    .uploadBy {
+        @apply mb-[16px];
+        p {
+            @apply text-[#57617a] font-[400] text-[16px];
+            a {
+                @apply font-[700] text-blue-700;
+            }
+        }
+    }
+    .content-description {
+        p {
+            @apply text-[#000514] text-[14px];
+        }
+        .info {
+            @apply block text-[#000514] text-[14px];
+        }
+    }
+    .pdf-viewer {
+        @apply flex flex-col justify-center items-center mt-[42px];
+        .number-input {
+            @apply flex justify-center items-center max-w-[200px] gap-[8px] mb-[16px];
+            input {
+                @apply w-[40px] p-0 pl-[4px];
+            }
+        }
+    }
+}

@@ -82,6 +82,7 @@
 @import './component/search.scss';
 @import './component/filter.scss';
 @import './component/pagination.scss';
+@import './component/document-desc.scss';
 
 @import './pages/document.scss';
 
@@ -207,4 +208,8 @@
 
 .container {
     max-width: 1248px;
+}
+
+.pdf-init {
+    @apply h-[850px];
 }
