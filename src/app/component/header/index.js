@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Dropdown } from 'antd';
 import { FiChevronDown  } from "react-icons/fi";
-
+import { Button } from '@/components/ui/button';
 
 const items = [
     {
@@ -40,7 +40,7 @@ const Header = () => {
                                 <FiChevronDown />
                             </Link>
                         </Dropdown>
-                        <Link href="/" className="btn-primary text-[18px]">Login <div className="animation"></div></Link>
+                        <Button className="btn-primary text-[18px] h-[40px]">Login <div className="animation"></div></Button>
                     </div>
                 </div>
             </div>

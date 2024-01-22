@@ -1,6 +1,5 @@
-import { useState } from "react";
-import Card from "../cartItem";
-import CardLoading from "../cardLoading";
+import Card from "@/app/component/cartItem";
+import CardLoading from "@/app/component/cardLoading";
 
 const ResultShow = ({ isLoading }) => {
     const dummys = [
@@ -79,7 +78,7 @@ const ResultShow = ({ isLoading }) => {
                     )
                 }) :
                     <>
-                        {[...Array(8)].map((x, i) =>
+                        {[...Array(12)].map((x, i) =>
                             <CardLoading key={i} />
                         )}
                     </>

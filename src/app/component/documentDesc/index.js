@@ -4,7 +4,7 @@ import PdfViewer from "../pdfViewer";
 
 const DocumentDesc = ({ file }) => {
     return (
-        <div className="document-Desc">
+        <div className="document-Desc h-[100vh]">
             <div className="views-total-pages">
                 <div className="item"><span className="title">20k views</span><span className="separator">.</span></div>
                 <div className="item"><span className="title">91 pages</span></div>
@@ -13,7 +13,7 @@ const DocumentDesc = ({ file }) => {
                 <h1>List of Sahaba R.A - Updated</h1>
             </div>
             <div className="uploadBy">
-                <p>Diunggah oleh <Link href={'/'}>Shadab Shaikh</Link> Data diunggahpada Oct 02, 2010</p>
+                <p>Diunggah oleh <Link href={'/'}>Shadab Shaikh</Link>, Oct 02, 2010</p>
             </div>
             <div className="content-description">
                 <p>
@@ -21,7 +21,7 @@ const DocumentDesc = ({ file }) => {
                     Attribution Non-Commercial (BY-NC)
                 </p>
                 <div className="mt-[16px]">
-                    <span className="info"><b>Description Asli:</b>Format TersediaUnduh sebagai PDF, TXT atau baca online dari Scribd</span>
+                    <span className="info"><b>Description Asli: </b>Format TersediaUnduh sebagai PDF, TXT atau baca online dari Scribd</span>
                     <span className="info"><b>Judul Asli:</b> List of Sahaba R.A - Updated www.QuranWaHadith.com</span>
                     <span className="info"><b>Hak Cipta:</b> List of Sahaba R.A - Updated www.QuranWaHadith.com</span>
                     <span className="info"><b>Unduh:</b> List of Sahaba R.A - Updated www.QuranWaHadith.com</span>

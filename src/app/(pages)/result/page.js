@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton"
+import { Button } from '@/components/ui/button';
 import ResultShow from '@/app/component/result';
 import PaginationComponent from '@/app/component/pagination';
 
@@ -31,7 +32,10 @@ export default function result() {
 
                 </div>
                 <ResultShow isLoading={isLoading} />
-                <PaginationComponent isLoading={isLoading} defaultCurrent={3} total={500} onShowSizeChange={(e) => console.log(e)} />
+                <div className={"w-full flex justify-center items-center"}>
+                    <Button className="rounded-[99px] btn-primary h-[40px] bg-blue-700 mt-[32px]">Show More</Button>
+                </div>
+                {/* <PaginationComponent isLoading={isLoading} defaultCurrent={3} total={500} onShowSizeChange={(e) => console.log(e)} /> */}
             </div>
         </div>
     );

@@ -83,8 +83,10 @@
 @import './component/filter.scss';
 @import './component/pagination.scss';
 @import './component/document-desc.scss';
+@import './component/slide.scss';
 
 @import './pages/document.scss';
+@import './pages/categories-pages.scss';
 
 .home-container {
     @apply pt-[80px] lg:pt-[120px];

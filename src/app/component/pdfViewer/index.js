@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import Link from 'next/link';
 import { Input } from "@/components/ui/input";
@@ -76,8 +76,11 @@ const PdfViewer = ({ file }) => {
                         file={file}
                         onLoadSuccess={onDocumentLoadSuccess}
                         options={{ workerSrc: "/pdf.worker.js" }}
+                        loading="Loading Files, Please Wait..."
+                        error="Error Get File from our server"
+                        noData="No Data Available"
                     >
-                        <Page pageNumber={pageNumber} />
+                        <Page height={800} scale={1.4} pageNumber={pageNumber} />
                     </Document>
                 }
             </div>

@@ -1,0 +1,28 @@
+.categories-page {
+    @apply pt-[120px];
+  .title-pages {
+    @apply pt-[16px];
+    h1 {
+        @apply leading-[1.5] font-[700] font-montserrat text-primarytext text-[2.80rem];
+    }
+    p {
+        @apply leading-[1.4] font-[500] font-roboto text-primarytext text-[1.14rem];
+    }
+  }
+  .epxlore-more {
+    @apply pt-[24px] flex flex-col items-center;
+    .title-more {
+        @apply mb-[24px] w-full;
+        h2 {
+            @apply font-montserrat leading-[1.3] font-normal font-[600] text-[1.625rem];
+            display: block;
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            line-height: 1.3;
+            max-height: 2.6;
+        }
+    }
+  }
+}

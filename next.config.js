@@ -6,6 +6,10 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'imgv2-1-f.scribdassets.com',
             },
+            {
+                protocol: 'https',
+                hostname: 's-f.scribdassets.com'
+            }
         ],
     },
     webpack: (config) => {

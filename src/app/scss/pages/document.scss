@@ -12,9 +12,13 @@
             }
 
             .item-content {
-                @apply flex justify-center items-start gap-[16px] pb-[16px] first:pt-[0] pt-[16px];
+                @apply flex justify-center items-start gap-[16px] pb-[16px];
                 border-bottom: 1px solid #e9edf8;
-                
+                .img {
+                    img {
+                        filter: drop-shadow(0 4px 6px rgba(0,0,0,.2));
+                    }
+                }
                 .description {
                     .type-totals {
                         @apply flex justify-start items-center gap-[4px];
