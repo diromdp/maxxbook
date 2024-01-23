@@ -86,6 +86,7 @@
 @import './component/slide.scss';
 
 @import './pages/document.scss';
+@import './pages/exproler.scss';
 @import './pages/categories-pages.scss';
 
 .home-container {
@@ -172,7 +173,7 @@
 }
 
 .result-show-item {
-    @apply border-[#e3e6ef] border rounded-[10px] relative max-w-[200px];
+    @apply border-[#e3e6ef] border rounded-[10px] relative max-w-[200px] flex flex-col;
     &:hover {
         box-shadow: 0 2px 10px rgba(0,0,0,.1);
     }

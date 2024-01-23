@@ -1,0 +1,35 @@
+.explorer-pages {
+    @apply pb-[120px];
+    .banner-explorer {
+        @apply bg-blue-900 h-[20.25em] relative;
+        .banner-1 {
+            @apply absolute left-[16px] top-[30%];
+        }
+        .banner-2 {
+            @apply absolute right-[16px] top-[40%];
+        }
+        h1 {
+            @apply font-montserrat font-[700] text-[2.25rem] leading-[1.3] text-white text-center;
+        }
+        p {
+            @apply font-roboto font-[400] text-[1.25rem] leading-[1.4] text-white text-center mt-[8px];
+
+        }
+    }
+    .item-view {
+        @apply mt-[24px];
+        h2 {
+            @apply font-montserrat text-[1.625rem] font-[600] leading-[1.3];
+            display: block;
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            max-height: 2.6;
+            margin: 0;
+        }
+        .view-more{
+            @apply text-blue-500 font-[600] text-[1rem] leading-[1.3];
+        }
+    }
+}
