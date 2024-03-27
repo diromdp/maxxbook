@@ -1,0 +1,22 @@
+
+.sideMenu {
+    @apply pt-[32px] min-h-dvh h-full;
+    .logo {
+        @apply px-[16px] ;
+    }
+    .content-menu {
+        @apply pt-[48px];
+        .items {
+            @apply mb-[16px] px-[16px] ;
+            &-menu {
+                @apply flex gap-[8px] items-center flex font-semibold items-center py-2 px-4 text-white hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-white;
+                svg {
+                    @apply w-[16px] h-[16px];
+                }
+                span {
+                    @apply font-[600] text-lg;
+                }
+            }
+        }
+    }
+}

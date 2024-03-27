@@ -1,0 +1,36 @@
+.about-page, .contact-page {
+    .content {
+        .title {
+            @apply mb-[32px];
+            h1 {
+                @apply text-[28px] font-[700] font-roboto text-primarytext;
+            }
+        }
+        .desc {
+            > div {
+                @apply text-[16px] font-[500] font-roboto text-primarytext;
+            }
+            h2 {
+                @apply text-[20px] font-[600] font-roboto text-primarytext my-[16px];
+            }
+            ul {
+                @apply list-disc pl-[16px];
+                li {
+                    @apply py-[4px];
+                }
+            }
+        }
+    }
+}
+
+.contact-page {
+    .desc {
+       > div {
+            @apply mb-[8px] block;
+        }
+      
+    }
+    .google-iframe {
+        @apply w-full h-[600px] mt-[20px];
+    }
+}

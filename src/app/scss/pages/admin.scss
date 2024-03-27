@@ -1,0 +1,10 @@
+.admin-layout {
+    .admin-home {
+        .content-item {
+            @apply grid grid-cols-4 gap-[16px];
+        }
+        .title-page {
+            @apply mb-4 text-2xl font-bold tracking-tight text-gray-950 sm:text-3xl;
+        }
+    }
+}

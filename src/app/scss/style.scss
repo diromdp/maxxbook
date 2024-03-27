@@ -84,10 +84,14 @@
 @import './component/pagination.scss';
 @import './component/document-desc.scss';
 @import './component/slide.scss';
+@import './component/sidebar.scss';
+@import './component/sideMenu.scss';
 
 @import './pages/document.scss';
 @import './pages/exproler.scss';
 @import './pages/categories-pages.scss';
+@import './pages/static.scss';
+@import './pages/admin.scss';
 
 .home-container {
     @apply pt-[80px] lg:pt-[120px];
@@ -215,4 +219,15 @@
 
 .pdf-init {
     @apply h-[850px];
+}
+.ant-image-img {
+    @apply rounded-[10px];
+}
+.ant-layout-sider-collapsed{
+    .logo {
+        @apply hidden;
+    }
+}
+.ant-layout-header {
+    @apply flex justify-between items-center pr-[16px] bg-white #{!important};
 }

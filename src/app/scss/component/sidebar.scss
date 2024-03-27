@@ -1,0 +1,17 @@
+
+.panel-sidebar {
+    @apply mt-[32px];
+    &-container {
+        ul {
+            @apply flex flex-col items-start gap-[10px];
+            li {
+                a {
+                    @apply font-[500] font-montserrat text-[16px];
+                    &:hover {
+                        @apply font-[600];
+                    }
+                }
+            }
+        }
+    }
+}

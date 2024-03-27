@@ -1,8 +1,5 @@
 import { Roboto, Montserrat } from 'next/font/google'
 import '@/app/scss/style.scss';
-import Header from './component/header';
-import Footer from './component/footer';
-
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -28,13 +25,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${monst.variable} ${roboto.variable}`}>
-        <div className='flex flex-col h-screen justify-between'>
-          <Header />
-          <div className='flex-grow'>
-            {children}
-          </div>
-          <Footer />
-        </div>
+        {children}
       </body>
     </html>
   )

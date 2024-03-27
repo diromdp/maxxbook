@@ -13,7 +13,7 @@ const ExplorerPages = ({ }) => {
                     <Image src={imgBanner1} width={300} height={225} />
                 </div>
                 <div className="mx-auto w-full max-w-screen-xl relative top-[160px]">
-                    <h1>Read anywhere. Anytime.</h1>
+                    <h1>Read anytime. Anywhere.</h1>
                     <p>All you can read is free! Get millions of documents you need here</p>
                 </div>
                 <div className="banner-2">
