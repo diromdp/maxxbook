@@ -1,4 +1,5 @@
-import { Roboto, Montserrat } from 'next/font/google'
+import { Roboto, Montserrat } from 'next/font/google';
+
 import '@/app/scss/style.scss';
 
 const roboto = Roboto({
@@ -23,10 +24,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${monst.variable} ${roboto.variable}`}>
-        {children}
-      </body>
-    </html>
+    <>
+      <html lang="en">
+        <body className={`${monst.variable} ${roboto.variable}`}>
+          {children}
+        </body>
+      </html>
+    </>
+    
   )
 }

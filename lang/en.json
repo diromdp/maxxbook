@@ -1,0 +1,25 @@
+{
+    "Homepage": {
+        "title": "Welcome to Maxibook",
+        "description": "Kamu bisa Anda baca gratis! Dapatkan jutaan dokumen yang Anda butuhkan di sini",
+        "or": "or",
+        "browser": "Browse categories",
+        "see category": "See All Categories",
+        "search anything": "Search Anything here...",
+        "search button": "Search",
+        "start explore": "Start exploring millions of fascinating documents",
+        "start desc": "Find specialized knowledge on any topic, and answers you won't find anywhere else",
+        "btn start": "Let's Go",
+        "about": "About",
+        "support": "Support",
+        "legal": "Legal",
+        "contact": "Contact Us",
+        "privacy policy": "Privacy Policy",
+        "term and conditions": "Terms and Conditions"
+    },
+    "Documents": {
+        "title": "Document",
+        "description": "Get started with the community’s uploads",
+        "content empty": "Document file is empty"
+    }
+}

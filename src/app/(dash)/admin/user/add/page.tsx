@@ -1,6 +1,6 @@
 "use client"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { z } from "zod";
 import {
     Card,
@@ -17,20 +17,36 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import axios from "axios";
+import { urlAPI } from "../../../../../lib/constant";
+import { useCookies } from "react-cookie";
+import { useRouter } from "next/navigation";
 
+import { notification } from 'antd';
 
 
 const addPages = () => {
-
+    const [cookies] = useCookies(["token"])
+    const [api, contextHolder] = notification.useNotification();
+    const router = useRouter();
+    const openNotification = (val) => {
+        api.info({
+            message: 'Warning Information',
+            description: val,
+        });
+    };
+    const openNotificationSuccess = () => {
+        api.info({
+            message: 'Create Notification',
+            description: 'Create user has been successfully created',
+        });
+    };
     const formSchema = z.object({
         fullname: z.string().min(2, {
             message: "Full Name must be at least 2 characters.",
         }),
         email: z.string().min(2, {
             message: "Email must be at least 2 characters.",
-        }),
-        phoneNumber: z.string().min(2, {
-            message: "Phone Number must be at least 2 characters.",
         }),
         password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
         confirmPassword: z.string().min(6, { message: 'Password must be at least 6 characters' })
@@ -45,18 +61,50 @@ const addPages = () => {
         defaultValues: {
             fullname: "",
             email: "",
-            phoneNumber: "",
             password: "",
             confirmPassword: "",
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        let formData = {
+            name: values.fullname,
+            email: values.email,
+            password: values.password,
+            password_confirmation: values.confirmPassword
+        }
+
+        await axios.post(`${urlAPI}backend/admin/users`, formData, {
+            headers: {
+                "Content-Type": "application/json",
+                'Accept': "application/json",
+                "Authorization": `Bearer ${cookies.token}`
+            }
+        })
+            .then((data) => {
+                if (data.status === 200) {
+                    form.reset();
+                    openNotificationSuccess();
+                }
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    openNotification(error.response.data.message)
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
     }
 
     return (
         <div className="admin-home">
+            {contextHolder}
             <h1 className="title-page">
                 Create New User
             </h1>
@@ -87,22 +135,6 @@ const addPages = () => {
                                         <FormLabel>Email Address</FormLabel>
                                         <FormControl>
                                             <Input type="email" placeholder="Email Address" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="phoneNumber"
-                                render={({ field }) => (
-
-                                    <FormItem
-                                        className="pt-[16px]"
-                                    >
-                                        <FormLabel>Phone / Whatsapp</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Email Address" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -142,8 +174,7 @@ const addPages = () => {
                             />
                             <div className="flex items-center gap-[16px]">
                                 <Button className="mt-[16px]" type="submit">Create</Button>
-                                <Button className="mt-[16px]" type="submit">Create Another</Button>
-                                <Button className="mt-[16px]" type="submit" variant="secondary">Cancel</Button>
+                                <Button className="mt-[16px]" type="button" onClick={() => form.reset()} variant="secondary">Cancel</Button>
 
                             </div>
                         </form>

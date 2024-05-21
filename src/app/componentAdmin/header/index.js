@@ -10,13 +10,18 @@ import {
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { urlAPI } from "../../../lib/constant";
+import { useMapContext } from "../../(dash)/admin/adminContex";
+import Cookies from 'universal-cookie';
+import { useCookies } from "react-cookie";
+import { getInitials } from "../../../lib/utils";
 
-import { useCookies } from "react-cookie"
 
 const HeaderContent = () => {
-
+    const { profile } = useMapContext();
     const [cookies, removeCookie] = useCookies(["token"])
     const router = useRouter(); 
+    const cookiesUniversal = new Cookies();
+
     const logout =  async() => {
         try {
             const response = await axios.post(`${urlAPI}backend/admin/logout`,{}, {
@@ -28,11 +33,14 @@ const HeaderContent = () => {
             })
                 .then(function (response) {
                     console.log(response);
-                    removeCookie('token', { path: '/'});
+                    cookiesUniversal.remove("token", {path: "/"})  
                     router.push('/login-admin');
                 })
                 .catch(function (error) {
                     console.log(error);  
+                    cookiesUniversal.remove("token", {path: "/"})  
+                    router.push('/login-admin');
+
                 });
 
         } catch (error) {
@@ -40,13 +48,15 @@ const HeaderContent = () => {
         }
     }
 
+    console.log(profile);
+
     return (
         <>
             <DropdownMenu className="pr-[32px]">
                 <DropdownMenuTrigger asChild>
                     <Avatar className="cursor-pointer">
-                        <AvatarImage src="https://github.com/shadcn.png" />
-                        <AvatarFallback>CN</AvatarFallback>
+                        <AvatarImage src={`${profile.avatar ? profile.avatar.url :"https://github.com/shadcn.png"}`} />
+                        <AvatarFallback>{getInitials(profile.name)}</AvatarFallback>
                     </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-46">

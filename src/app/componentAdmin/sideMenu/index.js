@@ -4,6 +4,10 @@ import {
     FileProtectOutlined,
     PieChartOutlined,
     UserOutlined,
+    BankOutlined,
+    FilePdfOutlined,
+    SettingOutlined,
+    MoneyCollectOutlined
 } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -32,8 +36,37 @@ const SideMenu = () => {
         ),
         getItem(
             'Users',
-            ['/admin/user'],
+            [
+                '/admin/user',
+            ],
             <UserOutlined />,
+            [
+                getItem(
+                    "Create User",
+                    '/admin/user/add',
+                ),
+                getItem(
+                    "List Users",
+                    '/admin/user',
+                ),
+            ],
+        ),
+        getItem(
+            'Documents',
+            [
+                '/admin/document',
+            ],
+            <FilePdfOutlined />,
+            [
+                getItem(
+                    "Create Document",
+                    '/admin/document/add',
+                ),
+                getItem(
+                    "List Documents",
+                    '/admin/document',
+                ),
+            ],
         ),
         getItem(
             'Category',
@@ -44,14 +77,49 @@ const SideMenu = () => {
             <FileProtectOutlined />,
             [
                 getItem(
-                    "All Categories",
+                    "Create Category",
+                    '/admin/category/add',
+                ),
+                getItem(
+                    "Create SubCategory",
+                    '/admin/subcategory/add',
+                ),
+                getItem(
+                    "List Categories",
                     '/admin/category',
                 ),
                 getItem(
-                    'All Subcategories',
-                    '/admin/category/subcategory',
+                    'List Subcategories',
+                    '/admin/subcategory',
                 ),
             ],
+        ),
+        getItem(
+            'Bank',
+            [
+                '/admin/bank',
+            ],
+            <BankOutlined />,
+            [
+                getItem(
+                    "Create Bank",
+                    '/admin/bank/add',
+                ),
+                getItem(
+                    "List Bank",
+                    '/admin/bank',
+                ),
+            ],
+        ),
+        getItem(
+            'Withdrawal',
+            ['/admin/withdrawal'],
+            <MoneyCollectOutlined />,
+        ),
+        getItem(
+            'Setting',
+            ['/admin/setting'],
+            <SettingOutlined />,
         ),
     ]
     const onOpenChange = (keys) => {

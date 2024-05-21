@@ -1,4 +1,5 @@
 "use client"
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from "zod";
@@ -17,20 +18,35 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
+import { notification } from 'antd';
+import axios from "axios";
+import { urlAPI } from "../../../../../lib/constant";
+import { useCookies } from "react-cookie";
+import { useRouter, useSearchParams } from 'next/navigation'
 
 
 const editPage = () => {
-
+    const [cookies] = useCookies(["token"])
+    const router = useRouter()
+    const [api, contextHolder] = notification.useNotification();
+    const searchParams = useSearchParams()
+    const dataQuery = {
+        id: searchParams.get('id'),
+        name: searchParams.get('name'),
+        email: searchParams.get('email'),
+    }
+    const openNotification = (val) => {
+        api.info({
+            message: 'Warning Information',
+            description: val,
+        });
+    };
     const formSchema = z.object({
         fullname: z.string().min(2, {
             message: "Full Name must be at least 2 characters.",
         }),
         email: z.string().min(2, {
             message: "Email must be at least 2 characters.",
-        }),
-        phoneNumber: z.string().min(2, {
-            message: "Phone Number must be at least 2 characters.",
         }),
         password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
         confirmPassword: z.string().min(6, { message: 'Password must be at least 6 characters' })
@@ -45,18 +61,54 @@ const editPage = () => {
         defaultValues: {
             fullname: "",
             email: "",
-            phoneNumber: "",
             password: "",
             confirmPassword: "",
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        let formData = {
+            name: values.fullname,
+            email: values.email,
+            password: values.password,
+            password_confirmation: values.confirmPassword
+        }
+
+        await axios.post(`${urlAPI}backend/admin/users/${dataQuery.id}`, formData, {
+            headers: {
+                "Content-Type": "application/json",
+                'Accept': "application/json",
+                "Authorization": `Bearer ${cookies.token}`
+            }
+        })
+            .then((data) => {
+                if (data.status === 200) {
+                    form.reset();
+                    router.push('/admin/user');
+                }
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    openNotification(error.response.data.message)
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
     }
+    useEffect(()=> {
+        form.setValue('fullname', dataQuery.name);
+        form.setValue('email', dataQuery.email);
+    },[])
 
     return (
         <div className="admin-home">
+            {contextHolder}
             <h1 className="title-page">
                 Update User
             </h1>
@@ -87,22 +139,6 @@ const editPage = () => {
                                         <FormLabel>Email Address</FormLabel>
                                         <FormControl>
                                             <Input type="email" placeholder="Email Address" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="phoneNumber"
-                                render={({ field }) => (
-
-                                    <FormItem
-                                        className="pt-[16px]"
-                                    >
-                                        <FormLabel>Phone / Whatsapp</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Email Address" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -141,9 +177,8 @@ const editPage = () => {
                                 )}
                             />
                             <div className="flex items-center gap-[16px]">
-                                <Button className="mt-[16px]" type="submit">Create</Button>
-                                <Button className="mt-[16px]" type="submit">Create Another</Button>
-                                <Button className="mt-[16px]" type="submit" variant="secondary">Cancel</Button>
+                                <Button className="mt-[16px]" type="submit">Update</Button>
+                                <Button className="mt-[16px]" type="button" onClick={() => router.push('/admin/user')} variant="secondary">Cancel</Button>
 
                             </div>
                         </form>

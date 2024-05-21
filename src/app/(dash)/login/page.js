@@ -1,35 +1,19 @@
+"use client";
+import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 import Link from "next/link";
 
-const AdminLogin = () => {
+const LoginUser = () => {
     return (
         <>
-            <div class="flex min-h-screen">
-                <div class="flex flex-row w-full">
-                    <div class='hidden lg:flex flex-col justify-between bg-[#ffe85c] lg:p-8 lg:max-w-sm xl:max-w-lg'>
-                        <div class="flex items-center justify-start space-x-3">
-                            <Link href={'/'}>
-                                <span className={`text-[20px] lg:text-[28px] xl:text-[40px] select-none font-montserrat font-[700] outline-0`}>Maxibook.</span>
-                            </Link>
-                        </div>
-                        <p class="font-medium">© 2024 Maxibook</p>
-                    </div>
-                    <div class="flex flex-1 flex-col items-center justify-center px-10 relative">
-                        <div class="flex lg:hidden justify-between items-center w-full py-4">
-                            <div class="flex items-center justify-start space-x-3">
-                                <Link href={'/'}>
-                                    <span className={`text-[20px] select-none font-montserrat font-[700] outline-0`}>Maxibook.</span>
-                                </Link>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <span>Not a member? </span>
-                                <a href="#" class="underline font-medium text-[#070eff]">
-                                    Sign up now
-                                </a>
-                            </div>
-                        </div>
-                        <div class="flex flex-1 flex-col  justify-center space-y-5 max-w-md">
+            <div className="flex min-h-screen">
+                <div className="flex flex-row w-full">
+                    <div className="flex flex-1 flex-col items-center justify-center px-[16px] 1xl:px-10 relative">
+                        <div className="flex 1xl:flex-1 flex-col max-w-full justify-center 2xl:max-w-md p-[20px] shadow-xl my-[80px] rounded-[8px]">
                             <form className="">
-                                <h3 className="mb-3 text-4xl font-extrabold text-dark-slate-900 text-center">Sign In</h3>
+                                <h3 className="mb-3 text-2xl 1xl:text-4xl font-extrabold text-dark-slate-900 text-center">Sign In</h3>
                                 <p className="mb-4 text-slate-700 text-center">Enter your email and password</p>
                                 <Link href={'/'} className="flex     items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-slate-900 bg-slate-100 hover:bg-slate-200 focus:ring-4 focus:ring-slate-200">
                                     <img
@@ -82,18 +66,19 @@ const AdminLogin = () => {
                                         </span>
                                     </label>
                                     <a
-                                        href="javascript:void(0)"
+                                        href="#"
                                         className="mr-4 text-sm font-medium text-purple-blue-500"
                                     >
                                         Forget password?
                                     </a>
                                 </div>
+                                
                                 <button className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-sky-600 focus:ring-4 focus:bg-sky-100 bg-sky-300">
                                     Sign In
                                 </button>
                                 <p className="text-sm leading-relaxed text-slate-900 text-center">
                                     Not registered yet?{" "}
-                                    <a href="javascript:void(0)" className="font-bold  text-slate-700">
+                                    <a href="#" className="font-bold  text-slate-700">
                                         Create an Account
                                     </a>
                                 </p>
@@ -106,4 +91,4 @@ const AdminLogin = () => {
     );
 }
 
-export default AdminLogin;
+export default LoginUser;

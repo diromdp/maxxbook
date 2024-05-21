@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
     Card,
     CardContent,
@@ -20,7 +20,10 @@ import { Input } from 'antd';
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Table } from 'antd';
+import dayjs from "dayjs";
 import { urlAPI } from "../../../../lib/constant";
+import { formatRupiah } from "../../../../lib/utils";
+
 const { Search } = Input;
 
 
@@ -36,8 +39,8 @@ const Users = () => {
         cursor: "",
         page: "1",
         perPage: "50",
-        sortBy: "name",
-        sortDirection: "asc"
+        sortBy: "created_at",
+        sortDirection: "desc"
     });
     const columns = [
         {
@@ -47,21 +50,39 @@ const Users = () => {
         {
             title: 'Name',
             dataIndex: 'name',
-            sorter: {
-                compare: (a, b) => a.name - b.name,
-            },
-            sortDirections: ['descend'],
         },
         {
             title: 'Email',
             dataIndex: 'email',
-            sorter: {
-                compare: (a, b) => a.email - b.email,
-            },
         },
         {
-            title: 'Tanggal Approve',
+            title: 'Total Balance',
+            dataIndex: 'balance',
+            render: (val) => {
+                return(
+                    <span>{val ? formatRupiah(val.balance) : formatRupiah(0)}</span>
+                )
+            }
+        },
+        {
+            title: 'Verified At',
             dataIndex: 'email_verified_at',
+            render: (val) => {
+                const format = dayjs(val).format("DD MM YYYY HH:mm"); // display
+                return(
+                    <span>{val ? format :""}</span>
+                )
+            }
+        },
+        {
+            title: 'Created At',
+            dataIndex: 'created_at',
+            render: (val) => {
+                const format = dayjs(val).format("DD MM YYYY HH:mm"); // display
+                return(
+                    <span>{val ? format :""}</span>
+                )
+            }
         },
         {
             title: 'Action',
@@ -71,10 +92,10 @@ const Users = () => {
             render: (val) => {
                 return (
                     <div className="flex items-center gap-[16px]">
-                        <Button variant="destructive" className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                        <Button variant="destructive" onClick={() => deleteUserSingle(val.id)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
                             <FiTrash2 />
                         </Button>
-                        <Button className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                        <Button onClick={() => editUser(val)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
                             <FiEdit />
                         </Button>
                     </div>
@@ -93,6 +114,8 @@ const Users = () => {
     };
     const hasSelected = selectedRowKeys.length > 0;
     const router = useRouter();
+    const hasFetchedData = useRef(false);
+
 
     const getUsers = async () => {
         await axios.get(`${urlAPI}backend/admin/users/paginated?q=${filterUser.q}&cursorEnabled=${filterUser.cursorEnabled}&cursor=${filterUser.cursor}&page=${filterUser.page}&perPage=${filterUser.perPage}&sortBy=${filterUser.sortBy}&sortDirection=${filterUser.sortDirection}`, {
@@ -104,8 +127,11 @@ const Users = () => {
         })
             .then((data) => {
                 if (data.status === 200) {
+                    let filteredUsers = data.data.data.filter((user) => {
+                        return user.deleted_at === null;
+                    });
                     setIsLoading(false)
-                    setDataFetch(data.data.data)
+                    setDataFetch(filteredUsers)
                     setDataPagination(data.data.links)
                 }
             })
@@ -125,10 +151,46 @@ const Users = () => {
 
     const updatePagination = async (val) => {
         var url_string = val;
-        var url = new URL(url_string);
-        var page = url.searchParams.get("page");
-        setFilterUser({ ...filterUser, page: page });
-        await axios.get(`${urlAPI}backend/admin/users/paginated?q=${filterUser.q}&page=${page}&perPage=${filterUser.perPage}&sortBy=${filterUser.sortBy}&sortDirection=${filterUser.sortDirection}`, {
+
+        if(url_string) {
+            var url = new URL(url_string);
+            var page = url.searchParams.get("page");
+            setFilterUser({ ...filterUser, page: page });
+            await axios.get(`${urlAPI}backend/admin/users/paginated?q=${filterUser.q}&page=${page}&perPage=${filterUser.perPage}&sortBy=${filterUser.sortBy}&sortDirection=${filterUser.sortDirection}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': "application/json",
+                    "Authorization": `Bearer ${cookies.token}`
+                }
+            })
+                .then((data) => {
+                    if (data.status === 200) {
+                        let filteredUsers = data.data.data.filter((user) => {
+                            return user.deleted_at === null;
+                        });
+                        setIsLoading(false)
+                        setDataFetch(filteredUsers)
+                        setDataPagination(data.data.links)
+                    }
+                })
+                .catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        console.log(error.request);
+                    } else {
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                });
+        }
+    }
+
+    const searchItems = async (value, _e, info) => {
+        setFilterUser({ ...filterUser, page: 1, q: value });
+        await axios.get(`${urlAPI}backend/admin/users/paginated?q=${value}&page=${1}&perPage=${filterUser.perPage}&sortBy=${filterUser.sortBy}&sortDirection=${filterUser.sortDirection}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': "application/json",
@@ -137,9 +199,53 @@ const Users = () => {
         })
             .then((data) => {
                 if (data.status === 200) {
+                    let filteredUsers = data.data.data.filter((user) => {
+                        return user.deleted_at === null;
+                    });
                     setIsLoading(false)
-                    setDataFetch(data.data.data)
+                    setDataFetch(filteredUsers)
                     setDataPagination(data.data.links)
+                }
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+
+    }
+
+    const removeItems = (array, itemToRemove) => {
+        return array.filter(v => {
+            return !itemToRemove.includes(v.id);
+        });
+    }
+
+    const editUser = (user) => {
+        console.log(user);
+        router.push(`/admin/user/${user.id}?id=${user.id}&name=${user.name}&email=${user.email}`);
+    }
+
+    const deleteUser = async() => {
+        await axios.delete(`${urlAPI}backend/admin/users`, {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${cookies.token}`
+            },
+            data: {
+                ids: selectedRowKeys
+            }
+        })
+            .then((data) => {
+                if (data.status === 200) {
+                    setDataFetch(removeItems(dataFetch, selectedRowKeys))
                 }
             })
             .catch(function (error) {
@@ -156,39 +262,40 @@ const Users = () => {
             });
     }
 
-    const searchItems = async (value, _e, info) => {
-            setFilterUser({ ...filterUser, page: 1, q: value });
-            await axios.get(`${urlAPI}backend/admin/users/paginated?q=${value}&page=${1}&perPage=${filterUser.perPage}&sortBy=${filterUser.sortBy}&sortDirection=${filterUser.sortDirection}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': "application/json",
-                    "Authorization": `Bearer ${cookies.token}`
+    const deleteUserSingle = async (val) => {
+        await axios.delete(`${urlAPI}backend/admin/users`, {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${cookies.token}`
+            },
+            data: {
+                ids: [val]
+            }
+        })
+            .then((data) => {
+                if (data.status === 200) {
+                    setDataFetch(removeItems(dataFetch, [val]))
                 }
             })
-                .then((data) => {
-                    if (data.status === 200) {
-                        setIsLoading(false)
-                        setDataFetch(data.data.data)
-                        setDataPagination(data.data.links)
-                    }
-                })
-                .catch(function (error) {
-                    if (error.response) {
-                        console.log(error.response.data.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                    console.log(error.config);
-                });
-        
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
     }
 
     useEffect(() => {
-        getUsers();
+        if (!hasFetchedData.current) {
+            getUsers();
+            hasFetchedData.current = true;
+        }
     }, [])
     return (
         <div className="admin-home">
@@ -199,7 +306,7 @@ const Users = () => {
                             className="w-[250px]"
                             onSearch={searchItems}
                             allowClear
-                            placeholder="Search..." 
+                            placeholder="Search..."
                             loading={isLoading} />
 
                         <Button onClick={() => router.push('/admin/user/add', undefined, { shallow: true })}><FiFilePlus /></Button>
@@ -208,7 +315,7 @@ const Users = () => {
                 </CardHeader>
                 <CardContent>
                     <div className="flex justify-start mb-4 gap-[8px] items-center">
-                        <Button variant="destructive" className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                        <Button variant="destructive" disabled={selectedRowKeys.length < 1} className="focus:outline-none text-white font-medium rounded-lg text-sm" onClick={deleteUser}>
                             <FiTrash2 />
                         </Button>
                         <span className="text-sm">

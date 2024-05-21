@@ -1,47 +1,29 @@
-import Link from 'next/link';
+import { useState } from 'react';
 import { Select, Skeleton } from 'antd';
+import { useLocale } from 'next-intl';
 
-const FilterComponent = ({ data, font, isLoading }) => {
+const FilterComponent = ({ FilterDocument, DataFetchCategory, isLoading, setFilterDocuments, filterDocuments }) => {
 
-    const dataLanguage = [
-        {
-            value: 'ID',
-            label: 'Indonesia'
-        },
-        {
-            value: 'EN',
-            label: 'English'
+    const [selectedId, setSelectedId] = useState(null);
+    let optionsCategory = [];
+    const locale = useLocale();
+    DataFetchCategory.map((item) => {
+        const category = {
+            value: item.id,
+            label: locale == 'en' ? item.name : item.name_id
         }
-    ];
-    const dataLength = [
-        {
-            value: '3',
-            label: '1-3 pages'
-        },
-        {
-            value: '100',
-            label: '4-100 pages'
-        },
-    ];
-    const dataType = [
-        {
-            value: 'PDF',
-            label: 'PDF'
-        },
-        {
-            value: 'MS word',
-            label: 'MS Word'
-        },
-        {
-            value: 'Presentation',
-            label: 'Presentation'
-        },
-        {
-            value: 'Spreadsheet',
-            label: 'Spreadsheet'
-        },
-    ]
+        optionsCategory.push(category);
+    })
 
+    const filterOption = (input, option) =>
+        (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+    const clearSelected = () => {
+        setSelectedId(null)
+    }
+    const onChange = (value) => {
+        setSelectedId(value)
+        console.log(value);
+    }
     return (
         <div className="filter-container">
             {
@@ -49,25 +31,21 @@ const FilterComponent = ({ data, font, isLoading }) => {
                     <>
                         <div className="item-filter">
                             <Select
-                                placeholder="Length"
-                                options={dataLength}
+                                showSearch
+                                placeholder="Select a Category"
+                                options={optionsCategory}
+                                onChange={onChange}
+                                filterOption={filterOption}
+                                value={selectedId}
                             />
                         </div>
-                        <div className="item-filter">
-                            <Select
-                                placeholder="File Type"
-                                options={dataType}
-                            />
-                        </div>
-                        <div className="item-filter">
-                            <Select
-                                placeholder="Language"
-                                options={dataLanguage}
-                            />
-                        </div>
-                        <div className="item-filter">
-                            <Link className={`${font}`} href={"/"}>Clear all</Link>
-                        </div>
+                        {
+                            selectedId &&
+                            <div className="item-filter">
+                                <div onClick={clearSelected} className={'text-sm font-[500] leading-2 text-[#596280] cursor-pointer underline'}>Clear all</div>
+                            </div>
+                        }
+
                     </> :
                     <>
                         <div className="item-filter">

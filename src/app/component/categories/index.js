@@ -1,46 +1,50 @@
 import Link from "next/link";
 import Image from 'next/image'
-import icDoc from '../../assets/images/ic-doc.png';
-import icDoc2 from '../../assets/images/ic-doc-2.png';
-import icDoc3 from '../../assets/images/ic-doc-3.png';
+import { useTranslations } from 'next-intl';
+import { getLocale } from 'next-intl/server';
+import { urlAPI } from "../../../lib/constant";
 
+async function getCategory() {
 
-const Categories = ({ data }) => {
-    return ( 
+    // Fetch data from external API
+    const data = await fetch(`${urlAPI}backend/categories/home`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': "application/json",
+        },
+    });
+
+    if (!data.ok) {
+        throw new Error('Network response was not ok');
+      }
+    // Pass data to the page via props
+    return data.json();
+}
+
+export default async function Categories() {
+    const t = useTranslations('Homepage');
+    const data = await getCategory()
+    const localData = await getLocale();
+    return (
         <div className="categories">
             <div className="container m-auto">
                 <div className="content">
-                    <Link href={'/'} className="item">
-                        <span>Science & Mathematics</span>
-                        <Image className="image" src={icDoc} />
-                    </Link>
-                     <Link href={'/'} className="item">
-                        <span>Fisika</span>
-                        <Image className="image" src={icDoc2} />
-                    </Link>
-                     <Link href={'/'} className="item">
-                        <span>Biologi</span>
-                        <Image className="image" src={icDoc3} />
-                    </Link>
-                     <Link href={'/'} className="item">
-                        <span>Bahasa</span>
-                        <Image className="image" src={icDoc} />
-                    </Link>
-                     <Link href={'/'} className="item">
-                        <span>Ekonomi</span>
-                        <Image className="image" src={icDoc2} />
-                    </Link>
-                     <Link href={'/'} className="item">
-                        <span>Hukum</span>
-                        <Image className="image" src={icDoc3} />
-                    </Link>
+                    {
+                        data && data.map((item, index) => {
+                            return (
+                                <Link key={index} href={`/${localData}/catagories/${item.slug}`} className="item">
+                                    <span>{localData == 'en' ? item.name : item.name_id}</span>
+                                    <Image className="image" width={96} height={96} src={item.icon_url} />
+                                </Link>
+                            )
+                        })
+                    }
                 </div>
                 <div className="see-more">
-                    <Link href={'/'}>See All Categories</Link>
+                    <Link href={'/'}>{t('see category')}</Link>
                 </div>
             </div>
-        </div> 
+        </div>
     );
 }
- 
-export default Categories;
