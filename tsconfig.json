@@ -27,7 +27,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/app/(dash)/admin/user/page.js", "src/app/(dash)/admin/category/page.js"  ],
+, "src/app/(dash)/admin/user/page.js", "src/app/(dash)/admin/category/page.js", "src/app/(pages)/[locale]/layout.jsx" ],
   "exclude": [
     "node_modules"
   ]

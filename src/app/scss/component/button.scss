@@ -1,6 +1,31 @@
 .btn-primary {
-    @apply block text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+    @apply block text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
 }
+
 .btn-light {
-    @apply bg-transparent border border-black focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 rounded-[999px] text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700;
+    @apply bg-transparent border border-black focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 rounded-[999px] text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700;
+}
+
+.download {
+    @apply mt-[32px];
+
+    .button-download {
+        @apply bg-blue-700 border border-blue-700 text-white;
+        border-radius: 8px;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.3em;
+        padding: 12px 24px;
+        position: relative;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.3em;
+        padding: 12px 24px;
+        position: relative;
+        text-align: center;
+    }
 }

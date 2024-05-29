@@ -6,11 +6,14 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 import Image from "next/image";
 
-const SlideSubCategories = ({ isLoading }) => {
+const SlideSubCategories = ({ isLoading, subCategory, locale }) => {
+    let newStr = locale.replace(/["]/g, '');  
+
     return (
         <Carousel
             opts={{
@@ -22,16 +25,20 @@ const SlideSubCategories = ({ isLoading }) => {
                 {
                     !isLoading ?
                         <>
-                            {Array.from({ length: 12 }).map((_, index) => (
-                                <CarouselItem key={index} className="first:ml-0 ml-[32px] md:basis-1/2 lg:basis-1/5 cursor-pointer">
-                                    <Card className="p-1 w-[280px] h-[90px]">
-                                        <CardContent className="flex card-content aspect-square items-center relative p-6 w-[280px] h-[90px] z-10">
-                                            <h3 className="title"> Biology</h3>
-                                            <Image height={76} width={76} src={'https://s-f.scribdassets.com/webpack/assets/images/explore/doc_thumbnails/doc_loaf_thumb_7.1ee2b181.jpg'} />
-                                        </CardContent>
-                                    </Card>
-                                </CarouselItem>
-                            ))}
+                            {subCategory && subCategory.map((item, index) => {
+                                return (
+                                    <CarouselItem key={index} className="first:ml-0 ml-[32px] md:basis-1/2 lg:basis-1/5 cursor-pointer">
+                                        <Link href={`/${newStr}/subcategory/${item.slug}`}>
+                                            <Card className="p-1 w-[280px] h-[90px]">
+                                                <CardContent className="flex card-content aspect-square items-center relative p-6 w-[280px] h-[90px] z-10">
+                                                    <h3 className="title"> {newStr == 'en' ? item.name : item.name_id}</h3>
+                                                    <Image height={76} width={76} src={'https://s-f.scribdassets.com/webpack/assets/images/explore/doc_thumbnails/doc_loaf_thumb_7.1ee2b181.jpg'} />
+                                                </CardContent>
+                                            </Card>
+                                        </Link>
+                                    </CarouselItem>
+                                )
+                            })}
                         </> :
                         <>
                             {Array.from({ length: 12 }).map((_, index) => (

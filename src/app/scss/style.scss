@@ -164,7 +164,7 @@
     @apply pt-[120px] min-h-screen pb-[32px] relative;
 
     .result-word {
-        @apply pt-[32px] pb-[24px] px-[20px] 2xl:px-0;
+        @apply pb-[24px] px-[20px] 2xl:px-0;
 
         p {
             @apply text-[#596280] font-[500] text-[1.125rem];

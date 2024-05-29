@@ -323,14 +323,14 @@ const Category = () => {
                                         if (data.label === "&laquo; Previous") {
                                             return (
                                                 <PaginationItem>
-                                                    <PaginationPrevious className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
+                                                    <PaginationPrevious disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
                                                 </PaginationItem>
 
                                             )
                                         } else if (data.label === "Next &raquo;") {
                                             return (
                                                 <PaginationItem>
-                                                    <PaginationNext className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
+                                                    <PaginationNext disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
                                                 </PaginationItem>
                                             )
                                         } else {

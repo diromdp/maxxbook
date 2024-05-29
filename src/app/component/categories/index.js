@@ -21,7 +21,6 @@ async function getCategory() {
     // Pass data to the page via props
     return data.json();
 }
-
 export default async function Categories() {
     const t = useTranslations('Homepage');
     const data = await getCategory()
@@ -42,7 +41,7 @@ export default async function Categories() {
                     }
                 </div>
                 <div className="see-more">
-                    <Link href={'/'}>{t('see category')}</Link>
+                    <Link href={`/${localData}/catagories`}>{t('see category')}</Link>
                 </div>
             </div>
         </div>

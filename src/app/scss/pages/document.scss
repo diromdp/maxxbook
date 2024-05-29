@@ -8,18 +8,32 @@
                 @apply w-full;
                 h2 {
                     @apply text-[22px] font-[600] text-primarytext;
+                    max-height: 114px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    text-transform: capitalize;
+                    line-height: 38px;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
+                    display: -webkit-box;
                 }
             }
 
             .item-content {
-                @apply flex justify-center items-start gap-[16px] pb-[16px];
+                @apply flex justify-start items-start gap-[16px] pb-[16px] w-[350px];
                 border-bottom: 1px solid #e9edf8;
                 .img {
+                    @apply w-[50%] flex justify-center;
+
                     img {
+                        @apply w-[143px] h-[174px] relative #{!important};
                         filter: drop-shadow(0 4px 6px rgba(0,0,0,.2));
+                        object-fit: contain;
                     }
                 }
                 .description {
+                    @apply w-[50%];
+
                     .type-totals {
                         @apply flex justify-start items-center gap-[4px];
                         .title {

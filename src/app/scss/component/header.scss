@@ -8,5 +8,11 @@
     }
     .header-login {
         @apply flex justify-center items-center gap-[8px];
+        .label {
+            @apply border rounded-[50px] border-slate-200 px-[10px];
+            select {
+                @apply outline-0 ring-0;
+            }
+        }
     }
 }

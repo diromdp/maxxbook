@@ -50,7 +50,6 @@ const editPages = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-
     const openNotification = (val) => {
         api.info({
             message: 'Warning Information',
@@ -97,7 +96,7 @@ const editPages = () => {
             title: values.title,
             description: values.description,
             category_id: values.category_id,
-            sub_category_id: null,
+            sub_category_id: values.sub_category_id,
             upload_id: uploadId ? uploadId : searchParams.get('upload_id') ? searchParams.get('upload_id') : null ,
             lang: 'id'
         }
@@ -238,6 +237,9 @@ const editPages = () => {
 
     useEffect(() => {
         getCategory();
+        if(searchParams.get('category_id') ) {
+            getSubCategory(searchParams.get('category_id'));
+        }
     }, [])
     return (
         <div className="admin-home">
@@ -312,7 +314,7 @@ const editPages = () => {
                                         name="sub_category_id"
                                         render={({ field }) => (
                                             <FormItem className="mb-[8px]">
-                                                <FormLabel>Select Category</FormLabel>
+                                                <FormLabel>Select Sub Category</FormLabel>
                                                 <Select onValueChange={field.onChange} defaultValue={field.value} disabled={disabled}>
                                                     <FormControl>
                                                         <SelectTrigger>
@@ -334,7 +336,7 @@ const editPages = () => {
                                     />
 
                                     <div className="flex items-center gap-[16px]">
-                                        <Button className="mt-[16px]" type="submit" disabled={disabledUploadButton}>Create</Button>
+                                        <Button className="mt-[16px]" type="submit">Create</Button>
                                         <Button className="mt-[16px]" type="button" onClick={() => router.push("/admin/document")} variant="secondary">Cancel</Button>
                                     </div>
                                 </form>
@@ -348,7 +350,7 @@ const editPages = () => {
                         <Spin spinning={isloading} delay={500}>
                             <div className="grid w-full max-w-sm items-center gap-1.5 mt-4">
                                 <label htmlFor="picture" className="mb-2 font-bold text-md">File Document</label>
-                                <Input id="picture" type="file" onChange={(e) => uploadImage(e)} />
+                                <Input id="picture" type="file" accept=".pdf,.doc,.docx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onChange={(e) => uploadImage(e)} />
                             </div>
                         </Spin>
                     </CardContent>

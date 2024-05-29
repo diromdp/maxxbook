@@ -23,7 +23,6 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Table } from 'antd';
 import { urlAPI } from "../../../../lib/constant";
-import { useMapContext } from "../adminContex";
 import Image from "next/image";
 
 const { Search } = Input;
@@ -35,7 +34,6 @@ const Document = () => {
     const [dataPagination, setDataPagination] = useState([]);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const { setCategories } = useMapContext();
 
     const [filterData, setFilterData] = useState({
         q: "",
@@ -89,20 +87,11 @@ const Document = () => {
         },
         {
             title: 'Sub Category',
-            dataIndex: 'sub_categories',
+            dataIndex: 'sub_category',
             render: (val) => {
                 return (
                     <>
-                        <ul className="flex justify-start items-center flex-wrap gap-[8px]">
-                            {
-                                val && val.map((item) => {
-                                    return (
-                                        <li><Badge variant="secondary">{item.name}</Badge></li>
-                                    )
-                                })
-                            }
-                        </ul>
-
+                        <Badge variant="secondary">{val && val.name}</Badge>
                     </>
                 )
             }
@@ -271,7 +260,8 @@ const Document = () => {
     }
 
     const editData = (data) => {
-        router.push(`/admin/document/${data.id}?id=${data.id}&title=${data.title}&description=${data.description}&category_id=${data.category_id}&upload_id=${data.upload_id}&sub_category_id=${data.sub_category_id}`);
+        console.log(data.upload.id);
+        router.push(`/admin/document/${data.id}?id=${data.id}&title=${data.title}&description=${data.description}&category_id=${data.category_id ? data.category_id : ''}&upload_id=${data.upload ? data.upload.id : ''}&sub_category_id=${data.sub_category_id ? data.sub_category_id : ''}`);
     }
 
     const deleteData = async () => {
@@ -438,14 +428,14 @@ const Document = () => {
                                         if (data.label === "&laquo; Previous") {
                                             return (
                                                 <PaginationItem>
-                                                    <PaginationPrevious className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
+                                                    <PaginationPrevious disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
                                                 </PaginationItem>
 
                                             )
                                         } else if (data.label === "Next &raquo;") {
                                             return (
                                                 <PaginationItem>
-                                                    <PaginationNext className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
+                                                    <PaginationNext disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
                                                 </PaginationItem>
                                             )
                                         } else {

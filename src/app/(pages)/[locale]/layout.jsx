@@ -3,23 +3,24 @@ import Footer from '../../component/footer';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
+import dynamic from "next/dynamic";
 
+
+const ReduxProvider = dynamic(() => import("../../store/redux-provider"), {
+    ssr: false
+});
 export default async function PagesLayout({
     children,
     params: { locale }
-}: {
-    children: React.ReactNode;
-    params: { locale: string };
 }) {
     const messages = await getMessages();
     const t = await getTranslations('Homepage');
-
     return (
-        <html lang={locale}>
-            <body>
+        <>
+            <ReduxProvider>
                 <NextIntlClientProvider messages={messages}>
                     <div className='flex flex-col h-screen justify-between'>
-                        <Header />
+                        <Header locale={locale} />
                         <div className='flex-grow'>
                             {children}
                         </div>
@@ -28,7 +29,7 @@ export default async function PagesLayout({
                         />
                     </div>
                 </NextIntlClientProvider>
-            </body>
-        </html>
+            </ReduxProvider>
+        </>
     )
 }

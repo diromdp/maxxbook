@@ -5,7 +5,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 async function getData() {
 
     // Fetch data from external API
-    const data = await fetch(`${urlAPI}backend/customer/categories`, {
+    const data = await fetch(`${urlAPI}backend/categories`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ async function getData() {
 export default async function category() {
     const data = await getData()
     const localData = await getLocale();
-    const t = await getTranslations("Documents")
+    const t = await getTranslations("Documents");
     return <>
         <div className="categories-page">
             <div className="mx-auto w-full max-w-screen-xl">
@@ -30,34 +30,34 @@ export default async function category() {
                 <div className="list-of-category">
                     {
                         data && data.map((item, key) => {
-                            return (
-                                <div key={key} className="items">
-                                    <h3>
-                                        <Link href={"#"}>
-                                            { localData == "en" ? item.name : item.name_id}
-                                        </Link>
-                                    </h3>
-                                    <ul>
-                                        {
-                                            item.sub_categories && item.sub_categories.map((sub_category, key) => {
-                                                return (
-                                                    <li>
-                                                        <Link href={"#"}>
-                                                            { localData == "en" ? sub_category.name : sub_category.name_id}
-                                                        </Link>
-                                                    </li>
-                                                )
-                                            })
-                                        }
-                                    </ul>
-                                </div>
-                            )
+                            if(item.sub_categories.length > 0) {
+                                return (
+                                    <div key={key} className="items">
+                                        <h3>
+                                            <Link href={`/${localData}/catagories/${item.slug}`}>
+                                                { localData == "en" ? item.name : item.name_id}
+                                            </Link>
+                                        </h3>
+                                        <ul>
+                                            {
+                                                item.sub_categories && item.sub_categories.map((sub_category, key) => {
+                                                    return (
+                                                        <li>
+                                                            <Link href={`/${localData}/subcategory/${sub_category.slug}`}>
+                                                                { localData == "en" ? sub_category.name : sub_category.name_id}
+                                                            </Link>
+                                                        </li>
+                                                    )
+                                                })
+                                            }
+                                        </ul>
+                                    </div>
+                                )
+                            }
                         })
                     }
-
                 </div>
             </div>
-
         </div>
     </>
 }

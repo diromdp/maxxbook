@@ -48,8 +48,6 @@ const HeaderContent = () => {
         }
     }
 
-    console.log(profile);
-
     return (
         <>
             <DropdownMenu className="pr-[32px]">

@@ -1,5 +1,5 @@
 .categories-page {
-   @apply py-[120px];
+   @apply py-[120px] px-[40px] 2xl:px-0;
 
    .title-pages {
       @apply pt-[16px];
@@ -32,7 +32,7 @@
       }
    }
    .list-of-category {
-      @apply flex flex-row flex-wrap gap-y-[30px] mt-[50px];
+      @apply flex flex-row flex-wrap gap-y-[30px] gap-x-[20px] xl:gap-x-0 justify-center mt-[50px];
       .items {
          @apply w-full md:w-[33%];
          h3 {

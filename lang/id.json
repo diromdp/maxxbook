@@ -20,6 +20,11 @@
     "Documents": {
         "title": "Dokumen",
         "description": "Mulailah dengan unggahan komunitas",
-        "content empty": "File dokumen kosong"
+        "content empty": "File dokumen kosong",
+        "views": "Tampilan",
+        "pages": "Halaman",
+        "uploads": "Diunggah",
+        "download": "Unduh Dokumen",
+        "other documents": "Anda mungkin juga menyukai"
     }
 }

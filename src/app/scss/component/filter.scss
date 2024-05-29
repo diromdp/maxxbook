@@ -1,5 +1,5 @@
 .filter-container {
-    @apply flex justify-center md:justify-start px-[20px] 2xl:px-0 gap-[8px] items-center;
+    @apply flex justify-start px-[20px] 2xl:px-0 gap-[8px] items-center;
     .item-filter {
         @apply w-[160px];
         .ant-select-selector {

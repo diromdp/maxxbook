@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Select, Skeleton } from 'antd';
 import { useLocale } from 'next-intl';
+import { setCategoryFilterState } from "../../store/reducer/categoryFilterSlice";
+import { useAppDispatch, useAppSelector } from "../../store";
 
-const FilterComponent = ({ FilterDocument, DataFetchCategory, isLoading, setFilterDocuments, filterDocuments }) => {
 
-    const [selectedId, setSelectedId] = useState(null);
+const FilterComponent = ({ DataFetchCategory, isLoading, getDocument}) => {
+    const dispatch = useAppDispatch();
+    const categoryFilterState = useAppSelector((state) => state.documents.categoryFilterState);
+    const [selectedId, setSelectedId] = useState();
     let optionsCategory = [];
     const locale = useLocale();
-    DataFetchCategory.map((item) => {
+    DataFetchCategory && DataFetchCategory.map((item) => {
         const category = {
             value: item.id,
             label: locale == 'en' ? item.name : item.name_id
@@ -17,15 +21,25 @@ const FilterComponent = ({ FilterDocument, DataFetchCategory, isLoading, setFilt
 
     const filterOption = (input, option) =>
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
     const clearSelected = () => {
-        setSelectedId(null)
+        dispatch(setCategoryFilterState({...categoryFilterState, category_id: ''}));
+        setSelectedId(null);
+        getDocument('');
+
     }
     const onChange = (value) => {
-        setSelectedId(value)
-        console.log(value);
+        dispatch(setCategoryFilterState({...categoryFilterState, category_id: value}));
+        setSelectedId(value);
+        getDocument(value);
     }
+
+    useEffect(() => {
+        //setSelectedId(categoryFilterState.category_id ? categoryFilterState.category_id : null);
+    }, []);
+
     return (
-        <div className="filter-container">
+        <div className="filter-container mb-[32px]">
             {
                 !isLoading ?
                     <>

@@ -65,6 +65,9 @@ const addPages = () => {
             description: "Successfully uploaded  file to database"
         });
     }
+    const notificationErrorMessage = (val) => {
+        api.error({ message: "Upload Failed", description: val.message });
+    }
     const formSchema = z.object({
         title: z.string().min(2, {
             message: "Title must be at least 2 characters.",
@@ -153,6 +156,8 @@ const addPages = () => {
                     console.log(error.response.data.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
+                    notificationErrorMessage(error.response.data);
+                    setIsLoading(false);
                 } else if (error.request) {
                     console.log(error.request);
                 } else {
@@ -224,6 +229,7 @@ const addPages = () => {
                     console.log(error.response.data.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
+                    console.log(error)
                 } else if (error.request) {
                     console.log(error.request);
                 } else {
@@ -309,7 +315,7 @@ const addPages = () => {
                                         name="sub_category_id"
                                         render={({ field }) => (
                                             <FormItem className="mb-[8px]">
-                                                <FormLabel>Select Category</FormLabel>
+                                                <FormLabel>Select Sub Category</FormLabel>
                                                 <Select onValueChange={field.onChange} defaultValue={field.value} disabled={disabled}>
                                                     <FormControl>
                                                         <SelectTrigger>
@@ -345,7 +351,7 @@ const addPages = () => {
                         <Spin spinning={isloading} delay={500}>
                             <div className="grid w-full max-w-sm items-center gap-1.5 mt-4">
                                 <label htmlFor="picture" className="mb-2 font-bold text-md">File Document</label>
-                                <Input id="picture" type="file" accept=".pdf,.doc,.docx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel " onChange={(e) => uploadImage(e)} />
+                                <Input id="picture" type="file" accept=".pdf,.doc,.docx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onChange={(e) => uploadImage(e)} />
                             </div>
                         </Spin>
                     </CardContent>

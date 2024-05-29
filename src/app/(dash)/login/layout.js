@@ -1,8 +1,15 @@
+import dynamic from "next/dynamic";
+
+const ReduxProvider = dynamic(() => import("../../store/redux-provider"), {
+    ssr: false
+});
 
 export default function LoginLayout({ children }) {
     return (
-        <main className="layout-login">
-            {children}
-        </main>
+        <ReduxProvider>
+            <main className="layout-login">
+                {children}
+            </main>
+        </ReduxProvider>
     )
 } 

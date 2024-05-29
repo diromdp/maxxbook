@@ -1,16 +1,39 @@
 import Image from "next/image";
 import Link from "next/link";
-import DocumentDesc from "@/app/component/documentDesc";
 import PlaceAdsance from "@/app/component/placeAdsence";
+import DocumentDesc from "../../../../component/documentDesc";
+import { urlAPI } from "../../../../../lib/constant";
+import { getTranslations, getLocale } from "next-intl/server";
 
-const documentPage = () => {
+async function getData() {
+    const data = await fetch(`${urlAPI}backend/documents?perPage=${10}&sortBy=${'id'}&sortDirection=${'desc'}&is_random=${1}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': "application/json",
+        },
+    });
+
+    if (!data.ok) {
+        throw new Error('Failed to fetch data')
+    }
+
+    return data.json()
+}
+
+export default async function documentPage({ params }) {
+    const slug = params.slug || "";
+    const dataDocument = await getData();
+    const t = await getTranslations("Documents");
+    const locale = await getLocale();
+
     return (
         <div className="document-page">
-            <div className="mx-auto w-full max-w-screen-xl">
+            <div className="mx-auto w-full max-w-screen-xl mb-[32px]">
                 <div className="flex flex-row gap-[16px]">
                     <div className="w-[70%] flex flex-col items-center relative">
-                        <DocumentDesc file={'https://media.neliti.com/media/publications/122953-EN-inserting-local-culture-in-english-langu.pdf'} />
                         <PlaceAdsance className="mt-[16px] absolute bottom-0" type={'Leaderboard'} />
+                        <DocumentDesc slug={slug} />
                     </div>
                     <div className="w-[30%]">
                         <div className="another-document">
@@ -19,29 +42,30 @@ const documentPage = () => {
                             </div>
                             <div className="another-document-content">
                                 <div className="title-document-content">
-                                    <h2>Anda mungkin juga menyukai</h2>
+                                    <h2>{t('other documents')}</h2>
                                 </div>
-                                {[...Array(6)].map((x, i) => {
-                                    return (
-                                        <Link href={'/'} key={i} className="item-content">
-                                            <div className="img">
-                                                <Image width={132} height={174} src={'https://imgv2-1-f.scribdassets.com/img/document/632331178/149x198/91cac954d5/1679274200?v=1'} />
-                                            </div>
-                                            <div className="description">
-                                                <div className="type-totals">
-                                                    <span className="title">Document</span>
-                                                    <span className="separator">.</span>
-                                                    <span className="title">37 Halaman</span>
+                                {
+                                    dataDocument && dataDocument.data.map((item, index) => {
+                                        return (
+                                            <Link key={index} href={`/${locale}/document/${item.slug}`} className="item-content">
+                                                <div className="img">
+                                                    <Image fill priority src={item.thumb_url ? item.thumb_url : 'https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1'} />
                                                 </div>
-                                                <div className="title-document">
-                                                    <h4>Makro Kel 4 Prekonomian</h4>
-                                                    <span className="people-name">Arif Kurniawan</span>
+                                                <div className="description">
+                                                    <div className="type-totals">
+                                                        <span className="title">Document</span>
+                                                        <span className="separator">.</span>
+                                                        <span className="title">{item.page_count ? item.page_count : 0} {t('pages')}</span>
+                                                    </div>
+                                                    <div className="title-document">
+                                                        <h4>{item.title}</h4>
+                                                        <span className="people-name">Arif Kurniawan</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </Link>
-                                    )
-                                })}
-
+                                            </Link>
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
                     </div>
@@ -50,5 +74,3 @@ const documentPage = () => {
         </div>
     );
 }
-
-export default documentPage;

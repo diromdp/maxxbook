@@ -48,12 +48,18 @@
         }
     }
     .pdf-viewer {
-        @apply flex flex-col justify-center items-center mt-[42px];
+        @apply flex flex-col justify-center items-center mt-[42px] h-full;
         .number-input {
             @apply flex justify-center items-center max-w-[200px] gap-[8px] mb-[16px];
             input {
                 @apply w-[40px] p-0 pl-[4px];
             }
+        }
+        #file-name {
+            @apply hidden;
+        }
+        #pdf-download {
+            @apply hidden;
         }
     }
 }

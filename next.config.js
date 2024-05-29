@@ -25,11 +25,18 @@ const nextConfig = {
             }
         ],
     },
-    webpack: (config) => {
+    webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+        config.externals = [...config.externals, { canvas: "canvas" }];
+        config.module.rules.push({
+            test: /\.pdf$/i,
+            type: 'asset/source'
+        });
         config.resolve.alias = {
             ...config.resolve.alias,
             '@': path.resolve(__dirname, './src/'),
-        }; return config;
+        };
+
+        return config;
     },
 }
 
