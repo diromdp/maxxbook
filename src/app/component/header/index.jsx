@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useEffect, useTransition, useCallback, useState } from 'react';
+import { useEffect, useTransition, useCallback, useState, useRef } from 'react';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
@@ -26,10 +26,10 @@ import {
 } from "lucide-react"
 import { urlAPI } from "../../../lib/constant";
 import { getInitials } from "../../../lib/utils";
-import {setAuthInfoSlice} from "../../store/reducer/authSlice";
+import { setAuthInfoSlice } from "../../store/reducer/authSlice";
 
 import axios from "axios";
-import { useAppSelector,  useAppDispatch} from "../../store";
+import { useAppSelector, useAppDispatch } from "../../store";
 
 const Header = ({ locale }) => {
     const dispath = useAppDispatch();
@@ -38,6 +38,7 @@ const Header = ({ locale }) => {
     const [menuSticky, setMenuSticky] = useState(false)
     const [userCurrent, setUserCurrent] = useState();
     const [y, setY] = useState(0);
+    const hasFetchedData = useRef(false);
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
 
     const router = useRouter();
@@ -52,31 +53,34 @@ const Header = ({ locale }) => {
 
     const getCurrentUser = async () => {
         const token = getToken.access_token;
-        await axios.get(`${urlAPI}backend/customer/user`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        })
-            .then((data) => {
-                if (data.status === 200) {
-                    setUserCurrent(data.data);
-                    dispath(setAuthInfoSlice(data.data));
+        if (token) {
+            await axios.get(`${urlAPI}backend/customer/user`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': "application/json",
+                    "Authorization": `Bearer ${token}`
                 }
             })
-            .catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
-                }
-                console.log(error.config);
-            });
+                .then((data) => {
+                    if (data.status === 200) {
+                        setUserCurrent(data.data);
+                        dispath(setAuthInfoSlice(data.data));
+                    }
+                })
+                .catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        console.log(error.request);
+                    } else {
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                });
+        }
+
     }
 
     const handleNavigation = useCallback((e) => {
@@ -100,7 +104,6 @@ const Header = ({ locale }) => {
     );
 
     useEffect(() => {
-        getCurrentUser();
         if (typeof window !== "undefined") {
             setY(window.scrollY);
             window.addEventListener("scroll", handleNavigation);
@@ -109,6 +112,13 @@ const Header = ({ locale }) => {
             }
         };
     }, [handleNavigation]);
+
+    useEffect(() => {
+        if (!hasFetchedData.current) {
+            getCurrentUser();
+            hasFetchedData.current = true;
+        }
+    }, []);
 
     return (
         <div className={`z-50 w-full  transform ${initMenuSticky ? 'menu-inisticky' : menuSticky ? 'menu-sticky' : 'menu-unsticky'} top-0`}>
@@ -131,7 +141,8 @@ const Header = ({ locale }) => {
                             </select>
                         </label>
                         {
-                            getToken.access_token != '' || getToken.access_token != null || getToken.access_token != undefined ?
+                            getToken.access_token == '' || getToken.access_token == null?
+                                <Link href={"/login"} className="btn-primary text-[18px] h-[40px]">Login <div className="animation"></div></Link> :
                                 <>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
@@ -148,19 +159,10 @@ const Header = ({ locale }) => {
                                                     <User className="mr-2 h-4 w-4" />
                                                     <span>Profile</span>
                                                 </DropdownMenuItem>
-                                                {/* <DropdownMenuItem>
-                                                    <CreditCard className="mr-2 h-4 w-4" />
-                                                    <span>Billing</span>
-                                                </DropdownMenuItem> */}
                                                 <DropdownMenuItem>
                                                     <Bookmark className="mr-2 h-4 w-4" />
                                                     <span>Saved</span>
                                                 </DropdownMenuItem>
-                                                {/* <DropdownMenuItem>
-                                                    <Keyboard className="mr-2 h-4 w-4" />
-                                                    <span>Keyboard shortcuts</span>
-                                                    <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-                                                </DropdownMenuItem> */}
                                             </DropdownMenuGroup>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuGroup>
@@ -181,7 +183,7 @@ const Header = ({ locale }) => {
                                         </DropdownMenuContent>
                                     </DropdownMenu>
 
-                                </> : <Link href={"/login"} className="btn-primary text-[18px] h-[40px]">Login <div className="animation"></div></Link>
+                                </>
                         }
 
                     </div>

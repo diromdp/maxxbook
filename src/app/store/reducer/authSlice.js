@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     authUser: {
-        access_token: '',
-        expires_at: '',
+        access_token: null,
+        expires_at: null,
     },
     authInfoUser: {}
 };
