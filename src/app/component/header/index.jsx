@@ -2,7 +2,7 @@
 import { useEffect, useTransition, useCallback, useState, useRef } from 'react';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import {
     Avatar,
     AvatarFallback,
@@ -13,7 +13,6 @@ import {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -23,7 +22,16 @@ import {
     User,
     CloudUpload,
     Bookmark,
-} from "lucide-react"
+} from "lucide-react";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import { urlAPI } from "../../../lib/constant";
 import { getInitials } from "../../../lib/utils";
 import { setAuthInfoSlice } from "../../store/reducer/authSlice";
@@ -40,7 +48,7 @@ const Header = ({ locale }) => {
     const [y, setY] = useState(0);
     const hasFetchedData = useRef(false);
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
-
+    const t = useTranslations("userLogins");
     const router = useRouter();
     const localActive = useLocale();
 
@@ -54,6 +62,7 @@ const Header = ({ locale }) => {
     const getCurrentUser = async () => {
         const token = getToken.access_token;
         if (token) {
+            console.log(`Access token: ${token}`);
             await axios.get(`${urlAPI}backend/customer/user`, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -121,7 +130,7 @@ const Header = ({ locale }) => {
     }, []);
 
     return (
-        <div className={`z-50 w-full  transform ${initMenuSticky ? 'menu-inisticky' : menuSticky ? 'menu-sticky' : 'menu-unsticky'} top-0`}>
+        <div className={`z-50 w-full border border-b border-[#e3e6ef] transform ${initMenuSticky ? 'menu-inisticky' : menuSticky ? 'menu-sticky' : 'menu-unsticky'} top-0`}>
             <div className="mx-auto w-full max-w-screen-xl">
                 <div className="header">
                     <Link href={`/${locale}/`} className="header-logo">
@@ -129,7 +138,7 @@ const Header = ({ locale }) => {
                     </Link>
                     <div className="header-login">
                         <label className='label'>
-                            <p className='sr-only'>change language</p>
+                            <p className='sr-only'>Change Language</p>
                             <select
                                 defaultValue={localActive}
                                 className='bg-transparent py-2'
@@ -141,7 +150,7 @@ const Header = ({ locale }) => {
                             </select>
                         </label>
                         {
-                            getToken.access_token == '' || getToken.access_token == null?
+                            getToken.access_token == '' || getToken.access_token == null ?
                                 <Link href={"/login"} className="btn-primary text-[18px] h-[40px]">Login <div className="animation"></div></Link> :
                                 <>
                                     <DropdownMenu>
@@ -152,31 +161,29 @@ const Header = ({ locale }) => {
                                             </Avatar>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent className="w-56">
-                                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                            <DropdownMenuSeparator />
                                             <DropdownMenuGroup>
-                                                <DropdownMenuItem>
+                                                <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/profile`, undefined, { shallow: true })}>
                                                     <User className="mr-2 h-4 w-4" />
                                                     <span>Profile</span>
                                                 </DropdownMenuItem>
-                                                <DropdownMenuItem>
+                                                <DropdownMenuItem className={"cursor-pointer"}>
                                                     <Bookmark className="mr-2 h-4 w-4" />
                                                     <span>Saved</span>
                                                 </DropdownMenuItem>
                                             </DropdownMenuGroup>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuGroup>
-                                                <DropdownMenuItem>
+                                                <DropdownMenuItem className={"cursor-pointer"}>
                                                     <CloudUpload className="mr-2 h-4 w-4" />
                                                     <span>Upload</span>
                                                 </DropdownMenuItem>
-                                                <DropdownMenuItem>
+                                                <DropdownMenuItem className={"cursor-pointer"}>
                                                     <FileInput className="mr-2 h-4 w-4" />
                                                     <span>List Document Uploads</span>
                                                 </DropdownMenuItem>
                                             </DropdownMenuGroup>
                                             <DropdownMenuSeparator />
-                                            <DropdownMenuItem>
+                                            <DropdownMenuItem className={"cursor-pointer"}>
                                                 <LogOut className="mr-2 h-4 w-4" />
                                                 <span>Log out</span>
                                             </DropdownMenuItem>
@@ -185,7 +192,6 @@ const Header = ({ locale }) => {
 
                                 </>
                         }
-
                     </div>
                 </div>
             </div>

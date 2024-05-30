@@ -179,7 +179,6 @@ const editPage = () => {
                             <div className="flex items-center gap-[16px]">
                                 <Button className="mt-[16px]" type="submit">Update</Button>
                                 <Button className="mt-[16px]" type="button" onClick={() => router.push('/admin/user')} variant="secondary">Cancel</Button>
-
                             </div>
                         </form>
                     </Form>

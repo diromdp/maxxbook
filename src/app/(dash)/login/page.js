@@ -24,11 +24,7 @@ const LoginUser = () => {
         email: z.string().email("Please provide a valid email").min(2, {
             message: request__error,
         }),
-        password: z.string().min(8, 'Password must be at least 8 characters long')
-            .regex(/[a-z]/, 'Password must include at least one lowercase character')
-            .regex(/[A-Z]/, 'Password must include at least one uppercase character')
-            .regex(/[0-9]/, 'Password must include at least one number')
-            .regex(/[@$!%*?&]/, 'Password must include at least one special character (@, $, !, %, *, ?, &)')
+        password: z.string().nonempty("Password is required"),
     });
 
     const {
