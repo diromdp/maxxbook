@@ -42,6 +42,7 @@
     "react": "^18",
     "react-cookie": "^7.1.0",
     "react-dom": "^18",
+    "react-draft-wysiwyg": "^1.15.0",
     "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.51.0",
     "react-hook-form-antd": "^1.1.0",

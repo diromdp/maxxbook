@@ -23,15 +23,6 @@ import {
     CloudUpload,
     Bookmark,
 } from "lucide-react";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
 import { urlAPI } from "../../../lib/constant";
 import { getInitials } from "../../../lib/utils";
 import { setAuthInfoSlice } from "../../store/reducer/authSlice";
@@ -62,8 +53,7 @@ const Header = ({ locale }) => {
     const getCurrentUser = async () => {
         const token = getToken.access_token;
         if (token) {
-            console.log(`Access token: ${token}`);
-            await axios.get(`${urlAPI}backend/customer/user`, {
+                await axios.get(`${urlAPI}backend/customer/user`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",
@@ -173,7 +163,7 @@ const Header = ({ locale }) => {
                                             </DropdownMenuGroup>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuGroup>
-                                                <DropdownMenuItem className={"cursor-pointer"}>
+                                                <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/upload-document`, undefined, { shallow: true })}>
                                                     <CloudUpload className="mr-2 h-4 w-4" />
                                                     <span>Upload</span>
                                                 </DropdownMenuItem>
@@ -189,7 +179,6 @@ const Header = ({ locale }) => {
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
-
                                 </>
                         }
                     </div>

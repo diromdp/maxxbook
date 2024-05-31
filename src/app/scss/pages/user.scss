@@ -3,10 +3,10 @@
     .image-profile-card {
         @apply relative flex items-center h-[90px];
         .img-avatar {
-            @apply absolute -top-[80px]
+            @apply absolute -top-[50px];
         }
         .description-user {
-            @apply ml-[130px] mb-[30px];
+            @apply ml-[150px] mb-[10px];
             h2 {
                 @apply font-[700] text-[24px];
                 font-family: 'Roboto', sans-serif;
@@ -31,5 +31,11 @@
                 }
             }
         }
+    }
+}
+
+.upload-document {
+    &--form {
+        @apply pt-[120px];
     }
 }

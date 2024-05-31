@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from "axios";
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Image, Input, notification } from 'antd';
+import { Image, Input, notification, Spin } from 'antd';
 import { BadgeCheck } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -14,6 +14,7 @@ import {
 import {
     Avatar,
     AvatarImage,
+    AvatarFallback
 } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -29,9 +30,12 @@ import { Button } from "@/components/ui/button";
 import { useAppSelector, useAppDispatch } from "../../../../store";
 import { urlAPI } from "../../../../../lib/constant";
 import { setAuthInfoSlice } from '../../../../store/reducer/authSlice';
+import { getInitials } from "../../../../../lib/utils";
+
 
 const ProfileUser = () => {
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
+    const [isloading, setIsLoading] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [api, contextHolder] = notification.useNotification();
     const [cpasswordVisible, setCPasswordVisible] = useState(false);
@@ -66,11 +70,18 @@ const ProfileUser = () => {
             description: 'Success change your name',
         });
     };
+    const notificationUploadfile = () => {
+        api.success({
+            message: 'Upload File Successfully',
+            description: "Successfully uploaded  file to database"
+        });
+    }
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             password: "",
             confirmPassword: "",
+            current_password: "",
         },
     });
 
@@ -110,41 +121,76 @@ const ProfileUser = () => {
                 });
         }
     };
+
     const onSubmit = async (values) => {
         let formData = {
-            name: changeName
+            password: values.current_password,
+            new_password: values.password
         }
-        if (changeName) {
-            await axios.post(`${urlAPI}backend/customer/user/profile`, formData, {
-                headers: {
-                    "Content-Type": "application/json",
-                    'Accept': "application/json",
-                    "Authorization": `Bearer ${getToken}`
+        await axios.post(`${urlAPI}backend/customer/user/reset-password`, formData, {
+            headers: {
+                "Content-Type": "application/json",
+                'Accept': "application/json",
+                "Authorization": `Bearer ${getToken}`
+            }
+        })
+            .then((data) => {
+                if (data.status === 200) {
+                    dispatch(setAuthInfoSlice({ ...getInfoUser, name: changeName }))
+                    api.success({
+                        message: `Successfully change passwod`,
+                        description: 'Congratulations you have been successfully changed your passwod'
+                    })
+                } setEditInput(false);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    openNotification(error.response.data.message)
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+    }
+
+    const uploadImage = async (e) => {
+        let inputData = e.target.files[0];
+        let formData = new FormData();
+        formData.append("file", inputData);
+        setIsLoading(true);
+        await axios.post(`${urlAPI}backend/customer/user/avatar`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                'Accept': "application/json",
+                "Authorization": `Bearer ${getToken}`
+            }
+        })
+            .then((data) => {
+                if (data.status === 200 || data.status === 201) {
+                    const dataJSOn = data.data.avatar;
+                    dispatch(setAuthInfoSlice({...getInfoUser, avatar: dataJSOn}));
+                    setIsLoading(false);
+                    notificationUploadfile();
+                    
                 }
             })
-                .then((data) => {
-                    if (data.status === 200) {
-                        dispatch(setAuthInfoSlice({ ...getInfoUser, name: changeName }))
-                        api.success({
-                            message: `Successfully change passwod`,
-                            description: 'Congratulations you have been successfully changed your passwod'
-                        })
-                    } setEditInput(false);
-                })
-                .catch(function (error) {
-                    if (error.response) {
-                        openNotification(error.response.data.message)
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                    console.log(error.config);
-                });
-        }
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
     }
 
     return (
@@ -159,7 +205,8 @@ const ProfileUser = () => {
                         <div className="image-profile-card p-4">
                             <div className="image-user">
                                 <Avatar className="cursor-pointer img-avatar w-[120px] h-[120px] rounded-md">
-                                    <AvatarImage src={"https://github.com/shadcn.png"} />
+                                    <AvatarImage src={getInfoUser && getInfoUser.avatar ? getInfoUser.avatar.url : 'https://github.com/shadcn.png'} />
+                                    <AvatarFallback>{getInitials(getInfoUser && getInfoUser.name)}</AvatarFallback>
                                 </Avatar>
                             </div>
                             <div className="description-user">
@@ -173,7 +220,7 @@ const ProfileUser = () => {
                     <TabsList>
                         <TabsTrigger value="account">Account</TabsTrigger>
                         <TabsTrigger value="changeUser">Change Password</TabsTrigger>
-                        <TabsTrigger value="uploadProfile">Upload Profile</TabsTrigger>
+                        <TabsTrigger value="uploadProfile">Change Image Profile</TabsTrigger>
                     </TabsList>
                     <TabsContent value="account">
                         <Card className="mt-[30px]">
@@ -297,16 +344,19 @@ const ProfileUser = () => {
                                             placeholder={
                                                 <Image
                                                     preview={false}
-                                                    src="https://avatars.githubusercontent.com/u/124599?v=4"
+                                                    src={getInfoUser && getInfoUser.avatar && getInfoUser.avatar.url}
                                                     width={200}
                                                 />
                                             }
-                                            src="https://avatars.githubusercontent.com/u/124599?v=4"
+                                            src={getInfoUser && getInfoUser.avatar && getInfoUser.avatar.url}
                                             fallback="data:image/png;base64,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"
                                         />
                                         <div className="flex flex-col gap-[20px]">
                                             <Label htmlFor="picture">Picture</Label>
-                                            <Input id="picture" type="file" accept='.jpg,.jpeg,.png,.svg,.webp' />
+                                            <Spin spinning={isloading} delay={500}>
+                                                <Input id="picture" type="file" accept='.jpg,.jpeg,.png,.svg,.webp' onChange={(e) => uploadImage(e)} />
+
+                                            </Spin>
                                         </div>
                                     </div>
                                 </div>

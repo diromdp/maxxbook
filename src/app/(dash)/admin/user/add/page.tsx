@@ -102,6 +102,8 @@ const addPages = () => {
             });
     }
 
+    
+
     return (
         <div className="admin-home">
             {contextHolder}
