@@ -1,12 +1,8 @@
 
-import { Upload } from 'antd';
-
-const { Dragger } = Upload;
-
 const uploadFile = ({params}) => {
     const props = {
         name: 'file',
-        multiple: true,
+        multiple: false,
         action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
         headers: {
         },

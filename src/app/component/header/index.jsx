@@ -39,7 +39,7 @@ const Header = ({ locale }) => {
     const [y, setY] = useState(0);
     const hasFetchedData = useRef(false);
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
-    const t = useTranslations("userLogins");
+    // const t = useTranslations("userLogins");
     const router = useRouter();
     const localActive = useLocale();
 

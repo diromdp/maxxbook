@@ -11,7 +11,6 @@ import {
     MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { Layout, Button } from 'antd';
-import NextNProgress from 'nextjs-progressbar';
 
 const { Header, Sider, Content } = Layout;
 
@@ -33,7 +32,6 @@ export default function AdminLayout({ children }) {
     })
     return (
         <>
-            <NextNProgress />
             <AdminProvider>
                 {
                     isLoggingState ?

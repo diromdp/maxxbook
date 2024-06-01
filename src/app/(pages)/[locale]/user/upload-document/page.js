@@ -5,26 +5,26 @@ import {
 import { FilePlus, Upload, CircleCheckBig } from 'lucide-react';
 import { useState } from 'react';
 import FormUploadDOcument from '../../../../component/FormUploadDocument';
-import axios from "axios";
-import { urlAPI } from "../../../../../lib/constant";
+import FormUploadFile from '../../../../component/FormUploadFIle';
+import { useAppSelector } from '../../../../store';
 
 const UploadDocument = () => {
-    const [stepCurrent , setStepCurrent] = useState(0);
+    const tabFormDocument = useAppSelector((state) => state.documents.tabFormDocuments);
 
     return (
         <div className="upload-document--form">
             <div className="mx-auto w-full max-w-screen-xl">
                 <Steps
-                    current={stepCurrent}
+                    current={tabFormDocument}
                     size="small"
                     items={[
                         {
-                            title: 'Form Document',
-                            icon: <FilePlus />,
-                        },
-                        {
                             title: 'Upload File Document',
                             icon: <Upload />,
+                        },
+                        {
+                            title: 'Form Document',
+                            icon: <FilePlus />,
                         },
                         {
                             title: 'Upload Finished',
@@ -34,8 +34,8 @@ const UploadDocument = () => {
                 />
                 <div className="tabs-content">
                     {
-                        stepCurrent == 0? 
-                            <FormUploadDOcument/> : stepCurrent == 1 ? <></> : stepCurrent == 2 ? <></> : <></>
+                        tabFormDocument == 0? 
+                            <FormUploadFile/> : tabFormDocument == 1 ? <FormUploadDOcument/> : tabFormDocument == 2 ? <></> : <></>
                     }
                     
                 </div>

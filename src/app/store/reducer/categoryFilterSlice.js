@@ -27,6 +27,7 @@ const initialState = {
     empatyState: false,
     emptyStateDocumentCategory: false,
     tabFormDocuments: 0,
+    upload_id: "",
     documentUpload:{}
 };
 
@@ -62,10 +63,13 @@ export const documentSlice = createSlice({
             state.emptyStateDocumentCategory = action.payload;
         },
         setTabFormatDocument: (state, action) => {
-            state.tabFormatDocument = action.payload;
+            state.tabFormDocuments = action.payload;
         },
         setDocumentUpload: (state, action) => {
             state.documentUpload = action.payload;
+        },
+        setUploadId: (state, action) => {
+            state.upload_id = action.payload;
         }
     },
 });
@@ -81,6 +85,7 @@ export const {
     setDocumentCategorySingle,
     setEmptyStateDocumentCategory,
     setTabFormatDocument,
-    setDocumentUpload
+    setDocumentUpload,
+    setUploadId
 } = documentSlice.actions;
 export const documentReducer = documentSlice.reducer;
