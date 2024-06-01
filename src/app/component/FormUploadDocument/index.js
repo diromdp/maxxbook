@@ -15,7 +15,8 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-react';
 import { i18nChangeLanguage } from '@wangeditor/editor'
 import axios from "axios";
 import { urlAPI } from "../../../lib/constant";
-import { Separator } from "@/components/ui/separator"
+import { Separator } from "@/components/ui/separator";
+
 
 import {
     Card,
@@ -85,7 +86,7 @@ const FormUploadDOcument = () => {
             "category_id": values.category,
             "sub_category_id": values.subcategory,
             "upload_id": null,
-            "lang": "id"
+            "lang": 
 
         }
         await axios.post(`${urlAPI}backend/customer/user/reset-password`, formData, {
