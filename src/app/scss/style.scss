@@ -94,6 +94,15 @@
 @import './pages/admin.scss';
 @import './pages/user.scss';
 
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+}
+p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
+    font-family: "Roboto", sans-serif;
+}
+
 .home-container {
     @apply pt-[80px] lg:pt-[120px];
 

@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import { useAppDispatch } from "../../store";
 import { setAuthSlice } from "../../store/reducer/authSlice";
 import { Loader2 } from "lucide-react";
+import { notification } from "antd";
 
 import Link from "next/link";
 
@@ -18,6 +19,7 @@ const LoginUser = () => {
     const [isLoading, setIsloading] = useState(false);
     const [remember, setRemember] = useState(false);
     const router = useRouter();
+    const [api, contextHolder] = notification.useNotification();
 
     const request__error = "This Field cannot be blank.";
     const formSchema = z.object({
@@ -64,11 +66,12 @@ const LoginUser = () => {
                 })
                 .catch(function (error) {
                     const errors = error.response.data;
-                    setError('email', {
-                        message: errors.errors.email[0],
-                    });
-                    setError('password', {
-                        message: errors.message,
+                    setIsdisabled(false);
+                    setIsloading(false);
+            
+                    api.error({
+                        message:errors.message,
+                        description: errors.errors.email[0],
                     });
                 });
         } catch (error) {
@@ -79,6 +82,7 @@ const LoginUser = () => {
     return (
         <>
             <div className="flex min-h-screen">
+                {contextHolder}
                 <div className="flex flex-row w-full">
                     <div className="flex flex-1 flex-col items-center justify-center px-[16px] 1xl:px-10 relative">
                         <div className="flex 1xl:flex-1 flex-col max-w-full justify-center 2xl:max-w-md p-[20px] shadow-xl my-[80px] rounded-[8px]">

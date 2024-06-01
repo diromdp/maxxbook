@@ -1,54 +1,44 @@
 "use client"
 import {
-    Button,
-    Form,
-    Input,
-    Select,
+    Steps
 } from 'antd';
-import { useRef, useState, useEffect} from "react";
-
+import { FilePlus, Upload, CircleCheckBig } from 'lucide-react';
+import { useState } from 'react';
+import FormUploadDOcument from '../../../../component/FormUploadDocument';
+import axios from "axios";
+import { urlAPI } from "../../../../../lib/constant";
 
 const UploadDocument = () => {
+    const [stepCurrent , setStepCurrent] = useState(0);
+
     return (
         <div className="upload-document--form">
-            <div className="container">
-                <Form
-                    labelCol={{
-                        span: 4,
-                    }}
-                    wrapperCol={{
-                        span: 14,
-                    }}
-                    layout="horizontal"
-                    initialValues={{
-                        size: 'large',
-                    }}
-                    size={'large'}
-                    style={{
-                        maxWidth: 600,
-                    }}
-                >
-                    <div className="form-item">
-                        <label>
-                            Title Of Document
-                        </label>
-                        <Input />
-                    </div>
-                    <div className="form-item">
-                        <label>
-                            Description
-                        </label>
-                      
-                    </div>
-                    <Form.Item label="Select">
-                        <Select>
-                            <Select.Option value="demo">Demo</Select.Option>
-                        </Select>
-                    </Form.Item>
-                    <Form.Item label="Button">
-                        <Button>Upload Document</Button>
-                    </Form.Item>
-                </Form>
+            <div className="mx-auto w-full max-w-screen-xl">
+                <Steps
+                    current={stepCurrent}
+                    size="small"
+                    items={[
+                        {
+                            title: 'Form Document',
+                            icon: <FilePlus />,
+                        },
+                        {
+                            title: 'Upload File Document',
+                            icon: <Upload />,
+                        },
+                        {
+                            title: 'Upload Finished',
+                            icon: <CircleCheckBig />
+                        }
+                    ]}
+                />
+                <div className="tabs-content">
+                    {
+                        stepCurrent == 0? 
+                            <FormUploadDOcument/> : stepCurrent == 1 ? <></> : stepCurrent == 2 ? <></> : <></>
+                    }
+                    
+                </div>
             </div>
         </div>
     );

@@ -1,6 +1,8 @@
 import { Roboto, Montserrat } from 'next/font/google';
 
 import '@/app/scss/style.scss';
+import '@wangeditor/editor/dist/css/style.css' // import css
+
 
 const roboto = Roboto({
   weight: ['400', '700'],

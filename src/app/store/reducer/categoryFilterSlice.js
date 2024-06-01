@@ -26,6 +26,8 @@ const initialState = {
     documentConfig: {},
     empatyState: false,
     emptyStateDocumentCategory: false,
+    tabFormDocuments: 0,
+    documentUpload:{}
 };
 
 export const documentSlice = createSlice({
@@ -58,6 +60,12 @@ export const documentSlice = createSlice({
         },
         setEmptyStateDocumentCategory: (state, action) => {
             state.emptyStateDocumentCategory = action.payload;
+        },
+        setTabFormatDocument: (state, action) => {
+            state.tabFormatDocument = action.payload;
+        },
+        setDocumentUpload: (state, action) => {
+            state.documentUpload = action.payload;
         }
     },
 });
@@ -71,6 +79,8 @@ export const {
     setCategoryFilterSingleState,
     setDocumentCategoryPagination,
     setDocumentCategorySingle,
-    setEmptyStateDocumentCategory
+    setEmptyStateDocumentCategory,
+    setTabFormatDocument,
+    setDocumentUpload
 } = documentSlice.actions;
 export const documentReducer = documentSlice.reducer;

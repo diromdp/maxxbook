@@ -36,6 +36,67 @@
 
 .upload-document {
     &--form {
-        @apply pt-[120px];
+        @apply pt-[140px] mb-[32px];
+        .ant-steps-item-container {
+            @apply flex items-center;
+            .ant-steps-icon {
+                @apply border rounded-[50%] w-[32px] h-[32px] border-[#00000073] block p-[5px] text-[18px];
+                svg {
+                    @apply text-[#00000073] w-[20px] h-[20px];
+                }
+            }
+            .ant-steps-item-title {
+                @apply text-[18px] font-[400];
+            }
+        }
+
+        .ant-steps-item-active {
+            .ant-steps-item-title {
+                @apply text-[18px] font-[700];
+            }
+            .ant-steps-icon {
+                @apply border rounded-[50%] w-[32px] h-[32px] border-slate-700 block p-[5px] text-[18px];
+                svg {
+                    @apply text-slate-950 w-[20px] h-[20px];
+                }
+            }
+        }
+        .tabs-content {
+            @apply mt-[32px];
+        
+            .ant-input, .ant-select-single   {
+                @apply border rounded-[8px] border-slate-700 h-[40px];
+                &:hover {
+                    @apply shadow-none;
+                    .ant-select-selector {
+                        @apply border-slate-700 #{!important};
+                    }
+                }
+            }
+            .ant-select-focused {
+                @apply shadow-none;
+                .ant-select-selector {
+                    @apply border-slate-700 #{!important};
+                }
+            }
+            .description-wrapper {
+                @apply border rounded-[8px] border-slate-700 min-h-[300px];
+                .rdw-editor-toolbar {
+                    @apply rounded-tl-[8px] rounded-tr-[8px];
+                }
+            }
+            .description-editor {
+                @apply px-[8px];
+            }
+        }
+    }
+}
+
+.form-group {
+    .form-select {
+        @apply xl:w-[400px];
+    }
+    .form-item {
+        @apply flex flex-col gap-y-[8px];
     }
 }

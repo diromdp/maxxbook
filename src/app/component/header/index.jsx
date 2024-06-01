@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 import { urlAPI } from "../../../lib/constant";
 import { getInitials } from "../../../lib/utils";
-import { setAuthInfoSlice } from "../../store/reducer/authSlice";
+import { setAuthInfoSlice, setAuthSlice } from "../../store/reducer/authSlice";
 
 import axios from "axios";
 import { useAppSelector, useAppDispatch } from "../../store";
@@ -71,6 +71,9 @@ const Header = ({ locale }) => {
                         console.log(error.response.data.data);
                         console.log(error.response.status);
                         console.log(error.response.headers);
+                        if(error.response.status == 401){
+                            dispath(setAuthSlice({...getToken, access_token: null}))
+                        }
                     } else if (error.request) {
                         console.log(error.request);
                     } else {
@@ -118,7 +121,6 @@ const Header = ({ locale }) => {
             hasFetchedData.current = true;
         }
     }, []);
-
     return (
         <div className={`z-50 w-full border border-b border-[#e3e6ef] transform ${initMenuSticky ? 'menu-inisticky' : menuSticky ? 'menu-sticky' : 'menu-unsticky'} top-0`}>
             <div className="mx-auto w-full max-w-screen-xl">
