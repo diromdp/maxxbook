@@ -37,9 +37,9 @@ const { TextArea } = Input;
 
 const FormUploadDOcument = () => {
     const dispatch = useAppDispatch();
-    const [api, contextHolder] = notification.useNotification();
+    const [api] = notification.useNotification();
     const [editor, setEditor] = useState(null);
-    const [html, setHtml] = useState('')
+    const [html, setHtml] = useState('');
     const [categories, setCategories] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
     const [idCategory, setIdCategory] = useState();
@@ -47,7 +47,6 @@ const FormUploadDOcument = () => {
     const hasFetchedData = useRef(false);
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
     const getUplaodID = useAppSelector((state) => state.documents.upload_id);
-    const dataDocument = useAppSelector((state) => state.documents.documentCategorySingle);
 
     const token = getToken.access_token;
     const toolbarConfig = {};
@@ -97,7 +96,7 @@ const FormUploadDOcument = () => {
             "lang": locale
 
         }
-        await axios.post(`${urlAPI}backend/customer/documents`, formData, {
+        await axios.put(`${urlAPI}backend/customer/documents`, formData, {
             headers: {
                 "Content-Type": "application/json",
                 'Accept': "application/json",
@@ -224,9 +223,6 @@ const FormUploadDOcument = () => {
     }, [editor])
     return (
         <>
-            {
-                contextHolder
-            }
             <Card>
                 <CardContent>
                     <Form {...form} >

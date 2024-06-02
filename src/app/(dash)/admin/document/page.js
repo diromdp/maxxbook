@@ -56,10 +56,6 @@ const Document = () => {
             dataIndex: 'title',
         },
         {
-            title: 'Description',
-            dataIndex: 'description',
-        },
-        {
             title: 'Image Thumbnail',
             dataIndex: 'thumb_url',
             render: (val) => {

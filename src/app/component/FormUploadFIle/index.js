@@ -15,7 +15,7 @@ const FormUploadFile = () => {
 
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
     const token = getToken.access_token;
-    const [api, contextHolder] = notification.useNotification();
+    const [api] = notification.useNotification();
     const dispatch = useAppDispatch();
 
     const props = {
@@ -30,12 +30,12 @@ const FormUploadFile = () => {
         onChange(info) {
             const { status } = info.file;
             if (status === 'done') {
-                dispatch(setTabFormatDocument(1));
                 dispatch(setUploadId(info.file.response.upload_id));
                 api.success({
                     message: `Successfully uploaded`,
                     description: `${info.file.name} has been uploaded to our server.`
                 });
+                dispatch(setTabFormatDocument(1));
             } else if (status === 'error') {
                 api.error({
                     message: `Failed uploaded`,
@@ -49,7 +49,6 @@ const FormUploadFile = () => {
     };
     return (
         <>
-            {contextHolder}
             <Card>
                 <CardContent>
                     <Dragger {...props}>

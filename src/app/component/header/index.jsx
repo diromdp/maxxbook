@@ -169,7 +169,7 @@ const Header = ({ locale }) => {
                                                     <CloudUpload className="mr-2 h-4 w-4" />
                                                     <span>Upload</span>
                                                 </DropdownMenuItem>
-                                                <DropdownMenuItem className={"cursor-pointer"}>
+                                                <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/document-own`, undefined, { shallow: true })}>
                                                     <FileInput className="mr-2 h-4 w-4" />
                                                     <span>List Document Uploads</span>
                                                 </DropdownMenuItem>
