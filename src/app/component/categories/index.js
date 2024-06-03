@@ -34,7 +34,7 @@ export default async function Categories() {
                             return (
                                 <Link key={index} href={`/${localData}/catagories/${item.slug}`} className="item">
                                     <span>{localData == 'en' ? item.name : item.name_id}</span>
-                                    <Image className="image" width={96} height={96} src={item.icon_url} />
+                                    <Image alt={item.name} className="image" width={96} height={96} src={item.icon_url} />
                                 </Link>
                             )
                         })

@@ -49,7 +49,7 @@ export default async function documentPage({ params }) {
                                         return (
                                             <Link key={index} href={`/${locale}/document/${item.slug}`} className="item-content">
                                                 <div className="img">
-                                                    <Image fill priority src={item.thumb_url ? item.thumb_url : 'https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1'} />
+                                                    <Image alt={item.slug} fill priority src={item.thumb_url ? item.thumb_url : 'https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1'} />
                                                 </div>
                                                 <div className="description">
                                                     <div className="type-totals">

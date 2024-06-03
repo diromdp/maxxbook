@@ -10,14 +10,14 @@ const ExplorerPages = ({ }) => {
         <div className="explorer-pages">
             <div className="banner-explorer">
                 <div className="banner-1">
-                    <Image src={imgBanner1} width={300} height={225} />
+                    <Image alt="banner-1" src={imgBanner1} width={300} height={225} />
                 </div>
                 <div className="mx-auto w-full max-w-screen-xl relative top-[160px]">
                     <h1>Read anytime. Anywhere.</h1>
                     <p>All you can read is free! Get millions of documents you need here</p>
                 </div>
                 <div className="banner-2">
-                    <Image src={imgBanner2} width={300} height={225} />
+                    <Image alt="banner-2" src={imgBanner2} width={300} height={225} />
                 </div>
             </div>
             <div className="mx-auto w-full max-w-screen-xl">

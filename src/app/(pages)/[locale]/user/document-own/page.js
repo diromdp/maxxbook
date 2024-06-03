@@ -20,12 +20,13 @@ import dayjs from "dayjs";
 import localeData from 'dayjs/plugin/localeData';
 import 'dayjs/locale/id';
 import axios from "axios";
+import Link from "next/link";
+import { useLocale } from "next-intl";
+import { Empty } from 'antd';
+
 
 dayjs.extend(localeData);
 dayjs.locale('id');
-
-
-
 const DocumentOwn = () => {
     const [listDocument, setLisDocument] = useState([]);
     const [dataPagination, setDataPagination] = useState([]);
@@ -40,6 +41,7 @@ const DocumentOwn = () => {
         sortDirection: "asc",
     });
     const token = getToken.access_token;
+    const locale = useLocale();
 
     const getData = async () => {
         await axios.get(`${urlAPI}backend/customer/documents/own?cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}`, {
@@ -83,12 +85,12 @@ const DocumentOwn = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",
-                    "Authorization": `Bearer ${cookies.token}`
+                    "Authorization": `Bearer ${token}`
                 }
             })
                 .then((data) => {
                     if (data.status === 200) {
-                        setIsLoading(false)
+                        setLoading(false)
                         setDataFetch(data.data.data)
                         setDataPagination(data.data.links)
                     }
@@ -106,7 +108,33 @@ const DocumentOwn = () => {
                     console.log(error.config);
                 });
         }
+    }
 
+    const onDelete = async(id) => {
+        await axios.delete(`${urlAPI}backend/customer/documents/${id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                'Accept': "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        })
+            .then((data) => {
+                if (data.status === 200) {
+                    
+                }
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
     }
 
     useEffect(() => {
@@ -142,23 +170,23 @@ const DocumentOwn = () => {
                                 :
                                 <>
                                     {
-                                        listDocument && listDocument.map((item, index) => {
+                                        listDocument.length > 0 ? listDocument.map((item, index) => {
                                             return (
                                                 <div className="item-document">
                                                     <div className="left-side">
-                                                        <Image width={132} height={174} src={"https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1"} />
-                                                        <div className="description">
+                                                        <Image alt={item.title} width={132} height={174} src={"https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1"} />
+                                                        <Link href={`/${locale}/document/${item.slug}`} className="description">
                                                             <h3>{item.title}</h3>
                                                             <div className="paragraph" dangerouslySetInnerHTML={{ __html: `${item.description_seo}` }}>
                                                             </div>
-                                                        </div>
+                                                        </Link>
                                                     </div>
                                                     <div className="right-side">
                                                         <div className="content-editor">
                                                             <div className="cursor-pointer">
                                                                 <Pencil className="cursor-pointer text-slate-600" />
                                                             </div>
-                                                            <div className="cursor-pointer">
+                                                            <div onClick={() => onDelete(item.id)} className="cursor-pointer">
                                                                 <Trash2 className="cursor-pointer text-red-600" />
                                                             </div>
                                                         </div>
@@ -180,23 +208,21 @@ const DocumentOwn = () => {
                                                                     </span>
                                                                 </li>
                                                             </ul>
-
                                                         </div>
                                                     </div>
                                                 </div>
                                             )
-                                        })
+                                        }) : 
+                                        <Empty className="mt-[120px]"/>
                                     }
-
                                 </>
                         }
-
                     </div>
                     <div className="my-[32px] flex justify-between">
                         <Pagination>
                             <PaginationContent>
                                 {
-                                    dataPagination && dataPagination.map((data) => {
+                                    listDocument.length > 0 && dataPagination.map((data) => {
                                         if (data.label === "&laquo; Previous") {
                                             return (
                                                 <PaginationItem>
@@ -221,7 +247,6 @@ const DocumentOwn = () => {
                                         }
                                     })
                                 }
-
                             </PaginationContent>
                         </Pagination>
                     </div>

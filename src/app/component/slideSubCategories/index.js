@@ -32,7 +32,7 @@ const SlideSubCategories = ({ isLoading, subCategory, locale }) => {
                                             <Card className="p-1 w-[280px] h-[90px]">
                                                 <CardContent className="flex card-content aspect-square items-center relative p-6 w-[280px] h-[90px] z-10">
                                                     <h3 className="title"> {newStr == 'en' ? item.name : item.name_id}</h3>
-                                                    <Image height={76} width={76} src={'https://s-f.scribdassets.com/webpack/assets/images/explore/doc_thumbnails/doc_loaf_thumb_7.1ee2b181.jpg'} />
+                                                    <Image alt={item.name} height={76} width={76} src={'https://s-f.scribdassets.com/webpack/assets/images/explore/doc_thumbnails/doc_loaf_thumb_7.1ee2b181.jpg'} />
                                                 </CardContent>
                                             </Card>
                                         </Link>

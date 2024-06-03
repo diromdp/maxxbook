@@ -40,11 +40,28 @@
         }
     }
     .content-description {
+        font-family: "Roboto", sans-serif;
         p {
-            @apply text-[#000514] text-[14px];
+            @apply text-[#000514] text-[16px];
+            font-family: "Roboto", sans-serif;
         }
         .info {
-            @apply block text-[#000514] text-[14px];
+            @apply block text-[#000514] text-[16px] ;
+            font-family: "Roboto", sans-serif;
+        }
+        ul {
+            @apply pl-[16px] list-disc;
+            li {
+                @apply font-[500] text-[14px];
+                font-family: "Roboto", sans-serif;
+            }
+        }
+        ol {
+            @apply pl-[16px] list-decimal;
+            li {
+                @apply font-[500] text-[14px];
+                font-family: "Roboto", sans-serif;
+            }
         }
     }
     .pdf-viewer {

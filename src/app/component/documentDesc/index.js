@@ -75,8 +75,6 @@ const DocumentDesc = ({ slug }) => {
         }
     }, 100);
 
-    console.log(documentData)
-
     return (
         <div className="document-Desc h-[100vh] w-full">
             <div className="views-total-pages">
@@ -130,7 +128,8 @@ const DocumentDesc = ({ slug }) => {
                             <Skeleton className="h-8 mb-[10px] w-[80%]" />
                         </> :
                         <>
-                            {documentData && documentData.description}
+                            <div dangerouslySetInnerHTML={{__html: documentData && documentData.description}}>
+                            </div>
                         </>
                 }
 

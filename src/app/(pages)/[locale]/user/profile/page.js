@@ -339,6 +339,7 @@ const ProfileUser = () => {
                                     <h4>Upload Avatar</h4>
                                     <div className="info-user flex gap-[30px]">
                                         <Image
+                                            alt="Avatar"
                                             width={200}
                                             height={200}
                                             placeholder={
