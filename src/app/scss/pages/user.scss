@@ -138,7 +138,7 @@
                     @apply flex gap-[16px] justify-end;
                 }
                 .desciption {
-                    @apply max-w-[200px] flex justify-start;
+                    @apply flex justify-start;
                     ul {
                         @apply p-0 text-right;
                         li {
@@ -153,6 +153,12 @@
         }
     }
 
+}
+
+.share-it {
+    h3 {
+        font-family: "Roboto", sans-serif;
+    }
 }
 
 .content-description {

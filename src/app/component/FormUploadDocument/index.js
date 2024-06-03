@@ -19,7 +19,7 @@ import { urlAPI } from "../../../lib/constant";
 import { Separator } from "@/components/ui/separator";
 import { useLocale } from "next-intl";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { setTabFormatDocument } from "../../store/reducer/categoryFilterSlice";
+import { setTabFormatDocument, setDocumentUpload } from "../../store/reducer/categoryFilterSlice";
 
 import {
     Card,
@@ -110,6 +110,7 @@ const FormUploadDOcument = () => {
                         description: "Congratulations you have successfully created a new Document"
                     })
                     dispatch(setTabFormatDocument(2));
+                    dispatch(setDocumentUpload(data.data.data));
                 }
             })
             .catch(function (error) {

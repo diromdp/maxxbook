@@ -3,15 +3,13 @@ import {
     Steps
 } from 'antd';
 import { FilePlus, Upload, CircleCheckBig } from 'lucide-react';
-import { useState } from 'react';
 import FormUploadDOcument from '../../../../component/FormUploadDocument';
 import FormUploadFile from '../../../../component/FormUploadFIle';
+import FormUrlShare from '../../../../component/FormUrlShare';
 import { useAppSelector } from '../../../../store';
-import { notification } from 'antd';
 
 const UploadDocument = () => {
     const tabFormDocument = useAppSelector((state) => state.documents.tabFormDocuments);
-
     return (
         <>
             <div className="upload-document--form">
@@ -37,7 +35,7 @@ const UploadDocument = () => {
                     <div className="tabs-content">
                         {
                             tabFormDocument == 0 ?
-                                <FormUploadFile /> : tabFormDocument == 1 ? <FormUploadDOcument /> : tabFormDocument == 2 ? <></> : <></>
+                                <FormUploadFile /> : tabFormDocument == 1 ? <FormUploadDOcument /> : tabFormDocument == 2 ? <FormUrlShare/> : <></>
                         }
 
                     </div>

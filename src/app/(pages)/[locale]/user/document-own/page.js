@@ -110,7 +110,7 @@ const DocumentOwn = () => {
         }
     }
 
-    const onDelete = async(id) => {
+    const onDelete = async (id) => {
         await axios.delete(`${urlAPI}backend/customer/documents/${id}`, {
             headers: {
                 "Content-Type": "application/json",
@@ -120,7 +120,7 @@ const DocumentOwn = () => {
         })
             .then((data) => {
                 if (data.status === 200) {
-                    
+
                 }
             })
             .catch(function (error) {
@@ -174,7 +174,7 @@ const DocumentOwn = () => {
                                             return (
                                                 <div className="item-document">
                                                     <div className="left-side">
-                                                        <Image alt={item.title} width={132} height={174} src={"https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1"} />
+                                                        <Image alt={item.title} width={132} height={174} src={item.thumb_url ? item.thumb_url : "https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1"} />
                                                         <Link href={`/${locale}/document/${item.slug}`} className="description">
                                                             <h3>{item.title}</h3>
                                                             <div className="paragraph" dangerouslySetInnerHTML={{ __html: `${item.description_seo}` }}>
@@ -199,7 +199,10 @@ const DocumentOwn = () => {
                                                                 </li>
                                                                 <li>
                                                                     <span>
-                                                                        Status: {item.approval.approval_status && item.approval.approval_status}
+                                                                        Status: 
+                                                                        <>
+                                                                        {item.approval.approval_status == "PENDING" ? <b className="text-red-800">{item.approval.approval_status}</b>: <b className="text-green-800">{item.approval.approval_status}</b>}
+                                                                        </>
                                                                     </span>
                                                                 </li>
                                                                 <li>
@@ -212,8 +215,8 @@ const DocumentOwn = () => {
                                                     </div>
                                                 </div>
                                             )
-                                        }) : 
-                                        <Empty className="mt-[120px]"/>
+                                        }) :
+                                            <Empty className="mt-[120px]" />
                                     }
                                 </>
                         }

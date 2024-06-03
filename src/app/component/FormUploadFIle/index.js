@@ -15,11 +15,12 @@ const FormUploadFile = () => {
 
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
     const token = getToken.access_token;
-    const [api] = notification.useNotification();
+    const [api, contextHolder] = notification.useNotification();
     const dispatch = useAppDispatch();
 
     const props = {
         name: 'file',
+        accept: '.pdf,doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         multiple: false,
         maxCount: 1,
         action: `${urlAPI}backend/customer/documents`,
@@ -49,6 +50,8 @@ const FormUploadFile = () => {
     };
     return (
         <>
+            {contextHolder}
+
             <Card>
                 <CardContent>
                     <Dragger {...props}>
