@@ -77,23 +77,6 @@
   }
 }
 
-@import './component/header.scss';
-@import './component/button.scss';
-@import './component/search.scss';
-@import './component/filter.scss';
-@import './component/pagination.scss';
-@import './component/document-desc.scss';
-@import './component/slide.scss';
-@import './component/sidebar.scss';
-@import './component/sideMenu.scss';
-
-@import './pages/document.scss';
-@import './pages/exproler.scss';
-@import './pages/categories-pages.scss';
-@import './pages/static.scss';
-@import './pages/admin.scss';
-@import './pages/user.scss';
-
 body {
     padding: 0;
     margin: 0;
@@ -101,6 +84,10 @@ body {
 }
 p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
     font-family: "Roboto", sans-serif;
+}
+
+.screen-layer {
+    @apply mx-auto w-full max-w-screen-xl;
 }
 
 .home-container {
@@ -270,3 +257,20 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
 .menu-inisticky {
     @apply fixed translate-y-0 bg-[#F4F8FE];
 }
+
+@import './component/header.scss';
+@import './component/button.scss';
+@import './component/search.scss';
+@import './component/filter.scss';
+@import './component/pagination.scss';
+@import './component/document-desc.scss';
+@import './component/slide.scss';
+@import './component/sidebar.scss';
+@import './component/sideMenu.scss';
+
+@import './pages/document.scss';
+@import './pages/exproler.scss';
+@import './pages/categories-pages.scss';
+@import './pages/static.scss';
+@import './pages/admin.scss';
+@import './pages/user.scss';

@@ -48,10 +48,10 @@ const FormUploadFile = () => {
             console.log('Dropped files', e.dataTransfer.files);
         },
     };
+    
     return (
         <>
             {contextHolder}
-
             <Card>
                 <CardContent>
                     <Dragger {...props}>

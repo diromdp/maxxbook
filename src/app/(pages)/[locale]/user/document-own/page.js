@@ -14,8 +14,6 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
-import { urlAPI } from "../../../../../lib/constant";
-import { useAppSelector } from "../../../../store";
 import dayjs from "dayjs";
 import localeData from 'dayjs/plugin/localeData';
 import 'dayjs/locale/id';
@@ -23,6 +21,9 @@ import axios from "axios";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 import { Empty } from 'antd';
+import { useRouter } from "next/navigation";
+import { urlAPI } from "../../../../../lib/constant";
+import { useAppSelector } from "../../../../store";
 
 
 dayjs.extend(localeData);
@@ -42,7 +43,7 @@ const DocumentOwn = () => {
     });
     const token = getToken.access_token;
     const locale = useLocale();
-
+    const router = useRouter();
     const getData = async () => {
         await axios.get(`${urlAPI}backend/customer/documents/own?cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}`, {
             headers: {
@@ -80,7 +81,6 @@ const DocumentOwn = () => {
             var url = new URL(url_string);
             var page = url.searchParams.get("page");
             setFilterData({ ...filterData, page: page });
-
             await axios.get(`${urlAPI}backend/customer/documents/own?cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}`, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -120,7 +120,8 @@ const DocumentOwn = () => {
         })
             .then((data) => {
                 if (data.status === 200) {
-
+                    const updateListDocument = listDocument.filter(item => item.id !== id);
+                    setLisDocument(updateListDocument);
                 }
             })
             .catch(function (error) {
@@ -143,10 +144,11 @@ const DocumentOwn = () => {
             hasFetchedData.current = true;
         }
     }, []);
+
     return (
         <>
             <div className="document-owner">
-                <div className="mx-auto w-full max-w-screen-xl">
+                <div className="screen-layer">
                     <div className="content-owner">
                         {
                             isLoading ?
@@ -183,7 +185,7 @@ const DocumentOwn = () => {
                                                     </div>
                                                     <div className="right-side">
                                                         <div className="content-editor">
-                                                            <div className="cursor-pointer">
+                                                            <div className="cursor-pointer" onClick={() => router.push(`/${locale}/user/upload-document/${item.id}`, undefined, { shallow: true })}>
                                                                 <Pencil className="cursor-pointer text-slate-600" />
                                                             </div>
                                                             <div onClick={() => onDelete(item.id)} className="cursor-pointer">

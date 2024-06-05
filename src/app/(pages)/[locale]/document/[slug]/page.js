@@ -29,7 +29,7 @@ export default async function documentPage({ params }) {
 
     return (
         <div className="document-page">
-            <div className="mx-auto w-full max-w-screen-xl mb-[32px]">
+            <div className="screen-layer mb-[32px]">
                 <div className="flex flex-row gap-[16px]">
                     <div className="w-[70%] flex flex-col items-center relative">
                         <PlaceAdsance className="mt-[16px] absolute bottom-0" type={'Leaderboard'} />

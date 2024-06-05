@@ -196,7 +196,7 @@ const ProfileUser = () => {
     return (
         <div className="profile">
             {contextHolder}
-            <div className="mx-auto w-full max-w-screen-xl">
+            <div className="screen-layer">
                 <Card>
                     <CardContent className={"p-0"}>
                         <div className="banner-profile-card">

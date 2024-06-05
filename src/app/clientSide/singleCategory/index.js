@@ -46,7 +46,7 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
 
     return (
         <div className="categories-page">
-            <div className="mx-auto w-full max-w-screen-xl">
+            <div className="screen-layer">
                 <BreadCumb menu={menu} />
                 <div className="title-pages">
                     <h1>{detailCategory && locale.value == "en" ? detailCategory[0].name : detailCategory[0].name_id} Documents</h1>

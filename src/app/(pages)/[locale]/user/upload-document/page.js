@@ -6,14 +6,24 @@ import { FilePlus, Upload, CircleCheckBig } from 'lucide-react';
 import FormUploadDOcument from '../../../../component/FormUploadDocument';
 import FormUploadFile from '../../../../component/FormUploadFIle';
 import FormUrlShare from '../../../../component/FormUrlShare';
-import { useAppSelector } from '../../../../store';
+import { useAppSelector, useAppDispatch } from '../../../../store';
+import { setTabFormatDocument } from '../../../../store/reducer/categoryFilterSlice';
+import { useEffect, useRef } from 'react';
 
 const UploadDocument = () => {
+    const dispatch = useAppDispatch();
     const tabFormDocument = useAppSelector((state) => state.documents.tabFormDocuments);
+    const hasFetchedData = useRef(false);
+    useEffect(() => {
+        if (!hasFetchedData.current) {
+            dispatch(setTabFormatDocument(0));
+            hasFetchedData.current = true;
+        }
+    }, [])
     return (
         <>
             <div className="upload-document--form">
-                <div className="mx-auto w-full max-w-screen-xl">
+                <div className="screen-layer">
                     <Steps
                         current={tabFormDocument}
                         size="small"

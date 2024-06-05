@@ -123,7 +123,7 @@ const Header = ({ locale }) => {
     }, []);
     return (
         <div className={`z-50 w-full border border-b border-[#e3e6ef] transform ${initMenuSticky ? 'menu-inisticky' : menuSticky ? 'menu-sticky' : 'menu-unsticky'} top-0`}>
-            <div className="mx-auto w-full max-w-screen-xl">
+            <div className="screen-layer">
                 <div className="header">
                     <Link href={`/${locale}/`} className="header-logo">
                         <span className={`text-[20px] lg:text-[28px] xl:text-[40px] select-none font-montserrat font-[700] outline-0`}>Maxibook.</span>

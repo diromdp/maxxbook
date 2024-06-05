@@ -18,7 +18,7 @@ const PrivacyPolicy = () => {
         }
     ])
     return (
-        <div className="mx-auto w-full max-w-screen-xl pt-[120px]">
+        <div className="screen-layer pt-[120px]">
             <BreadCumb menu={menu} />
             <div className="flex gap-[16px] contact-page">
                 <div className="w-[20%]">

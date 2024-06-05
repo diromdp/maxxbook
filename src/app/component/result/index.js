@@ -152,7 +152,7 @@ const ResultShow = ({ QureyParams }) => {
 
     return (
         <>
-            <div className="mx-auto w-full max-w-screen-xl">
+            <div className="screen-layer">
                 {
                     <>
                         <FilterComponent

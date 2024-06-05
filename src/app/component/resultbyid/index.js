@@ -110,7 +110,7 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
 
     return (
         <>
-            <div className="mx-auto w-full max-w-screen-xl">
+            <div className="screen-layer">
                 {
                     emptyState &&
                     <div className="content-empty">
