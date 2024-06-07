@@ -37,7 +37,6 @@ const login = () => {
     });
 
     const onSubmit = async (data) => {
-        console.log(data);
         setIsdisabled(true);
         setIsloading(true);
         try {
@@ -60,6 +59,8 @@ const login = () => {
                 })
                 .catch(function (error) {
                     const errors = error.response.data;
+                    setIsdisabled(false);
+                    setIsloading(false);
                     setError('email', {
                         message: errors.errors.email[0],
                     });
@@ -68,7 +69,9 @@ const login = () => {
                     });
                 });
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            setIsdisabled(false);
+            setIsloading(false);
         }
     };
 

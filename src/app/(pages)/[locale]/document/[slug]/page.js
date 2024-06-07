@@ -17,7 +17,6 @@ async function getData() {
     if (!data.ok) {
         throw new Error('Failed to fetch data')
     }
-
     return data.json()
 }
 
@@ -55,7 +54,7 @@ export default async function documentPage({ params }) {
                                                     <div className="type-totals">
                                                         <span className="title">Document</span>
                                                         <span className="separator">.</span>
-                                                        <span className="title">{item.page_count ? item.page_count : 0} {t('pages')}</span>
+                                                        <span className="title">{item && item.page_count ? item.page_count : 0} {t('pages')}</span>
                                                     </div>
                                                     <div className="title-document">
                                                         <h4>{item.title}</h4>

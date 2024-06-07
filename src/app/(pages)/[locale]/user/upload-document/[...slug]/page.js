@@ -10,11 +10,12 @@ import {
     Card,
     CardContent,
 } from "@/components/ui/card";
-import { 
+import {
     Input,
     Select,
     notification,
-    Upload
+    Upload,
+    Image
 } from 'antd';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -25,28 +26,34 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-react';
 import { i18nChangeLanguage } from '@wangeditor/editor';
 import axios from "axios";
 import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { urlAPI } from "../../../../../../lib/constant";
-import { useAppSelector } from "../../../../../store";
-
+import { useAppSelector, useAppDispatch } from "../../../../../store";
+import { setUploadId } from "../../../../../store/reducer/categoryFilterSlice";
 
 i18nChangeLanguage('en')
 const { TextArea } = Input;
 
 const editUploadFile = ({ params }) => {
+    const dispatch = useAppDispatch();
     const { slug } = params;
     const [editor, setEditor] = useState(null);
     const [html, setHtml] = useState('');
     const [categories, setCategories] = useState([]);
+    const [idCategory, setIdCategory] = useState();
     const [subCategories, setSubCategories] = useState([]);
     const [documentOwn, setDocumentOwn] = useState();
     const [disabled, setDisabled] = useState(true);
     const [isLoading, setLoading] = useState(true);
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
+    const getUplaodID = useAppSelector((state) => state.documents.upload_id);
+
     const [api, contextHolder] = notification.useNotification();
     const token = getToken.access_token;
     const hasFetchedData = useRef(false);
     const toolbarConfig = {};
+    const router = useRouter();
     const locale = useLocale();
     toolbarConfig.excludeKeys = [
         'headerSelect',
@@ -63,8 +70,8 @@ const editUploadFile = ({ params }) => {
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
     const formSchema = z.object({
         title: z.string().min(2, 'Title document is required'),
-        category: z.string().nonempty({ message: 'Categories are required' }),
-        subcategory: z.string().nonempty({ message: 'Subcategories are required' }),
+        category: z.string().optional(),
+        subcategory: z.string().optional(),
         title_seo: z.string().min(2, 'Title Seo document is required'),
         description_seo: z.string().min(2, 'Description Seo document is required'),
     });
@@ -84,6 +91,9 @@ const editUploadFile = ({ params }) => {
         accept: '.pdf,doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         multiple: false,
         maxCount: 1,
+        data: {
+            document_id: documentOwn && documentOwn.id
+        },
         action: `${urlAPI}backend/customer/documents`,
         headers: {
             'Accept': "application/json",
@@ -97,7 +107,6 @@ const editUploadFile = ({ params }) => {
                     message: `Successfully uploaded`,
                     description: `${info.file.name} has been uploaded to our server.`
                 });
-                dispatch(setTabFormatDocument(1));
             } else if (status === 'error') {
                 api.error({
                     message: `Failed uploaded`,
@@ -117,17 +126,16 @@ const editUploadFile = ({ params }) => {
 
     const onSubmit = async (values) => {
         let formData = {
-            "id": null,
-            "slug": null,
+            "id": documentOwn && documentOwn.id,
+            "slug": documentOwn && documentOwn.slug,
             "title": values.title,
             "description": html,
             "title_seo": values.title_seo,
             "description_seo": values.description_seo,
-            "category_id": idCategory,
-            "sub_category_id": values.subcategory,
+            "category_id": idCategory ? idCategory : documentOwn.category_id,
+            "sub_category_id": values.subcategory ? values.subcategory : documentOwn.sub_category_id,
             "upload_id": getUplaodID,
             "lang": locale
-
         }
         await axios.put(`${urlAPI}backend/customer/documents`, formData, {
             headers: {
@@ -142,8 +150,7 @@ const editUploadFile = ({ params }) => {
                         message: "Successfully Created Document",
                         description: "Congratulations you have successfully created a new Document"
                     })
-                    dispatch(setTabFormatDocument(2));
-                    dispatch(setDocumentUpload(data.data.data));
+                    router.push(`/${locale}/user/document-own`)
                 }
             })
             .catch(function (error) {
@@ -173,7 +180,6 @@ const editUploadFile = ({ params }) => {
             .then((data) => {
                 if (data.status === 200) {
                     const dataJson = data.data;
-                    console.log(dataJson);
                     setIdCategory(dataJson[0].id);
                     let extractData = []
                     dataJson[0].sub_categories.map((item) => {
@@ -248,7 +254,14 @@ const editUploadFile = ({ params }) => {
                     const dataJson = data.data;
                     setLoading(false);
                     setDocumentOwn(dataJson);
-                    console.log(data.data);
+                    form.setValue("title", dataJson && dataJson.title);
+                    form.setValue("title_seo", dataJson && dataJson.title_seo);
+                    form.setValue("description_seo", dataJson && dataJson.description_seo);
+                    setHtml(dataJson && dataJson.description)
+                    if (dataJson && dataJson.category_id) {
+                        setDisabled(false);
+                        getSubCategories(dataJson && dataJson.category_id);
+                    }
                 }
             })
             .catch(function (error) {
@@ -284,7 +297,7 @@ const editUploadFile = ({ params }) => {
         <>
             <div className="upload-document--form">
                 <div className="screen-layer">
-                {contextHolder}
+                    {contextHolder}
                     <Card>
                         <CardContent>
                             {
@@ -413,13 +426,9 @@ const editUploadFile = ({ params }) => {
                                                 )}
                                             />
 
-                                            <div className="mt-[32px]">
-                                                {/* <Image
-                                                    width={200}
-                                                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                                                /> */}
+                                            <div className="mt-[32px] flex flex-col gap-[32px]">
                                                 <Upload {...props}>
-                                                    <Button icon={<Upload />}>Click to Upload</Button>
+                                                    <Button type="button" icon={<Upload />}>Click to Upload</Button>
                                                 </Upload>
                                             </div>
                                             <div className="flex items-center gap-[16px]">

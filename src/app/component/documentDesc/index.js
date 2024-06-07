@@ -75,6 +75,8 @@ const DocumentDesc = ({ slug }) => {
         }
     }, 100);
 
+    console.log(documentData && documentData);
+
     return (
         <div className="document-Desc h-[100vh] w-full">
             <div className="views-total-pages">
@@ -91,7 +93,7 @@ const DocumentDesc = ({ slug }) => {
                     {
                         isLoading ?
                             <Skeleton className="h-4 w-[120px]" /> :
-                            <span className="title">{documentData.page_count ? page_count : 0} {t('pages')}</span>
+                            <span className="title">{documentData && documentData.page_count ? documentData.page_count : 0} {t('pages')}</span>
 
                     }
                 </div>

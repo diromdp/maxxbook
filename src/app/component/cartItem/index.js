@@ -13,7 +13,7 @@ const Card = ({ colorImage, imagePath, title, description, className, slug }) =>
             </div>
             <div className="description">
                 <h6>{title}</h6>
-                <p>{description}</p>
+                <div dangerouslySetInnerHTML={{__html: description}} />
             </div>
         </Link>
     );

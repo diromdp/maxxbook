@@ -19,11 +19,11 @@ import { Badge } from "@/components/ui/badge";
 import { FiEdit, FiTrash2, FiFilePlus, FiFeather } from "react-icons/fi";
 import { Input } from 'antd';
 import { useCookies } from "react-cookie";
-
+import Link from "next/link";
 import axios from "axios";
 import { Table } from 'antd';
-import { urlAPI } from "../../../../lib/constant";
 import Image from "next/image";
+import { urlAPI } from "../../../../lib/constant";
 
 const { Search } = Input;
 
@@ -106,6 +106,19 @@ const Document = () => {
             }
         },
         {
+            title: 'View Document',
+            dataIndex: 'url',
+            render: (url) => {
+                return (
+                    <>
+                        {
+                            url && <Link href={url} target="_blank" className="text-md font-medium text-black underline">{'Click Here'}</Link>
+                        }
+                    </>
+                )
+            }
+        },
+        {
             title: 'Status',
             dataIndex: 'approval',
             render: (val) => {
@@ -152,7 +165,6 @@ const Document = () => {
     const hasSelected = selectedRowKeys.length > 0;
     const router = useRouter();
     const hasFetchedData = useRef(false);
-
 
     const getData = async () => {
         await axios.get(`${urlAPI}backend/admin/documents?q=${filterData.q}&cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}&user_id=${filterData.user_id}&category_id=${filterData.category_id}&sub_category_id=${filterData.sub_category_id}&approval_status=${filterData.approval_status}`, {
