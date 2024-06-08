@@ -257,6 +257,17 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
 .menu-inisticky {
     @apply fixed translate-y-0 bg-[#F4F8FE];
 }
+.share-link {
+    @apply flex flex-row gap-[16px] items-center mb-[16px];
+    .bookmark-container {
+        button {
+            @apply mt-[5px];
+        }
+    }
+    .sosmed {
+        @apply flex gap-[16px];
+    }
+}
 
 @import './component/header.scss';
 @import './component/button.scss';

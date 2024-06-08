@@ -1,14 +1,14 @@
-import Header from "../../component/header"
-import Footer from '../../component/footer';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
 import dynamic from "next/dynamic";
-import ProtectAuth  from "./protectAuth";
-const ReduxProvider = dynamic(() => import("../../store/redux-provider"), {
+import Header from "../../../component/header";
+import Footer from '../../../component/footer';
+import ProtectLogin from '../protectLogin';
+
+const ReduxProvider = dynamic(() => import("../../../store/redux-provider"), {
     ssr: false
 });
-
 export default async function PagesLayout({
     children,
     params: { locale }
@@ -19,17 +19,17 @@ export default async function PagesLayout({
         <>
             <ReduxProvider>
                 <NextIntlClientProvider messages={messages}>
-                    <ProtectAuth>
+                    <ProtectLogin>
                         <div className='flex flex-col h-screen justify-between'>
                             <Header locale={locale} />
-                                <div className='flex-grow'>
-                                    {children}
-                                </div>
+                            <div className='flex-grow'>
+                                {children}
+                            </div>
                             <Footer
                                 t={t}
                             />
                         </div>
-                    </ProtectAuth>
+                    </ProtectLogin>
                 </NextIntlClientProvider>
             </ReduxProvider>
         </>

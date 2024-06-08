@@ -20,6 +20,62 @@ async function getData() {
     return data.json()
 }
 
+async function getDetails(slug) {
+    const data = await fetch(`${urlAPI}backend/documents/detail/${slug}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': "application/json",
+        },
+    });
+
+    if (!data.ok) {
+        throw new Error('Failed to fetch data')
+    }
+    return data.json()
+}
+
+export async function generateMetadata({ params }, parent) {
+    // read route params
+    const slug = params.slug
+    const dataDetailDocument = await getDetails(slug);
+
+    // fetch data
+    return {
+        title: dataDetailDocument.title_seo,
+        description: dataDetailDocument.description_seo,
+        keywords: [dataDetailDocument.title],
+        twitter: {
+            card: 'summary_large_image',
+            title: dataDetailDocument.title_seo,
+            description: dataDetailDocument.description_seo,
+            images: {
+                url: dataDetailDocument.thumb_url,
+                alt: dataDetailDocument.title_seo,
+            },
+        },
+        openGraph: {
+            title: dataDetailDocument.title_seo,
+            description: dataDetailDocument.description_seo,
+            url: 'https://maxibook.com',
+            type: 'website',
+            images: [
+                {
+                    url: dataDetailDocument.thumb_url, // Must be an absolute URL
+                    width: 800,
+                    height: 600,
+                },
+                {
+                    url: dataDetailDocument.thumb_url, // Must be an absolute URL
+                    width: 1800,
+                    height: 1600,
+                    alt: dataDetailDocument.title_seo,
+                },
+            ],
+        },
+    }
+}
+
 export default async function documentPage({ params }) {
     const slug = params.slug || "";
     const dataDocument = await getData();

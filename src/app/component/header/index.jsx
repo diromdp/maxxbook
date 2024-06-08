@@ -2,7 +2,7 @@
 import { useEffect, useTransition, useCallback, useState, useRef } from 'react';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
-import { useLocale, useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 import {
     Avatar,
     AvatarFallback,
@@ -23,21 +23,18 @@ import {
     CloudUpload,
     Bookmark,
 } from "lucide-react";
-import { urlAPI } from "../../../lib/constant";
 import { getInitials } from "../../../lib/utils";
-import { setAuthInfoSlice, setAuthSlice } from "../../store/reducer/authSlice";
+import { setAuthSlice } from "../../store/reducer/authSlice";
 
-import axios from "axios";
 import { useAppSelector, useAppDispatch } from "../../store";
 
 const Header = ({ locale }) => {
-    const dispath = useAppDispatch();
+    const dispatch = useAppDispatch
     const [isPending, startTransition] = useTransition();
     const [initMenuSticky, setInitMenuSticky] = useState(true);
     const [menuSticky, setMenuSticky] = useState(false)
     const [userCurrent, setUserCurrent] = useState();
     const [y, setY] = useState(0);
-    const hasFetchedData = useRef(false);
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
     // const t = useTranslations("userLogins");
     const router = useRouter();
@@ -50,39 +47,9 @@ const Header = ({ locale }) => {
         });
     };
 
-    const getCurrentUser = async () => {
-        const token = getToken.access_token;
-        if (token) {
-                await axios.get(`${urlAPI}backend/customer/user`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            })
-                .then((data) => {
-                    if (data.status === 200) {
-                        setUserCurrent(data.data);
-                        dispath(setAuthInfoSlice(data.data));
-                    }
-                })
-                .catch(function (error) {
-                    if (error.response) {
-                        console.log(error.response.data.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                        if(error.response.status == 401){
-                            dispath(setAuthSlice({...getToken, access_token: null}))
-                        }
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                    console.log(error.config);
-                });
-        }
-
+    const logoutUser = () => {
+        dispatch(setAuthSlice({ ...getToken, access_token: null, expires_at: null }))
+        router.push('/');
     }
 
     const handleNavigation = useCallback((e) => {
@@ -115,12 +82,6 @@ const Header = ({ locale }) => {
         };
     }, [handleNavigation]);
 
-    useEffect(() => {
-        if (!hasFetchedData.current) {
-            getCurrentUser();
-            hasFetchedData.current = true;
-        }
-    }, []);
     return (
         <div className={`z-50 w-full border border-b border-[#e3e6ef] transform ${initMenuSticky ? 'menu-inisticky' : menuSticky ? 'menu-sticky' : 'menu-unsticky'} top-0`}>
             <div className="screen-layer">
@@ -175,7 +136,7 @@ const Header = ({ locale }) => {
                                                 </DropdownMenuItem>
                                             </DropdownMenuGroup>
                                             <DropdownMenuSeparator />
-                                            <DropdownMenuItem className={"cursor-pointer"}>
+                                            <DropdownMenuItem className={"cursor-pointer"} onClick={() => logoutUser()}>
                                                 <LogOut className="mr-2 h-4 w-4" />
                                                 <span>Log out</span>
                                             </DropdownMenuItem>

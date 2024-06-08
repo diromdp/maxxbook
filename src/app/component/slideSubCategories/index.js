@@ -12,7 +12,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const SlideSubCategories = ({ isLoading, subCategory, locale }) => {
-    let newStr = locale.replace(/["]/g, '');  
+    let newStr = locale && locale.replace(/["]/g, '');  
 
     return (
         <Carousel

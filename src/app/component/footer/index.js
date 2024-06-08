@@ -9,23 +9,12 @@ const Footer = ({t}) => {
                             <span className={`text-[40px] select-none font-montserrat font-[700] outline-0`}>Maxibook.</span>
                         </a>
                     </div>
-                    <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+                    <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-2">
                         <div>
                             <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{t('about')}</h2>
                             <ul className="text-gray-500 dark:text-gray-400 font-medium">
                                 <li className="mb-4">
                                     <a href="https://flowbite.com/" className="hover:underline">Maxibook</a>
-                                </li>
-                                <li>
-                                    <a href="https://tailwindcss.com/" className="hover:underline">{t('contact')}</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{t('support')}</h2>
-                            <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                                <li className="mb-4">
-                                    <a href="https://github.com/themesberg/flowbite" className="hover:underline ">FAQ</a>
                                 </li>
                             </ul>
                         </div>

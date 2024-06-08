@@ -2,8 +2,18 @@
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton"
 import dayjs from "dayjs";
-
+import {
+    FacebookIcon,
+    FacebookShareButton,
+    LinkedinIcon,
+    LinkedinShareButton,
+    TwitterShareButton,
+    WhatsappIcon,
+    WhatsappShareButton,
+    XIcon,
+} from "react-share";
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { urlAPI } from "../../../lib/constant";
 import axios from "axios";
 import 'dayjs/locale/id';
@@ -12,15 +22,20 @@ import { saveAs } from 'file-saver';
 import { formatNumber } from "../../../lib/utils";
 import { useTranslations } from "next-intl";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
-
+import {
+    Bookmark
+} from "lucide-react";
 dayjs.extend(localeData);
 dayjs.locale('id');
 
 const DocumentDesc = ({ slug }) => {
     const [documentData, setDocumentData] = useState();
     const [isLoading, setLoading] = useState(true);
+    const [bookmark, setBookmark] = useState(false);
     const hasFetchedData = useRef(false);
     const t = useTranslations('Documents');
+    const urlShare = window.location.href;
+    const router = useRouter();
 
     const fileDocument = [
         { uri: documentData ? documentData.url : '' }
@@ -68,14 +83,41 @@ const DocumentDesc = ({ slug }) => {
         }
     };
 
+    const bookmarkSaved = async () => {
+        let token = "";
+        await axios.put(`${urlAPI}backend/customer/documents/${documentData.id}/statistics/saved`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        })
+            .then((data) => {
+                if (data.status === 200) {
+                    setBookmark(!bookmark);
+                }
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    router.push('/login');
+                    console.log(error.response.data.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+    }
+
     useEffect(() => {
         if (!hasFetchedData.current) {
             getDocumentbySlug();
             hasFetchedData.current = true;
         }
     }, 100);
-
-    console.log(documentData && documentData);
 
     return (
         <div className="document-Desc h-[100vh] w-full">
@@ -85,7 +127,7 @@ const DocumentDesc = ({ slug }) => {
                         isLoading ?
                             <Skeleton className="h-4 w-[200px]" /> :
                             <>
-                                <span className="title">{formatNumber(documentData && documentData.statistics ? documentData.statistics : 0)} {t('views')}</span><span className="separator">.</span>
+                                <span className="title">{formatNumber(documentData && documentData.statistics ? documentData.statistics.views : 0)} {t('views')}</span><span className="separator">.</span>
                             </>
                     }
                 </div>
@@ -130,11 +172,41 @@ const DocumentDesc = ({ slug }) => {
                             <Skeleton className="h-8 mb-[10px] w-[80%]" />
                         </> :
                         <>
-                            <div dangerouslySetInnerHTML={{__html: documentData && documentData.description}}>
+                            <div dangerouslySetInnerHTML={{ __html: documentData && documentData.description }}>
                             </div>
                         </>
                 }
 
+            </div>
+            <div className="share-link">
+                <div className="bookmark-container">
+                    <button type="button" onClick={() => bookmarkSaved()}>
+                        <Bookmark fill={`${bookmark ? '#000': '#fff'}`} />
+                    </button>
+                </div>
+                <div className="sosmed">
+                    <FacebookShareButton
+                        url={urlShare}
+                    >
+                        <FacebookIcon size={32} round />
+                    </FacebookShareButton>
+                    <WhatsappShareButton
+                        url={urlShare}
+                    >
+                        <WhatsappIcon size={32} round />
+                    </WhatsappShareButton>
+                    <TwitterShareButton
+                        url={urlShare}
+                    >
+                        <XIcon size={32} round />
+                    </TwitterShareButton>
+                    <LinkedinShareButton
+                        url={urlShare}
+                    >
+                        <LinkedinIcon size={32} round />
+                    </LinkedinShareButton>
+
+                </div>
             </div>
             <div className="download">
                 <button className="button-download" onClick={() => downloadFile(documentData && documentData.url, documentData && documentData.upload.file_name)}>Download Document</button>
