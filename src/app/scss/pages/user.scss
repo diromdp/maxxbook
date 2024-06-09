@@ -1,5 +1,5 @@
 .profile {
-    @apply pt-[120px] bg-[#f8f7fa] min-h-screen;
+    @apply pt-[120px] bg-[#f8f7fa] min-h-screen pb-[32px];
     .image-profile-card {
         @apply relative flex items-center h-[90px];
         .img-avatar {
@@ -100,7 +100,7 @@
         @apply flex flex-col gap-y-[8px];
     }
 }
-.document-owner {
+.document-owner, .saved-container {
     @apply mt-[120px];
     .content-owner {
         @apply flex flex-col;
@@ -163,4 +163,21 @@
 
 .content-description {
     @apply mb-[16px];
+}
+.look-user-detail {
+    @apply pt-[90px] pb-[32px];
+    .user-info {
+        @apply flex flex-row gap-[24px] items-center;
+        .circle {
+            @apply rounded-[50%] w-[75px] h-[75px] bg-rose-700 flex flex-row justify-center items-center border-2 border-white  text-white text-xl;
+            font-family: "Roboto", sans-serif;
+        }
+        .name {
+            @apply text-2xl text-white;
+            font-family: "Roboto", sans-serif;
+        }
+    }
+    .list-document {
+        @apply mt-[32px];
+    }
 }

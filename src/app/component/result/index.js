@@ -15,6 +15,8 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { urlAPI } from "../../../lib/constant";
 import { useTranslations } from 'next-intl';
+import Lottie from 'react-lottie';
+import * as searchNotFound from '../../../lottie/search-not-found.json';
 
 import FilterComponent from "../FilterComponent";
 import { setCategoryFilterState, setPaginationState, setDocumentdata, setDocumentConfig, setEmpatyState } from "../../store/reducer/categoryFilterSlice";
@@ -30,17 +32,21 @@ const ResultShow = ({ QureyParams }) => {
     const [isLoading, setLoading] = useState(true);
     const [isLoadingSelectCategory, setIsLoadingSelectCategory] = useState(true);
     const [dataFetchCategory, setDataFetchCategory] = useState();
-
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: searchNotFound,
+    };
     const t = useTranslations('Documents');
     const hasFetchedData = useRef(false);
 
     const getDocument = async (val) => {
-        if(categoryFilterState && categoryFilterState.category_id == '') {
+        if (categoryFilterState && categoryFilterState.category_id == '') {
             dispatch(setCategoryFilterState({ ...categoryFilterState, category_id: val ? val : '', q: QureyParams != '' ? QureyParams : '' }));
         }
 
-       await setTimeout(() => {
-             axios.get(`${urlAPI}backend/documents?q=${QureyParams}&cursor=${categoryFilterState && categoryFilterState.cursor ? categoryFilterState.cursor : ''}&perPage=${categoryFilterState && categoryFilterState.perPage ? categoryFilterState.perPage : ''}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${val ? val : ''}`, {
+        await setTimeout(() => {
+            axios.get(`${urlAPI}backend/documents?q=${QureyParams}&cursor=${categoryFilterState && categoryFilterState.cursor ? categoryFilterState.cursor : ''}&perPage=${categoryFilterState && categoryFilterState.perPage ? categoryFilterState.perPage : ''}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${val ? val : ''}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",
@@ -175,8 +181,11 @@ const ResultShow = ({ QureyParams }) => {
                 {
                     empatyState &&
                     <div className="content-empty">
-                        <h3>{t('content empty')}</h3>
-                        <img src="/image/content-empty.webp" alt="content is empty" />
+                        <Lottie options={defaultOptions}
+                            height={400}
+                            width={400}
+                            disabled={true}    
+                        />
                     </div>
                 }
                 {

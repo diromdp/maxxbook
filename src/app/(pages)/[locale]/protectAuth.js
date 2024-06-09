@@ -24,7 +24,6 @@ const ProtectAuth = ({children}) => {
             })
                 .then((data) => {
                     if (data.status === 200) {
-                        setUserCurrent(data.data);
                         dispatch(setAuthInfoSlice(data.data));
                     }
                 })

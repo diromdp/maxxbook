@@ -1,10 +1,5 @@
 "use client";
-import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
-import {
-    Pencil,
-    Trash2
-} from "lucide-react";
+
 import {
     Pagination,
     PaginationContent,
@@ -17,23 +12,28 @@ import { Skeleton } from "@/components/ui/skeleton";
 import dayjs from "dayjs";
 import localeData from 'dayjs/plugin/localeData';
 import 'dayjs/locale/id';
-import axios from "axios";
-import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
 import { useLocale } from "next-intl";
 import { Empty } from 'antd';
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import Link from "next/link";
+import {
+    Bookmark,
+} from "lucide-react";
 import { urlAPI } from "../../../../../lib/constant";
 import { useAppSelector } from "../../../../store";
 
-
 dayjs.extend(localeData);
 dayjs.locale('id');
-const DocumentOwn = () => {
+
+const Saved = () => {
+    const [isLoading, setLoading] = useState(true);
     const [listDocument, setLisDocument] = useState([]);
     const [dataPagination, setDataPagination] = useState([]);
-    const [isLoading, setLoading] = useState(true);
     const hasFetchedData = useRef(false);
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
+    const token = getToken.access_token;    
     const [filterData, setFilterData] = useState({
         q: "",
         cursor: "",
@@ -41,12 +41,11 @@ const DocumentOwn = () => {
         sortBy: "title",
         sortDirection: "asc",
     });
-    const token = getToken.access_token;
     const locale = useLocale();
     const router = useRouter();
-    
+
     const getData = async () => {
-        await axios.get(`${urlAPI}backend/customer/documents/own?cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}`, {
+        await axios.get(`${urlAPI}backend/customer/documents/saved?cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}`, {
             headers: {
                 "Content-Type": "application/json",
                 'Accept': "application/json",
@@ -82,7 +81,7 @@ const DocumentOwn = () => {
             var url = new URL(url_string);
             var page = url.searchParams.get("page");
             setFilterData({ ...filterData, page: page });
-            await axios.get(`${urlAPI}backend/customer/documents/own?cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}`, {
+            await axios.get(`${urlAPI}backend/customer/documents/saved?cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",
@@ -111,8 +110,8 @@ const DocumentOwn = () => {
         }
     }
 
-    const onDelete = async (id) => {
-        await axios.delete(`${urlAPI}backend/customer/documents/${id}`, {
+    const onUnsaved = async (id) => {
+        await axios.put(`${urlAPI}backend/customer/documents/${id}/statistics/saved`, {},{
             headers: {
                 "Content-Type": "application/json",
                 'Accept': "application/json",
@@ -148,7 +147,7 @@ const DocumentOwn = () => {
 
     return (
         <>
-            <div className="document-owner">
+            <div className="saved-container">
                 <div className="screen-layer">
                     <div className="content-owner">
                         {
@@ -165,7 +164,6 @@ const DocumentOwn = () => {
                                             </div>
                                             <div className="right-side">
                                                 <Skeleton className="h-[40px] w-[100px]" />
-
                                             </div>
                                         </div>
                                     ))}
@@ -177,7 +175,7 @@ const DocumentOwn = () => {
                                             return (
                                                 <div className="item-document">
                                                     <div className="left-side">
-                                                        <Image alt={item.title} width={132} height={174} src={item.thumb_url ? item.thumb_url : "https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1"} />
+                                                        <img src={`${item.thumb_url ? item.thumb_url : "https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1"}`} width={132} height={174} />
                                                         <Link href={`/${locale}/document/${item.slug}`} className="description">
                                                             <h3>{item.title}</h3>
                                                             <div className="paragraph" dangerouslySetInnerHTML={{ __html: `${item.description_seo}` }}>
@@ -186,11 +184,8 @@ const DocumentOwn = () => {
                                                     </div>
                                                     <div className="right-side">
                                                         <div className="content-editor">
-                                                            <div className="cursor-pointer" onClick={() => router.push(`/${locale}/user/upload-document/${item.id}`, undefined, { shallow: true })}>
-                                                                <Pencil className="cursor-pointer text-slate-600" />
-                                                            </div>
-                                                            <div onClick={() => onDelete(item.id)} className="cursor-pointer">
-                                                                <Trash2 className="cursor-pointer text-red-600" />
+                                                            <div className="cursor-pointer" onClick={() => onUnsaved(item.id)}>
+                                                                <Bookmark className="cursor-pointer text-slate-600" />
                                                             </div>
                                                         </div>
                                                         <div className="desciption">
@@ -198,14 +193,6 @@ const DocumentOwn = () => {
                                                                 <li>
                                                                     <span>
                                                                         Name File: {item.upload.file_name && item.upload.file_name}
-                                                                    </span>
-                                                                </li>
-                                                                <li>
-                                                                    <span>
-                                                                        Status: 
-                                                                        <>
-                                                                        {item.approval && item.approval.approval_status == "PENDING" ? <b className="text-red-800">{ item.approval && item.approval.approval_status}</b> : <b className="text-green-800">{item.approval && item.approval.approval_status}</b>}
-                                                                        </>
                                                                     </span>
                                                                 </li>
                                                                 <li>
@@ -219,7 +206,7 @@ const DocumentOwn = () => {
                                                 </div>
                                             )
                                         }) :
-                                            <Empty className="mt-[120px]" />
+                                            <Empty className="mt-[120px]" description="Data Not Found" />
                                     }
                                 </>
                         }
@@ -262,4 +249,4 @@ const DocumentOwn = () => {
     );
 }
 
-export default DocumentOwn;
+export default Saved;

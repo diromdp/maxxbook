@@ -33,9 +33,9 @@ const Header = ({ locale }) => {
     const [isPending, startTransition] = useTransition();
     const [initMenuSticky, setInitMenuSticky] = useState(true);
     const [menuSticky, setMenuSticky] = useState(false)
-    const [userCurrent, setUserCurrent] = useState();
     const [y, setY] = useState(0);
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
+    const getInfoUser = useAppSelector((state) => state.authUserStorage.authInfoUser);
     // const t = useTranslations("userLogins");
     const router = useRouter();
     const localActive = useLocale();
@@ -109,8 +109,8 @@ const Header = ({ locale }) => {
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
                                             <Avatar className="cursor-pointer">
-                                                <AvatarImage src={`${userCurrent && userCurrent.avatar ? userCurrent.avatar.url : "https://github.com/shadcn.png"}`} />
-                                                <AvatarFallback>{getInitials(userCurrent && userCurrent.name)}</AvatarFallback>
+                                                <AvatarImage src={`${getInfoUser && getInfoUser.avatar ? getInfoUser.avatar.url : "https://github.com/shadcn.png"}`} />
+                                                <AvatarFallback>{getInitials(getInfoUser && getInfoUser.name)}</AvatarFallback>
                                             </Avatar>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent className="w-56">
@@ -119,7 +119,7 @@ const Header = ({ locale }) => {
                                                     <User className="mr-2 h-4 w-4" />
                                                     <span>Profile</span>
                                                 </DropdownMenuItem>
-                                                <DropdownMenuItem className={"cursor-pointer"}>
+                                                <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/saved`, undefined, { shallow: true })}>
                                                     <Bookmark className="mr-2 h-4 w-4" />
                                                     <span>Saved</span>
                                                 </DropdownMenuItem>

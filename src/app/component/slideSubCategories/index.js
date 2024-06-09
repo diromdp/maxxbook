@@ -19,7 +19,7 @@ const SlideSubCategories = ({ isLoading, subCategory, locale }) => {
             opts={{
                 align: "start",
             }}
-            className="w-full carousel-slide-sub-category"
+            className="w-full pt-[48px] carousel-slide-sub-category"
         >
             <CarouselContent>
                 {

@@ -12,8 +12,11 @@ import {
 } from "@/components/ui/pagination";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
-import { urlAPI } from "../../../lib/constant";
 import { useTranslations, useLocale } from 'next-intl';
+import Lottie from 'react-lottie';
+import * as searchNotFound from '../../../lottie/search-not-found.json';
+
+import { urlAPI } from "../../../lib/constant";
 
 import { setDocumentCategoryPagination, setDocumentCategorySingle, setEmptyStateDocumentCategory } from "../../store/reducer/categoryFilterSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
@@ -25,9 +28,13 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
     const dataPaginationState = useAppSelector((state) => state.documents.documentCategoryPagination);
     const dataDocument = useAppSelector((state) => state.documents.documentCategorySingle);
     const emptyState = useAppSelector((state) => state.documents.emptyStateDocumentCategory);
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: searchNotFound,
+    };
 
     const t = useTranslations('Documents');
-    const locale = useLocale();
     const hasFetchedData = useRef(false);
 
     const getDocument = async () => {
@@ -114,8 +121,12 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
                 {
                     emptyState &&
                     <div className="content-empty">
-                        <h3>{t('content empty')}</h3>
-                        <img src="/image/content-empty.webp" alt="content is empty" />
+                        {/* <h3>{t('content empty')}</h3> */}
+                        <Lottie options={defaultOptions}
+                            height={400}
+                            width={400}
+                            disabled={true}    
+                        />
                     </div>
                 }
                 {

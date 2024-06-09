@@ -52,11 +52,9 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
                     <h1>{detailCategory && locale.value == "en" ? detailCategory[0].name : detailCategory[0].name_id} Documents</h1>
                     <p>{detailCategory && locale.value == "en" ? detailCategory[0].description : detailCategory[0].description_id}.</p>
                 </div>
-                <div className="pt-[48px]">
-                    {
-                        slug.length < 2 && <SlideSubCategories locale={locale.value} subCategory={detailCategory[0].sub_categories} isLoading={isLoading} />
-                    }
-                </div>
+                {
+                    slug.length < 2 && detailCategory[0].sub_categories > 0 && <SlideSubCategories locale={locale.value} subCategory={detailCategory[0].sub_categories} isLoading={isLoading} />
+                }
                 <div className="epxlore-more">
                     {
                         slug.length < 2 &&

@@ -12,6 +12,7 @@ import {
     WhatsappShareButton,
     XIcon,
 } from "react-share";
+import { useLocale } from "next-intl";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { urlAPI } from "../../../lib/constant";
@@ -25,6 +26,9 @@ import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import {
     Bookmark
 } from "lucide-react";
+import { notification } from 'antd';
+
+import { useAppSelector } from "../../store";
 dayjs.extend(localeData);
 dayjs.locale('id');
 
@@ -33,6 +37,10 @@ const DocumentDesc = ({ slug }) => {
     const [isLoading, setLoading] = useState(true);
     const [bookmark, setBookmark] = useState(false);
     const hasFetchedData = useRef(false);
+    const getToken = useAppSelector((state) => state.authUserStorage.authUser);
+    const token = getToken.access_token;    
+    const [api, contextHolder] = notification.useNotification();
+    const locale = useLocale();
     const t = useTranslations('Documents');
     const urlShare = window.location.href;
     const router = useRouter();
@@ -84,8 +92,7 @@ const DocumentDesc = ({ slug }) => {
     };
 
     const bookmarkSaved = async () => {
-        let token = "";
-        await axios.put(`${urlAPI}backend/customer/documents/${documentData.id}/statistics/saved`, {
+        await axios.put(`${urlAPI}backend/customer/documents/${documentData.id}/statistics/saved`,{}, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': "application/json",
@@ -95,6 +102,10 @@ const DocumentDesc = ({ slug }) => {
             .then((data) => {
                 if (data.status === 200) {
                     setBookmark(!bookmark);
+                    api.info({
+                        message: "Saved your Document",
+                        description: "Your document has been saved"
+                    })
                 }
             })
             .catch(function (error) {
@@ -119,8 +130,11 @@ const DocumentDesc = ({ slug }) => {
         }
     }, 100);
 
+    console.log(documentData && documentData);
+
     return (
         <div className="document-Desc h-[100vh] w-full">
+            {contextHolder}
             <div className="views-total-pages">
                 <div className="item">
                     {
@@ -155,7 +169,7 @@ const DocumentDesc = ({ slug }) => {
                         <p>{t('uploads')} &nbsp;
                             <>
                                 {
-                                    documentData && documentData.user_id == null ? <Link href={'#'}>Admin Maxibook</Link> : <Link href={'/'}>Shadab Shaikh</Link>
+                                    documentData && documentData.user_id == null ? <Link href={'#'}>Admin Maxibook</Link> : <Link href={`/${locale}/look/${documentData.user_id}`}>{documentData.user.name}</Link>
                                 }
                             </>
                             , {documentData && dayjs(documentData.upload.created_at).format("D MMMM YYYY")}

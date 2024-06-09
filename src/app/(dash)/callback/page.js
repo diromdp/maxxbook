@@ -8,7 +8,7 @@ import { notification } from 'antd';
 
 const Callback = ({ searchParams }) => {
     const dispatch = useAppDispatch();
-    const { token, errMsg } = searchParams;
+    const { token, errMsg, expires } = searchParams;
     const SESSION_EXPIRATION_TIME = 120 * 60; // 30 days in milliseconds
     const setExpiredTime = Date.now() + SESSION_EXPIRATION_TIME;
     const router = useRouter();
@@ -18,7 +18,7 @@ const Callback = ({ searchParams }) => {
     const redirect = () => {
         const data = {
             access_token: token,
-            expires_at: setExpiredTime,
+            expires_at: expires,
             message: 'ok'
         }
         dispatch(setAuthSlice(data))

@@ -20,7 +20,7 @@
     "Documents": {
         "title": "Document",
         "description": "Get started with the community’s uploads",
-        "content empty": "Document file is empty",
+        "content empty": "Document file not found",
         "views": "Views",
         "pages": "Pages",
         "uploads": "Upload By",
