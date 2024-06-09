@@ -44,7 +44,6 @@ const admninDashboard = () => {
           }
           console.log(error.config);
         });
-      
     }
 
     useEffect(() => {
@@ -62,7 +61,6 @@ const admninDashboard = () => {
                             {
                                 !loading ? <Skeleton className="h-6 w-[150px]" /> :
                                     <span className="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white">{kFormatter(data.total_users)}</span>
-
                             }
                         </CardContent>
                     </Card>

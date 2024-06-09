@@ -11,6 +11,9 @@ import {
     MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { Layout, Button } from 'antd';
+import Lottie from 'react-lottie';
+import * as loadingData from '../../../lottie/loading-3.json';
+
 
 const { Header, Sider, Content } = Layout;
 
@@ -21,13 +24,19 @@ export default function AdminLayout({ children }) {
 
     const router = useRouter()
     const isLogging = cookies.token ? cookies.token : null;
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: loadingData,
+    };
+
 
     useEffect(() => {
         if (!isLogging || isLogging === "undefined") {
             router.push('/login-admin');
             setIsloggingState(false)
         } else {
-            setIsloggingState(true)
+          setIsloggingState(true)
         }
     })
     return (
@@ -70,9 +79,11 @@ export default function AdminLayout({ children }) {
                                 </Layout>
                             </Layout>
                         </main> :
-                        <div className="h-screen w-screen flex justify-center items-center">
-                            <div className="w-[100px] h-[100px]">
-                                <Image src={"/loading.svg"} width={150} height={150} />
+                        <div className="h-screen w-screen">
+                            <div className="w-full h-full flex justify-center items-center">
+                                <Lottie options={defaultOptions}
+                                    height={400}
+                                    width={400} />
                             </div>
                         </div>
                 }

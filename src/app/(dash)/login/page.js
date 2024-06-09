@@ -1,16 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import axios from "axios";
-import { urlAPI } from "../../../lib/constant";
-import { useRouter } from 'next/navigation'
-import { useAppDispatch } from "../../store";
-import { setAuthSlice } from "../../store/reducer/authSlice";
+import { useRouter } from 'next/navigation';
 import { Loader2 } from "lucide-react";
 import { notification } from "antd";
 
+import { urlAPI } from "../../../lib/constant";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { setAuthSlice } from "../../store/reducer/authSlice";
 import Link from "next/link";
 
 const LoginUser = () => {
@@ -18,6 +18,8 @@ const LoginUser = () => {
     const [isDisabled, setIsdisabled] = useState(false);
     const [isLoading, setIsloading] = useState(false);
     const [remember, setRemember] = useState(false);
+    const getToken = useAppSelector((state) => state.authUserStorage.authUser);
+    const token = getToken.access_token;
     const router = useRouter();
     const [api, contextHolder] = notification.useNotification();
 
@@ -32,11 +34,16 @@ const LoginUser = () => {
     const {
         register,
         handleSubmit,
-        setError,
         formState: { errors }
     } = useForm({
         resolver: zodResolver(formSchema)
     });
+
+    const checkLogin = () => {
+        if(token) {
+            router.push('/');
+        }
+    }
 
     const checkedRemmber = (val) => {
         console.log(val.target.checked);
@@ -79,6 +86,10 @@ const LoginUser = () => {
         }
     };
 
+    useEffect(() => {
+        checkLogin();
+    }, [])
+
     return (
         <>
             <div className="flex min-h-screen">
@@ -89,7 +100,7 @@ const LoginUser = () => {
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <h3 className="mb-3 text-2xl 1xl:text-4xl font-extrabold text-dark-slate-900 text-center">Sign In</h3>
                                 <p className="mb-4 text-slate-700 text-center">Enter your email and password</p>
-                                <Link href={'/'} className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-slate-900 bg-slate-100 hover:bg-slate-200 focus:ring-4 focus:ring-slate-200">
+                                <Link href={'https://docs.brohim.online/backend/customer/login/google'} className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-slate-900 bg-slate-100 hover:bg-slate-200 focus:ring-4 focus:ring-slate-200">
                                     <img
                                         className="h-5 mr-2"
                                         src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"

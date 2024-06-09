@@ -4,13 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import axios from "axios";
-import Image from "next/image";
 import { useCookies } from "react-cookie";
 import { useRouter } from 'next/navigation'
 import { Checkbox } from "@/components/ui/checkbox"
 import { urlAPI } from "../../../lib/constant";
 import { Loader2 } from "lucide-react";
-
+import Lottie from 'react-lottie';
+import * as loadingData from '../../../lottie/loading-2.json';
 
 const login = () => {
     const router = useRouter()
@@ -27,6 +27,11 @@ const login = () => {
         }),
         password: z.string().min(6, 'Password is to short'),
     });
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: loadingData,
+    };
     const {
         register,
         handleSubmit,
@@ -101,7 +106,7 @@ const login = () => {
                             <input className="w-full border rounded p-2 outline-none focus:shadow-outline" type="password" {...register("password")} placeholder="Password" />
                             {errors.password && <p className="text-red-500 text-[16px]">{errors.password.message}</p>}
                             <div className="flex items-center space-x-2 pt-[16px]">
-                                <Checkbox onCheckedChange={(e) => setRemember(e)}  id="terms" />
+                                <Checkbox onCheckedChange={(e) => setRemember(e)} id="terms" />
                                 <label
                                     htmlFor="terms"
                                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -118,9 +123,11 @@ const login = () => {
                     </form>
                 </div>
             </div> :
-            <div className="h-screen w-screen flex justify-center items-center">
-                <div className="w-[100px] h-[100px]">
-                    <Image src={"/loading.svg"} width={150} height={150} />
+            <div className="h-screen w-screen">
+                <div className="w-full h-full flex justify-center items-center">
+                    <Lottie options={defaultOptions}
+                        height={400}
+                        width={400} />
                 </div>
             </div>
         }

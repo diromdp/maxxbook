@@ -29,7 +29,7 @@ import { setAuthSlice } from "../../store/reducer/authSlice";
 import { useAppSelector, useAppDispatch } from "../../store";
 
 const Header = ({ locale }) => {
-    const dispatch = useAppDispatch
+    const dispatch = useAppDispatch();
     const [isPending, startTransition] = useTransition();
     const [initMenuSticky, setInitMenuSticky] = useState(true);
     const [menuSticky, setMenuSticky] = useState(false)
