@@ -67,7 +67,7 @@ const FormUploadDOcument = () => {
     const formSchema = z.object({
         title: z.string().min(2, 'Title document is required'),
         category: z.string().nonempty({ message: 'Categories are required' }),
-        subcategory: z.string().nonempty({ message: 'Subcategories are required' }),
+        subcategory: z.string().optional(),
         title_seo: z.string().min(2, 'Title Seo document is required'),
         description_seo: z.string().min(2, 'Description Seo document is required'),
     });
@@ -205,6 +205,7 @@ const FormUploadDOcument = () => {
 
     const onChange = () => {
         const values = form.getValues()
+        form.resetField('subcategory');
         getSubCategories(values && values.category)
     };
 

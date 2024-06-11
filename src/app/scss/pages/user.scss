@@ -110,7 +110,7 @@
                 @apply bg-slate-100;
             }
             .left-side {
-                @apply flex justify-center relative gap-[24px];
+                @apply flex justify-start relative gap-[24px] w-[50%];
                 .image-placeholder {
                     @apply w-[132px] h-[174px];
                 }
@@ -133,7 +133,7 @@
                 }
             }
             .right-side {
-                @apply flex flex-col gap-[30px];
+                @apply flex flex-col gap-[30px] w-[50%];
                 .content-editor {
                     @apply flex gap-[16px] justify-end;
                 }

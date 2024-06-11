@@ -16,7 +16,9 @@ const UploadDocument = () => {
     const hasFetchedData = useRef(false);
     useEffect(() => {
         if (!hasFetchedData.current) {
-            dispatch(setTabFormatDocument(0));
+            if(tabFormDocument == 2) {
+                dispatch(setTabFormatDocument(0));
+            }
             hasFetchedData.current = true;
         }
     }, [])

@@ -79,7 +79,6 @@ const ResultShow = ({ QureyParams }) => {
                     console.log(error.config);
                 });
         }, 100);
-
     }
 
     const updatePagination = async (val) => {

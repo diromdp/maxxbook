@@ -28,11 +28,14 @@ import {
 } from "lucide-react";
 import { notification } from 'antd';
 
-import { useAppSelector } from "../../store";
+import { useAppSelector, useAppDispatch } from "../../store";
+import { setOwnerOfUpload } from "../../store/reducer/categoryFilterSlice";
+
 dayjs.extend(localeData);
 dayjs.locale('id');
 
 const DocumentDesc = ({ slug }) => {
+    const dispatch = useAppDispatch();
     const [documentData, setDocumentData] = useState();
     const [isLoading, setLoading] = useState(true);
     const [bookmark, setBookmark] = useState(false);
@@ -123,6 +126,11 @@ const DocumentDesc = ({ slug }) => {
             });
     }
 
+    const getInfoUserUpload = () => {
+        const dataUser = documentData.user;
+        dispatch(setOwnerOfUpload(dataUser));
+    }
+
     useEffect(() => {
         if (!hasFetchedData.current) {
             getDocumentbySlug();
@@ -169,7 +177,7 @@ const DocumentDesc = ({ slug }) => {
                         <p>{t('uploads')} &nbsp;
                             <>
                                 {
-                                    documentData && documentData.user_id == null ? <Link href={'#'}>Admin Maxibook</Link> : <Link href={`/${locale}/look/${documentData.user_id}`}>{documentData.user.name}</Link>
+                                    documentData && documentData.user_id == null ? <Link href={'#'}>Admin Maxibook</Link> : <Link href={`/${locale}/look/${documentData.user_id}`} onClick={() => getInfoUserUpload()}>{documentData.user.name}</Link>
                                 }
                             </>
                             , {documentData && dayjs(documentData.upload.created_at).format("D MMMM YYYY")}

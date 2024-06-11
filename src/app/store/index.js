@@ -27,13 +27,13 @@ const storage =
 const documentPersistConfig = {
   key: "documents",
   storage: storage,
-  whitelist: ["categoryFilterState", "documentData", "documentPagination", "documentConfig", "empatyState"],
+  whitelist: ["categoryFilterState", "documentConfig", "categoryFilterSingleState", "documentConfig", "empatyState", "ownerOfUpload", "documentUpload", "upload_id", "tabFormDocuments"],
 };
 
 const authPersistConfig = {
   key: "authStorage",
   storage: storage,
-  whitelist: ["authUser"]
+  whitelist: ["authUser", "authInfoUser"]
 };
 
 const persistedReducerAuth = persistReducer(authPersistConfig, authReducer)

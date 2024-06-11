@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
-    FileProtectOutlined,
-    PieChartOutlined,
-    UserOutlined,
-    BankOutlined,
-    FilePdfOutlined,
-    SettingOutlined,
-    MoneyCollectOutlined
-} from '@ant-design/icons';
+    LayoutDashboard,
+    SquareUserRound,
+    File,
+    Leaf,
+    Landmark,
+    HandCoins,
+    Settings
+} from 'lucide-react';
+
 import { Menu } from 'antd';
 import { useRouter } from 'next/navigation';
 import {BaseUrl} from '../../../lib/constant';
@@ -32,14 +33,14 @@ const SideMenu = () => {
         getItem(
             'Dashboard',
             ['/admin'],
-            <PieChartOutlined />,
+            <LayoutDashboard className="w-[18px] h-[18px]" />
         ),
         getItem(
             'Users',
             [
                 '/admin/user',
             ],
-            <UserOutlined />,
+            <SquareUserRound className="w-[18px] h-[18px]" />,
             [
                 getItem(
                     "Create User",
@@ -56,7 +57,7 @@ const SideMenu = () => {
             [
                 '/admin/document',
             ],
-            <FilePdfOutlined />,
+            <File className="w-[18px] h-[18px]" />,
             [
                 getItem(
                     "Create Document",
@@ -74,7 +75,7 @@ const SideMenu = () => {
                 '/admin/category',
                 '/admin/category/subcategory',
             ],
-            <FileProtectOutlined />,
+            <Leaf className="w-[18px] h-[18px]" />,
             [
                 getItem(
                     "Create Category",
@@ -99,7 +100,7 @@ const SideMenu = () => {
             [
                 '/admin/bank',
             ],
-            <BankOutlined />,
+            <Landmark className="w-[18px] h-[18px]" />,
             [
                 getItem(
                     "Create Bank",
@@ -114,12 +115,12 @@ const SideMenu = () => {
         getItem(
             'Withdrawal',
             ['/admin/withdrawal'],
-            <MoneyCollectOutlined />,
+            <HandCoins className="w-[18px] h-[18px]" />
         ),
         getItem(
             'Setting',
             ['/admin/setting'],
-            <SettingOutlined />,
+            <Settings className="w-[18px] h-[18px]" />
         ),
     ]
     const onOpenChange = (keys) => {

@@ -28,7 +28,8 @@ const initialState = {
     emptyStateDocumentCategory: false,
     tabFormDocuments: 0,
     upload_id: "",
-    documentUpload:{}
+    documentUpload:{},
+    ownerOfUpload:{},
 };
 
 export const documentSlice = createSlice({
@@ -70,7 +71,10 @@ export const documentSlice = createSlice({
         },
         setUploadId: (state, action) => {
             state.upload_id = action.payload;
-        }
+        },
+        setOwnerOfUpload: (state, action) => {
+            state.ownerOfUpload = action.payload;
+        },
     },
 });
 
@@ -86,6 +90,7 @@ export const {
     setEmptyStateDocumentCategory,
     setTabFormatDocument,
     setDocumentUpload,
-    setUploadId
+    setUploadId,
+    setOwnerOfUpload
 } = documentSlice.actions;
 export const documentReducer = documentSlice.reducer;
