@@ -1,5 +1,8 @@
+import { useTranslations } from "next-intl";
 
-const Footer = ({t}) => {
+const Footer = async() => {
+    const t = await useTranslations('Homepage');
+
     return (
         <footer className="bg-[#F4F8FE] border border-t border-[#e3e6ef]">
             <div className="screen-layer p-4 py-6 lg:py-8">

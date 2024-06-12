@@ -88,14 +88,14 @@ const Settings = () => {
             value: '',
         },
         {
-            key: 'seo.title_subcategory',
-            label: "Seo Title subcategory",
+            key: 'seo.title_explorer',
+            label: "Seo Title explorer",
             type: 'string',
             value: '',
         },
         {
-            key: 'seo.description_subcategory',
-            label: "Seo Description subcategory",
+            key: 'seo.description_explorer',
+            label: "Seo Description explorer",
             type: 'string',
             mode: 'long',
             value: '',
@@ -168,7 +168,7 @@ const Settings = () => {
     const [selectedFormTransaction, setSelectedFormTransaction] = useState();
     const [selectedFormSeoHome, setSelectedFormSeoHome] = useState();
     const [selectedFormSeoCategory, setSelectedFormSeoCategory] = useState();
-    const [selectedFormSeoSubCategory, setSelectedFormSeoSubCategory] = useState();
+    const [selectedFormSeoExproler, setSelectedFormSeoExproler] = useState();
     const [selectedFormSeoAbout, setSelectedFormSeoAbout] = useState();
     const [selectedFormPageTerm, setSelectedFormPageTerm] = useState();
     const [selectedFormPagePrivacy, setSelectedFormPagePrivacy] = useState();
@@ -195,7 +195,7 @@ const Settings = () => {
     const transaction = ['transactions.approval', 'transactions.min_withdrawal', 'transactions.balance_enabled'];
     const seoHome = ['seo.title_home', 'seo.description_home'];
     const seoCategory = ['seo.title_category', 'seo.description_category'];
-    const seoSubCategory = ['seo.title_subcategory', 'seo.description_subcategory'];
+    const seoExplorer = ['seo.title_explorer', 'seo.description_explorer'];
     const seoAbout = ['seo.title_about', 'seo.description_about', 'page.description_about'];
     const termTerm = ['page.title_term', 'page.description_seo_term', 'page.description_term'];
     const privacy = ['page.title_privacy', 'page.description_seo_privacy', 'page.description_privacy']
@@ -228,7 +228,7 @@ const Settings = () => {
                         const foundObjectSeoHome = join.filter(element => seoHome.includes(element.key));
                         const foundObjectSeoResult = join.filter(element => seoResult.includes(element.key));
                         const foundObjectSeoCategory = join.filter(element => seoCategory.includes(element.key));
-                        const foundObjectSeoSubcategory = join.filter(element => seoSubCategory.includes(element.key));
+                        const foundObjectSeoExplorer = join.filter(element => seoExplorer.includes(element.key));
                         const foundObjectSeoAbout = join.filter(element => seoAbout.includes(element.key));
                         const foundEditorAbout = foundObjectSeoAbout.find(element => element.key === 'page.description_about');
                         const foundObjectPageTerm = join.filter(element => termTerm.includes(element.key));
@@ -239,7 +239,7 @@ const Settings = () => {
                         setHtmlTerm(foundEditorTerm.value);
                         setHtmlPrivacy(foundEditorPrivacy.value);
                         setSelectedFormSeoCategory(foundObjectSeoCategory);
-                        setSelectedFormSeoSubCategory(foundObjectSeoSubcategory);
+                        setSelectedFormSeoExproler(foundObjectSeoExplorer);
                         setSelectedFormSeoHome(foundObjectSeoHome);
                         setSelectedFormSeoAbout(foundObjectSeoAbout);
                         setSelectedFormTransaction(foundObject);
@@ -315,10 +315,10 @@ const Settings = () => {
                 "seo.title_category": data.seo.title_category,
                 "seo.description_category": data.seo.description_category
             }
-        } else if (selectForm == 'subcategory') {
+        } else if (selectForm == 'explorer') {
             formData = {
-                "seo.title_subcategory": data.seo.title_subcategory,
-                "seo.description_subcategory": data.seo.description_subcategory
+                "seo.title_explorer": data.seo.title_explorer,
+                "seo.description_explorer": data.seo.description_explorer
             }
         } else if (selectForm == 'about') {
             formData = {
@@ -366,7 +366,7 @@ const Settings = () => {
                             <TabsTrigger value="home" onClick={() => setSelectedForm('home')}>Home</TabsTrigger>
                             <TabsTrigger value="result" onClick={() => setSelectedForm('result')}>Result</TabsTrigger>
                             <TabsTrigger value="category" onClick={() => setSelectedForm('category')}>Categories</TabsTrigger>
-                            <TabsTrigger value="subcategory" onClick={() => setSelectedForm('subcategory')}>Sub Categories</TabsTrigger>
+                            <TabsTrigger value="explorer" onClick={() => setSelectedForm('explorer')}>Explorer</TabsTrigger>
                             <TabsTrigger value="about" onClick={() => setSelectedForm('about')}>About</TabsTrigger>
                             <TabsTrigger value="term" onClick={() => setSelectedForm('term')}>Term and Condition</TabsTrigger>
                             <TabsTrigger value="privacy" onClick={() => setSelectedForm('privacy')}>Privacy</TabsTrigger>
@@ -501,12 +501,12 @@ const Settings = () => {
                                 </CardContent>
                             </Card>
                         </TabsContent>
-                        <TabsContent value="subcategory">
+                        <TabsContent value="explorer">
                             <Card>
                                 <CardContent className="space-y-2">
                                     <form className="flex flex-col gap-[8px]" onSubmit={handleSubmit(onSubmit)}>
                                         {
-                                            selectedFormSeoSubCategory && selectedFormSeoSubCategory.map((item, index) => {
+                                            selectedFormSeoExproler && selectedFormSeoExproler.map((item, index) => {
                                                 if (item.mode === "long") {
                                                     return (
                                                         <div key={index} className="space-y-1">
