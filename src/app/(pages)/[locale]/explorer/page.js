@@ -22,18 +22,6 @@ const ExplorerPages = ({ }) => {
             </div>
             <div className="screen-layer">
                 <div className="item-view">
-                    <h2>Most favorites documents</h2>
-                    <SliderCardItem />
-                </div>
-                <div className="item-view">
-                    <h2>Most downloaded documents</h2>
-                    <SliderCardItem />
-                </div>
-                <div className="item-view">
-                    <h2>Saved documents</h2>
-                    <SliderCardItem />
-                </div>
-                <div className="item-view">
                     <div className="flex justify-between items-center">
                         <h2>Saved documents</h2>
                         <Link href={'/'} className="view-more">View more</Link>

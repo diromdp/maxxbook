@@ -75,6 +75,19 @@ const Settings = () => {
             value: '',
         },
         {
+            key: 'seo.title_result',
+            label: "Seo Title result",
+            type: 'string',
+            value: '',
+        },
+        {
+            key: 'seo.description_seo_result',
+            label: "Seo Description result",
+            type: 'string',
+            mode: 'long',
+            value: '',
+        },
+        {
             key: 'seo.title_subcategory',
             label: "Seo Title subcategory",
             type: 'string',
@@ -159,6 +172,7 @@ const Settings = () => {
     const [selectedFormSeoAbout, setSelectedFormSeoAbout] = useState();
     const [selectedFormPageTerm, setSelectedFormPageTerm] = useState();
     const [selectedFormPagePrivacy, setSelectedFormPagePrivacy] = useState();
+    const [selectedFormPageResult, setSelectedFormPageResult] = useState();
     const [filterUser, setFilterUser] = useState({
         q: "",
         cursorEnabled: null,
@@ -185,7 +199,7 @@ const Settings = () => {
     const seoAbout = ['seo.title_about', 'seo.description_about', 'page.description_about'];
     const termTerm = ['page.title_term', 'page.description_seo_term', 'page.description_term'];
     const privacy = ['page.title_privacy', 'page.description_seo_privacy', 'page.description_privacy']
-
+    const seoResult = ['seo.title_result', 'seo.description_seo_result']
 
     const [api, contextHolder] = notification.useNotification();
 
@@ -212,6 +226,7 @@ const Settings = () => {
                     setTimeout(() => {
                         const foundObject = join.filter(element => transaction.includes(element.key))
                         const foundObjectSeoHome = join.filter(element => seoHome.includes(element.key));
+                        const foundObjectSeoResult = join.filter(element => seoResult.includes(element.key));
                         const foundObjectSeoCategory = join.filter(element => seoCategory.includes(element.key));
                         const foundObjectSeoSubcategory = join.filter(element => seoSubCategory.includes(element.key));
                         const foundObjectSeoAbout = join.filter(element => seoAbout.includes(element.key));
@@ -230,6 +245,7 @@ const Settings = () => {
                         setSelectedFormTransaction(foundObject);
                         setSelectedFormPagePrivacy(foundObjectPagePrivacy);
                         setSelectedFormPageTerm(foundObjectPageTerm);
+                        setSelectedFormPageResult(foundObjectSeoResult);
                     }, 500);
                 }
             })
@@ -322,7 +338,13 @@ const Settings = () => {
                 "page.description_seo_privacy": data.page.description_seo_privacy,
                 "page.description_privacy": htmlPrivacy,
             }
+        } else if (selectForm == 'result') {
+            formData = {
+                "seo.title_result": data.seo.title_result,
+                "seo.description_seo_result": data.seo.description_seo_result,
+            }
         }
+
         submitToServer(formData);
     }
 
@@ -339,9 +361,10 @@ const Settings = () => {
             <Card>
                 <CardContent>
                     <Tabs defaultValue="transaction" className="w-full">
-                        <TabsList className="grid w-full grid-cols-7">
+                        <TabsList className="grid w-full grid-cols-8">
                             <TabsTrigger value="transaction" onClick={() => setSelectedForm('transaction')}>Transaction</TabsTrigger>
                             <TabsTrigger value="home" onClick={() => setSelectedForm('home')}>Home</TabsTrigger>
+                            <TabsTrigger value="result" onClick={() => setSelectedForm('result')}>Result</TabsTrigger>
                             <TabsTrigger value="category" onClick={() => setSelectedForm('category')}>Categories</TabsTrigger>
                             <TabsTrigger value="subcategory" onClick={() => setSelectedForm('subcategory')}>Sub Categories</TabsTrigger>
                             <TabsTrigger value="about" onClick={() => setSelectedForm('about')}>About</TabsTrigger>
@@ -413,6 +436,29 @@ const Settings = () => {
                                                     )
                                                 }
 
+                                            })
+                                        }
+                                        <Button className="mt-[16px]" type="submit">Save</Button>
+                                    </form>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+                        <TabsContent value="result">
+                            <Card>
+                                <CardContent className="space-y-2">
+                                    <form className="flex flex-col gap-[8px]" onSubmit={handleSubmit(onSubmit)}>
+                                        {
+                                            selectedFormPageResult && selectedFormPageResult.map((item, index) => {
+                                                return (
+                                                    <div key={index} className="space-y-1">
+                                                        <Label htmlFor={item.key}>{item.label}</Label>
+                                                        <Input
+                                                            id={item.key}
+                                                            defaultValue={item.value}
+                                                            {...register(`${item.key}`)}
+                                                        />
+                                                    </div>
+                                                )
                                             })
                                         }
                                         <Button className="mt-[16px]" type="submit">Save</Button>

@@ -4,6 +4,7 @@ import PlaceAdsance from "@/app/component/placeAdsence";
 import DocumentDesc from "../../../../component/documentDesc";
 import { urlAPI } from "../../../../../lib/constant";
 import { getTranslations, getLocale } from "next-intl/server";
+import { headers } from "next/headers";
 
 async function getData() {
     const data = await fetch(`${urlAPI}backend/documents?perPage=${10}&sortBy=${'id'}&sortDirection=${'desc'}&is_random=${1}`, {
@@ -35,10 +36,12 @@ async function getDetails(slug) {
     return data.json()
 }
 
-export async function generateMetadata({ params }, parent) {
+export async function generateMetadata({ params }) {
     // read route params
-    const slug = params.slug
+    const slug = params.slug;
     const dataDetailDocument = await getDetails(slug);
+    const headersList = headers();
+    const pathname = headersList.get("referer");
 
     // fetch data
     return {
@@ -48,6 +51,7 @@ export async function generateMetadata({ params }, parent) {
         twitter: {
             card: 'summary_large_image',
             title: dataDetailDocument.title_seo,
+            url: pathname,
             description: dataDetailDocument.description_seo,
             images: {
                 url: dataDetailDocument.thumb_url,
@@ -57,7 +61,7 @@ export async function generateMetadata({ params }, parent) {
         openGraph: {
             title: dataDetailDocument.title_seo,
             description: dataDetailDocument.description_seo,
-            url: 'https://maxibook.com',
+            url: pathname,
             type: 'website',
             images: [
                 {

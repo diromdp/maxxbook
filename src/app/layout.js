@@ -1,5 +1,5 @@
 import { Roboto, Montserrat, League_Spartan } from 'next/font/google';
-
+import { BaseUrl } from '../lib/constant';
 import '@/app/scss/style.scss';
 import '@wangeditor/editor/dist/css/style.css' // import css
 
@@ -27,16 +27,45 @@ const league = League_Spartan({
   variable: '--font-league_spartan',
 
 })
+
 export const metadata = {
   title: 'Maxibook - All you can read anything',
+  manifest: '/manifest.json',
   description: 'Maxibook is place to find documents or materials than can help to solve your problem',
+  alternates: {
+    canonical: BaseUrl,
+    languages: {
+      'en': '/en',
+      'id': '/id',
+    },
+  },
   verification: {
     google: 'google',
     yandex: 'yandex',
     yahoo: 'yahoo',
     bing: 'bing',
   },
-  themeColor: 'black',
+  icons: {
+    icon: [
+      { url: '/icon/favicon-16x16.png', sizes: '16x16'},
+      { url: '/icon/favicon-32x32.png', sizes: '32x32'},
+      { url: '/icon/favicon-96x96.png', sizes: '96x96'},
+    ],
+    shortcut: ['/icon/apple-icon.png'],
+    apple: [
+      { url: '/icon/apple-icon.png' },
+      { url: '/icon/apple-icon-114x114.png', sizes: '114x114', type: 'image/png' },
+      { url: '/icon/apple-icon-114x114.png', sizes: '114x114', type: 'image/png' },
+      { url: '/icon/apple-icon-144x144.png', sizes: '144x144', type: 'image/png' },
+      { url: '/icon/apple-icon-180x180.png', sizes: '180x180', type: 'image/png' },
+    ],
+    other: [
+      {
+        rel: 'apple-touch-icon-precomposed',
+        url: '/icon/apple-icon-precomposed.png',
+      },
+    ],
+  },
 }
 
 export default function RootLayout({ children }) {

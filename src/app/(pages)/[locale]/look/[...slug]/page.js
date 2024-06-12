@@ -102,7 +102,7 @@ const LookUserDetail = ({ params }) => {
             hasFetchedData.current = true;
         }
     }, []);
-    console.log(getUserUploadInfo && getUserUploadInfo)
+
     return (
         <>
             <div className="look-user-detail">
