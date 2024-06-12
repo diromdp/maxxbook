@@ -86,7 +86,8 @@ module.exports = {
       },
       fontFamily: {
         'roboto' : 'var(--font-roboto)',
-        'montserrat': 'var(--font-montserrat)'
+        'montserrat': 'var(--font-montserrat)',
+        'league_spartan': 'var(--font-league_spartan)',
       }
     },
   },

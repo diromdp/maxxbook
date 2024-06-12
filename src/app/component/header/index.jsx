@@ -87,7 +87,7 @@ const Header = ({ locale }) => {
             <div className="screen-layer">
                 <div className="header">
                     <Link href={`/${locale}/`} className="header-logo">
-                        <span className={`text-[20px] lg:text-[28px] xl:text-[40px] select-none font-montserrat font-[700] outline-0`}>Maxibook.</span>
+                        <span className={`text-[20px] lg:text-[28px] xl:text-[40px] select-none font-league_spartan font-[700] outline-0`}>Maxibook.</span>
                     </Link>
                     <div className="header-login">
                         <label className='label'>

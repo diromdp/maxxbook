@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import axios from "axios";
 import { useRouter } from 'next/navigation';
 import { Loader2 } from "lucide-react";
