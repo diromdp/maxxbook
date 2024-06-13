@@ -11,12 +11,6 @@ import { useEffect } from "react";
 import Card from "../cartItem";
 
 const SliderCardItem = ({data}) => {
-    console.log(data)
-    console.log('asdads')
-
-    useEffect(() => {
-       console.log('slider') 
-    })
     return (
         <Carousel
             opts={{
