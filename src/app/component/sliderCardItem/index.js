@@ -1,3 +1,4 @@
+"use client";
 import {
     Carousel,
     CarouselContent,
@@ -5,10 +6,17 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useEffect } from "react";
 
 import Card from "../cartItem";
 
-const SliderCardItem = () => {
+const SliderCardItem = ({data}) => {
+    console.log(data)
+    console.log('asdads')
+
+    useEffect(() => {
+       console.log('slider') 
+    })
     return (
         <Carousel
             opts={{
@@ -17,14 +25,14 @@ const SliderCardItem = () => {
             className="w-full carousel-slide-sub-category"
         >
             <CarouselContent>
-                {Array.from({ length: 12 }).map((_, index) => (
+                {data && data.map((item, index) => (
                     <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/6 cursor-pointer">
                         <Card
                             key={index}
-                            colorImage={'bg-blue-200'}
-                            imagePath={'https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1'}
-                            title={'Matimatic with images example'}
-                            description={'lorem ipsum dolor sit amet, con'}
+                            colorImage={item.color}
+                            imagePath={item.thumb_url}
+                            title={item.title}
+                            description={item.description}
                         />
                     </CarouselItem>
                 ))}

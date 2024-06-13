@@ -1,20 +1,19 @@
 import Header from "../../component/header"
 import Footer from '../../component/footer';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations, useMessages } from "next-intl";
 import dynamic from "next/dynamic";
 import ProtectAuth  from "./protectAuth";
 const ReduxProvider = dynamic(() => import("../../store/redux-provider"), {
     ssr: false
 });
 
-export default async function PagesLayout({
+export default function PagesLayout({
     children,
     params: { locale }
 }) {
-    const messages = await getMessages();
-    const t = await getTranslations('Homepage');
+    const messages = useMessages();
+    const t = useTranslations('Homepage');
     return (
         <>
             <ReduxProvider>

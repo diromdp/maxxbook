@@ -1,7 +1,7 @@
 {
     "Homepage": {
         "title": "Welcome to Maxibook",
-        "description": "Kamu bisa Anda baca gratis! Dapatkan jutaan dokumen yang Anda butuhkan di sini",
+        "description": "All you can read is free! Get millions of documents you need here",
         "or": "or",
         "browser": "Browse categories",
         "see category": "See All Categories",
@@ -26,5 +26,11 @@
         "uploads": "Upload By",
         "download": "Download Document",
         "other documents": "You might also like"
+    },
+    "Exporler": {
+        "heading":"Read anytime. Anywhere.",
+        "leading": "All you can read is free! Get millions of documents you need here",
+        "saved documents": "Saved documents",
+        "View more": "View more"
     }
 }

@@ -26,5 +26,11 @@
         "uploads": "Diunggah",
         "download": "Unduh Dokumen",
         "other documents": "Anda mungkin juga menyukai"
+    },
+    "Exporler": {
+        "heading":"Baca kapan saja. Dimanapun.",
+        "leading": "Semua yang bisa Anda baca gratis! Dapatkan jutaan dokumen yang Anda butuhkan di sini",
+        "saved documents": "Dokumen yang disimpan",
+        "View more": "Selanjutnya"
     }
 }
