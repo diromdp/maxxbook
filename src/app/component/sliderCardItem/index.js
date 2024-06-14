@@ -27,6 +27,7 @@ const SliderCardItem = ({data}) => {
                             imagePath={item.thumb_url}
                             title={item.title}
                             description={item.description}
+                            slug={item.slug}
                         />
                     </CarouselItem>
                 ))}

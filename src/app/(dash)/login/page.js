@@ -158,7 +158,7 @@ const LoginUser = () => {
                                         </span>
                                     </label>
                                     <a
-                                        href="#"
+                                        href="/login/send-link"
                                         className="mr-4 text-sm font-medium text-purple-blue-500"
                                     >
                                         Forget password?

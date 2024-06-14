@@ -206,11 +206,11 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
         h6 {
             @apply font-roboto font-[700] text-[1rem] 2xl:text-[1.25rem] text-primarytext;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 2;
             overflow: hidden;
             -webkit-box-orient: vertical;
             font-style: normal;
-            line-height: 1.5;
+            line-height: 20px;
         }
 
         p {
@@ -220,7 +220,7 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
             overflow: hidden;
             -webkit-box-orient: vertical;
             font-style: normal;
-            line-height: 1.5;
+            line-height: 20px;
         }
     }
 }

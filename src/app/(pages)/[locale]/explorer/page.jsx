@@ -1,14 +1,14 @@
 
 import Image from "next/image";
+import Link from "next/link";
+import { use } from "react";
+import { headers } from "next/headers";
+import SavedComponent from "../../../component/savedComponent"
 import imgBanner1 from "@/app/assets/images/img-banner-1.svg";
 import imgBanner2 from "@/app/assets/images/img-banner-2.svg";
 import { useTranslations, useLocale } from "next-intl";
 import SliderCardItem from "@/app/component/sliderCardItem";
-import Link from "next/link";
-import { use } from "react";
 import { urlAPI } from "../../../../lib/constant";
-import { headers } from "next/headers";
-
 
 async function getData() {
     const data = await fetch(`${urlAPI}backend/documents?perPage=${10}&sortBy=${'id'}&sortDirection=${'desc'}&is_random=${1}`, {
@@ -67,7 +67,7 @@ const ExplorerPages = () => {
     const locale = useLocale();
     const data = use(getData());
     const cardItems = data.data;
-    console.log(cardItems);
+
 
     return (
         <div className="explorer-pages">
@@ -84,17 +84,11 @@ const ExplorerPages = () => {
                 </div>
             </div>
             <div className="screen-layer">
+                <SavedComponent />
                 <div className="item-view">
                     <div className="flex justify-between items-center">
-                        <h2>{t('saved documents')}</h2>
-                        <Link href={'/'} className="view-more">{t('View more')}</Link>
-                    </div>
-                    {/* <SliderCardItem /> */}
-                </div>
-                <div className="item-view">
-                    <div className="flex justify-between items-center">
-                        <h2> documents</h2>
-                        <Link href={`/${locale}/result`}>{t('View more')}</Link>
+                        <h2>{t('documents')}</h2>
+                        <Link className="view-more" href={`/${locale}/result`}>{t('View more')}</Link>
                     </div>
                     <SliderCardItem data={cardItems} />
                 </div>

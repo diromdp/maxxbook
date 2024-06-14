@@ -1,6 +1,6 @@
 
 .panel-sidebar {
-    @apply mt-[32px];
+    @apply mt-[10px];
     &-container {
         ul {
             @apply flex flex-col items-start gap-[10px];
@@ -10,6 +10,9 @@
                     &:hover {
                         @apply font-[600];
                     }
+                }
+                .active {
+                    @apply font-[900] font-montserrat text-[16px];
                 }
             }
         }

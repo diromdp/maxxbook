@@ -1,7 +1,8 @@
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 const Footer = async() => {
     const t = await useTranslations('Homepage');
+    const locale = useLocale();
 
     return (
         <footer className="bg-[#F4F8FE] border border-t border-[#e3e6ef]">
@@ -25,10 +26,10 @@ const Footer = async() => {
                             <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
                             <ul className="text-gray-500 dark:text-gray-400 font-medium">
                                 <li className="mb-4">
-                                    <a href="#" className="hover:underline">{t('privacy policy')}</a>
+                                    <a href={`/${locale}/privacy-policy`} className="hover:underline">{t('privacy policy')}</a>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:underline">{t('term and conditions')}</a>
+                                    <a href={`/${locale}/terms-condition`} className="hover:underline">{t('term and conditions')}</a>
                                 </li>
                             </ul>
                         </div>

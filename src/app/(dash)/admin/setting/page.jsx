@@ -160,10 +160,31 @@ const Settings = () => {
             mode: 'editor',
             value: '',
         },
+        {
+            key: 'page.title_contact',
+            label: "Page Title contact",
+            type: 'string',
+            value: '',
+        },
+        {
+            key: 'page.description_seo_contact',
+            label: "Page Description seo contact",
+            type: 'string',
+            mode: 'long',
+            value: '',
+        },
+        {
+            key: 'page.description_contact',
+            label: "Page Description contact",
+            type: 'string',
+            mode: 'editor',
+            value: '',
+        },
     ]);
     const [htmlAbout, setHtmlAbout] = useState();
     const [htmlTerms, setHtmlTerm] = useState();
     const [htmlPrivacy, setHtmlPrivacy] = useState();
+    const [htmlContact, setHtmlContact] = useState();
     const [selectForm, setSelectedForm] = useState('transaction');
     const [selectedFormTransaction, setSelectedFormTransaction] = useState();
     const [selectedFormSeoHome, setSelectedFormSeoHome] = useState();
@@ -173,6 +194,8 @@ const Settings = () => {
     const [selectedFormPageTerm, setSelectedFormPageTerm] = useState();
     const [selectedFormPagePrivacy, setSelectedFormPagePrivacy] = useState();
     const [selectedFormPageResult, setSelectedFormPageResult] = useState();
+    const [selectedFormPageContact, setSelectedFormPageContact] = useState();
+
     const [filterUser, setFilterUser] = useState({
         q: "",
         cursorEnabled: null,
@@ -200,7 +223,7 @@ const Settings = () => {
     const termTerm = ['page.title_term', 'page.description_seo_term', 'page.description_term'];
     const privacy = ['page.title_privacy', 'page.description_seo_privacy', 'page.description_privacy']
     const seoResult = ['seo.title_result', 'seo.description_seo_result']
-
+    const contact = ['page.title_contact', 'page.description_seo_contact', 'page.description_contact']
     const [api, contextHolder] = notification.useNotification();
 
     const hasFetchedData = useRef(false);
@@ -235,9 +258,12 @@ const Settings = () => {
                         const foundEditorTerm = foundObjectPageTerm.find(element => element.key === 'page.description_term');
                         const foundObjectPagePrivacy = join.filter(element => privacy.includes(element.key));
                         const foundEditorPrivacy = foundObjectPagePrivacy.find(element => element.key === 'page.description_privacy');
+                        const foundObjectContact = join.filter(element => contact.includes(element.key));
+                        const foundEditorContact = foundObjectContact.find(element => element.key === 'page.description_contact');
                         setHtmlAbout(foundEditorAbout.value);
                         setHtmlTerm(foundEditorTerm.value);
                         setHtmlPrivacy(foundEditorPrivacy.value);
+                        setHtmlContact(foundEditorContact.value);
                         setSelectedFormSeoCategory(foundObjectSeoCategory);
                         setSelectedFormSeoExproler(foundObjectSeoExplorer);
                         setSelectedFormSeoHome(foundObjectSeoHome);
@@ -246,6 +272,7 @@ const Settings = () => {
                         setSelectedFormPagePrivacy(foundObjectPagePrivacy);
                         setSelectedFormPageTerm(foundObjectPageTerm);
                         setSelectedFormPageResult(foundObjectSeoResult);
+                        setSelectedFormPageContact(foundObjectContact);
                     }, 500);
                 }
             })
@@ -343,6 +370,13 @@ const Settings = () => {
                 "seo.title_result": data.seo.title_result,
                 "seo.description_seo_result": data.seo.description_seo_result,
             }
+        } else if (selectForm == 'contact') {
+            formData = {
+                "page.title_contact": data.page.title_contact,
+                "page.description_seo_contact": data.page.description_seo_contact,
+                "page.description_contact": htmlContact,
+
+            }
         }
 
         submitToServer(formData);
@@ -361,7 +395,7 @@ const Settings = () => {
             <Card>
                 <CardContent>
                     <Tabs defaultValue="transaction" className="w-full">
-                        <TabsList className="grid w-full grid-cols-8">
+                        <TabsList className="grid w-full grid-cols-9">
                             <TabsTrigger value="transaction" onClick={() => setSelectedForm('transaction')}>Transaction</TabsTrigger>
                             <TabsTrigger value="home" onClick={() => setSelectedForm('home')}>Home</TabsTrigger>
                             <TabsTrigger value="result" onClick={() => setSelectedForm('result')}>Result</TabsTrigger>
@@ -370,6 +404,8 @@ const Settings = () => {
                             <TabsTrigger value="about" onClick={() => setSelectedForm('about')}>About</TabsTrigger>
                             <TabsTrigger value="term" onClick={() => setSelectedForm('term')}>Term and Condition</TabsTrigger>
                             <TabsTrigger value="privacy" onClick={() => setSelectedForm('privacy')}>Privacy</TabsTrigger>
+                            <TabsTrigger value="contact" onClick={() => setSelectedForm('contact')}>Contact Us</TabsTrigger>
+
                         </TabsList>
                         <TabsContent value="transaction">
                             <Card>
@@ -663,6 +699,56 @@ const Settings = () => {
                                                                     config={config}
                                                                     tabIndex={1}
                                                                     onBlur={(newContent) => setHtmlPrivacy(newContent)} // preferred to use only this option to update the content for performance reasons
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                } else {
+                                                    return (
+                                                        <div key={index} className="space-y-1">
+                                                            <Label htmlFor={item.key}>{item.label}</Label>
+                                                            <Input
+                                                                id={item.key}
+                                                                defaultValue={item.value}
+                                                                {...register(`${item.key}`)}
+                                                            />
+                                                        </div>
+                                                    )
+                                                }
+                                            })
+                                        }
+                                        <Button className="mt-[16px]" type="submit">Save</Button>
+                                    </form>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+                        <TabsContent value="contact">
+                            <Card>
+                                <CardContent className="space-y-2">
+                                    <form className="flex flex-col gap-[8px]" onSubmit={handleSubmit(onSubmit)}>
+                                        {
+                                            selectedFormPageContact && selectedFormPageContact.map((item, index) => {
+                                                if (item.mode === "long") {
+                                                    return (
+                                                        <div key={index} className="space-y-1">
+                                                            <Label htmlFor={item.key}>{item.label}</Label>
+                                                            <Textarea
+                                                                {...register(`${item.key}`)}
+                                                                defaultValue={item.value} />
+                                                        </div>
+                                                    )
+                                                } else if (item.mode === "editor") {
+                                                    return (
+                                                        <div key={index} className="space-y-1">
+                                                            <Label htmlFor={item.key}>{item.label}</Label>
+                                                            <div className="border border-input rounded-[8px]">
+                                                                <JoditEditor
+                                                                    ref={editor}
+                                                                    className="rounded-[8px]"
+                                                                    value={htmlContact ? htmlContact : ''}
+                                                                    config={config}
+                                                                    tabIndex={1}
+                                                                    onBlur={(newContent) => setHtmlContact(newContent)} // preferred to use only this option to update the content for performance reasons
                                                                 />
                                                             </div>
                                                         </div>
