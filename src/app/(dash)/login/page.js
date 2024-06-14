@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from 'next/navigation';
-import { Loader2 } from "lucide-react";
+import { Loader2, Eye, EyeOff } from "lucide-react";
 import { notification } from "antd";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +17,7 @@ const LoginUser = () => {
     const [isDisabled, setIsdisabled] = useState(false);
     const [isLoading, setIsloading] = useState(false);
     const [remember, setRemember] = useState(false);
+    const [isEye, setIseye] = useState(false);
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
     const token = getToken.access_token;
     const router = useRouter();
@@ -39,7 +40,7 @@ const LoginUser = () => {
     });
 
     const checkLogin = () => {
-        if(token) {
+        if (token) {
             router.push('/');
         }
     }
@@ -74,9 +75,9 @@ const LoginUser = () => {
                     const errors = error.response.data;
                     setIsdisabled(false);
                     setIsloading(false);
-            
+
                     api.error({
-                        message:errors.message,
+                        message: errors.message,
                         description: errors.errors.email[0],
                     });
                 });
@@ -99,7 +100,7 @@ const LoginUser = () => {
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <h3 className="mb-3 text-2xl 1xl:text-4xl font-extrabold text-dark-slate-900 text-center">Sign In</h3>
                                 <p className="mb-4 text-slate-700 text-center">Enter your email and password</p>
-                                <Link href={'https://docs.brohim.online/backend/customer/login/google'} className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-slate-900 bg-slate-100 hover:bg-slate-200 focus:ring-4 focus:ring-slate-200">
+                                <Link href={`${urlAPI}backend/customer/login/google`}className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-slate-900 bg-slate-100 hover:bg-slate-200 focus:ring-4 focus:ring-slate-200">
                                     <img
                                         className="h-5 mr-2"
                                         src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
@@ -129,13 +130,20 @@ const LoginUser = () => {
                                     <label htmlFor="password" className="mb-2 text-sm text-start text-slate-900">
                                         Password*
                                     </label>
-                                    <input
-                                        id="password"
-                                        type="password"
-                                        placeholder="Enter a password"
-                                        {...register("password")}
-                                        className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-slate-400 placeholder:text-slate-700 bg-slate-200 text-dark-slate-900 rounded-2xl"
-                                    />
+                                    <div className="relative eye-password">
+                                        <input
+                                            id="password"
+                                            type={isEye ? "text" : "password"}
+                                            placeholder="Enter a password"
+                                            {...register("password")}
+                                            className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-slate-400 placeholder:text-slate-700 bg-slate-200 text-dark-slate-900 rounded-2xl"
+                                        />
+                                        {
+                                            isEye ? <EyeOff className="pointer" onClick={() => setIseye(!isEye)} /> :  <Eye className="pointer" onClick={() => setIseye(!isEye)} />
+                                        }
+                                       
+                                    </div>
+
                                     {errors.password && <p className="text-red-500 text-[16px]">{errors.password.message}</p>}
                                 </div>
                                 <div className="flex flex-row justify-between mb-8">
@@ -171,7 +179,7 @@ const LoginUser = () => {
                                 </button>
                                 <p className="text-sm leading-relaxed text-slate-900 text-center">
                                     Not registered yet?{" "}
-                                    <a href="#" className="font-bold  text-slate-700">
+                                    <a href="/register" className="font-bold  text-slate-700">
                                         Create an Account
                                     </a>
                                 </p>

@@ -181,6 +181,7 @@ const ResultShow = ({ QureyParams }) => {
                     empatyState &&
                     <div className="content-empty">
                         <Lottie options={defaultOptions}
+                            className="lottie-container"
                             height={400}
                             width={400}
                             disabled={true}    

@@ -95,7 +95,7 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
 
     .searching {
         .content {
-            @apply flex flex-col justify-center items-center px-[16px] lg:px-0;
+            @apply flex flex-col justify-center items-center text-center pt-[32px] lg:pt-0 lg:px-0;
         }
     }
 
@@ -104,7 +104,7 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
             @apply flex gap-[16px] flex-wrap justify-center items-center w-full xl:w-[850px] m-auto pt-[32px];
 
             .item {
-                @apply p-[10px] w-[250px] h-[80px] rounded-[8px] border border-slate-200 relative overflow-hidden;
+                @apply p-[10px] w-full sm:w-[250px] h-[80px] rounded-[8px] border border-slate-200 relative overflow-hidden;
 
                 &:hover {
                     @apply border-blue-500;
@@ -141,7 +141,7 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
     }
 
     .start-to-search {
-        @apply bg-[#fbf9f8] flex justify-center items-center flex-col py-[32px] h-[300px] mt-[60px];
+        @apply bg-[#fbf9f8] flex justify-center items-center flex-col text-center py-[32px] h-[300px] mt-[60px];
 
         .content {
             @apply flex justify-center items-center flex-col px-[16px] lg:px-0;
@@ -170,6 +170,9 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
 }
 .content-empty {
     @apply flex flex-col items-center px-[20px] 2xl:px-0;
+    .lottie-container {
+        @apply w-full h-full md:w-[400px] md:h-[400px];
+    }
     h3 {
         @apply font-roboto font-[700] text-[1.1rem] text-center 2xl:text-[1.85rem] text-primarytext mb-[24px] 2xl:mb-[32px];
     }
@@ -179,7 +182,7 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
 }
 
 .result-show {
-    @apply flex items-center gap-[16px] flex-wrap w-full m-auto justify-center md:justify-start px-[20px] 2xl:px-0;
+    @apply flex items-center gap-[16px] flex-wrap w-full m-auto justify-center md:justify-start;
 }
 
 .result-show-item {
@@ -227,6 +230,7 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
 
 .container {
     max-width: 1248px;
+    @apply px-[16px];
 }
 
 .pdf-init {
@@ -266,6 +270,12 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
     }
     .sosmed {
         @apply flex gap-[16px];
+    }
+}
+
+.eye-password {
+    svg {
+        @apply absolute z-[99] right-5 top-[15px] text-[#868686];
     }
 }
 

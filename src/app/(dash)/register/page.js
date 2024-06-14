@@ -8,14 +8,16 @@ import axios from "axios";
 import { useRouter } from 'next/navigation'
 import { urlAPI } from "../../../lib/constant";
 import { notification } from 'antd';
+import { Eye, EyeOff } from "lucide-react";
 
 
 const RegisterUser = () => {
     const [isDisbaled, setIsdisabled] = useState(false);
     const [isLoading, setIsloading] = useState(false);
     const router = useRouter();
+    const [isEye, setIseye] = useState(false);
+    const [isEyeConfirm, setEyeConfirm] = useState(false);
     const [api, contextHolder] = notification.useNotification();
-
 
     const passwordValidation = new RegExp(
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
@@ -34,9 +36,9 @@ const RegisterUser = () => {
             message: 'Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character',
         }),
         cpassword: z.string().min(6, { message: 'Password must be at least 6 characters' })
-        }).refine((data) => data.password === data.cpassword, {
-            path: ['cpassword'],
-            message: 'Passwords does not match'
+    }).refine((data) => data.password === data.cpassword, {
+        path: ['cpassword'],
+        message: 'Passwords does not match'
     });
 
     const {
@@ -49,8 +51,8 @@ const RegisterUser = () => {
     });
 
     const onSubmit = async (value) => {
-        // setIsdisabled(true);
-        // setIsloading(true);
+        setIsdisabled(true);
+        setIsloading(true);
         try {
             const response = await axios.post(`${urlAPI}backend/customer/register`, {
                 "name": value.name,
@@ -83,14 +85,14 @@ const RegisterUser = () => {
 
     return (
         <>
-            <div className="flex min-h-screen bg-[#F4F8FE]">
+            <div className="flex min-h-screen">
                 <div className="flex flex-row w-full">
-                    <div className="flex flex-1 flex-col items-center justify-center px-[16px] 2xl:px-0 relative">
-                        <div className="flex 2xl:flex-1 flex-col bg-white max-w-full justify-center 2xl:max-w-md p-[20px] shadow-xl my-[80px] rounded-[8px]">
+                    <div className="flex flex-1 flex-col items-center justify-center px-[16px] 1xl:px-10 relative">
+                        <div className="flex 1xl:flex-1 flex-col max-w-full justify-center 2xl:max-w-md p-[20px] shadow-xl my-[80px] rounded-[8px]">
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <h1 className="mb-3 text-2xl 1xl:text-4xl font-extrabold text-dark-slate-900 text-center">Create your account</h1>
                                 <p className="mb-4 text-slate-700 text-center">Enter your email and password</p>
-                                <Link href={'/'} className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-slate-900 bg-slate-100 hover:bg-slate-200 focus:ring-4 focus:ring-slate-200">
+                                <Link href={`${urlAPI}backend/customer/login/google`} className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-slate-900 bg-slate-100 hover:bg-slate-200 focus:ring-4 focus:ring-slate-200">
                                     <img
                                         className="h-5 mr-2"
                                         src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
@@ -135,30 +137,41 @@ const RegisterUser = () => {
                                     <label htmlFor="password" className="mb-2 text-sm text-start text-slate-900">
                                         Password<span className="text-red-800 font-bold">*</span>
                                     </label>
-                                    <input
-                                        id="password"
-                                        type="password"
-                                        placeholder="Enter a password"
-                                        className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-slate-400 placeholder:text-slate-700 bg-slate-200 text-dark-slate-900 rounded-2xl"
-                                        {...register("password")}
-                                    />
+                                    <div className="relative eye-password">
+                                        <input
+                                            id="password"
+                                            type={isEye ? "text" : "password"}
+                                            placeholder="Enter a password"
+                                            className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-slate-400 placeholder:text-slate-700 bg-slate-200 text-dark-slate-900 rounded-2xl"
+                                            {...register("password")}
+                                        />
+                                        {
+                                            isEye ? <EyeOff className="pointer" onClick={() => setIseye(!isEye)} /> : <Eye className="pointer" onClick={() => setIseye(!isEye)} />
+                                        }
+                                    </div>
                                     {errors.password && <p className="text-red-500 text-[16px] mt-2">{errors.password.message}</p>}
                                 </div>
                                 <div className="mb-7">
                                     <label htmlFor="cpassword" className="mb-2 text-sm text-start text-slate-900">
                                         Confirm Password<span className="text-red-800 font-bold">*</span>
                                     </label>
-                                    <input
-                                        id="cpassword"
-                                        type="password"
-                                        placeholder="Enter a confirm password"
-                                        className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-slate-400 placeholder:text-slate-700 bg-slate-200 text-dark-slate-900 rounded-2xl"
-                                        {...register("cpassword")}
-                                    />
+                                    <div className="relative eye-password">
+                                        <input
+                                            id="cpassword"
+                                            type={isEyeConfirm ? "text" : "password"}
+                                            placeholder="Enter a confirm password"
+                                            className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-slate-400 placeholder:text-slate-700 bg-slate-200 text-dark-slate-900 rounded-2xl"
+                                            {...register("cpassword")}
+                                        />
+                                        {
+                                            isEyeConfirm ? <EyeOff className="pointer" onClick={() => setEyeConfirm(!isEyeConfirm)} /> : <Eye className="pointer" onClick={() => setEyeConfirm(!isEyeConfirm)} />
+                                        }
+                                    </div>
                                     {errors.cpassword && <p className="text-red-500 text-[16px] mt-2">{errors.cpassword.message}</p>}
                                 </div>
-                                <button type="submit" className="w-full px-6 py-5 mb-7 text-sm font-bold leading-none text-white transition duration-300 rounded-2xl hover:bg-sky-600 focus:ring-4 focus:bg-sky-100 bg-sky-300">
+                                <button type="submit" disabled={isDisbaled} className="w-full px-6 py-5 mb-7 text-sm font-bold leading-none text-white transition duration-300 rounded-2xl hover:bg-sky-600 focus:ring-4 focus:bg-sky-100 bg-sky-300">
                                     Continue
+                                    {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
                                 </button>
                                 <p className="text-sm leading-relaxed text-slate-900 text-left">
                                     Already have an account to maxibook? Use your maxibook username and password?{" "}

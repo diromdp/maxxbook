@@ -123,8 +123,6 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
                     <div className="content-empty">
                         {/* <h3>{t('content empty')}</h3> */}
                         <Lottie options={defaultOptions}
-                            height={400}
-                            width={400}
                             disabled={true}    
                         />
                     </div>
