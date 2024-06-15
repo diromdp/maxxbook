@@ -51,11 +51,11 @@ const ContactUs = () => {
 
     return (
         <div className="screen-layer pt-[120px]">
-            <div className="flex gap-[16px] contact-page">
-                <div className="w-[20%]">
+            <div className="flex flex-col md:flex-row gap-[16px] about-page px-[16px] md:px-0">
+                <div className="md:w-[20%]">
                     <Sidebar />
                 </div>
-                <div className="w-[80%] flex-col items-start">
+                <div className="md:w-[80%] flex-col items-start">
                     <div className="content mb-[32px]">
                         <div className="title">
                             <h1>Contact Us</h1>
@@ -65,7 +65,7 @@ const ContactUs = () => {
                         </div>
                         <div className="googlemap">
                             <iframe
-                                className="google-iframe"
+                                className="google-iframe w-full"
                                 title={"Maxibook"}
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2141.398698034589!2d106.8357595716977!3d-6.350808165822227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ec39d21587cd%3A0xb00808a789734eec!2sJl.%20H.%20Shibi%203%2C%20RT.5%2FRW.2%2C%20Srengseng%20Sawah%2C%20Kec.%20Jagakarsa%2C%20Kota%20Jakarta%20Selatan%2C%20Daerah%20Khusus%20Ibukota%20Jakarta!5e0!3m2!1sen!2sid!4v1706375844493!5m2!1sen!2sid"
                                 style={{ border: 0 }}

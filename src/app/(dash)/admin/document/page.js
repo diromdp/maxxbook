@@ -49,15 +49,18 @@ const Document = () => {
     const columns = [
         {
             title: "No",
-            dataIndex: 'id'
+            dataIndex: 'id',
+            responsive: ["sm"]
         },
         {
             title: 'Title Document',
             dataIndex: 'title',
+            responsive: ["sm"]
         },
         {
             title: 'Image Thumbnail',
             dataIndex: 'thumb_url',
+            responsive: ["sm"],
             render: (val) => {
                 return (
                     <>
@@ -71,6 +74,7 @@ const Document = () => {
         {
             title: 'Category',
             dataIndex: 'category',
+            responsive: ["sm"],
             render: (val) => {
                 return (
                     <>
@@ -84,6 +88,7 @@ const Document = () => {
         {
             title: 'Sub Category',
             dataIndex: 'sub_category',
+            responsive: ["sm"],
             render: (val) => {
                 return (
                     <>
@@ -95,6 +100,7 @@ const Document = () => {
         {
             title: 'Upload By User',
             dataIndex: 'user',
+            responsive: ["sm"],
             render: (val) => {
                 return (
                     <>
@@ -108,6 +114,7 @@ const Document = () => {
         {
             title: 'View Document',
             dataIndex: 'url',
+            responsive: ["sm"],
             render: (url) => {
                 return (
                     <>
@@ -121,6 +128,7 @@ const Document = () => {
         {
             title: 'Status',
             dataIndex: 'approval',
+            responsive: ["sm"],
             render: (val) => {
                 return (
                     <>
@@ -135,6 +143,7 @@ const Document = () => {
             title: 'Action',
             key: 'operation',
             fixed: 'right',
+            responsive: ["sm"],
             width: 100,
             render: (val) => {
                 return (
@@ -339,7 +348,12 @@ const Document = () => {
         })
             .then((data) => {
                 if (data.status === 200) {
-                    console.log(data.data);
+                    const updateDocument = dataFetch.map(document =>
+                        document.id === val.id ? { ...document, approval: {
+                            approval_status: "APPROVED"
+                        }} : document
+                    );
+                    setDataFetch(updateDocument);
                 }
             })
             .catch(function (error) {
@@ -385,7 +399,6 @@ const Document = () => {
                 console.log(error.config);
             });
     }
-
 
     useEffect(() => {
         if (!hasFetchedData.current) {

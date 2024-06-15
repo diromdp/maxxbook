@@ -5,10 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import axios from "axios";
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import { urlAPI } from "../../../lib/constant";
 import { notification } from 'antd';
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 
 const RegisterUser = () => {
@@ -72,8 +72,9 @@ const RegisterUser = () => {
                     }
                 })
                 .catch(function (error) {
-                    console.log(error)
                     const errors = error && error.response.data && error.response.data;
+                    setIsdisabled(false);
+                    setIsloading(false);
                     setError('email', {
                         message: errors.errors.email[0],
                     });
@@ -169,9 +170,10 @@ const RegisterUser = () => {
                                     </div>
                                     {errors.cpassword && <p className="text-red-500 text-[16px] mt-2">{errors.cpassword.message}</p>}
                                 </div>
-                                <button type="submit" disabled={isDisbaled} className="w-full px-6 py-5 mb-7 text-sm font-bold leading-none text-white transition duration-300 rounded-2xl hover:bg-sky-600 focus:ring-4 focus:bg-sky-100 bg-sky-300">
-                                    Continue
+                                <button type="submit" disabled={isDisbaled} className="w-full flex flex-row justify-center items-center gap-[8px] px-6 py-5 mb-7 text-sm font-bold leading-none text-white transition duration-300 rounded-2xl hover:bg-sky-600 focus:ring-4 focus:bg-sky-100 bg-sky-300">
                                     {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
+
+                                    Continue
                                 </button>
                                 <p className="text-sm leading-relaxed text-slate-900 text-left">
                                     Already have an account to maxibook? Use your maxibook username and password?{" "}

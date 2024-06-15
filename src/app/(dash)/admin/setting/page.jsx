@@ -402,7 +402,7 @@ const Settings = () => {
                             <TabsTrigger value="category" onClick={() => setSelectedForm('category')}>Categories</TabsTrigger>
                             <TabsTrigger value="explorer" onClick={() => setSelectedForm('explorer')}>Explorer</TabsTrigger>
                             <TabsTrigger value="about" onClick={() => setSelectedForm('about')}>About</TabsTrigger>
-                            <TabsTrigger value="term" onClick={() => setSelectedForm('term')}>Term and Condition</TabsTrigger>
+                            <TabsTrigger value="term" onClick={() => setSelectedForm('term')}>Term Condition</TabsTrigger>
                             <TabsTrigger value="privacy" onClick={() => setSelectedForm('privacy')}>Privacy</TabsTrigger>
                             <TabsTrigger value="contact" onClick={() => setSelectedForm('contact')}>Contact Us</TabsTrigger>
 

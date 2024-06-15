@@ -14,7 +14,6 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
     ]);
     const [isLoading, setLoading] = useState(true);
     useEffect(() => {
-        console.log(detailCategory);
         setTimeout(() => {
             setLoading(!isLoading);
         }, 1000)
@@ -43,7 +42,7 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
             setMenu([...menu, ...data]);
         }
     }, []);
-
+    
     return (
         <div className="categories-page">
             <div className="screen-layer">
@@ -53,7 +52,7 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
                     <p>{detailCategory && locale.value == "en" ? detailCategory[0].description : detailCategory[0].description_id}.</p>
                 </div>
                 {
-                    slug.length < 2 && detailCategory[0].sub_categories > 0 && <SlideSubCategories locale={locale.value} subCategory={detailCategory[0].sub_categories} isLoading={isLoading} />
+                    slug.length < 2 && detailCategory.length > 0 && <SlideSubCategories locale={locale.value} subCategory={detailCategory[0].sub_categories} isLoading={isLoading} />
                 }
                 <div className="epxlore-more">
                     {

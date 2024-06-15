@@ -18,7 +18,7 @@ import * as searchNotFound from '../../../lottie/search-not-found.json';
 
 import { urlAPI } from "../../../lib/constant";
 
-import { setDocumentCategoryPagination, setDocumentCategorySingle, setEmptyStateDocumentCategory } from "../../store/reducer/categoryFilterSlice";
+import { setDocumentCategoryPagination, setCategoryFilterState, setDocumentCategorySingle, setEmptyStateDocumentCategory } from "../../store/reducer/categoryFilterSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 
 const ResultShowID = ({ idCategory, idSubCategory }) => {

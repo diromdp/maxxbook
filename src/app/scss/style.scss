@@ -182,7 +182,7 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
 }
 
 .result-show {
-    @apply flex items-center gap-[16px] flex-wrap w-full m-auto justify-center md:justify-start;
+    @apply flex items-center gap-[16px] flex-wrap w-full m-auto justify-start;
 }
 
 .result-show-item {
@@ -276,6 +276,19 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
 .eye-password {
     svg {
         @apply absolute z-[99] right-5 top-[15px] text-[#868686];
+    }
+}
+
+.ant-table-content {
+    overflow-x: scroll;
+}
+
+.ant-steps {
+    @apply gap-[18px] md:gap-0;
+    .ant-steps-item  {
+        .ant-steps-item-content {
+            @apply min-h-full md:min-h-[48px] #{!important};
+        }
     }
 }
 

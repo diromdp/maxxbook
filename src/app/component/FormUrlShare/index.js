@@ -35,7 +35,7 @@ const FormUrlShare = () => {
                     <Input type={"text"} defaultValue={urlShare} />
                     <Button onClick={() => Router.push(`${urlShare}`, undefined, { shallow: true })} className="bg-sky-700 hover:bg-sky-800 border-sky-700">View</Button>
                 </div>
-                <div className="flex gap-[16px] mt-[10px]">
+                <div className="flex gap-[16px] mt-[16px] flex-wrap justify-center mt-[10px]">
                     <FacebookShareButton
                         url={urlShare}
                     >

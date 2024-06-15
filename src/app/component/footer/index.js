@@ -9,7 +9,7 @@ const Footer = async() => {
             <div className="screen-layer p-4 py-6 lg:py-8">
                 <div className="md:flex md:justify-between">
                     <div className="mb-6 md:mb-0">
-                        <a href="https://flowbite.com/" className="flex items-center">
+                        <a href="/" className="flex items-center">
                             <span className={`text-[40px] select-none font-league_spartan font-[700] outline-0`}>Maxibook.</span>
                         </a>
                     </div>
@@ -18,7 +18,7 @@ const Footer = async() => {
                             <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{t('about')}</h2>
                             <ul className="text-gray-500 dark:text-gray-400 font-medium">
                                 <li className="mb-4">
-                                    <a href="/" className="hover:underline">Maxibook</a>
+                                    <a href={`/${locale}/about`} className="hover:underline">Maxibook</a>
                                 </li>
                             </ul>
                         </div>

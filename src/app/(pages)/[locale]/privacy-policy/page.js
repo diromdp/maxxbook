@@ -48,13 +48,13 @@ const PrivacyPolicy = () => {
     const selectedEditor = detailSEO.filter(x => x.key === 'page.description_privacy')
 
     return (
-        <div className="screen-layer pt-[120px]">
-            <div className="flex gap-[16px] contact-page">
-                <div className="w-[20%]">
+        <div className="screen-layer pt-[80px] lg:pt-[120px]">
+            <div className="flex flex-col md:flex-row gap-[16px] about-page px-[16px] md:px-0">
+                <div className="md:w-[20%]">
                     <Sidebar/>
                 </div>
-                <div className="w-[80%] flex-col items-start">
-                    <div className="content">
+                <div className="md:w-[80%] flex-col items-start">
+                    <div className="content mb-[32px]">
                         <div className="title">
                             <h1>Privacy Policy</h1>
                         </div>
