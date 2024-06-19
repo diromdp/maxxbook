@@ -330,7 +330,7 @@ const Category = () => {
                         <Pagination>
                             <PaginationContent>
                                 {
-                                    dataPagination && dataPagination.map((data) => {
+                                    dataPagination && dataPagination.map((data, index) => {
                                         if (data.label === "&laquo; Previous") {
                                             return (
                                                 <PaginationItem key={index}>
