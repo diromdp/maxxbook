@@ -22,6 +22,10 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'usc1.contabostorage.com'
+            },
+            {
+                protocol: 'https',
+                hostname: 'sin1.contabostorage.com'
             }
         ],
     },
