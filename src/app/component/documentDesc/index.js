@@ -63,7 +63,6 @@ const DocumentDesc = ({ slug }) => {
             .then((data) => {
                 if (data.status === 200) {
                     setLoading(false)
-                    console.log(data.data)
                     setDocumentData(data.data)
                 }
             })

@@ -129,7 +129,6 @@ const EditPages = () => {
         })
             .then((data) => {
                 if (data.status === 200) {
-                    console.log(data.data)
                     setUrlPathIcon(data.data.icon_url)
                     form.setValue('name', data.data.name);
                     form.setValue('name_id', data.data.name_id);
