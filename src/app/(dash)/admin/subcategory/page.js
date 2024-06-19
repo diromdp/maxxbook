@@ -355,7 +355,6 @@ const Category = () => {
                                         }
                                     })
                                 }
-
                             </PaginationContent>
                         </Pagination>
                     </div>

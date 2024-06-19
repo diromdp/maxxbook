@@ -65,7 +65,7 @@ const AddPages = () => {
         category_id: z.string().trim().nonempty({ message: "Category is required" })
     });
 
-    const form = useForm<ValidationSchemaType>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
