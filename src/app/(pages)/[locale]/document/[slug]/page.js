@@ -89,17 +89,17 @@ export default async function documentPage({ params }) {
     return (
         <div className="document-page">
             <div className="screen-layer mb-[32px]">
-                <div className="flex flex-row gap-[16px]">
-                    <div className="w-[70%] flex flex-col items-center relative">
-                        <PlaceAdsance className="mt-[16px] absolute bottom-0" type={'Leaderboard'} />
+                <div className="flex flex-col px-[16px] lg:px-0 lg:flex-row gap-[16px]">
+                    <div className="w-full lg:w-[70%] flex flex-col items-center relative">
+                        <PlaceAdsance className="my-[16px] hidden md:block w-full " type={'Leaderboard'} />
                         <DocumentDesc slug={slug} />
                     </div>
-                    <div className="w-[30%]">
+                    <div className="w-full lg:w-[30%]">
                         <div className="another-document">
-                            <div className="adds flex flex-col items-center">
-                                <PlaceAdsance type={'Large rectangle'} />
-                            </div>
                             <div className="another-document-content">
+                                <div className="adds flex flex-col hidden lg:flex items-center">
+                                    <PlaceAdsance type={'Large rectangle'} />
+                                </div>
                                 <div className="title-document-content">
                                     <h2>{t('other documents')}</h2>
                                 </div>

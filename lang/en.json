@@ -33,5 +33,14 @@
         "saved documents": "Saved documents",
         "View more": "View more",
         "documents": "Documents"
+    },
+    "User": {
+        "Account": "Account",
+        "Account Information": "Account Information",
+        "Change Password": "Change Password",
+        "Change Image Profile": "Change Image Profile",
+        "Edit": "Edit",
+        "Update": "Update",
+        "Current Password": "Current Password"
     }
 }

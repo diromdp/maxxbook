@@ -57,17 +57,25 @@ const SavedComponent = () => {
         }
     }, []);
 
+    console.log(listDocument);
+
     return (
         <>
             {
                 token &&
-                <div className="item-view">
-                    <div className="flex justify-between items-center">
-                        <h2>{t('saved documents')}</h2>
-                        <Link href={'/'} className="view-more">{t('View more')}</Link>
-                    </div>
-                    <SliderCardItem data={listDocument} />
-                </div>
+                <>
+                    {
+                        listDocument.length > 0 &&
+                        <div className="item-view">
+                            <div className="flex justify-between items-center">
+                                <h2>{t('saved documents')}</h2>
+                                <Link href={'/'} className="view-more">{t('View more')}</Link>
+                            </div>
+                            <SliderCardItem data={listDocument} />
+                        </div>
+                    }
+                </>
+
             }
         </>
     );

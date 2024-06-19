@@ -42,7 +42,7 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
             setMenu([...menu, ...data]);
         }
     }, []);
-    
+    console.log(detailCategory[0].sub_categories);
     return (
         <div className="categories-page">
             <div className="screen-layer">
@@ -52,7 +52,7 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
                     <p>{detailCategory && locale.value == "en" ? detailCategory[0].description : detailCategory[0].description_id}.</p>
                 </div>
                 {
-                    slug.length < 2 && detailCategory.length > 0 && <SlideSubCategories locale={locale.value} subCategory={detailCategory[0].sub_categories} isLoading={isLoading} />
+                    detailCategory[0].sub_categories.length > 0 && <SlideSubCategories locale={locale.value} subCategory={detailCategory[0].sub_categories} isLoading={isLoading} />
                 }
                 <div className="epxlore-more">
                     {

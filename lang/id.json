@@ -33,5 +33,14 @@
         "saved documents": "Dokumen yang disimpan",
         "View more": "Selanjutnya",
         "documents": "Dokumen"
+    },
+    "User": {
+        "Account": "Akun",
+        "Account Information": "Informasi Akun",
+        "Change Password": "Ubah Kata Sandi",
+        "Change Image Profile": "Ubah Profil Gambar",
+        "Edit": "Edit",
+        "Update": "Update",
+        "Current Password": "Kata Sandi Saat Ini"
     }
 }

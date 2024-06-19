@@ -1,6 +1,7 @@
 .document-page {
     @apply pt-[120px];
     .another-document {
+        @apply mt-[85%] md:mt-[40%] lg:mt-0;
         &-content {
             @apply flex flex-col items-center pt-[24px] mt-[24px] gap-[16px];
             border-top: 1px solid #cfd6e0;
@@ -20,7 +21,7 @@
             }
 
             .item-content {
-                @apply flex justify-start items-start gap-[16px] pb-[16px] w-[350px];
+                @apply flex flex-col items-center lg:flex-row lg:justify-start lg:items-start gap-[16px] pb-[16px] w-full lg:w-[350px];
                 border-bottom: 1px solid #e9edf8;
                 .img {
                     @apply w-[50%] flex justify-center;
@@ -32,7 +33,7 @@
                     }
                 }
                 .description {
-                    @apply w-[50%];
+                    @apply w-full lg:w-[50%];
 
                     .type-totals {
                         @apply flex justify-start items-center gap-[4px];

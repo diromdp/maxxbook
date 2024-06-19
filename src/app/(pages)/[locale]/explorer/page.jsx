@@ -75,7 +75,7 @@ const ExplorerPages = () => {
                 <div className="banner-1">
                     <Image alt="banner-1" src={imgBanner1} width={300} height={225} />
                 </div>
-                <div className="screen-layer relative top-[160px]">
+                <div className="screen-layer relative top-[110px] lg:top-[160px] ">
                     <h1>{t('heading')}</h1>
                     <p>{t('leading')}</p>
                 </div>
@@ -83,10 +83,10 @@ const ExplorerPages = () => {
                     <Image alt="banner-2" src={imgBanner2} width={300} height={225} />
                 </div>
             </div>
-            <div className="screen-layer">
+            <div className="screen-layer px-[16px] lg:px-0">
                 <SavedComponent />
                 <div className="item-view">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center mb-[16px]">
                         <h2>{t('documents')}</h2>
                         <Link className="view-more" href={`/${locale}/result`}>{t('View more')}</Link>
                     </div>

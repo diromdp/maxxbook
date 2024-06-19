@@ -120,8 +120,7 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
             <div className="screen-layer">
                 {
                     emptyState &&
-                    <div className="content-empty">
-                        {/* <h3>{t('content empty')}</h3> */}
+                    <div className="content-empty w-full h-full lg:w-[400px] lg:h-[400px] m-auto">
                         <Lottie options={defaultOptions}
                             disabled={true}    
                         />

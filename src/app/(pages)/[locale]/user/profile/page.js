@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Image, Input, notification, Spin } from 'antd';
 import { BadgeCheck } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { useTranslations } from 'next-intl';
 import {
     Card,
     CardContent,
@@ -32,7 +32,6 @@ import { urlAPI } from "../../../../../lib/constant";
 import { setAuthInfoSlice } from '../../../../store/reducer/authSlice';
 import { getInitials } from "../../../../../lib/utils";
 
-
 const ProfileUser = () => {
     const dispatch = useAppDispatch();
     const [isloading, setIsLoading] = useState(false);
@@ -44,6 +43,7 @@ const ProfileUser = () => {
     const getAuth = useAppSelector((state) => state.authUserStorage.authUser);
     const getInfoUser = useAppSelector((state) => state.authUserStorage.authInfoUser);
     const getToken = getAuth ? getAuth.access_token : null;
+    const t = useTranslations("User");
     const formSchema = z.object({
         password: z.string().min(8, 'Password must be at least 8 characters long')
             .regex(/[a-z]/, 'Password must include at least one lowercase character')
@@ -121,6 +121,37 @@ const ProfileUser = () => {
                 });
         }
     };
+
+    const verifyEmail = async() => {
+        await axios.post(`${urlAPI}backend/customer/verification/email`, {}, {
+            headers: {
+                "Content-Type": "application/json",
+                'Accept': "application/json",
+                "Authorization": `Bearer ${getToken}`
+            }
+        })
+            .then((data) => {
+                if (data.status === 200) {
+                    api.success({
+                        message: `Successfully send verification`,
+                        description: 'Kindly check your email account, we have send email verification'
+                    })
+                } 
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    openNotification(error.response.data.message)
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+    }
 
     const onSubmit = async (values) => {
         let formData = {
@@ -218,15 +249,15 @@ const ProfileUser = () => {
 
                 <Tabs defaultValue="account" className="w-full mt-[32px]">
                     <TabsList>
-                        <TabsTrigger value="account">Account</TabsTrigger>
-                        <TabsTrigger value="changeUser">Change Password</TabsTrigger>
-                        <TabsTrigger value="uploadProfile">Change Image Profile</TabsTrigger>
+                        <TabsTrigger value="account">{t("Account")}</TabsTrigger>
+                        <TabsTrigger value="changeUser">{t("Change Password")}</TabsTrigger>
+                        <TabsTrigger value="uploadProfile">{t("Change Image Profile")}</TabsTrigger>
                     </TabsList>
                     <TabsContent value="account">
                         <Card className="mt-[30px]">
                             <CardContent className={"p-4"}>
                                 <div className="content-user">
-                                    <h4>Account Information</h4>
+                                    <h4>{t("Account Information")}</h4>
                                     <div className="info-user">
                                         <div className="item">
                                             <label>Fullname</label>
@@ -243,11 +274,12 @@ const ProfileUser = () => {
                                         </div>
                                         <div className="item">
                                             <label>Email</label>
-                                            <div className="flex gap-[4px]">
+                                            <div className="flex gap-[6px] items-center">
                                                 <span>{getInfoUser && getInfoUser.email}</span>
                                                 {
-                                                    getInfoUser && getInfoUser.email_verified_at != "" &&
-                                                    <BadgeCheck className="text-green-900" />
+                                                    getInfoUser && getInfoUser.email_verified_at ?
+                                                    <BadgeCheck className="text-green-900" /> :
+                                                    <Button variant="link" className="p-0" onClick={verifyEmail}> Verify</Button>
                                                 }
                                             </div>
                                         </div>

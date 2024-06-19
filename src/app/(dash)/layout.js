@@ -1,10 +1,17 @@
+import dynamic from "next/dynamic";
+const ReduxProvider = dynamic(() => import("../store/redux-provider"), {
+  ssr: false
+});
+
 
 export default function SideLayout({ children }) {
   return (
-    <div className='flex flex-col h-screen justify-between'>
-      <div className='flex-grow'>
-        {children}
+    <ReduxProvider>
+      <div className='flex flex-col h-screen justify-between'>
+        <div className='flex-grow'>
+          {children}
+        </div>
       </div>
-    </div>
+    </ReduxProvider>
   )
 } 

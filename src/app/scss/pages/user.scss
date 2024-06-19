@@ -39,6 +39,9 @@
         @apply pt-[90px] px-[16px] md:px-0 md:pt-[140px] mb-[32px];
         .ant-steps-item-container {
             @apply flex items-center;
+            .ant-steps-item-content {
+                @apply flex items-center;
+            }
             .ant-steps-icon {
                 @apply border rounded-[50%] w-[32px] h-[32px] border-[#00000073] block p-[5px] text-[18px];
                 svg {
@@ -121,7 +124,7 @@
                 }
                 .description {
                     h3 {
-                        @apply text-[20px] font-[700] text-sky-700 capitalize mb-[8px];
+                        @apply text-[20px] font-[700] text-sky-700 capitalize mb-[8px] break-words;
                         font-family: "Roboto", sans-serif;
                     }
                     .paragraph {
