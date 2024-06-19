@@ -12,7 +12,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie"
 import { urlAPI } from "../../../lib/constant";
 
-const admninDashboard = () => {
+const AdmninDashboard = () => {
     const [loading, setLoading] = useState(false);
     const [cookies] = useCookies(["token"])
 
@@ -113,4 +113,4 @@ const admninDashboard = () => {
     );
 }
 
-export default admninDashboard;
+export default AdmninDashboard;

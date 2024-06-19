@@ -27,7 +27,7 @@ import { Switch } from "@/components/ui/switch";
 import { urlAPI } from "../../../../../lib/constant";
 
 
-const editPages = () => {
+const EditPages = () => {
     const [cookies] = useCookies(["token"])
     const [api, contextHolder] = notification.useNotification();
     const [urlPathIcon, setUrlPathIcon] = useState('');
@@ -68,9 +68,8 @@ const editPages = () => {
         }),
         select_homepage: z.boolean()
     });
-    type ValidationSchemaType = z.infer<typeof formSchema>
 
-    const form = useForm<ValidationSchemaType>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: '',
@@ -81,7 +80,7 @@ const editPages = () => {
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const onSubmit = async (values) => {
         let formData = {
             id: idCategory,
             name: values.name,
@@ -153,7 +152,7 @@ const editPages = () => {
             });
     }
 
-    const uploadImage = async(e: any) => {
+    const uploadImage = async(e) => {
         let inputData = e.target.files[0];
         let formData = new FormData();
 
@@ -307,4 +306,4 @@ const editPages = () => {
     );
 }
 
-export default editPages;
+export default EditPages;

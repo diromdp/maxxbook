@@ -25,7 +25,7 @@ import { useRouter } from "next/navigation";
 import { notification } from 'antd';
 
 
-const addPages = () => {
+const AddPages = () => {
     const [cookies] = useCookies(["token"])
     const [api, contextHolder] = notification.useNotification();
     const router = useRouter();
@@ -54,9 +54,8 @@ const addPages = () => {
         path: ['confirmPassword'],
         message: 'Passwords does not match'
     });
-    type ValidationSchemaType = z.infer<typeof formSchema>
 
-    const form = useForm<ValidationSchemaType>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             fullname: "",
@@ -66,7 +65,7 @@ const addPages = () => {
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const onSubmit = async (values) => {
         let formData = {
             name: values.fullname,
             email: values.email,
@@ -187,4 +186,4 @@ const addPages = () => {
     );
 }
 
-export default addPages;
+export default AddPages;

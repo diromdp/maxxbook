@@ -24,7 +24,7 @@ import { useRouter } from 'next/navigation'
 import { notification } from 'antd';
 
 
-const addPages = () => {
+const AddPages = () => {
     const [cookies] = useCookies(["token"])
     const [api, contextHolder] = notification.useNotification();
     const route = useRouter();
@@ -52,9 +52,8 @@ const addPages = () => {
             message: "Code must be at least 3 characters.",
         }),
     });
-    type ValidationSchemaType = z.infer<typeof formSchema>
 
-    const form = useForm<ValidationSchemaType>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
@@ -63,8 +62,7 @@ const addPages = () => {
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values);        
+    const onSubmit = async (values) => {
         let formData = {
             id: null,
             name: values.name,
@@ -167,4 +165,4 @@ const addPages = () => {
     );
 }
 
-export default addPages;
+export default AddPages;

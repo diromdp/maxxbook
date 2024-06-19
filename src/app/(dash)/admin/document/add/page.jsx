@@ -36,7 +36,7 @@ import { notification, Spin } from 'antd';
 import { useRouter } from 'next/navigation';
 
 
-const addPages = () => {
+const AddPages = () => {
     const [cookies] = useCookies(["token"])
     const [api, contextHolder] = notification.useNotification();
     const [idCategory, setIdCategory] = useState(null);
@@ -78,9 +78,8 @@ const addPages = () => {
         category_id: z.string().trim().nonempty({ message: "Category is required" }),
         sub_category_id: z.string().trim().nonempty({ message: "Category is required" })
     });
-    type ValidationSchemaType = z.infer<typeof formSchema>
 
-    const form = useForm<ValidationSchemaType>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: "",
@@ -90,7 +89,7 @@ const addPages = () => {
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const onSubmit = async (values) => {
         let formData = {
             id: idCategory,
             title: values.title,
@@ -131,7 +130,7 @@ const addPages = () => {
             });
     }
 
-    const uploadImage = async (e: any) => {
+    const uploadImage = async (e) => {
         let inputData = e.target.files[0];
         let formData = new FormData();
         setIsLoading(true);
@@ -300,7 +299,7 @@ const addPages = () => {
                                                     <SelectContent>
                                                         {
                                                             getCategoryData && getCategoryData.map((category, index) => {
-                                                                return <SelectItem value={category.id}>{category.name}</SelectItem>
+                                                                return <SelectItem key={index} value={category.id}>{category.name}</SelectItem>
 
                                                             })
                                                         }
@@ -325,7 +324,7 @@ const addPages = () => {
                                                     <SelectContent>
                                                         {
                                                             getSubCategoryData && getSubCategoryData.map((category, index) => {
-                                                                return <SelectItem value={category.id}>{category.name}</SelectItem>
+                                                                return <SelectItem key={index} value={category.id}>{category.name}</SelectItem>
 
                                                             })
                                                         }
@@ -362,4 +361,4 @@ const addPages = () => {
     );
 }
 
-export default addPages;
+export default AddPages;

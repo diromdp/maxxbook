@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -17,7 +17,6 @@ const RegisterUser = () => {
     const router = useRouter();
     const [isEye, setIseye] = useState(false);
     const [isEyeConfirm, setEyeConfirm] = useState(false);
-    const [api, contextHolder] = notification.useNotification();
 
     const passwordValidation = new RegExp(
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/

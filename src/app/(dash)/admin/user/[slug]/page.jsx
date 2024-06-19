@@ -25,7 +25,7 @@ import { useCookies } from "react-cookie";
 import { useRouter, useSearchParams } from 'next/navigation'
 
 
-const editPage = () => {
+const EditPage = () => {
     const [cookies] = useCookies(["token"])
     const router = useRouter()
     const [api, contextHolder] = notification.useNotification();
@@ -54,9 +54,8 @@ const editPage = () => {
         path: ['confirmPassword'],
         message: 'Passwords does not match'
     });
-    type ValidationSchemaType = z.infer<typeof formSchema>
 
-    const form = useForm<ValidationSchemaType>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             fullname: "",
@@ -66,7 +65,7 @@ const editPage = () => {
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const onSubmit = async (values) => {
         let formData = {
             name: values.fullname,
             email: values.email,
@@ -188,4 +187,4 @@ const editPage = () => {
     );
 }
 
-export default editPage;
+export default EditPage;

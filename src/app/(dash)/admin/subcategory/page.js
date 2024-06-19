@@ -333,20 +333,20 @@ const Category = () => {
                                     dataPagination && dataPagination.map((data) => {
                                         if (data.label === "&laquo; Previous") {
                                             return (
-                                                <PaginationItem>
+                                                <PaginationItem key={index}>
                                                     <PaginationPrevious disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
                                                 </PaginationItem>
 
                                             )
                                         } else if (data.label === "Next &raquo;") {
                                             return (
-                                                <PaginationItem>
+                                                <PaginationItem key={index}>
                                                     <PaginationNext disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
                                                 </PaginationItem>
                                             )
                                         } else {
                                             return (
-                                                <PaginationItem>
+                                                <PaginationItem key={index}>
                                                     <PaginationLink className="cursor-pointer" data-url={data.url} isActive={data.active} onClick={() => updatePagination(data.url)}>
                                                         {data.label}
                                                     </PaginationLink>

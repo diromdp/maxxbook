@@ -217,12 +217,12 @@ const ResultShow = ({ QureyParams }) => {
                         <Pagination>
                             <PaginationContent>
                                 {
-                                    dataPaginationState && dataPaginationState.map((data) => {
+                                    dataPaginationState && dataPaginationState.map((data, index) => {
                                         if (data.label === "&laquo; Previous") {
                                             return (
                                                 <>
                                                     {
-                                                        <PaginationItem>
+                                                        <PaginationItem key={index}>
                                                             <PaginationPrevious disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
                                                         </PaginationItem>
                                                     }
@@ -232,7 +232,7 @@ const ResultShow = ({ QureyParams }) => {
                                             return (
                                                 <>
                                                     {
-                                                        <PaginationItem>
+                                                        <PaginationItem key={index}>
                                                             <PaginationNext disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
                                                         </PaginationItem>
                                                     }
@@ -240,7 +240,7 @@ const ResultShow = ({ QureyParams }) => {
                                             )
                                         } else {
                                             return (
-                                                <PaginationItem>
+                                                <PaginationItem key={index}>
                                                     <PaginationLink className="cursor-pointer" data-url={data.url} isActive={data.active} onClick={() => updatePagination(data.url)}>
                                                         {data.label}
                                                     </PaginationLink>

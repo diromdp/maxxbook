@@ -6,7 +6,7 @@ import { z } from "zod";
 import {
     Card,
     CardContent,
-} from "@/components/ui/card";
+} from "../../../../../components/ui/card";
 
 import {
     Form,
@@ -15,9 +15,9 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+} from "../../../../../components/ui/form";
+import { Button } from "../../../../../components/ui/button";
+import { Input } from "../../../../../components/ui/input";
 import { urlAPI } from "../../../../../lib/constant";
 import { useCookies } from "react-cookie";
 import { useSearchParams, useRouter } from 'next/navigation'
@@ -25,7 +25,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { notification } from 'antd';
 
 
-const addPages = () => {
+const AddPages = () => {
     const [cookies] = useCookies(["token"])
     const [api, contextHolder] = notification.useNotification();
     const searchParams = useSearchParams();
@@ -55,9 +55,8 @@ const addPages = () => {
             message: "Code must be at least 3 characters.",
         }),
     });
-    type ValidationSchemaType = z.infer<typeof formSchema>
 
-    const form = useForm<ValidationSchemaType>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: searchParams.get('name')? searchParams.get('name') : "",
@@ -66,7 +65,7 @@ const addPages = () => {
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const onSubmit = async (values) => {
         let formData = {
             id: searchParams.get('id') ? searchParams.get('id') : null,
             name: values.name,
@@ -169,4 +168,4 @@ const addPages = () => {
     );
 }
 
-export default addPages;
+export default AddPages;

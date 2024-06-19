@@ -77,9 +77,9 @@ export default async function category() {
                                         </h3>
                                         <ul>
                                             {
-                                                item.sub_categories && item.sub_categories.map((sub_category, key) => {
+                                                item.sub_categories && item.sub_categories.map((sub_category, index) => {
                                                     return (
-                                                        <li>
+                                                        <li key={index}>
                                                             <Link href={`/${localData}/subcategory/${sub_category.slug}`}>
                                                                 { localData == "en" ? sub_category.name : sub_category.name_id}
                                                             </Link>

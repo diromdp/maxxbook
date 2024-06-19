@@ -14,6 +14,7 @@ const UploadDocument = () => {
     const dispatch = useAppDispatch();
     const tabFormDocument = useAppSelector((state) => state.documents.tabFormDocuments);
     const hasFetchedData = useRef(false);
+    
     useEffect(() => {
         if (!hasFetchedData.current) {
             if(tabFormDocument == 2) {

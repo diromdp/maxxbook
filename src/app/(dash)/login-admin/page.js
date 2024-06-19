@@ -12,7 +12,7 @@ import { Loader2 } from "lucide-react";
 import Lottie from 'react-lottie';
 import * as loadingData from '../../../lottie/loading-2.json';
 
-const login = () => {
+const Login = () => {
     const router = useRouter()
     const [cookies, setCookie] = useCookies(['token']);
     const [isDisbaled, setIsdisabled] = useState(false);
@@ -135,4 +135,4 @@ const login = () => {
     );
 }
 
-export default login;
+export default Login;

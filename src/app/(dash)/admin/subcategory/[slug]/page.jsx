@@ -34,7 +34,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { notification } from 'antd';
 
 
-const addPages = () => {
+const AddPages = () => {
     const [cookies] = useCookies(["token"])
     const [api, contextHolder] = notification.useNotification();
     const [getCategoryData, setGetCategoryData] = useState([]);
@@ -69,9 +69,8 @@ const addPages = () => {
         }),
         category_id: z.string().trim().nonempty({ message: "Category is required" })
     });
-    type ValidationSchemaType = z.infer<typeof formSchema>
 
-    const form = useForm<ValidationSchemaType>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: searchParams.get('name')? searchParams.get('name') : "",
@@ -82,7 +81,7 @@ const addPages = () => {
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const onSubmit = async (values) => {
         console.log(values.category_id)
         let formData = {
             id: searchParams.get('id') ? searchParams.get('id') : null,
@@ -240,7 +239,7 @@ const addPages = () => {
                                                     <SelectContent>
                                                         {
                                                             getCategoryData && getCategoryData.map((category, index) => {
-                                                                return <SelectItem value={category.id}>{category.name}</SelectItem>
+                                                                return <SelectItem key={index} value={category.id}>{category.name}</SelectItem>
                                                             })
                                                         }
                                                     </SelectContent>
@@ -265,4 +264,4 @@ const addPages = () => {
     );
 }
 
-export default addPages;
+export default AddPages;

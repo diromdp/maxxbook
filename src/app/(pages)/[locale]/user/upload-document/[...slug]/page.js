@@ -35,7 +35,7 @@ import { setUploadId } from "../../../../../store/reducer/categoryFilterSlice";
 i18nChangeLanguage('en')
 const { TextArea } = Input;
 
-const editUploadFile = ({ params }) => {
+const EditUploadFile = ({ params }) => {
     const dispatch = useAppDispatch();
     const { slug } = params;
     const [editor, setEditor] = useState(null);
@@ -446,4 +446,4 @@ const editUploadFile = ({ params }) => {
     );
 }
 
-export default editUploadFile;
+export default EditUploadFile;

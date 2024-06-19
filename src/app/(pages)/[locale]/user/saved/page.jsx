@@ -173,9 +173,9 @@ const Saved = () => {
                                     {
                                         listDocument.length > 0 ? listDocument.map((item, index) => {
                                             return (
-                                                <div className="item-document">
+                                                <div className="item-document" key={index}>
                                                     <div className="left-side">
-                                                        <img src={`${item.thumb_url ? item.thumb_url : "https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1"}`} width={132} height={174} />
+                                                        <img alt={item.title} src={`${item.thumb_url ? item.thumb_url : "https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1"}`} width={132} height={174} />
                                                         <Link href={`/${locale}/document/${item.slug}`} className="description">
                                                             <h3>{item.title}</h3>
                                                             <div className="paragraph" dangerouslySetInnerHTML={{ __html: `${item.description_seo}` }}>
@@ -215,23 +215,23 @@ const Saved = () => {
                         <Pagination>
                             <PaginationContent>
                                 {
-                                    listDocument.length > 0 && dataPagination.map((data) => {
+                                    listDocument.length > 0 && dataPagination.map((data, index) => {
                                         if (data.label === "&laquo; Previous") {
                                             return (
-                                                <PaginationItem>
+                                                <PaginationItem key={index}>
                                                     <PaginationPrevious disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
                                                 </PaginationItem>
 
                                             )
                                         } else if (data.label === "Next &raquo;") {
                                             return (
-                                                <PaginationItem>
+                                                <PaginationItem key={index}>
                                                     <PaginationNext disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
                                                 </PaginationItem>
                                             )
                                         } else {
                                             return (
-                                                <PaginationItem>
+                                                <PaginationItem key={index}>
                                                     <PaginationLink className="cursor-pointer" data-url={data.url} isActive={data.active} onClick={() => updatePagination(data.url)}>
                                                         {data.label}
                                                     </PaginationLink>

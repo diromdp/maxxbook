@@ -104,7 +104,7 @@ const LoginUser = () => {
                                     <img
                                         className="h-5 mr-2"
                                         src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
-                                        alt=""
+                                        alt="Sig in Google"
                                     />
                                     Sign in with Google
                                 </Link>

@@ -37,7 +37,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 
 
 
-const editPages = () => {
+const EditPages = () => {
     const [cookies] = useCookies(["token"])
     const [api, contextHolder] = notification.useNotification();
     const [idCategory, setIdCategory] = useState(null);
@@ -78,9 +78,8 @@ const editPages = () => {
         category_id: z.string().trim().nonempty({ message: "Category is required" }),
         sub_category_id: z.string().trim().nonempty({ message: "Category is required" })
     });
-    type ValidationSchemaType = z.infer<typeof formSchema>
 
-    const form = useForm<ValidationSchemaType>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: searchParams.get('title') ? searchParams.get('title') : "",
@@ -90,7 +89,7 @@ const editPages = () => {
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const onSubmit = async (values) => {
         let formData = {
             id: searchParams.get('id'),
             title: values.title,
@@ -130,7 +129,7 @@ const editPages = () => {
             });
     }
 
-    const uploadImage = async (e: any) => {
+    const uploadImage = async (e) => {
         let inputData = e.target.files[0];
         let formData = new FormData();
         setIsLoading(true);
@@ -299,7 +298,7 @@ const editPages = () => {
                                                     <SelectContent>
                                                         {
                                                             getCategoryData && getCategoryData.map((category, index) => {
-                                                                return <SelectItem value={category.id}>{category.name}</SelectItem>
+                                                                return <SelectItem key={index} value={category.id}>{category.name}</SelectItem>
 
                                                             })
                                                         }
@@ -324,7 +323,7 @@ const editPages = () => {
                                                     <SelectContent>
                                                         {
                                                             getSubCategoryData && getSubCategoryData.map((category, index) => {
-                                                                return <SelectItem value={category.id}>{category.name}</SelectItem>
+                                                                return <SelectItem key={index} value={category.id}>{category.name}</SelectItem>
 
                                                             })
                                                         }
@@ -361,4 +360,4 @@ const editPages = () => {
     );
 }
 
-export default editPages;
+export default EditPages;
