@@ -26,25 +26,28 @@ const UploadDocument = () => {
     return (
         <>
             <div className="upload-document--form">
-                <div className="screen-layer">
-                    <Steps
-                        current={tabFormDocument}
-                        size="small"
-                        items={[
-                            {
-                                title: 'Upload File Document',
-                                icon: <Upload />,
-                            },
-                            {
-                                title: 'Form Document',
-                                icon: <FilePlus />,
-                            },
-                            {
-                                title: 'Upload Finished',
-                                icon: <CircleCheckBig />
-                            }
-                        ]}
-                    />
+                <div className="screen-layer min-h-dvh">
+                    <div className="px-[16px] lg:px-0">
+                        <Steps
+                            current={tabFormDocument}
+                            size="small"
+                            items={[
+                                {
+                                    title: 'Upload File Document',
+                                    icon: <Upload />,
+                                },
+                                {
+                                    title: 'Form Document',
+                                    icon: <FilePlus />,
+                                },
+                                {
+                                    title: 'Upload Finished',
+                                    icon: <CircleCheckBig />
+                                }
+                            ]}
+                        />
+                    </div>
+                    
                     <div className="tabs-content">
                         {
                             tabFormDocument == 0 ?

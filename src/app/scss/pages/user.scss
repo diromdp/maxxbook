@@ -97,7 +97,7 @@
 
 .form-group {
     .form-select {
-        @apply md:w-[200px];
+        @apply w-full md:w-[200px] #{!important};
     }
     .form-item {
         @apply flex flex-col gap-y-[8px];
