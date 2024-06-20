@@ -19,9 +19,9 @@ export default function PagesLayout({
             <ReduxProvider>
                 <NextIntlClientProvider messages={messages}>
                     <ProtectAuth>
-                        <div className='flex flex-col h-screen justify-between'>
+                        <div className='flex flex-col'>
                             <Header locale={locale} />
-                                <div className='flex-grow'>
+                                <div className='h-full '>
                                     {children}
                                 </div>
                             <Footer

@@ -7,10 +7,8 @@ const ReduxProvider = dynamic(() => import("../store/redux-provider"), {
 export default function SideLayout({ children }) {
   return (
     <ReduxProvider>
-      <div className='flex flex-col h-screen justify-between'>
-        <div className='flex-grow'>
+      <div className='flex flex-col'>
           {children}
-        </div>
       </div>
     </ReduxProvider>
   )

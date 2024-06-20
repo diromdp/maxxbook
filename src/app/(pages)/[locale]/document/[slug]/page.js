@@ -85,7 +85,7 @@ export default async function documentPage({ params }) {
     const dataDocument = await getData();
     const t = await getTranslations("Documents");
     const locale = await getLocale();
-
+    
     return (
         <div className="document-page">
             <div className="screen-layer mb-[32px]">
@@ -118,7 +118,7 @@ export default async function documentPage({ params }) {
                                                     </div>
                                                     <div className="title-document">
                                                         <h4>{item.title}</h4>
-                                                        <span className="people-name">Arif Kurniawan</span>
+                                                        <span className="people-name">{item.user && item.user.name}</span>
                                                     </div>
                                                 </div>
                                             </Link>

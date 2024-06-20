@@ -137,10 +137,8 @@ const DocumentDesc = ({ slug }) => {
         }
     }, 100);
 
-    console.log(documentData && documentData);
-
     return (
-        <div className="document-Desc h-[100vh] w-full">
+        <div className="document-Desc h-full min-h-[100vh] w-full">
             {contextHolder}
             <div className="views-total-pages">
                 <div className="item">

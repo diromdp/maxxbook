@@ -68,7 +68,7 @@
             @apply mt-[32px];
         
             .ant-input, .ant-select-single {
-                @apply border rounded-[8px] w-full md:w-auto  border-slate-700 h-[40px];
+                @apply border rounded-[8px] w-full border-slate-700 h-[40px];
                 &:hover {
                     @apply shadow-none;
                     .ant-select-selector {
