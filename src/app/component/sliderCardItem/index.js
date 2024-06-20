@@ -10,7 +10,7 @@ import { useEffect } from "react";
 
 import Card from "../cartItem";
 
-const SliderCardItem = ({data}) => {
+const SliderCardItem = ({ data }) => {
     return (
         <Carousel
             opts={{
@@ -19,19 +19,25 @@ const SliderCardItem = ({data}) => {
             className="w-full"
         >
             <CarouselContent>
-                {data && data.map((item, index) => (
-                    <CarouselItem key={index} className="first:ml-0 basis-1/2 lg:basis-1/6 cursor-pointer">
-                        <Card
-                            key={index}
-                            colorImage={item.color}
-                            imagePath={item.thumb_url}
-                            title={item.title}
-                            className="!w-full md:!w-[200px]"
-                            description={item.description}
-                            slug={item.slug}
-                        />
-                    </CarouselItem>
-                ))}
+                {data && data.map((item, index) => {
+                    if (item.slug) {
+                        return (
+                            <CarouselItem key={index} className="first:ml-0 basis-1/2 lg:basis-1/6 cursor-pointer">
+                                <Card
+                                    key={index}
+                                    colorImage={item.color}
+                                    imagePath={item.thumb_url}
+                                    title={item.title}
+                                    className="!w-full md:!w-[200px]"
+                                    description={item.description}
+                                    slug={item.slug}
+                                />
+                            </CarouselItem>
+                        )
+
+                    }
+                }
+                )}
             </CarouselContent>
             <div className="flex flex-row items-center justify-center mt-[40px]">
                 <CarouselPrevious className="relative -left-[5px] sm:-left-[20px] lg:-left-[3.0rem] lg:absolute" />
