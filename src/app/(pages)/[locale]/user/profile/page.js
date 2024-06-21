@@ -261,12 +261,12 @@ const ProfileUser = () => {
                                     <div className="info-user">
                                         <div className="item">
                                             <label>Fullname</label>
-                                            <div className="flex gap-[4px] items-center">
+                                            <div className="flex gap-[8px] items-center">
                                                 {
                                                     editInput ? <Input className='w-[300px]' defaultValue={getInfoUser && getInfoUser.name} onChange={(e) => setChangeName(e.target.value)} /> : <span>{getInfoUser && getInfoUser.name} </span>
                                                 }
                                                 {
-                                                    editInput ? <Button onClick={handleSubmitChangeName} variant="link">Save</Button> : <Button onClick={handleChangeName} variant="link">Edit</Button>
+                                                    editInput ? <Button onClick={handleSubmitChangeName} variant="secondary">Save</Button> : <Button onClick={handleChangeName} variant="secondary">Edit</Button>
 
                                                 }
 
@@ -279,7 +279,7 @@ const ProfileUser = () => {
                                                 {
                                                     getInfoUser && getInfoUser.email_verified_at ?
                                                     <BadgeCheck className="text-green-900" /> :
-                                                    <Button variant="link" className="p-0" onClick={verifyEmail}> Verify</Button>
+                                                    <Button variant="secondary" className=""  onClick={verifyEmail}>Verify</Button>
                                                 }
                                             </div>
                                         </div>

@@ -5,13 +5,17 @@ import { useAppDispatch } from "../../store";
 import { setAuthSlice } from "../../store/reducer/authSlice";
 import { useRouter } from 'next/navigation';
 import { notification } from 'antd';
+import { useSearchParams } from 'next/navigation';
 
-const Callback = ({ searchParams }) => {
+const Callback = () => {
     const dispatch = useAppDispatch();
-    const { token, errMsg, expires } = searchParams;
+    const searchParams = useSearchParams();
+    const token = searchParams.get('token');
+    const expires = searchParams.get('expires');
+    const errMsg = searchParams.get('errMsg');
+
     const router = useRouter();
     const [api, contextHolder] = notification.useNotification();
-    const hasFetchedData = useRef(false);
 
     const redirect = () => {
         const data = {
@@ -19,6 +23,7 @@ const Callback = ({ searchParams }) => {
             expires_at: expires,
             message: 'ok'
         }
+        console.log(data);
         dispatch(setAuthSlice(data))
         router.push('/');
     }
@@ -29,18 +34,17 @@ const Callback = ({ searchParams }) => {
             description: errMsg
         })
         setTimeout(() => {
-            router.push('/login');
+           router.push('/login');
         }, 4000)
     }
 
     useEffect(() => {
-        if (!hasFetchedData.current) {
-            if (errMsg) {
-                errorPages();
-            } else {
-                redirect();
-            }
-            hasFetchedData.current = true;
+        if (errMsg == null) {
+            redirect();
+            console.log('direct redirect')
+        } else {
+            errorPages();
+            console.log('erorr redirect')
         }
     }, [])
 
