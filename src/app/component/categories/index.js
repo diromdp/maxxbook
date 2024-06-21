@@ -14,10 +14,6 @@ async function getCategory() {
             'Accept': "application/json",
         },
     });
-
-    if (!data.ok) {
-        throw new Error('Network response was not ok');
-      }
     // Pass data to the page via props
     return data.json();
 }
@@ -30,7 +26,7 @@ export default async function Categories() {
             <div className="container m-auto">
                 <div className="content">
                     {
-                        data && data.map((item, index) => {
+                        data && data.length > 0 && data.map((item, index) => {
                             return (
                                 <Link key={index} href={`/${localData}/catagories/${item.slug}`} className="item">
                                     <span>{localData == 'en' ? item.name : item.name_id}</span>
