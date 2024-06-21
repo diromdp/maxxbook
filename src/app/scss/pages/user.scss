@@ -104,7 +104,7 @@
     }
 }
 .document-owner, .saved-container {
-    @apply mt-[80px] md:mt-[120px];
+    @apply mt-[80px] md:mt-[120px] min-h-screen;
     .content-owner {
         @apply flex flex-col;
         .item-document {
