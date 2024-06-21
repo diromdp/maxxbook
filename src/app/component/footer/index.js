@@ -1,7 +1,7 @@
 import { useTranslations, useLocale } from "next-intl";
 
-const Footer = async() => {
-    const t = await useTranslations('Homepage');
+const Footer = () => {
+    const t = useTranslations('Homepage');
     const locale = useLocale();
 
     return (
