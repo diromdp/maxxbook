@@ -6,7 +6,6 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useEffect } from "react";
 
 import Card from "../cartItem";
 
