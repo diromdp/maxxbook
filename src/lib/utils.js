@@ -71,14 +71,26 @@ export function delay(ms) {
    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+export function formatDateToDatabaseString(date = new Date()) {
+   let year = date.getFullYear();
+   let month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based, pad single digit months with leading zero
+   let day = String(date.getDate()).padStart(2, '0'); // Pad single digit days with leading zero
+   let hours = String(date.getHours()).padStart(2, '0'); // Pad single digit hours with leading zero
+   let minutes = String(date.getMinutes()).padStart(2, '0'); // Pad single digit minutes with leading zero
+   let seconds = String(date.getSeconds()).padStart(2, '0'); // Pad single digit seconds with leading zero
+
+   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+
 export function formatNumber(num) {
    const absNum = Math.abs(num);
    if (absNum >= 1e9) {
-     return (num / 1e9).toFixed(1) + 'B';
+      return (num / 1e9).toFixed(1) + 'B';
    } else if (absNum >= 1e6) {
-     return (num / 1e6).toFixed(1) + 'M';
+      return (num / 1e6).toFixed(1) + 'M';
    } else if (absNum >= 1e3) {
-     return (num / 1e3).toFixed(1) + 'K';
+      return (num / 1e3).toFixed(1) + 'K';
    }
    return num.toString();
- }
+}

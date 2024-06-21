@@ -25,6 +25,7 @@ import { Switch } from "@/components/ui/switch";
 
 import axios from "axios";
 import { urlAPI } from "../../../../../lib/constant";
+import { formatDateToDatabaseString } from "../../../../../lib/utils";
 import { useCookies } from "react-cookie";
 
 import { notification, Image } from 'antd';
@@ -36,6 +37,7 @@ const AddPages = () => {
     const [disabled, setDisabled] = useState(true);
     const [idCategory, setIdCategory] = useState(null);
     const [urlPathIcon, setUrlPathIcon] = useState('https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png');
+    const [isPublish, setPublish] = useState(null);
     const router = useRouter();
     const openNotification = (val) => {
         api.info({
@@ -69,7 +71,7 @@ const AddPages = () => {
             message: "Description must be at least 6 characters.",
         }),
         select_homepage: z.boolean()
-    }); 
+    });
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -90,6 +92,7 @@ const AddPages = () => {
             name_id: values.name_id,
             description_id: values.description_text_id,
             icon: null,
+            published_at: isPublish ? isPublish : null,
             is_home: values.select_homepage
         }
 
@@ -152,6 +155,15 @@ const AddPages = () => {
                 }
                 console.log(error.config);
             });
+    }
+    
+    const onChangePublish = async (e) => {
+        let formattedDate = formatDateToDatabaseString();
+        if(e === true){
+            setPublish(formattedDate);
+        } else {
+            setPublish(null);
+        }
     }
 
     return (
@@ -230,6 +242,26 @@ const AddPages = () => {
                                                         checked={field.value}
                                                         onCheckedChange={field.onChange}
                                                         aria-readonly
+                                                        className="!mt-0"
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="select_publisher"
+                                        render={({ field }) => (
+                                            <FormItem className="mb-[8px] gap-[16px] flex items-center">
+                                                <FormLabel>Publish</FormLabel>
+                                                <FormControl>
+                                                    <Switch
+                                                        checked={isPublish ? true : false}
+                                                        onCheckedChange={onChangePublish}
+                                                        aria-readonly
+                                                        className="!mt-0"
                                                     />
                                                 </FormControl>
                                                 <FormMessage />

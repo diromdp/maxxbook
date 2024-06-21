@@ -57,6 +57,8 @@ export default async function category() {
     const data = await getData()
     const localData = await getLocale();
     const t = await getTranslations("Documents");
+
+    console.log(data);
     return <>
         <div className="categories-page">
             <div className="screen-layer">

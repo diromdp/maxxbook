@@ -24,10 +24,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { urlAPI } from "../../../../../lib/constant";
+import { formatDateToDatabaseString } from "../../../../../lib/utils";
+
 import { useCookies } from "react-cookie";
 
 import { notification } from 'antd';
@@ -37,6 +40,8 @@ const AddPages = () => {
     const [cookies] = useCookies(["token"])
     const [api, contextHolder] = notification.useNotification();
     const [getCategoryData, setGetCategoryData] = useState([]);
+    const [isPublish, setPublish] = useState(null);
+
     const openNotification = (val) => {
         api.info({
             message: 'Warning Information',
@@ -83,6 +88,7 @@ const AddPages = () => {
             description: values.description_text,
             name_id: values.name_id,
             description_id: values.description_text_id,
+            published_at: isPublish ? isPublish : null,
             category_id: values.category_id,
         }
 
@@ -147,6 +153,15 @@ const AddPages = () => {
                 }
                 console.log(error.config);
             });
+    }
+
+    const onChangePublish = async (e) => {
+        let formattedDate = formatDateToDatabaseString();
+        if(e === true){
+            setPublish(formattedDate);
+        } else {
+            setPublish(null);
+        }
     }
 
     useEffect(() => {
@@ -239,6 +254,24 @@ const AddPages = () => {
                                                         }
                                                     </SelectContent>
                                                 </Select>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="select_publisher"
+                                        render={({ field }) => (
+                                            <FormItem className="mb-[8px] gap-[16px] flex items-center">
+                                                <FormLabel>Publish</FormLabel>
+                                                <FormControl>
+                                                    <Switch
+                                                        checked={isPublish ? true : false}
+                                                        onCheckedChange={onChangePublish}
+                                                        aria-readonly
+                                                        className="!mt-0"
+                                                    />
+                                                </FormControl>
                                                 <FormMessage />
                                             </FormItem>
                                         )}

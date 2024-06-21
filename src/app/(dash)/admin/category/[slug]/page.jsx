@@ -25,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { urlAPI } from "../../../../../lib/constant";
+import { formatDateToDatabaseString } from "../../../../../lib/utils";
 
 
 const EditPages = () => {
@@ -33,6 +34,7 @@ const EditPages = () => {
     const [urlPathIcon, setUrlPathIcon] = useState('');
     const searchParams = useSearchParams();
     const idCategory = searchParams.get('id');
+    const [isPublish, setPublish] = useState(null);
     const router = useRouter();
 
     const notificationSuccess = () => {
@@ -87,6 +89,7 @@ const EditPages = () => {
             description: values.description_text,
             name_id: values.name_id,
             description_id: values.description_text_id,
+            published_at: isPublish ? isPublish : null,
             icon: null,
             is_home: values.select_homepage
         }
@@ -101,7 +104,7 @@ const EditPages = () => {
             .then((data) => {
                 if (data.status === 200) {
                     notificationSuccess();
-                    router.push('/admin/category');
+                    
                 }
             })
             .catch(function (error) {
@@ -135,6 +138,11 @@ const EditPages = () => {
                     form.setValue('description_text', data.data.description);
                     form.setValue('description_text_id', data.data.description_id);
                     form.setValue('select_homepage', data.data.is_home == 1 ? true : false);
+                    if(data.data.published_at) {
+                        setPublish(data.data.published_at)
+                    } else {
+                        setPublish(null);
+                    }
                 }
             })
             .catch(function (error) {
@@ -181,6 +189,15 @@ const EditPages = () => {
                 }
                 console.log(error.config);
             });
+    }
+
+    const onChangePublish = async (e) => {
+        let formattedDate = formatDateToDatabaseString();
+        if(e === true){
+            setPublish(formattedDate);
+        } else {
+            setPublish(null);
+        }
     }
 
     useEffect(() => {
@@ -262,6 +279,24 @@ const EditPages = () => {
                                                         checked={field.value}
                                                         onCheckedChange={field.onChange}
                                                         aria-readonly
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="select_publisher"
+                                        render={({ field }) => (
+                                            <FormItem className="mb-[8px] gap-[16px] flex items-center">
+                                                <FormLabel>Publish</FormLabel>
+                                                <FormControl>
+                                                    <Switch
+                                                        checked={isPublish ? true : false}
+                                                        onCheckedChange={onChangePublish}
+                                                        aria-readonly
+                                                        className="!mt-0"
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
