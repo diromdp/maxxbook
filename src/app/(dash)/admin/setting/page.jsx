@@ -62,6 +62,19 @@ const Settings = () => {
             value: '',
         },
         {
+            key: 'seo.title_home_id',
+            label: "Seo Title home (ID)",
+            type: 'string',
+            value: '',
+        },
+        {
+            key: 'seo.description_home_id',
+            label: "Seo Description Home(ID)",
+            type: 'string',
+            mode: 'long',
+            value: '',
+        },
+        {
             key: 'seo.title_category',
             label: "Seo Title category",
             type: 'string',
@@ -70,6 +83,19 @@ const Settings = () => {
         {
             key: 'seo.description_category',
             label: "Seo Description category",
+            type: 'string',
+            mode: 'long',
+            value: '',
+        },
+        {
+            key: 'seo.title_category_id',
+            label: "Seo Title category (ID)",
+            type: 'string',
+            value: '',
+        },
+        {
+            key: 'seo.description_category_id',
+            label: "Seo Description category (ID)",
             type: 'string',
             mode: 'long',
             value: '',
@@ -88,6 +114,19 @@ const Settings = () => {
             value: '',
         },
         {
+            key: 'seo.title_result_id',
+            label: "Seo Title result (ID)",
+            type: 'string',
+            value: '',
+        },
+        {
+            key: 'seo.description_seo_result_id',
+            label: "Seo Description result (ID)",
+            type: 'string',
+            mode: 'long',
+            value: '',
+        },
+        {
             key: 'seo.title_explorer',
             label: "Seo Title explorer",
             type: 'string',
@@ -96,6 +135,19 @@ const Settings = () => {
         {
             key: 'seo.description_explorer',
             label: "Seo Description explorer",
+            type: 'string',
+            mode: 'long',
+            value: '',
+        },
+        {
+            key: 'seo.title_explorer_id',
+            label: "Seo Title explorer (ID)",
+            type: 'string',
+            value: '',
+        },
+        {
+            key: 'seo.description_explorer_id',
+            label: "Seo Description explorer (ID)",
             type: 'string',
             mode: 'long',
             value: '',
@@ -114,8 +166,28 @@ const Settings = () => {
             value: '',
         },
         {
+            key: 'seo.title_about_id',
+            label: "Seo Title about (ID)",
+            type: 'string',
+            value: '',
+        },
+        {
+            key: 'seo.description_about_id',
+            label: "Seo Description about (ID)",
+            type: 'string',
+            mode: 'long',
+            value: '',
+        },
+        {
             key: 'page.description_about',
             label: "Page Description about",
+            type: 'string',
+            mode: 'editor',
+            value: '',
+        },
+        {
+            key: 'page.description_about_id',
+            label: "Page Description about (ID)",
             type: 'string',
             mode: 'editor',
             value: '',
@@ -141,6 +213,26 @@ const Settings = () => {
             value: '',
         },
         {
+            key: 'page.title_term_id',
+            label: "Page Title term (ID)",
+            type: 'string',
+            value: '',
+        },
+        {
+            key: 'page.description_seo_term_id',
+            label: "Page Description seo term (ID)",
+            type: 'string',
+            mode: 'long',
+            value: '',
+        },
+        {
+            key: 'page.description_term_id',
+            label: "Page Description term (ID)",
+            type: 'string',
+            mode: 'editor',
+            value: '',
+        },
+        {
             key: 'page.title_privacy',
             label: "Page Title privacy",
             type: 'string',
@@ -156,6 +248,26 @@ const Settings = () => {
         {
             key: 'page.description_privacy',
             label: "Page Description privacy",
+            type: 'string',
+            mode: 'editor',
+            value: '',
+        },
+        {
+            key: 'page.title_privacy_id',
+            label: "Page Title privacy (ID)",
+            type: 'string',
+            value: '',
+        },
+        {
+            key: 'page.description_seo_privacy_id',
+            label: "Page Description seo privacy (ID)",
+            type: 'string',
+            mode: 'long',
+            value: '',
+        },
+        {
+            key: 'page.description_privacy_id',
+            label: "Page Description privacy (ID)",
             type: 'string',
             mode: 'editor',
             value: '',
@@ -180,10 +292,37 @@ const Settings = () => {
             mode: 'editor',
             value: '',
         },
+        {
+            key: 'page.title_contact_id',
+            label: "Page Title contact (ID)",
+            type: 'string',
+            value: '',
+        },
+        {
+            key: 'page.description_seo_contact_id',
+            label: "Page Description seo contact (ID)",
+            type: 'string',
+            mode: 'long',
+            value: '',
+        },
+        {
+            key: 'page.description_contact_id',
+            label: "Page Description contact (ID)",
+            type: 'string',
+            mode: 'editor',
+            value: '',
+        },
     ]);
     const [htmlAbout, setHtmlAbout] = useState();
+    const [htmlAboutID, setHtmlAboutID] = useState();
+
     const [htmlTerms, setHtmlTerm] = useState();
+    const [htmlTermsID, setHtmlTermID] = useState();
+
     const [htmlPrivacy, setHtmlPrivacy] = useState();
+    const [htmlPrivacyId, setHtmlPrivacyID] = useState();
+    const [htmlContacIdt, setHtmlContactID] = useState();
+
     const [htmlContact, setHtmlContact] = useState();
     const [selectForm, setSelectedForm] = useState('transaction');
     const [selectedFormTransaction, setSelectedFormTransaction] = useState();
@@ -216,14 +355,14 @@ const Settings = () => {
     );
 
     const transaction = ['transactions.approval', 'transactions.min_withdrawal', 'transactions.balance_enabled'];
-    const seoHome = ['seo.title_home', 'seo.description_home'];
-    const seoCategory = ['seo.title_category', 'seo.description_category'];
-    const seoExplorer = ['seo.title_explorer', 'seo.description_explorer'];
-    const seoAbout = ['seo.title_about', 'seo.description_about', 'page.description_about'];
-    const termTerm = ['page.title_term', 'page.description_seo_term', 'page.description_term'];
-    const privacy = ['page.title_privacy', 'page.description_seo_privacy', 'page.description_privacy']
-    const seoResult = ['seo.title_result', 'seo.description_seo_result']
-    const contact = ['page.title_contact', 'page.description_seo_contact', 'page.description_contact']
+    const seoHome = ['seo.title_home', 'seo.description_home', 'seo.title_home_id', 'seo.description_home_id'];
+    const seoCategory = ['seo.title_category', 'seo.description_category', 'seo.title_category_id', 'seo.description_category_id'];
+    const seoExplorer = ['seo.title_explorer', 'seo.description_explorer', 'seo.title_explorer_id', 'seo.description_explorer_id'];
+    const seoAbout = ['seo.title_about', 'seo.description_about', 'page.description_about', 'seo.title_about_id', 'seo.description_about_id', 'page.description_about_id'];
+    const termTerm = ['page.title_term', 'page.description_seo_term', 'page.description_term', 'page.title_term_id', 'page.description_seo_term_id', 'page.description_term_id'];
+    const privacy = ['page.title_privacy', 'page.description_seo_privacy', 'page.description_privacy', 'page.title_privacy_id', 'page.description_seo_privacy_id', 'page.description_privacy_id']
+    const seoResult = ['seo.title_result', 'seo.description_seo_result', 'seo.title_result_id', 'seo.description_seo_result_id']
+    const contact = ['page.title_contact', 'page.description_seo_contact', 'page.description_contact', 'page.title_contact_id', 'page.description_seo_contact_id', 'page.description_contact_id']
     const [api, contextHolder] = notification.useNotification();
 
     const hasFetchedData = useRef(false);
@@ -335,7 +474,9 @@ const Settings = () => {
         } else if (selectForm == 'home') {
             formData = {
                 "seo.title_home": data.seo.title_home,
-                "seo.description_home": data.seo.description_home
+                "seo.description_home": data.seo.description_home,
+                "seo.title_home_id": data.seo.title_home_id,
+                "seo.description_home_id": data.seo.description_home_id
             }
         } else if (selectForm == 'category') {
             formData = {
