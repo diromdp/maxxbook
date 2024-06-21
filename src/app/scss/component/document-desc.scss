@@ -65,7 +65,7 @@
         }
     }
     .pdf-viewer {
-        @apply flex flex-col justify-center items-center mt-[42px] h-full;
+        @apply flex flex-col justify-center items-center mt-[42px] h-auto lg:h-[140vh];
         .number-input {
             @apply flex justify-center items-center max-w-[200px] gap-[8px] mb-[16px];
             input {
