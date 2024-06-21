@@ -9,11 +9,13 @@ import FormUrlShare from '../../../../component/FormUrlShare';
 import { useAppSelector, useAppDispatch } from '../../../../store';
 import { setTabFormatDocument } from '../../../../store/reducer/categoryFilterSlice';
 import { useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 
 const UploadDocument = () => {
     const dispatch = useAppDispatch();
     const tabFormDocument = useAppSelector((state) => state.documents.tabFormDocuments);
     const hasFetchedData = useRef(false);
+    const t = useTranslations('Global');
     
     useEffect(() => {
         if (!hasFetchedData.current) {
@@ -33,15 +35,15 @@ const UploadDocument = () => {
                             size="small"
                             items={[
                                 {
-                                    title: 'Upload File Document',
+                                    title: t('Upload File Document'),
                                     icon: <Upload />,
                                 },
                                 {
-                                    title: 'Form Document',
+                                    title: t('Form Document'),
                                     icon: <FilePlus />,
                                 },
                                 {
-                                    title: 'Upload Finished',
+                                    title: t('Upload Finished'),
                                     icon: <CircleCheckBig />
                                 }
                             ]}

@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useTransition, useCallback, useState, useRef } from 'react';
+import { useEffect, useTransition, useCallback, useState } from 'react';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import {
     Avatar,
     AvatarFallback,
@@ -39,6 +39,7 @@ const Header = ({ locale }) => {
     // const t = useTranslations("userLogins");
     const router = useRouter();
     const localActive = useLocale();
+    const t = useTranslations("Global");
 
     const onSelectChange = (e) => {
         const nextLocale = e.target.value;
@@ -91,7 +92,7 @@ const Header = ({ locale }) => {
                     </Link>
                     <div className="header-login">
                         <label className='label'>
-                            <p className='sr-only'>Change Language</p>
+                            <p className='sr-only'>{t('Change Language')}</p>
                             <select
                                 defaultValue={localActive}
                                 className='bg-transparent py-2'
@@ -104,7 +105,7 @@ const Header = ({ locale }) => {
                         </label>
                         {
                             getToken.access_token == '' || getToken.access_token == null ?
-                                <Link href={"/login"} className="btn-primary text-[18px] h-[40px]">Login <div className="animation"></div></Link> :
+                                <Link href={"/login"} className="btn-primary text-[18px] h-[40px]">Sign In <div className="animation"></div></Link> :
                                 <>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
@@ -117,28 +118,28 @@ const Header = ({ locale }) => {
                                             <DropdownMenuGroup>
                                                 <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/profile`, undefined, { shallow: true })}>
                                                     <User className="mr-2 h-4 w-4" />
-                                                    <span>Profile</span>
+                                                    <span>{t('Profile')}</span>
                                                 </DropdownMenuItem>
                                                 <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/saved`, undefined, { shallow: true })}>
                                                     <Bookmark className="mr-2 h-4 w-4" />
-                                                    <span>Saved</span>
+                                                    <span>{t('Saved')}</span>
                                                 </DropdownMenuItem>
                                             </DropdownMenuGroup>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuGroup>
                                                 <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/upload-document`, undefined, { shallow: true })}>
                                                     <CloudUpload className="mr-2 h-4 w-4" />
-                                                    <span>Upload</span>
+                                                    <span>{t('Upload')}</span>
                                                 </DropdownMenuItem>
                                                 <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/document-own`, undefined, { shallow: true })}>
                                                     <FileInput className="mr-2 h-4 w-4" />
-                                                    <span>List Document Uploads</span>
+                                                    <span>{t('List Document Uploads')}</span>
                                                 </DropdownMenuItem>
                                             </DropdownMenuGroup>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuItem className={"cursor-pointer"} onClick={() => logoutUser()}>
                                                 <LogOut className="mr-2 h-4 w-4" />
-                                                <span>Log out</span>
+                                                <span>{t('Log out')}</span>
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>

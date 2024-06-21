@@ -38,9 +38,20 @@
         "Account": "Akun",
         "Account Information": "Informasi Akun",
         "Change Password": "Ubah Kata Sandi",
-        "Change Image Profile": "Ubah Profil Gambar",
+        "Change Image Profile": "Ubah Gambar",
         "Edit": "Edit",
         "Update": "Update",
         "Current Password": "Kata Sandi Saat Ini"
+    },
+    "Global": {
+        "Change Language" : "Ganti Bahasa",
+        "Profile": "Profil",
+        "Saved": "Disimpan",
+        "Upload" : "Unggah",
+        "List Document Uploads": "Daftar Unggahan Dokumen",
+        "Log out": "Keluar",
+        "Upload File Document" : "Unggah Dokumen File",
+        "Form Document": "Dokumen Formulir",
+        "Upload Finished": "Upload Selesai"
     }
 }

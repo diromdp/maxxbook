@@ -1,5 +1,5 @@
 .categories-page {
-   @apply pt-[80px] pb-[32px] px-[16px] sm:py-[120px] sm:px-[40px] 2xl:px-0;
+   @apply pt-[80px] pb-[32px] px-[16px] sm:py-[120px] sm:px-[40px] 2xl:px-0 min-h-screen;
 
    .title-pages {
       @apply pt-[16px];

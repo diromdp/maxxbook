@@ -38,9 +38,20 @@
         "Account": "Account",
         "Account Information": "Account Information",
         "Change Password": "Change Password",
-        "Change Image Profile": "Change Image Profile",
+        "Change Image Profile": "Change Image",
         "Edit": "Edit",
         "Update": "Update",
         "Current Password": "Current Password"
+    },
+    "Global": {
+        "Change Language" : "Change Language",
+        "Profile": "Profile",
+        "Saved": "Saved",
+        "Upload" : "Upload",
+        "List Document Uploads": "List Document Uploads",
+        "Log out": "Log Out",
+        "Upload File Document" : "Upload File Document",
+        "Form Document": "Form Document",
+        "Upload Finished": "Upload Finished"
     }
 }
