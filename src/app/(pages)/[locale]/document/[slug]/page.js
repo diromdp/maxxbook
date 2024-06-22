@@ -42,25 +42,26 @@ export async function generateMetadata({ params }) {
     const dataDetailDocument = await getDetails(slug);
     const headersList = headers();
     const pathname = headersList.get("referer");
-
+    
+    console.log(dataDetailDocument);
     // fetch data
     return {
-        title: dataDetailDocument.title_seo,
-        description: dataDetailDocument.description_seo,
+        title: dataDetailDocument.title_seo ? dataDetailDocument.title_seo : dataDetailDocument.title,
+        description: dataDetailDocument.description_seo ? dataDetailDocument.description_seo : dataDetailDocument.description,
         keywords: [dataDetailDocument.title],
         twitter: {
             card: 'summary_large_image',
-            title: dataDetailDocument.title_seo,
+            title: dataDetailDocument.title_seo ? dataDetailDocument.title_seo : dataDetailDocument.title,
             url: pathname,
-            description: dataDetailDocument.description_seo,
+            description: dataDetailDocument.description_seo ? dataDetailDocument.description_seo : dataDetailDocument.description,
             images: {
                 url: dataDetailDocument.thumb_url,
-                alt: dataDetailDocument.title_seo,
+                alt: dataDetailDocument.title_seo ? dataDetailDocument.title_seo : dataDetailDocument.title,
             },
         },
         openGraph: {
-            title: dataDetailDocument.title_seo,
-            description: dataDetailDocument.description_seo,
+            title: dataDetailDocument.title_seo ? dataDetailDocument.title_seo : dataDetailDocument.title,
+            description: dataDetailDocument.description_seo ? dataDetailDocument.description_seo : dataDetailDocument.description,
             url: pathname,
             type: 'website',
             images: [

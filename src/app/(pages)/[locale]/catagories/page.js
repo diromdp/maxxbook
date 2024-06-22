@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { urlAPI } from "../../../../lib/constant";
 import { getLocale, getTranslations } from 'next-intl/server';
 import { headers } from "next/headers";
+import { urlAPI } from "../../../../lib/constant";
 
 async function getData() {
     const data = await fetch(`${urlAPI}backend/categories`, {
