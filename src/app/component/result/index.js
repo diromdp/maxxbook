@@ -178,11 +178,14 @@ const ResultShow = ({ QureyParams }) => {
                 }
                 {
                     empatyState &&
-                    <div className="content-empty w-full h-full lg:w-[400px] lg:h-[400px] m-auto">
-                        <Lottie options={defaultOptions}
-                            className="lottie-container"
-                            disabled={true}    
-                        />
+                    <div className="content-empty w-full h-full  m-auto">
+                        <h1 className="text-[38px] font-bold">Documents Not Found</h1>
+                        <div className="lg:w-[300px] lg:h-[300px]">
+                            <Lottie options={defaultOptions}
+                                className="lottie-container "
+                                disabled={true}    
+                            />
+                        </div>
                     </div>
                 }
                 {
@@ -212,7 +215,6 @@ const ResultShow = ({ QureyParams }) => {
 
                     </div>
                 }
-
                 {
                     !empatyState &&
                     <div className="mt-[32px] flex justify-between">
@@ -255,8 +257,6 @@ const ResultShow = ({ QureyParams }) => {
                         </Pagination>
                     </div>
                 }
-
-
             </div>
         </>
 

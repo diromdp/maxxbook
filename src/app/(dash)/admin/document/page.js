@@ -279,7 +279,7 @@ const Document = () => {
     }
 
     const editData = (data) => {
-        console.log(data.upload.id);
+        
         router.push(`/admin/document/${data.id}?id=${data.id}&title=${data.title}&description=${data.description}&category_id=${data.category_id ? data.category_id : ''}&upload_id=${data.upload ? data.upload.id : ''}&sub_category_id=${data.sub_category_id ? data.sub_category_id : ''}`);
     }
 

@@ -121,9 +121,13 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
                 {
                     emptyState &&
                     <div className="content-empty w-full h-full lg:w-[400px] lg:h-[400px] m-auto">
-                        <Lottie options={defaultOptions}
-                            disabled={true}    
-                        />
+                        <h1 className="text-[38px] font-bold">Documents Not Found</h1>
+                        <div className="lg:w-[300px] lg:h-[300px]">
+                            <Lottie options={defaultOptions}
+                                className="lottie-container "
+                                disabled={true}    
+                            />
+                        </div>
                     </div>
                 }
                 {
