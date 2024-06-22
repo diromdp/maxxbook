@@ -41,7 +41,7 @@ const DocumentDesc = ({ slug }) => {
     const [bookmark, setBookmark] = useState(false);
     const hasFetchedData = useRef(false);
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
-    const token = getToken.access_token;    
+    const token = getToken.access_token;
     const [api, contextHolder] = notification.useNotification();
     const locale = useLocale();
     const t = useTranslations('Documents');
@@ -63,7 +63,9 @@ const DocumentDesc = ({ slug }) => {
             .then((data) => {
                 if (data.status === 200) {
                     setLoading(false)
+                    const dataDocument = data.data;
                     setDocumentData(data.data)
+                    setBookmark(dataDocument.is_saved)
                 }
             })
             .catch(function (error) {
@@ -94,7 +96,7 @@ const DocumentDesc = ({ slug }) => {
     };
 
     const bookmarkSaved = async () => {
-        await axios.put(`${urlAPI}backend/customer/documents/${documentData.id}/statistics/saved`,{}, {
+        await axios.put(`${urlAPI}backend/customer/documents/${documentData.id}/statistics/saved`, {}, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': "application/json",
@@ -200,7 +202,7 @@ const DocumentDesc = ({ slug }) => {
             <div className="share-link">
                 <div className="bookmark-container">
                     <button type="button" onClick={() => bookmarkSaved()}>
-                        <Bookmark fill={`${bookmark ? '#000': '#fff'}`} />
+                        <Bookmark fill={`${bookmark ? '#000' : '#fff'}`} />
                     </button>
                 </div>
                 <div className="sosmed">
@@ -232,7 +234,18 @@ const DocumentDesc = ({ slug }) => {
             </div>
             <div className="pdf-viewer">
                 {
-                    documentData && <DocViewer documents={fileDocument} pluginRenderers={DocViewerRenderers} />
+                    documentData &&
+                    <DocViewer
+                        documents={fileDocument}
+                        className="!h-[1086px]"
+                        config={{
+                            header: {
+                                disableHeader: false,
+                                disableFileName: false,
+                                retainURLParams: false
+                            }
+                        }} 
+                        pluginRenderers={DocViewerRenderers} />
                 }
             </div>
         </div>

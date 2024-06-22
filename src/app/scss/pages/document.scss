@@ -1,5 +1,6 @@
 .document-page {
     @apply pt-[120px];
+    @apply overflow-hidden;
     .another-document {
         @apply mt-[85%] md:mt-[40%] lg:mt-0;
         &-content {

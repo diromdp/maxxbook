@@ -33,7 +33,7 @@ const Saved = () => {
     const [dataPagination, setDataPagination] = useState([]);
     const hasFetchedData = useRef(false);
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
-    const token = getToken.access_token;    
+    const token = getToken.access_token;
     const [filterData, setFilterData] = useState({
         q: "",
         cursor: "",
@@ -111,7 +111,7 @@ const Saved = () => {
     }
 
     const onUnsaved = async (id) => {
-        await axios.put(`${urlAPI}backend/customer/documents/${id}/statistics/saved`, {},{
+        await axios.put(`${urlAPI}backend/customer/documents/${id}/statistics/saved`, {}, {
             headers: {
                 "Content-Type": "application/json",
                 'Accept': "application/json",
@@ -175,11 +175,14 @@ const Saved = () => {
                                             return (
                                                 <div className="item-document" key={index}>
                                                     <div className="left-side">
-                                                        <img alt={item.title} src={`${item.thumb_url ? item.thumb_url : "https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1"}`} width={132} height={174} />
+                                                        <img alt={item.title ? item.title : ''} src={`${item.thumb_url ? item.thumb_url : "https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1"}`} width={132} height={174} />
                                                         <Link href={`/${locale}/document/${item.slug}`} className="description">
-                                                            <h3>{item.title}</h3>
-                                                            <div className="paragraph" dangerouslySetInnerHTML={{ __html: `${item.description_seo}` }}>
-                                                            </div>
+                                                            <h3>{item.title ? item.title : ''}</h3>
+                                                            {
+                                                                item.description_seo &&
+                                                                <div className="paragraph" dangerouslySetInnerHTML={{ __html: `${item.description_seo}` }}>
+                                                                </div>
+                                                            }
                                                         </Link>
                                                     </div>
                                                     <div className="right-side">

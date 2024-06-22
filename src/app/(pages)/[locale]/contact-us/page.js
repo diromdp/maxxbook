@@ -1,11 +1,13 @@
 import Sidebar from "@/app/component/sidebar";
+import { useTranslations, useLocale } from "next-intl";
+import { getLocale } from "next-intl/server";
 import { headers } from "next/headers";
 import { urlAPI } from "../../../../lib/constant";
 import { use } from "react";
 
 
 async function getDetails() {
-    const data = await fetch(`${urlAPI}backend/settings?keys=page.title_contact,page.description_seo_contact,page.description_contact`, {
+    const data = await fetch(`${urlAPI}backend/settings?keys=page.title_contact,page.description_seo_contact,page.description_contact,title_contact_id,page.description_seo_contact_id,page.description_contact_id,page.title_contact_id`, {
         method: 'get',
         headers: {
             'Content-Type': 'application/json',
@@ -25,43 +27,70 @@ export async function generateMetadata() {
     const detailSEO = await getDetails();
     const selectedTitle = detailSEO.filter(x => x.key === 'page.title_contact');
     const selectedDesc = detailSEO.filter(x => x.key === 'page.description_seo_contact');
-
-    return {
-        title: selectedTitle ?  selectedTitle[0].value : '',
-        description: selectedDesc ? selectedDesc[0].value : '',
-        twitter: {
-            card: 'summary_large_image',
-            title: selectedTitle ? selectedTitle[0].value : '',
-            url: pathname,
+    const selectedTitleID = detailSEO.filter(x => x.key === 'page.title_contact_id');
+    const selectedDescID = detailSEO.filter(x => x.key === 'page.description_seo_contact_id');
+    const locale = getLocale();    
+    if(locale === 'en') {
+        return {
+            title: selectedTitle ?  selectedTitle[0].value : '',
             description: selectedDesc ? selectedDesc[0].value : '',
-        },
-        openGraph: {
-            title: selectedTitle ? selectedTitle[0].value : '',
-            description: selectedDesc ? selectedDesc[0].value : '',
-            url: pathname,
-            type: 'website',
-        },
+            twitter: {
+                card: 'summary_large_image',
+                title: selectedTitle ? selectedTitle[0].value : '',
+                url: pathname,
+                description: selectedDesc ? selectedDesc[0].value : '',
+            },
+            openGraph: {
+                title: selectedTitle ? selectedTitle[0].value : '',
+                description: selectedDesc ? selectedDesc[0].value : '',
+                url: pathname,
+                type: 'website',
+            },
+        }
+    } else {
+        return {
+            title: selectedTitleID ?  selectedTitleID[0].value : '',
+            description: selectedDescID ? selectedDescID[0].value : '',
+            twitter: {
+                card: 'summary_large_image',
+                title: selectedTitleID ? selectedTitleID[0].value : '',
+                url: pathname,
+                description: selectedDescID ? selectedDescID[0].value : '',
+            },
+            openGraph: {
+                title: selectedTitleID ? selectedTitleID[0].value : '',
+                description: selectedDescID ? selectedDescID[0].value : '',
+                url: pathname,
+                type: 'website',
+            },
+        }
     }
 }
-
 
 const ContactUs = () => {
     const detailSEO = use(getDetails());
     const selectedEditor = detailSEO.filter(x => x.key === 'page.description_contact')
-
+    const selectedEditorID = detailSEO.filter(x => x.key === 'page.description_contact_id')
+    const t = useTranslations("Global");
+    const localeNext = useLocale();
+    console.log()
     return (
-        <div className="screen-layer pt-[120px]">
-            <div className="flex flex-col md:flex-row gap-[16px] about-page px-[16px] md:px-0">
+        <div className="screen-layer pt-[120px] min-h-screen">
+            <div className="flex flex-col md:flex-row gap-[16px] about-page px-[16px] 1xl:px-0">
                 <div className="md:w-[20%]">
                     <Sidebar />
                 </div>
                 <div className="md:w-[80%] flex-col items-start">
                     <div className="content mb-[32px]">
                         <div className="title">
-                            <h1>Contact Us</h1>
+                            <h1>{t('Contact Us')}</h1>
                         </div>
                         <div className="desc">
-                            <div dangerouslySetInnerHTML={{__html: selectedEditor && selectedEditor[0].value}}></div>
+                            {
+                                localeNext === "en" ?
+                                <div dangerouslySetInnerHTML={{__html: selectedEditor && selectedEditor[0].value}}></div>:
+                                <div dangerouslySetInnerHTML={{__html: selectedEditorID && selectedEditorID[0].value}}></div>
+                            }
                         </div>
                         <div className="googlemap">
                             <iframe

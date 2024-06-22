@@ -1,10 +1,13 @@
 import Sidebar from "@/app/component/sidebar";
 import { headers } from "next/headers";
+import { useTranslations, useLocale } from "next-intl";
+import { getLocale } from "next-intl/server";
+
 import { urlAPI } from "../../../../lib/constant";
 import { use } from "react";
 
 async function getDetails() {
-    const data = await fetch(`${urlAPI}backend/settings?keys=page.title_privacy,page.description_seo_privacy,page.description_privacy`, {
+    const data = await fetch(`${urlAPI}backend/settings?keys=page.title_privacy,page.description_seo_privacy,page.description_privacy,page.title_privacy_id,page.description_seo_privacy_id,page.description_privacy_id`, {
         method: 'get',
         headers: {
             'Content-Type': 'application/json',
@@ -25,41 +28,70 @@ export async function generateMetadata() {
     const detailSEO = await getDetails();
     const selectedTitle = detailSEO.filter(x => x.key === 'page.title_privacy')
     const selectedDesc = detailSEO.filter(x => x.key === 'page.description_seo_privacy')
+    const selectedTitleID = detailSEO.filter(x => x.key === 'page.title_privacy_id')
+    const selectedDescID = detailSEO.filter(x => x.key === 'page.description_seo_privacy_id')
+    const locale = getLocale();    
 
-    return {
-        title: detailSEO.length > 0 ? selectedTitle[0].value : '',
-        description: detailSEO.length > 0 ? selectedDesc[0].value : '',
-        twitter: {
-            card: 'summary_large_image',
-            title: detailSEO.length > 0 ? selectedTitle[0].value : '',
-            url: pathname,
-            description: detailSEO.length > 0 ? selectedDesc[0].value : '',
-        },
-        openGraph: {
+    if(locale == "en") {
+        return {
             title: detailSEO.length > 0 ? selectedTitle[0].value : '',
             description: detailSEO.length > 0 ? selectedDesc[0].value : '',
-            url: pathname,
-            type: 'website',
-        },
+            twitter: {
+                card: 'summary_large_image',
+                title: detailSEO.length > 0 ? selectedTitle[0].value : '',
+                url: pathname,
+                description: detailSEO.length > 0 ? selectedDesc[0].value : '',
+            },
+            openGraph: {
+                title: detailSEO.length > 0 ? selectedTitle[0].value : '',
+                description: detailSEO.length > 0 ? selectedDesc[0].value : '',
+                url: pathname,
+                type: 'website',
+            },
+        }
+    } else {
+        return {
+            title: detailSEO.length > 0 ? selectedTitleID[0].value : '',
+            description: detailSEO.length > 0 ? selectedDescID[0].value : '',
+            twitter: {
+                card: 'summary_large_image',
+                title: detailSEO.length > 0 ? selectedTitleID[0].value : '',
+                url: pathname,
+                description: detailSEO.length > 0 ? selectedDescID[0].value : '',
+            },
+            openGraph: {
+                title: detailSEO.length > 0 ? selectedTitleID[0].value : '',
+                description: detailSEO.length > 0 ? selectedDescID[0].value : '',
+                url: pathname,
+                type: 'website',
+            },
+        }
     }
+    
 }
 const PrivacyPolicy = () => {
     const detailSEO = use(getDetails());
     const selectedEditor = detailSEO.filter(x => x.key === 'page.description_privacy')
-
+    const selectedEditorID = detailSEO.filter(x => x.key === 'page.description_privacy_id')
+    const t = useTranslations("Global");
+    const localeNext = useLocale();
     return (
         <div className="screen-layer pt-[80px] lg:pt-[120px]">
-            <div className="flex flex-col md:flex-row gap-[16px] about-page px-[16px] md:px-0">
+            <div className="flex flex-col md:flex-row gap-[16px] about-page px-[16px] 1xl:px-0">
                 <div className="md:w-[20%]">
                     <Sidebar/>
                 </div>
                 <div className="md:w-[80%] flex-col items-start">
                     <div className="content mb-[32px]">
                         <div className="title">
-                            <h1>Privacy Policy</h1>
+                            <h1>{t('Privacy Policy')}</h1>
                         </div>
                         <div className="desc mb-[32px]">
-                            <div dangerouslySetInnerHTML={{ __html: selectedEditor && selectedEditor[0].value }} />
+                            {
+                                localeNext === "en" ? 
+                                <div dangerouslySetInnerHTML={{ __html: selectedEditor && selectedEditor[0].value }} />:
+                                <div dangerouslySetInnerHTML={{ __html: selectedEditorID && selectedEditorID[0].value }} />
+                            }
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 
 .panel-sidebar {
-    @apply mt-[10px];
+    @apply mt-[10px] border-slate-400 border-b pb-[32px] xl:mb-[32px] xl:border-0;
     &-container {
         ul {
             @apply flex flex-col items-start gap-[10px];

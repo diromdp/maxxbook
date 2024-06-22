@@ -98,7 +98,6 @@ const ResultShow = ({ QureyParams }) => {
             })
                 .then((data) => {
                     if (data.status === 200) {
-                        console.log('asdasdasd')
                         setLoading(false)
                         dispatch(setDocumentdata(data.data.data))
                         dispatch(setPaginationState(data.data.links))
@@ -191,15 +190,18 @@ const ResultShow = ({ QureyParams }) => {
                     <div className="result-show">
                         {
                             !isLoading ? dataDocument && dataDocument.map((item, index) => {
-                                return (
-                                    <Card
-                                        key={index}
-                                        colorImage={item.color}
-                                        imagePath={item.thumb_url}
-                                        title={item.title}
-                                        description={item.description}
-                                        slug={`${item.slug}`} />
-                                )
+                                if(item.slug) {
+                                    return (
+                                        <Card
+                                            key={index}
+                                            colorImage={item.color}
+                                            imagePath={item.thumb_url}
+                                            title={item.title}
+                                            description={item.description}
+                                            slug={`${item.slug}`} />
+                                    )
+                                }
+                               
                             }) :
                                 <>
                                     {[...Array(12)].map((x, i) =>

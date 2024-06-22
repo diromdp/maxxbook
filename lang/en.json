@@ -52,6 +52,10 @@
         "Log out": "Log Out",
         "Upload File Document" : "Upload File Document",
         "Form Document": "Form Document",
-        "Upload Finished": "Upload Finished"
+        "Upload Finished": "Upload Finished",
+        "About Maxibook":"About Maxibook",
+        "Contact Us": "Contact Us",
+        "Privacy Policy": "Privacy Policy",
+        "Terms of Use": "Terms of Use"
     }
 }

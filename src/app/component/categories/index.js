@@ -21,6 +21,7 @@ export default async function Categories() {
     const t = useTranslations('Homepage');
     const data = await getCategory()
     const localData = await getLocale();
+    console.log(data);
     return (
         <div className="categories">
             <div className="container m-auto">
@@ -30,7 +31,7 @@ export default async function Categories() {
                             return (
                                 <Link key={index} href={`/${localData}/catagories/${item.slug}`} className="item">
                                     <span>{localData == 'en' ? item.name : item.name_id}</span>
-                                    <Image alt={item.name} className="image" width={96} height={96} src={item.icon_url} />
+                                    <Image alt={item.name ? item.name : ''} className="image" width={96} height={96} src={item.icon_url ? item.icon_url : ''} />
                                 </Link>
                             )
                         })

@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import SliderCardItem from "@/app/component/sliderCardItem";
+import { useTranslations, useLocale } from "next-intl";
 import { urlAPI } from "../../../lib/constant";
 import { useAppSelector } from "../../store";
-import SliderCardItem from "@/app/component/sliderCardItem";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 const SavedComponent = () => {
@@ -21,6 +21,7 @@ const SavedComponent = () => {
     });
     const hasFetchedData = useRef(false);
     const t = useTranslations('Exporler');
+    const locale = useLocale();
 
     const getData = async () => {
         await axios.get(`${urlAPI}backend/customer/documents/saved?cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}`, {
@@ -57,8 +58,6 @@ const SavedComponent = () => {
         }
     }, []);
 
-    console.log(listDocument);
-
     return (
         <>
             {
@@ -69,7 +68,7 @@ const SavedComponent = () => {
                         <div className="item-view">
                             <div className="flex justify-between items-center">
                                 <h2>{t('saved documents')}</h2>
-                                <Link href={'/'} className="view-more">{t('View more')}</Link>
+                                <Link href={`/${locale}/user/saved`} className="view-more">{t('View more')}</Link>
                             </div>
                             <SliderCardItem data={listDocument} />
                         </div>

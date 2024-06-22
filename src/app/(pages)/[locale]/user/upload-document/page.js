@@ -14,14 +14,24 @@ import { useTranslations } from 'next-intl';
 const UploadDocument = () => {
     const dispatch = useAppDispatch();
     const tabFormDocument = useAppSelector((state) => state.documents.tabFormDocuments);
+    const upload_id = useAppSelector((state) => state.documents.upload_id);
     const hasFetchedData = useRef(false);
     const t = useTranslations('Global');
+
+
+    const checkPositionTabs = () => {
+        if(tabFormDocument == 2) {
+            dispatch(setTabFormatDocument(0))
+        } else if(tabFormDocument == 1) {
+            if(upload_id == null) {
+                dispatch(setTabFormatDocument(0))
+            }
+        }
+    }
     
     useEffect(() => {
         if (!hasFetchedData.current) {
-            if(tabFormDocument == 2) {
-                dispatch(setTabFormatDocument(0));
-            }
+            checkPositionTabs();
             hasFetchedData.current = true;
         }
     }, [])

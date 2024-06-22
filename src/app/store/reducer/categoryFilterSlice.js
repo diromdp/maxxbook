@@ -27,8 +27,8 @@ const initialState = {
     empatyState: false,
     emptyStateDocumentCategory: false,
     tabFormDocuments: 0,
-    upload_id: "",
-    documentUpload:{},
+    upload_id: null,
+    documentUpload:null,
     ownerOfUpload:{},
 };
 
