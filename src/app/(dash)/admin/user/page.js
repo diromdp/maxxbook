@@ -21,6 +21,8 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Table } from 'antd';
 import dayjs from "dayjs";
+import { Tooltip } from 'antd';
+
 import { urlAPI } from "../../../../lib/constant";
 import { formatRupiah } from "../../../../lib/utils";
 
@@ -44,10 +46,6 @@ const Users = () => {
     });
     const columns = [
         {
-            title: "No",
-            dataIndex: 'id'
-        },
-        {
             title: 'Name',
             dataIndex: 'name',
         },
@@ -59,7 +57,7 @@ const Users = () => {
             title: 'Total Balance',
             dataIndex: 'balance',
             render: (val) => {
-                return(
+                return (
                     <span>{val ? formatRupiah(val.balance) : formatRupiah(0)}</span>
                 )
             }
@@ -69,8 +67,8 @@ const Users = () => {
             dataIndex: 'email_verified_at',
             render: (val) => {
                 const format = dayjs(val).format("DD MM YYYY HH:mm"); // display
-                return(
-                    <span>{val ? format :""}</span>
+                return (
+                    <span>{val ? format : ""}</span>
                 )
             }
         },
@@ -79,8 +77,8 @@ const Users = () => {
             dataIndex: 'created_at',
             render: (val) => {
                 const format = dayjs(val).format("DD MM YYYY HH:mm"); // display
-                return(
-                    <span>{val ? format :""}</span>
+                return (
+                    <span>{val ? format : ""}</span>
                 )
             }
         },
@@ -92,12 +90,16 @@ const Users = () => {
             render: (val) => {
                 return (
                     <div className="flex items-center gap-[16px]">
-                        <Button variant="destructive" onClick={() => deleteUserSingle(val.id)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
-                            <FiTrash2 />
-                        </Button>
-                        <Button onClick={() => editUser(val)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
-                            <FiEdit />
-                        </Button>
+                        <Tooltip title="Delete">
+                            <Button variant="destructive" onClick={() => deleteUserSingle(val.id)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                                <FiTrash2 />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Edit">
+                            <Button onClick={() => editUser(val)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                                <FiEdit />
+                            </Button>
+                        </Tooltip>
                     </div>
                 )
             }
@@ -152,7 +154,7 @@ const Users = () => {
     const updatePagination = async (val) => {
         var url_string = val;
 
-        if(url_string) {
+        if (url_string) {
             var url = new URL(url_string);
             var page = url.searchParams.get("page");
             setFilterUser({ ...filterUser, page: page });
@@ -233,7 +235,7 @@ const Users = () => {
         router.push(`/admin/user/${user.id}?id=${user.id}&name=${user.name}&email=${user.email}`);
     }
 
-    const deleteUser = async() => {
+    const deleteUser = async () => {
         await axios.delete(`${urlAPI}backend/admin/users`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -361,7 +363,6 @@ const Users = () => {
                                         }
                                     })
                                 }
-
                             </PaginationContent>
                         </Pagination>
                     </div>

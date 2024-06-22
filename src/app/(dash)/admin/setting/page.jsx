@@ -187,9 +187,9 @@ const Settings = () => {
         },
         {
             key: 'page.description_about_id',
-            label: "Page Description about (ID)",
+            label: "Page Description About (ID)",
             type: 'string',
-            mode: 'editor',
+            mode: 'editor_id',
             value: '',
         },
         {
@@ -229,7 +229,7 @@ const Settings = () => {
             key: 'page.description_term_id',
             label: "Page Description term (ID)",
             type: 'string',
-            mode: 'editor',
+            mode: 'editor_id',
             value: '',
         },
         {
@@ -269,7 +269,7 @@ const Settings = () => {
             key: 'page.description_privacy_id',
             label: "Page Description privacy (ID)",
             type: 'string',
-            mode: 'editor',
+            mode: 'editor_id',
             value: '',
         },
         {
@@ -309,7 +309,7 @@ const Settings = () => {
             key: 'page.description_contact_id',
             label: "Page Description contact (ID)",
             type: 'string',
-            mode: 'editor',
+            mode: 'editor_id',
             value: '',
         },
     ]);
@@ -321,7 +321,7 @@ const Settings = () => {
 
     const [htmlPrivacy, setHtmlPrivacy] = useState();
     const [htmlPrivacyId, setHtmlPrivacyID] = useState();
-    const [htmlContacIdt, setHtmlContactID] = useState();
+    const [htmlContactID, setHtmlContactID] = useState();
 
     const [htmlContact, setHtmlContact] = useState();
     const [selectForm, setSelectedForm] = useState('transaction');
@@ -393,16 +393,27 @@ const Settings = () => {
                         const foundObjectSeoExplorer = join.filter(element => seoExplorer.includes(element.key));
                         const foundObjectSeoAbout = join.filter(element => seoAbout.includes(element.key));
                         const foundEditorAbout = foundObjectSeoAbout.find(element => element.key === 'page.description_about');
+                        const foundEditorAboutID = foundObjectSeoAbout.find(element => element.key === 'page.description_about_id');
+
                         const foundObjectPageTerm = join.filter(element => termTerm.includes(element.key));
                         const foundEditorTerm = foundObjectPageTerm.find(element => element.key === 'page.description_term');
+                        const foundEditorTermID = foundObjectPageTerm.find(element => element.key === 'page.description_term_id');
+
                         const foundObjectPagePrivacy = join.filter(element => privacy.includes(element.key));
                         const foundEditorPrivacy = foundObjectPagePrivacy.find(element => element.key === 'page.description_privacy');
+                        const foundEditorPrivacyID = foundObjectPagePrivacy.find(element => element.key === 'page.description_privacy_id');
+
                         const foundObjectContact = join.filter(element => contact.includes(element.key));
                         const foundEditorContact = foundObjectContact.find(element => element.key === 'page.description_contact');
+                        const foundEditorContactID = foundObjectContact.find(element => element.key === 'page.description_contact_id');
                         setHtmlAbout(foundEditorAbout.value);
+                        setHtmlAboutID(foundEditorAboutID.value);
                         setHtmlTerm(foundEditorTerm.value);
+                        setHtmlTermID(foundEditorTermID.value);
                         setHtmlPrivacy(foundEditorPrivacy.value);
+                        setHtmlPrivacyID(foundEditorPrivacyID.value);
                         setHtmlContact(foundEditorContact.value);
+                        setHtmlContactID(foundEditorContactID.value);
                         setSelectedFormSeoCategory(foundObjectSeoCategory);
                         setSelectedFormSeoExproler(foundObjectSeoExplorer);
                         setSelectedFormSeoHome(foundObjectSeoHome);
@@ -481,42 +492,60 @@ const Settings = () => {
         } else if (selectForm == 'category') {
             formData = {
                 "seo.title_category": data.seo.title_category,
-                "seo.description_category": data.seo.description_category
+                "seo.description_category": data.seo.description_category,
+                "seo.title_category_id": data.seo.title_category_id,
+                "seo.description_category_id": data.seo.description_category_id
             }
         } else if (selectForm == 'explorer') {
             formData = {
                 "seo.title_explorer": data.seo.title_explorer,
-                "seo.description_explorer": data.seo.description_explorer
+                "seo.description_explorer": data.seo.description_explorer,
+                "seo.title_explorer_id": data.seo.title_explorer_id,
+                "seo.description_explorer_id": data.seo.description_explorer_id
             }
         } else if (selectForm == 'about') {
             formData = {
                 "seo.title_about": data.seo.title_about,
                 "seo.description_about": data.seo.description_about,
                 "page.description_about": htmlAbout,
+                "seo.title_about_id": data.seo.title_about_id,
+                "seo.description_about_id": data.seo.description_about_id,
+                "page.description_about_id": htmlAboutID,
             }
         } else if (selectForm == 'term') {
             formData = {
                 "page.title_term": data.page.title_term,
                 "page.description_seo_term": data.page.description_seo_term,
                 "page.description_term": htmlTerms,
+                "page.title_term_id": data.page.title_term_id,
+                "page.description_seo_term_id": data.page.description_seo_term_id,
+                "page.description_term_id": htmlTermsID,
+
             }
         } else if (selectForm == 'privacy') {
             formData = {
                 "page.title_privacy": data.page.title_privacy,
                 "page.description_seo_privacy": data.page.description_seo_privacy,
                 "page.description_privacy": htmlPrivacy,
+                "page.title_privacy_id": data.page.title_privacy_id,
+                "page.description_seo_privacy_id": data.page.description_seo_privacy_id,
+                "page.description_privacy_id": htmlPrivacyId,
             }
         } else if (selectForm == 'result') {
             formData = {
                 "seo.title_result": data.seo.title_result,
                 "seo.description_seo_result": data.seo.description_seo_result,
+                "seo.title_result_id": data.seo.title_result_id,
+                "seo.description_seo_result_id": data.seo.description_seo_result_id,
             }
         } else if (selectForm == 'contact') {
             formData = {
                 "page.title_contact": data.page.title_contact,
                 "page.description_seo_contact": data.page.description_seo_contact,
                 "page.description_contact": htmlContact,
-
+                "page.title_contact_id": data.page.title_contact_id,
+                "page.description_seo_contact_id": data.page.description_seo_contact_id,
+                "page.description_contact_id": htmlContactID,
             }
         }
 
@@ -546,7 +575,6 @@ const Settings = () => {
                             <TabsTrigger value="term" onClick={() => setSelectedForm('term')}>Term Condition</TabsTrigger>
                             <TabsTrigger value="privacy" onClick={() => setSelectedForm('privacy')}>Privacy</TabsTrigger>
                             <TabsTrigger value="contact" onClick={() => setSelectedForm('contact')}>Contact Us</TabsTrigger>
-
                         </TabsList>
                         <TabsContent value="transaction">
                             <Card>
@@ -626,16 +654,28 @@ const Settings = () => {
                                     <form className="flex flex-col gap-[8px]" onSubmit={handleSubmit(onSubmit)}>
                                         {
                                             selectedFormPageResult && selectedFormPageResult.map((item, index) => {
-                                                return (
-                                                    <div key={index} className="space-y-1">
-                                                        <Label htmlFor={item.key}>{item.label}</Label>
-                                                        <Input
-                                                            id={item.key}
-                                                            defaultValue={item.value}
-                                                            {...register(`${item.key}`)}
-                                                        />
-                                                    </div>
-                                                )
+                                                if (item.mode === "long") {
+                                                    return (
+                                                        <div key={index} className="space-y-1">
+                                                            <Label htmlFor={item.key}>{item.label}</Label>
+                                                            <Textarea
+                                                                {...register(`${item.key}`)}
+                                                                defaultValue={item.value} />
+                                                        </div>
+                                                    )
+                                                } else {
+                                                    return (
+                                                        <div key={index} className="space-y-1">
+                                                            <Label htmlFor={item.key}>{item.label}</Label>
+                                                            <Input
+                                                                id={item.key}
+                                                                defaultValue={item.value}
+                                                                {...register(`${item.key}`)}
+                                                            />
+                                                        </div>
+                                                    )
+                                                }
+                                                
                                             })
                                         }
                                         <Button className="mt-[16px]" type="submit">Save</Button>
@@ -744,6 +784,22 @@ const Settings = () => {
                                                             </div>
                                                         </div>
                                                     )
+                                                } else if (item.mode === "editor_id") {
+                                                    return (
+                                                        <div key={index} className="space-y-1">
+                                                            <Label htmlFor={item.key}>{item.label}</Label>
+                                                            <div className="border border-input rounded-[8px]">
+                                                                <JoditEditor
+                                                                    ref={editor}
+                                                                    className="rounded-[8px]"
+                                                                    value={htmlAboutID ? htmlAboutID : ''}
+                                                                    config={config}
+                                                                    tabIndex={1} // tabIndex of textarea
+                                                                    onBlur={(newContent) => setHtmlAboutID(newContent)} // preferred to use only this option to update the content for performance reasons
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )
                                                 } else {
                                                     return (
                                                         <div key={index} className="space-y-1">
@@ -790,6 +846,22 @@ const Settings = () => {
                                                                     config={config}
                                                                     tabIndex={1} // tabIndex of textarea
                                                                     onBlur={(newContent) => setHtmlTerm(newContent)} // preferred to use only this option to update the content for performance reasons
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                } else if (item.mode === "editor_id") {
+                                                    return (
+                                                        <div key={index} className="space-y-1">
+                                                            <Label htmlFor={item.key}>{item.label}</Label>
+                                                            <div className="border border-input rounded-[8px]">
+                                                                <JoditEditor
+                                                                    ref={editor}
+                                                                    className="rounded-[8px]"
+                                                                    value={htmlTermsID ? htmlTermsID : ''}
+                                                                    config={config}
+                                                                    tabIndex={1} // tabIndex of textarea
+                                                                    onBlur={(newContent) => setHtmlTermID(newContent)} // preferred to use only this option to update the content for performance reasons
                                                                 />
                                                             </div>
                                                         </div>
@@ -844,6 +916,22 @@ const Settings = () => {
                                                             </div>
                                                         </div>
                                                     )
+                                                } else if (item.mode === "editor_id") {
+                                                    return (
+                                                        <div key={index} className="space-y-1">
+                                                            <Label htmlFor={item.key}>{item.label}</Label>
+                                                            <div className="border border-input rounded-[8px]">
+                                                                <JoditEditor
+                                                                    ref={editor}
+                                                                    className="rounded-[8px]"
+                                                                    value={htmlPrivacyId ? htmlPrivacyId : ''}
+                                                                    config={config}
+                                                                    tabIndex={1} // tabIndex of textarea
+                                                                    onBlur={(newContent) => setHtmlPrivacyID(newContent)} // preferred to use only this option to update the content for performance reasons
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )
                                                 } else {
                                                     return (
                                                         <div key={index} className="space-y-1">
@@ -894,7 +982,23 @@ const Settings = () => {
                                                             </div>
                                                         </div>
                                                     )
-                                                } else {
+                                                } else if (item.mode === "editor_id") {
+                                                    return (
+                                                        <div key={index} className="space-y-1">
+                                                            <Label htmlFor={item.key}>{item.label}</Label>
+                                                            <div className="border border-input rounded-[8px]">
+                                                                <JoditEditor
+                                                                    ref={editor}
+                                                                    className="rounded-[8px]"
+                                                                    value={htmlContactID ? htmlContactID : ''}
+                                                                    config={config}
+                                                                    tabIndex={1}
+                                                                    onBlur={(newContent) => setHtmlContactID(newContent)} // preferred to use only this option to update the content for performance reasons
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                }  else {
                                                     return (
                                                         <div key={index} className="space-y-1">
                                                             <Label htmlFor={item.key}>{item.label}</Label>

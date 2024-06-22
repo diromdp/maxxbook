@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/pagination";
 import { useRouter } from 'next/navigation';
 import { Badge } from "@/components/ui/badge"
-
+import { Tooltip } from 'antd';
 
 import { FiEdit, FiTrash2, FiFilePlus } from "react-icons/fi";
 import { Input } from 'antd';
@@ -24,9 +24,7 @@ import { useCookies } from "react-cookie";
 
 import axios from "axios";
 import { Table } from 'antd';
-import dayjs from "dayjs";
 import { urlAPI } from "../../../../lib/constant";
-import { useMapContext } from "../adminContex";
 
 const { Search } = Input;
 
@@ -87,12 +85,16 @@ const Category = () => {
             render: (val) => {
                 return (
                     <div className="flex items-center gap-[16px]">
-                        <Button variant="destructive" onClick={() => deleteDataSingle(val.id)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
-                            <FiTrash2 />
-                        </Button>
-                        <Button onClick={() => editData(val)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
-                            <FiEdit />
-                        </Button>
+                        <Tooltip title="Delete">
+                            <Button variant="destructive" onClick={() => deleteDataSingle(val.id)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                                <FiTrash2 />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Edit">
+                            <Button onClick={() => editData(val)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                                <FiEdit />
+                            </Button>
+                        </Tooltip>
                     </div>
                 )
             }
@@ -144,7 +146,7 @@ const Category = () => {
     const updatePagination = async (val) => {
         var url_string = val;
 
-        if(url_string) {
+        if (url_string) {
             var url = new URL(url_string);
             var page = url.searchParams.get("page");
             setFilterUser({ ...filterUser, page: page });
@@ -155,26 +157,26 @@ const Category = () => {
                     "Authorization": `Bearer ${cookies.token}`
                 }
             })
-            .then((data) => {
-                if (data.status === 200) {
-                   
-                    setIsLoading(false)
-                    setDataFetch(data.data.data)
-                    setDataPagination(data.data.links)
-                }
-            })
-            .catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
-                }
-                console.log(error.config);
-            });
+                .then((data) => {
+                    if (data.status === 200) {
+
+                        setIsLoading(false)
+                        setDataFetch(data.data.data)
+                        setDataPagination(data.data.links)
+                    }
+                })
+                .catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        console.log(error.request);
+                    } else {
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                });
         }
     }
 

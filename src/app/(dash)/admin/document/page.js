@@ -21,8 +21,9 @@ import { Input } from 'antd';
 import { useCookies } from "react-cookie";
 import Link from "next/link";
 import axios from "axios";
-import { Table } from 'antd';
+import { Table, Tooltip } from 'antd';
 import Image from "next/image";
+
 import { urlAPI } from "../../../../lib/constant";
 
 const { Search } = Input;
@@ -47,11 +48,6 @@ const Document = () => {
         approval_status: ""
     });
     const columns = [
-        {
-            title: "No",
-            dataIndex: 'id',
-            responsive: ["sm"]
-        },
         {
             title: 'Title Document',
             dataIndex: 'title',
@@ -148,15 +144,21 @@ const Document = () => {
             render: (val) => {
                 return (
                     <div className="flex items-center gap-[16px]">
-                        <Button variant="destructive" onClick={() => deleteDataSingle(val.id)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
-                            <FiTrash2 />
-                        </Button>
-                        <Button onClick={() => editData(val)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
-                            <FiEdit />
-                        </Button>
-                        <Button disabled={val.approval.approval_status === "APPROVED" ? true : false} onClick={() => approvalDataSingle(val)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
-                            <FiFeather />
-                        </Button>
+                        <Tooltip title="Delete">
+                            <Button variant="destructive" onClick={() => deleteDataSingle(val.id)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                                <FiTrash2 />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Edit">
+                            <Button onClick={() => editData(val)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                                <FiEdit />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Approval">
+                            <Button disabled={val.approval.approval_status === "APPROVED" ? true : false} onClick={() => approvalDataSingle(val)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                                <FiFeather />
+                            </Button>
+                        </Tooltip>
                     </div>
                 )
             }
