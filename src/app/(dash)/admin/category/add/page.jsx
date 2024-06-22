@@ -36,7 +36,7 @@ const AddPages = () => {
     const [api, contextHolder] = notification.useNotification();
     const [disabled, setDisabled] = useState(true);
     const [idCategory, setIdCategory] = useState(null);
-    const [urlPathIcon, setUrlPathIcon] = useState('https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png');
+    const [urlPathIcon, setUrlPathIcon] = useState('');
     const [isPublish, setPublish] = useState(null);
     const router = useRouter();
     const openNotification = (val) => {

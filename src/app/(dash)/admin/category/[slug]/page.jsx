@@ -208,7 +208,7 @@ const EditPages = () => {
         <div className="admin-home">
             {contextHolder}
             <h1 className="title-page">
-                Created New Category
+                Created Update Category
             </h1>
             <div className="flex gap-[16px]">
                 <div style={{ width: "50%" }}>

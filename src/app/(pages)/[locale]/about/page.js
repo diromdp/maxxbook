@@ -1,4 +1,5 @@
 import Sidebar from "@/app/component/sidebar";
+import { useLocale } from "next-intl";
 import { headers } from "next/headers";
 import { urlAPI } from "../../../../lib/constant";
 import { use } from "react";
@@ -24,7 +25,6 @@ export async function generateMetadata() {
     const detailSEO = await getDetails();
     const selectedTitle = detailSEO.filter(x => x.key === 'seo.title_about');
     const selectedDesc = detailSEO.filter(x => x.key === 'seo.description_about');
-
     return {
         title: selectedTitle ?  selectedTitle[0].value : '',
         description: selectedDesc ? selectedDesc[0].value : '',
@@ -46,6 +46,9 @@ export async function generateMetadata() {
 const About = () => {
     const detailSEO = use(getDetails());
     const selectedEditor = detailSEO.filter(x => x.key === 'page.description_about')
+    const selectedEditorID = detailSEO.filter(x => x.key === 'page.description_about_id');
+    const localeNext = useLocale();
+    console.log(selectedEditorID);
     return (
         <>
             <div className="screen-layer pt-[80px] lg:pt-[120px]">
@@ -56,10 +59,14 @@ const About = () => {
                     <div className="md:w-[80%] flex-col items-start">
                         <div className="content">
                             <div className="title">
-                                <h1>About Maxibook</h1>
+                                <h1>Aboasdut Maxibook</h1>
                             </div>
                             <div className="desc mb-[32px]">
-                                <div dangerouslySetInnerHTML={{ __html: selectedEditor && selectedEditor[0].value }} />
+                                {
+                                    localeNext == "en" ?
+                                    <div dangerouslySetInnerHTML={{ __html: selectedEditor && selectedEditor[0].value }} />:
+                                    <div dangerouslySetInnerHTML={{ __html: selectedEditor && selectedEditor[0].value }} />
+                                }
                             </div>
                         </div>
                     </div>

@@ -84,6 +84,7 @@ const AddPages = () => {
                 if (data.status === 200) {
                     form.reset();
                     openNotificationSuccess();
+                    router.push('/admin/user');
                 }
             })
             .catch(function (error) {
@@ -100,8 +101,6 @@ const AddPages = () => {
                 console.log(error.config);
             });
     }
-
-    
 
     return (
         <div className="admin-home">

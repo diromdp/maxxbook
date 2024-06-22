@@ -101,8 +101,8 @@ const AddPages = () => {
         })
             .then((data) => {
                 if (data.status === 200) {
-                    console.log(data.status);
                     notificationSuccess();
+                    router.push("/admin/subcategory")
                 }
             })
             .catch(function (error) {

@@ -46,10 +46,6 @@ const Category = () => {
     });
     const columns = [
         {
-            title: "No",
-            dataIndex: 'id'
-        },
-        {
             title: 'Name',
             dataIndex: 'name',
         },

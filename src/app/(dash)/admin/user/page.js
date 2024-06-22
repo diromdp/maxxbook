@@ -16,12 +16,10 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import { FiFilePlus, FiTrash2, FiEdit } from "react-icons/fi";
-import { Input } from 'antd';
+import { Input, Tooltip , Table} from 'antd';
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { Table } from 'antd';
 import dayjs from "dayjs";
-import { Tooltip } from 'antd';
 
 import { urlAPI } from "../../../../lib/constant";
 import { formatRupiah } from "../../../../lib/utils";

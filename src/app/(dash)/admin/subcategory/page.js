@@ -15,16 +15,13 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useRouter } from 'next/navigation';
-import { Badge } from "@/components/ui/badge"
-
+import { Badge } from "@/components/ui/badge";
+import axios from "axios";
 
 import { FiEdit, FiTrash2, FiFilePlus } from "react-icons/fi";
-import { Input } from 'antd';
+import { Input, Tooltip , Table} from 'antd';
 import { useCookies } from "react-cookie";
 
-import axios from "axios";
-import { Table } from 'antd';
-import dayjs from "dayjs";
 import { urlAPI } from "../../../../lib/constant";
 
 const { Search } = Input;
@@ -47,10 +44,6 @@ const Category = () => {
     });
     const columns = [
         {
-            title: "No",
-            dataIndex: 'id'
-        },
-        {
             title: 'Name',
             dataIndex: 'name',
         },
@@ -71,16 +64,6 @@ const Category = () => {
                 )
             }
         },
-        // {
-        //     title: 'Deleted At',
-        //     dataIndex: 'deleted_at',
-        //     render: (val) => {
-        //         const format = dayjs(val).format("DD MM YYYY HH:mm"); // display
-        //         return (
-        //             <span>{val ? format : ""}</span>
-        //         )
-        //     }
-        // },
         {
             title: 'Action',
             key: 'operation',
@@ -89,12 +72,16 @@ const Category = () => {
             render: (val) => {
                 return (
                     <div className="flex items-center gap-[16px]">
-                        <Button variant="destructive" onClick={() => deleteDataSingle(val.id)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
-                            <FiTrash2 />
-                        </Button>
-                        <Button onClick={() => editData(val)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
-                            <FiEdit />
-                        </Button>
+                        <Tooltip title="Delete">
+                            <Button variant="destructive" onClick={() => deleteDataSingle(val.id)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                                <FiTrash2 />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Edit">
+                            <Button onClick={() => editData(val)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                                <FiEdit />
+                            </Button>
+                        </Tooltip>
                     </div>
                 )
             }
