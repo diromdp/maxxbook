@@ -30,7 +30,7 @@ export async function generateMetadata() {
     const selectedDesc = detailSEO.filter(x => x.key === 'page.description_seo_privacy')
     const selectedTitleID = detailSEO.filter(x => x.key === 'page.title_privacy_id')
     const selectedDescID = detailSEO.filter(x => x.key === 'page.description_seo_privacy_id')
-    const locale = getLocale();    
+    const locale = await getLocale();    
 
     if(locale == "en") {
         return {

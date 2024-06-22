@@ -21,7 +21,6 @@ export default async function Categories() {
     const t = useTranslations('Homepage');
     const data = await getCategory()
     const localData = await getLocale();
-    console.log(data);
     return (
         <div className="categories">
             <div className="container m-auto">

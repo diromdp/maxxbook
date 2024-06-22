@@ -29,7 +29,7 @@ export async function generateMetadata() {
     const selectedDesc = detailSEO.filter(x => x.key === 'page.description_seo_contact');
     const selectedTitleID = detailSEO.filter(x => x.key === 'page.title_contact_id');
     const selectedDescID = detailSEO.filter(x => x.key === 'page.description_seo_contact_id');
-    const locale = getLocale();    
+    const locale = await getLocale();    
     if(locale === 'en') {
         return {
             title: selectedTitle ?  selectedTitle[0].value : '',

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import BreadCumb from "@/app/component/breadcumb";
+import { useTranslations } from "next-intl"
 import SlideSubCategories from "@/app/component/slideSubCategories";
 import ResultShowID from "../../component/resultbyid";
 
@@ -13,6 +14,8 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
         }
     ]);
     const [isLoading, setLoading] = useState(true);
+    const t = useTranslations("Global");
+
     useEffect(() => {
         setTimeout(() => {
             setLoading(!isLoading);
@@ -42,13 +45,12 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
             setMenu([...menu, ...data]);
         }
     }, []);
-    console.log(detailCategory[0].sub_categories);
     return (
         <div className="categories-page">
             <div className="screen-layer">
                 <BreadCumb menu={menu} />
                 <div className="title-pages">
-                    <h1>{detailCategory && locale.value == "en" ? detailCategory[0].name : detailCategory[0].name_id} Documents</h1>
+                    <h1>{detailCategory && locale.value == "en" ? detailCategory[0].name : detailCategory[0].name_id} {t('Documents')}</h1>
                     <p>{detailCategory && locale.value == "en" ? detailCategory[0].description : detailCategory[0].description_id}.</p>
                 </div>
                 {
@@ -58,7 +60,7 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
                     {
                         slug.length < 2 &&
                         <div className="title-more">
-                            <h2>Explore more in {detailCategory && locale.value == "en" ? detailCategory[0].name : detailCategory[0].name_id}</h2>
+                            <h2>{t('Explore more in')} {detailCategory && locale.value == "en" ? detailCategory[0].name : detailCategory[0].name_id}</h2>
                         </div>
                     }
                     <ResultShowID idCategory={detailCategory && detailCategory[0].id} />

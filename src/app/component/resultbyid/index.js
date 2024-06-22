@@ -35,6 +35,8 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
     };
 
     const t = useTranslations('Documents');
+    const t2 = useTranslations('Global');
+
     const hasFetchedData = useRef(false);
 
     const getDocument = async () => {
@@ -120,8 +122,8 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
             <div className="screen-layer">
                 {
                     emptyState &&
-                    <div className="content-empty w-full h-full lg:w-[400px] lg:h-[400px] m-auto">
-                        <h1 className="text-[38px] font-bold">Documents Not Found</h1>
+                    <div className="content-empty w-full h-full m-auto">
+                        <h1 className="text-[38px] font-bold">{t2('Documents Not Found')}</h1>
                         <div className="lg:w-[300px] lg:h-[300px]">
                             <Lottie options={defaultOptions}
                                 className="lottie-container "

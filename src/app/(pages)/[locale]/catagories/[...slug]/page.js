@@ -41,7 +41,7 @@ export async function generateMetadata({ params }) {
 export default async function CategoriesAndSubCategories({ params }) {
     const { slug } = params;
     const data = await getData(slug);
-    const locale = getLocale();
+    const locale = await getLocale();
     return (
         <>
             <SingleCategory locale={locale} detailCategory={data} slug={slug} />
