@@ -17,8 +17,7 @@ const UploadDocument = () => {
     const upload_id = useAppSelector((state) => state.documents.upload_id);
     const hasFetchedData = useRef(false);
     const t = useTranslations('Global');
-
-
+    
     const checkPositionTabs = () => {
         if(tabFormDocument == 2) {
             dispatch(setTabFormatDocument(0))

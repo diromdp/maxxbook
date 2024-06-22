@@ -52,6 +52,36 @@ const DocumentDesc = ({ slug }) => {
         { uri: documentData ? documentData.url : '' }
     ]
 
+    const getDocumentbySlugToken = async () => {
+        await axios.get(`${urlAPI}backend/customer/documents/detail/${slug}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        })
+            .then((data) => {
+                if (data.status === 200) {
+                    setLoading(false)
+                    const dataDocument = data.data;
+                    setDocumentData(data.data)
+                    setBookmark(dataDocument.is_saved)
+                }
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+    };
+
     const getDocumentbySlug = async () => {
 
         await axios.get(`${urlAPI}backend/documents/detail/${slug}`, {
@@ -134,7 +164,11 @@ const DocumentDesc = ({ slug }) => {
 
     useEffect(() => {
         if (!hasFetchedData.current) {
-            getDocumentbySlug();
+            if(token) {
+                getDocumentbySlugToken();
+            } else {
+                getDocumentbySlug();
+            }
             hasFetchedData.current = true;
         }
     }, 100);

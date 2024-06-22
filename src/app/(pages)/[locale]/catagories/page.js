@@ -4,8 +4,6 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { headers } from "next/headers";
 
 async function getData() {
-
-    // Fetch data from external API
     const data = await fetch(`${urlAPI}backend/categories`, {
         method: 'GET',
         headers: {
@@ -13,9 +11,9 @@ async function getData() {
             'Accept': "application/json",
         },
     });
-    // Pass data to the page via props
     return data.json();
 }
+
 async function getDetails() {
     const data = await fetch(`${urlAPI}backend/settings?keys=seo.title_category%2Cseo.description_category`, {
         method: 'get',
@@ -58,7 +56,6 @@ export default async function category() {
     const localData = await getLocale();
     const t = await getTranslations("Documents");
 
-    console.log(data);
     return <>
         <div className="categories-page">
             <div className="screen-layer">

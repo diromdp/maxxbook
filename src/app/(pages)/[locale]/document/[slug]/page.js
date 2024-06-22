@@ -65,12 +65,12 @@ export async function generateMetadata({ params }) {
             type: 'website',
             images: [
                 {
-                    url: dataDetailDocument.thumb_url, // Must be an absolute URL
+                    url: dataDetailDocument.thumb_url,
                     width: 800,
                     height: 600,
                 },
                 {
-                    url: dataDetailDocument.thumb_url, // Must be an absolute URL
+                    url: dataDetailDocument.thumb_url,
                     width: 1800,
                     height: 1600,
                     alt: dataDetailDocument.title_seo,
