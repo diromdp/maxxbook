@@ -260,7 +260,7 @@ const ProfileUser = () => {
                                     <h4>{t("Account Information")}</h4>
                                     <div className="info-user">
                                         <div className="item">
-                                            <label>Fullname</label>
+                                            <label>{t('Full Name')}</label>
                                             <div className="flex gap-[8px] items-center">
                                                 {
                                                     editInput ? <Input className='w-[300px]' defaultValue={getInfoUser && getInfoUser.name} onChange={(e) => setChangeName(e.target.value)} /> : <span>{getInfoUser && getInfoUser.name} </span>
@@ -292,7 +292,7 @@ const ProfileUser = () => {
                         <Card className="mt-[30px]">
                             <CardContent className={"p-4"}>
                                 <div className="content-user">
-                                    <h4>Change Password</h4>
+                                    <h4>{t('Change Password')}</h4>
                                     <div className="form-user w-[300px]">
                                         <Form {...form} >
                                             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -301,10 +301,10 @@ const ProfileUser = () => {
                                                     name="current_password"
                                                     render={({ field }) => (
                                                         <FormItem>
-                                                            <FormLabel>Current Password</FormLabel>
+                                                            <FormLabel>{t('Current Password')}</FormLabel>
                                                             <FormControl>
                                                                 <Input.Password
-                                                                    placeholder="Current Password"
+                                                                    placeholder={t('Current Password')}
                                                                     {...field}
                                                                     visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
                                                                 />
@@ -320,10 +320,10 @@ const ProfileUser = () => {
                                                         <FormItem
                                                             className="pt-[16px]"
                                                         >
-                                                            <FormLabel>New Password</FormLabel>
+                                                            <FormLabel>{t('New Password')}</FormLabel>
                                                             <FormControl>
                                                                 <Input.Password
-                                                                    placeholder="New Password"
+                                                                    placeholder={t('New Password')}
                                                                     {...field}
                                                                     visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
                                                                 />
@@ -340,10 +340,10 @@ const ProfileUser = () => {
                                                         <FormItem
                                                             className="pt-[16px]"
                                                         >
-                                                            <FormLabel>Confirm Password</FormLabel>
+                                                            <FormLabel>{t('Confirm Password')}</FormLabel>
                                                             <FormControl>
                                                                 <Input.Password
-                                                                    placeholder="Confirm Password"
+                                                                    placeholder={t('Confirm Password')}
                                                                     {...field}
                                                                     visibilityToggle={{ visible: cpasswordVisible, onVisibleChange: setCPasswordVisible }}
                                                                 />
@@ -353,7 +353,7 @@ const ProfileUser = () => {
                                                     )}
                                                 />
                                                 <div className="flex items-center gap-[16px]">
-                                                    <Button className="mt-[16px]" type="submit">Update</Button>
+                                                    <Button className="mt-[16px]" type="submit">{t('Update')}</Button>
                                                 </div>
                                             </form>
 
@@ -368,7 +368,7 @@ const ProfileUser = () => {
                         <Card className="mt-[30px]">
                             <CardContent className={"p-4"}>
                                 <div className="content-user">
-                                    <h4>Upload Avatar</h4>
+                                    <h4>{t('Upload Avatar')}</h4>
                                     <div className="info-user flex gap-[30px]">
                                         <Image
                                             alt="Avatar"

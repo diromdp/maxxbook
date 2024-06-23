@@ -48,10 +48,7 @@ export const AdminProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        if (!hasFetchedData.current) {
-            getProfile();
-            hasFetchedData.current = true;
-        }
+        getProfile();
     }, [])
 
     return (

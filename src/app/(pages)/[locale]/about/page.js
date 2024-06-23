@@ -5,7 +5,6 @@ import { useTranslations, useLocale } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { urlAPI } from "../../../../lib/constant";
 
-
 async function getDetails() {
     const data = await fetch(`${urlAPI}backend/settings?keys=seo.title_about,seo.title_about_id,seo.description_about,seo.description_about_id,page.description_about,page.description_about_id`, {
         method: 'get',

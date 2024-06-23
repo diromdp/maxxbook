@@ -6,15 +6,16 @@ import SlideSubCategories from "@/app/component/slideSubCategories";
 import ResultShowID from "../../component/resultbyid";
 
 const SingleCategory = ({detailCategory, slug, locale}) => {
+    const t = useTranslations("Global");
+
     const [menu, setMenu] = useState([
         {
-            name: 'Home',
+            name: t('Home'),
             urlPath: '/',
             isIcon: false
         }
     ]);
     const [isLoading, setLoading] = useState(true);
-    const t = useTranslations("Global");
 
     useEffect(() => {
         setTimeout(() => {
@@ -50,11 +51,11 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
             <div className="screen-layer">
                 <BreadCumb menu={menu} />
                 <div className="title-pages">
-                    <h1>{detailCategory && locale.value == "en" ? detailCategory[0].name : detailCategory[0].name_id} {t('Documents')}</h1>
-                    <p>{detailCategory && locale.value == "en" ? detailCategory[0].description : detailCategory[0].description_id}.</p>
+                    <h1>{detailCategory && locale == "en" ? detailCategory[0].name : detailCategory[0].name_id} {t('Documents')}</h1>
+                    <p>{detailCategory && locale == "en" ? detailCategory[0].description : detailCategory[0].description_id}.</p>
                 </div>
                 {
-                    detailCategory[0].sub_categories.length > 0 && <SlideSubCategories locale={locale.value} subCategory={detailCategory[0].sub_categories} isLoading={isLoading} />
+                    detailCategory[0].sub_categories.length > 0 && <SlideSubCategories locale={locale} subCategory={detailCategory[0].sub_categories} isLoading={isLoading} />
                 }
                 <div className="epxlore-more">
                     {

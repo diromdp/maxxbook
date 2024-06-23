@@ -1,3 +1,4 @@
+"use client";
 import { Upload } from 'antd';
 import { CloudUpload } from 'lucide-react';
 import {
@@ -8,6 +9,7 @@ import { urlAPI } from "../../../lib/constant";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setUploadId, setTabFormatDocument} from '../../store/reducer/categoryFilterSlice';
 import { notification } from 'antd';
+import { useTranslations, useLocale } from 'next-intl';
 
 const { Dragger } = Upload;
 
@@ -17,6 +19,8 @@ const FormUploadFile = () => {
     const token = getToken.access_token;
     const [api, contextHolder] = notification.useNotification();
     const dispatch = useAppDispatch();
+    const t = useTranslations('Global');
+    const locale = useLocale();
 
     const props = {
         name: 'file',
@@ -58,10 +62,10 @@ const FormUploadFile = () => {
                         <p className="flex justify-center">
                             <CloudUpload className='h-[42px] w-[42px] mb-[32px]' />
                         </p>
-                        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                        <p className="ant-upload-text">{ locale == 'en' ? 'Click or drag file to this area to upload' : 'Klik atau seret file ke area ini untuk diunggah'}</p>
                         <p className="ant-upload-hint">
-                            Support for a single upload. Strictly prohibited from uploading company data or other
-                            banned files.
+                        { locale == 'en' ? 'Support for a single upload. Strictly prohibited from uploading company data or other banned files.' : 'Dukungan untuk satu unggahan. Dilarang keras mengunggah data perusahaan atau lainnya dan file terlarang.'}
+                        
                         </p>
                     </Dragger>
                 </CardContent>

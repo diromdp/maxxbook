@@ -38,6 +38,7 @@ const ResultShow = ({ QureyParams }) => {
         animationData: searchNotFound,
     };
     const t = useTranslations('Documents');
+    const t2 = useTranslations('Global');
     const hasFetchedData = useRef(false);
 
     const getDocument = async (val) => {
@@ -169,7 +170,7 @@ const ResultShow = ({ QureyParams }) => {
                             <div className="result-word">
                                 {
                                     !isLoading && optionsDocument ?
-                                        <p>{optionsDocument.current_page}-{optionsDocument.total} of {optionsDocument.total} results</p> :
+                                        <p>{optionsDocument.current_page}-{optionsDocument.total} of {optionsDocument.total} {t('results')}</p> :
                                         <Skeleton className={"w-[180px] h-[20px]"} />
                                 }
                             </div>
@@ -179,7 +180,7 @@ const ResultShow = ({ QureyParams }) => {
                 {
                     empatyState &&
                     <div className="content-empty w-full h-full  m-auto">
-                        <h1 className="text-[38px] font-bold">{t('Documents Not Found')}</h1>
+                        <h1 className="text-[38px] font-bold">{t2('Documents Not Found')}</h1>
                         <div className="lg:w-[300px] lg:h-[300px]">
                             <Lottie options={defaultOptions}
                                 className="lottie-container "

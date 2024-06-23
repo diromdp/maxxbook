@@ -25,7 +25,20 @@
         "pages": "Pages",
         "uploads": "Upload By",
         "download": "Download Document",
-        "other documents": "You might also like"
+        "other documents": "You might also like",
+        "results": "Results",
+        "Select a category": "Select a category",
+        "Title Document": "Title Document",
+        "Category": "Category",
+        "Description": "Description",
+        "Sub Category": "Sub Category",
+        "Select a sub category" : "Select a sub category",
+        "Title Page SEO": "Title Page SEO",
+        "Title Description SEO": "Title Description SEO",
+        "Click to Upload": "Click to Upload",
+        "Submit": "Submit",
+        "Share It": "Share It",
+        "View": "View"
     },
     "Exporler": {
         "heading":"Read anytime. Anywhere.",
@@ -41,7 +54,12 @@
         "Change Image Profile": "Change Image",
         "Edit": "Edit",
         "Update": "Update",
-        "Current Password": "Current Password"
+        "Current Password": "Current Password",
+        "New Password": "New Password",
+        "Confirm Password": "Confirm Password",
+        "Full Name": "Full Name",
+        "Upload Avatar":"Upload Avatar",
+        "Picture": "Picture"
     },
     "Global": {
         "Change Language" : "Change Language",
@@ -59,6 +77,7 @@
         "Terms of Use": "Terms of Use",
         "Explore more in" : "Explore More in",
         "Documents": "Documents",
-        "Documents Not Found": "Documents Not Found"
+        "Documents Not Found": "Documents Not Found",
+        "Home": "Home"
     }
 }

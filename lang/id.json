@@ -25,7 +25,20 @@
         "pages": "Halaman",
         "uploads": "Diunggah",
         "download": "Unduh Dokumen",
-        "other documents": "Anda mungkin juga menyukai"
+        "other documents": "Anda mungkin juga menyukai",
+        "results": "Hasil",
+        "Select a category": "Pilih Kategori",
+        "Title Document": "Judul Dokumen",
+        "Category": "Kategori",
+        "Description": "Keterangan",
+        "Sub Category": "Sub Kategori",
+        "Select a sub category" : "Pilih sub kategori",
+        "Title Page SEO": "SEO Halaman Judul",
+        "Title Description SEO": "Deskripsi Judul SEO",
+        "Click to Upload": "Klik untuk Mengunggah",
+        "Submit": "Kirim",
+        "Share It": "Bagikan ini",
+        "View": "View"
     },
     "Exporler": {
         "heading":"Baca kapan saja. Dimanapun.",
@@ -40,8 +53,13 @@
         "Change Password": "Ubah Kata Sandi",
         "Change Image Profile": "Ubah Gambar",
         "Edit": "Edit",
-        "Update": "Update",
-        "Current Password": "Kata Sandi Saat Ini"
+        "Update": "Memperbarui",
+        "Current Password": "Kata Sandi Saat Ini",
+        "New Password": "kata sandi baru",
+        "Confirm Password": "Konfirmasi Kata Sandi",
+        "Full Name": "Nama Lengkap",
+        "Upload Avatar":"Unggah Avatar",
+        "Picture": "Picture"
     },
     "Global": {
         "Change Language" : "Ganti Bahasa",
@@ -59,6 +77,7 @@
         "Terms of Use": "Syarat Penggunaan",
         "Explore more in": "Jelajahi lebih lanjut di",
         "Documents": "Dokumen",
-        "Documents Not Found": "Dokument tidak ditemukan"
+        "Documents Not Found": "Dokument tidak ditemukan",
+        "Home": "Beranda"
     }
 }

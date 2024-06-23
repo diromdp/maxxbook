@@ -119,11 +119,8 @@ const Category = () => {
         })
             .then((data) => {
                 if (data.status === 200) {
-                    let filtereData = data.data.data.filter((item) => {
-                        return item.deleted_at === null;
-                    });
+                    let filtereData = data.data.data;
                     setIsLoading(false)
-                    
                     setDataFetch(filtereData)
                     setDataPagination(data.data.links)
                 }
@@ -158,9 +155,7 @@ const Category = () => {
             })
                 .then((data) => {
                     if (data.status === 200) {
-                        let filtereData = data.data.data.filter((item) => {
-                            return item.deleted_at === null;
-                        });
+                        let filtereData = data.data.data;
                         setIsLoading(false)
                         setDataFetch(filtereData)
                         setDataPagination(data.data.links)
@@ -193,9 +188,7 @@ const Category = () => {
         })
             .then((data) => {
                 if (data.status === 200) {
-                    let filtereData = data.data.data.filter((item) => {
-                        return item.deleted_at === null;
-                    });
+                    let filtereData = data.data.data;
                     setIsLoading(false)
                     setDataFetch(filtereData)
                     setDataPagination(data.data.links)

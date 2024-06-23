@@ -11,7 +11,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     import.meta.url,
 ).toString();
 
-const PdfViewer = ({ file }) => {
+const PDFViewer = ({ file }) => {
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
     const [isRendered, setIsRendered] = useState(false);
@@ -89,4 +89,4 @@ const PdfViewer = ({ file }) => {
     );
 }
 
-export default PdfViewer;
+export default PDFViewer;

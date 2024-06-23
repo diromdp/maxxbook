@@ -16,7 +16,7 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import { FiFilePlus, FiTrash2, FiEdit } from "react-icons/fi";
-import { Input, Tooltip , Table} from 'antd';
+import { Input, Tooltip, Table } from 'antd';
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -127,11 +127,10 @@ const Users = () => {
         })
             .then((data) => {
                 if (data.status === 200) {
-                    let filteredUsers = data.data.data.filter((user) => {
-                        return user.deleted_at === null;
-                    });
+                    let filtereData = data.data.data;
+
                     setIsLoading(false)
-                    setDataFetch(filteredUsers)
+                    setDataFetch(filtereData)
                     setDataPagination(data.data.links)
                 }
             })
@@ -165,11 +164,10 @@ const Users = () => {
             })
                 .then((data) => {
                     if (data.status === 200) {
-                        let filteredUsers = data.data.data.filter((user) => {
-                            return user.deleted_at === null;
-                        });
+                        let filtereData = data.data.data;
+
                         setIsLoading(false)
-                        setDataFetch(filteredUsers)
+                        setDataFetch(filtereData)
                         setDataPagination(data.data.links)
                     }
                 })
@@ -199,11 +197,10 @@ const Users = () => {
         })
             .then((data) => {
                 if (data.status === 200) {
-                    let filteredUsers = data.data.data.filter((user) => {
-                        return user.deleted_at === null;
-                    });
+                    let filtereData = data.data.data;
+
                     setIsLoading(false)
-                    setDataFetch(filteredUsers)
+                    setDataFetch(filtereData)
                     setDataPagination(data.data.links)
                 }
             })

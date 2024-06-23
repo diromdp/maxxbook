@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Select, Skeleton } from 'antd';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { setCategoryFilterState } from "../../store/reducer/categoryFilterSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 
@@ -11,6 +11,7 @@ const FilterComponent = ({ DataFetchCategory, isLoading, getDocument}) => {
     const [selectedId, setSelectedId] = useState();
     let optionsCategory = [];
     const locale = useLocale();
+    const t = useTranslations("Documents");
     DataFetchCategory && DataFetchCategory.map((item) => {
         const category = {
             value: item.id,
@@ -34,10 +35,6 @@ const FilterComponent = ({ DataFetchCategory, isLoading, getDocument}) => {
         getDocument(value);
     }
 
-    useEffect(() => {
-        //setSelectedId(categoryFilterState.category_id ? categoryFilterState.category_id : null);
-    }, []);
-
     return (
         <div className="filter-container mb-[32px]">
             {
@@ -46,7 +43,7 @@ const FilterComponent = ({ DataFetchCategory, isLoading, getDocument}) => {
                         <div className="item-filter">
                             <Select
                                 showSearch
-                                placeholder="Select a Category"
+                                placeholder={locale === 'en' ? 'Select a Category' : "Pilih Kategori"}
                                 options={optionsCategory}
                                 onChange={onChange}
                                 filterOption={filterOption}

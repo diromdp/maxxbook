@@ -14,8 +14,7 @@ import {
     Input,
     Select,
     notification,
-    Upload,
-    Image
+    Upload
 } from 'antd';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -25,7 +24,7 @@ import { useEffect, useState, useRef } from "react";
 import { Editor, Toolbar } from '@wangeditor/editor-for-react';
 import { i18nChangeLanguage } from '@wangeditor/editor';
 import axios from "axios";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { urlAPI } from "../../../../../../lib/constant";
@@ -48,7 +47,7 @@ const EditUploadFile = ({ params }) => {
     const [isLoading, setLoading] = useState(true);
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
     const getUplaodID = useAppSelector((state) => state.documents.upload_id);
-
+    const t = useTranslations("Documents");
     const [api, contextHolder] = notification.useNotification();
     const token = getToken.access_token;
     const hasFetchedData = useRef(false);
@@ -309,10 +308,10 @@ const EditUploadFile = ({ params }) => {
                                                 name="title"
                                                 render={({ field }) => (
                                                     <div className="form-item">
-                                                        <FormLabel>Title Document</FormLabel>
+                                                        <FormLabel>{t('Title Document')}</FormLabel>
                                                         <FormItem>
                                                             <Input
-                                                                placeholder="Title Document"
+                                                                placeholder={t('Title Document')}
                                                                 {...field}
                                                             />
                                                             <FormMessage />
@@ -326,7 +325,7 @@ const EditUploadFile = ({ params }) => {
                                                 name="description"
                                                 render={({ field }) => (
                                                     <div className="pt-[16px] form-item">
-                                                        <FormLabel>Description</FormLabel>
+                                                        <FormLabel>{t('Description')}</FormLabel>
                                                         <div className="border border-slate-700 rounded-[8px]">
                                                             <Toolbar
                                                                 editor={editor}
@@ -352,11 +351,11 @@ const EditUploadFile = ({ params }) => {
                                                 name="category"
                                                 render={({ field }) => (
                                                     <div className="pt-[16px] form-item">
-                                                        <FormLabel>Category</FormLabel>
+                                                        <FormLabel>{t('Category')}</FormLabel>
                                                         <FormItem>
                                                             <Select
                                                                 showSearch
-                                                                placeholder="Select a category"
+                                                                placeholder={t('Select a category')}
                                                                 optionFilterProp="children"
                                                                 onSelect={onChange}
                                                                 filterOption={filterOption}
@@ -374,11 +373,11 @@ const EditUploadFile = ({ params }) => {
                                                 name="subcategory"
                                                 render={({ field }) => (
                                                     <div className="pt-[16px] form-item">
-                                                        <FormLabel>Sub Category</FormLabel>
+                                                        <FormLabel>{t('Sub Category')}</FormLabel>
                                                         <FormItem>
                                                             <Select
                                                                 showSearch
-                                                                placeholder="Select a sub category"
+                                                                placeholder={t('Select a sub category')}
                                                                 optionFilterProp="children"
                                                                 filterOption={filterOption}
                                                                 disabled={disabled}
@@ -397,10 +396,10 @@ const EditUploadFile = ({ params }) => {
                                                 name="title_seo"
                                                 render={({ field }) => (
                                                     <div className="form-item">
-                                                        <FormLabel>Title Page SEO</FormLabel>
+                                                        <FormLabel>{t('Title Page SEO')}</FormLabel>
                                                         <FormItem>
                                                             <Input
-                                                                placeholder="Title SEO"
+                                                                placeholder={t('Title Page SEO')}
                                                                 {...field}
                                                             />
                                                         </FormItem>
@@ -413,7 +412,7 @@ const EditUploadFile = ({ params }) => {
                                                 name="description_seo"
                                                 render={({ field }) => (
                                                     <div className="form-item mt-[16px]">
-                                                        <FormLabel>Title Description SEO</FormLabel>
+                                                        <FormLabel>{t('Title Description SEO')}</FormLabel>
                                                         <FormItem>
                                                             <TextArea
                                                                 className="!min-h-[200px]"
@@ -428,11 +427,11 @@ const EditUploadFile = ({ params }) => {
 
                                             <div className="mt-[32px] flex flex-col gap-[32px]">
                                                 <Upload {...props}>
-                                                    <Button type="button" icon={<Upload />}>Click to Upload</Button>
+                                                    <Button type="button" icon={<Upload />}>{t('Click to Upload')}</Button>
                                                 </Upload>
                                             </div>
                                             <div className="flex items-center gap-[16px]">
-                                                <Button className="mt-[32px] w-[150px] bg-blue-700 hover:bg-blue-800" type="submit">Submit</Button>
+                                                <Button className="mt-[32px] w-[150px] bg-blue-700 hover:bg-blue-800" type="submit">{t("Submit")}</Button>
                                             </div>
                                         </form>
                                     </Form>

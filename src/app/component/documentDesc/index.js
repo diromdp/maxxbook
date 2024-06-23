@@ -22,7 +22,7 @@ import localeData from 'dayjs/plugin/localeData';
 import { saveAs } from 'file-saver';
 import { formatNumber } from "../../../lib/utils";
 import { useTranslations } from "next-intl";
-import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
+import PDFViewer from "../pdfViewer";
 import {
     Bookmark
 } from "lucide-react";
@@ -266,7 +266,7 @@ const DocumentDesc = ({ slug }) => {
             <div className="download">
                 <button className="button-download" onClick={() => downloadFile(documentData && documentData.url, documentData && documentData.upload.file_name)}>Download Document</button>
             </div>
-            <div className="pdf-viewer">
+            {/* <div className="pdf-viewer">
                 {
                     documentData &&
                     <DocViewer
@@ -281,7 +281,7 @@ const DocumentDesc = ({ slug }) => {
                         }} 
                         pluginRenderers={DocViewerRenderers} />
                 }
-            </div>
+            </div> */}
         </div>
     );
 }
