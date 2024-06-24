@@ -1,6 +1,6 @@
 'use client';
 import Link from "next/link";
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/components/ui/skeleton";
 import dayjs from "dayjs";
 import {
     FacebookIcon,
@@ -22,7 +22,6 @@ import localeData from 'dayjs/plugin/localeData';
 import { saveAs } from 'file-saver';
 import { formatNumber } from "../../../lib/utils";
 import { useTranslations } from "next-intl";
-import PDFViewer from "../pdfViewer";
 import {
     Bookmark
 } from "lucide-react";
@@ -51,6 +50,8 @@ const DocumentDesc = ({ slug }) => {
     const fileDocument = [
         { uri: documentData ? documentData.url : '' }
     ]
+
+    console.log(documentData && documentData)
 
     const getDocumentbySlugToken = async () => {
         await axios.get(`${urlAPI}backend/customer/documents/detail/${slug}`, {
@@ -144,7 +145,7 @@ const DocumentDesc = ({ slug }) => {
             })
             .catch(function (error) {
                 if (error.response) {
-                    router.push('/login');
+                    router.push('/login', undefined, { shallow: true })
                     console.log(error.response.data.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
@@ -266,6 +267,10 @@ const DocumentDesc = ({ slug }) => {
             <div className="download">
                 <button className="button-download" onClick={() => downloadFile(documentData && documentData.url, documentData && documentData.upload.file_name)}>Download Document</button>
             </div>
+            {/* {
+                documentData && documentData.upload.extension === 'pdf' && <PDFViewer file={documentData.url}/>
+            } */}
+           
             {/* <div className="pdf-viewer">
                 {
                     documentData &&

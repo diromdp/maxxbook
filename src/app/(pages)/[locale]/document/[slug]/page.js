@@ -1,10 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import PlaceAdsance from "@/app/component/placeAdsence";
-import DocumentDesc from "../../../../component/documentDesc";
+import dynamic from 'next/dynamic';
 import { urlAPI } from "../../../../../lib/constant";
 import { getTranslations, getLocale } from "next-intl/server";
 import { headers } from "next/headers";
+
+const PlaceAdsance = dynamic(() => import('@/app/component/placeAdsence'), {
+    ssr: false,
+})
+const DocumentDesc = dynamic(() => import('../../../../component/documentDesc'), {
+    ssr: false,
+})
 
 async function getData() {
     const data = await fetch(`${urlAPI}backend/documents?perPage=${10}&sortBy=${'id'}&sortDirection=${'desc'}&is_random=${1}`, {
@@ -84,7 +90,7 @@ export default async function documentPage({ params }) {
     const dataDocument = await getData();
     const t = await getTranslations("Documents");
     const locale = await getLocale();
-    
+
     return (
         <div className="document-page">
             <div className="screen-layer mb-[32px]">

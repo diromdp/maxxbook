@@ -1,9 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
-import BreadCumb from "@/app/component/breadcumb";
+import dynamic from 'next/dynamic';
 import { useTranslations } from "next-intl"
-import SlideSubCategories from "@/app/component/slideSubCategories";
-import ResultShowID from "../../component/resultbyid";
+const BreadCumb = dynamic(() => import('@/app/component/breadcumb'), {
+    ssr: false,
+})
+const SlideSubCategories = dynamic(() => import('@/app/component/slideSubCategories'), {
+    ssr: false,
+})
+const ResultShowID = dynamic(() => import('../../component/resultbyid'), {
+    ssr: false,
+})
 
 const SingleCategory = ({detailCategory, slug, locale}) => {
     const t = useTranslations("Global");

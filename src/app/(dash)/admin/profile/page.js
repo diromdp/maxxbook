@@ -52,7 +52,6 @@ const ProfileForm = () => {
     const {
         register,
         handleSubmit,
-        setValue,
         formState: { errors }
     } = useForm({
         resolver: zodResolver(formSchema),
@@ -61,7 +60,7 @@ const ProfileForm = () => {
             name: profile.name,
             email: profile.email,
             password: "",
-            confirmPassword: "",
+            cPassword: "",
         }
     });
 
@@ -69,6 +68,8 @@ const ProfileForm = () => {
         const inputData = {
             name: data.name,
             email: data.email,
+            password: data.password,
+            password_confirmation: data.cPassword
         }
         await axios.post(`${urlAPI}backend/admin/user`, inputData, {
             headers: {
@@ -88,7 +89,12 @@ const ProfileForm = () => {
             })
             .catch(function (error) {
                 if (error.response) {
-                    console.log(error.response.data.data);
+                    setIsLoading(false);
+                    api.error({
+                        message: `Error updating profile`,
+                        description:`${error.response.data.message}`
+                    })
+                    console.log(error.response.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
                 } else if (error.request) {
@@ -158,12 +164,12 @@ const ProfileForm = () => {
                             </div>
                             <div className="mb-[8px]">
                                 <Label htmlFor="password">Password</Label>
-                                <Input type="password" id="password" placeholder="Please type here.." {...register("password",)} />
+                                <Input type="password" id="password" placeholder="Please type password here.." {...register("password",)} />
                                 {errors.password && <p className="text-red-500 text-[16px]">{errors.password.message}</p>}
                             </div>
                             <div className="mb-[8px]">
                                 <Label htmlFor="cPassword">Confrim Password</Label>
-                                <Input type="password" id="cPassword" placeholder="Please type here.." {...register("cPassword",)} />
+                                <Input type="password" id="cPassword" placeholder="Please type password here.." {...register("cPassword",)} />
                                 {errors.cPassword && <p className="text-red-500 text-[16px]">{errors.cPassword.message}</p>}
                             </div>
                             <div className="mb-[16px]">

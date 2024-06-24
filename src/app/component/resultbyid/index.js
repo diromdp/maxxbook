@@ -1,6 +1,5 @@
 "use client";
-import Card from "@/app/component/cartItem";
-import CardLoading from "@/app/component/cardLoading";
+import dynamic from 'next/dynamic';
 import React from "react";
 import {
     Pagination,
@@ -12,14 +11,20 @@ import {
 } from "@/components/ui/pagination";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
-import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import Lottie from 'react-lottie';
 import * as searchNotFound from '../../../lottie/search-not-found.json';
-
 import { urlAPI } from "../../../lib/constant";
 
 import { setDocumentCategoryPagination, setCategoryFilterState, setDocumentCategorySingle, setEmptyStateDocumentCategory } from "../../store/reducer/categoryFilterSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
+
+const Card = dynamic(() => import('@/app/component/cartItem'), {
+    ssr: false,
+})
+const CardLoading = dynamic(() => import('@/app/component/cardLoading'), {
+    ssr: false,
+})
 
 const ResultShowID = ({ idCategory, idSubCategory }) => {
     const dispatch = useAppDispatch();

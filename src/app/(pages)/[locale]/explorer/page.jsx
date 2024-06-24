@@ -5,11 +5,12 @@ import { use } from "react";
 import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
 import SavedComponent from "../../../component/savedComponent";
-import imgBanner1 from "@/app/assets/images/img-banner-1.svg";
-import imgBanner2 from "@/app/assets/images/img-banner-2.svg";
 import { useTranslations, useLocale } from "next-intl";
 import SliderCardItem from "@/app/component/sliderCardItem";
 import { urlAPI } from "../../../../lib/constant";
+import imgBanner1 from "@/app/assets/images/img-banner-1.svg";
+import imgBanner2 from "@/app/assets/images/img-banner-2.svg";
+
 
 async function getData() {
     const data = await fetch(`${urlAPI}backend/documents?perPage=${10}&sortBy=${'id'}&sortDirection=${'desc'}&is_random=${1}`, {

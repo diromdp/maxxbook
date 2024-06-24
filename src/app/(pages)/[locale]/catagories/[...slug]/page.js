@@ -1,7 +1,11 @@
-import SingleCategory from '../../../../clientSide/singleCategory';
-import { urlAPI } from "../../../../../lib/constant";
 import { getLocale } from "next-intl/server";
 import { headers } from "next/headers";
+import dynamic from 'next/dynamic';
+import { urlAPI } from "../../../../../lib/constant";
+
+const SingleCategory = dynamic(() => import('../../../../clientSide/singleCategory'), {
+    ssr: false,
+})
 
 async function getData(val) {
     const data = await fetch(`${urlAPI}backend/customer/categories/detail/${val}`, {

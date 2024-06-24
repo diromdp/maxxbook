@@ -1,13 +1,20 @@
 'use client'
-import { useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
+import { useEffect, useState } from 'react';
+import { Document, Page, pdfjs} from 'react-pdf';
+import dynamic from 'next/dynamic';
+
 import Link from 'next/link';
 import { Input } from "@/components/ui/input";
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
+const pdfjsWorker = dynamic(() => import('pdfjs-dist/build/pdf.worker.min.mjs'), {
+    ssr: false,
+})
+
+
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.js',
+    pdfjsWorker,
     import.meta.url,
 ).toString();
 
@@ -46,17 +53,10 @@ const PDFViewer = ({ file }) => {
             setIsRendered(false);
         }, 100)
     }
+
     return (
         <>
             <div className='number-input'>
-                <div className="downloaded">
-                    <Link href={file} download="Example-PDF-document"
-                        target="_blank"
-                        className="btn-primary text-[18px] !m-0"
-                        rel="noopener noreferrer">
-                        Download
-                    </Link>
-                </div>
                 <Input type={'number'} min={0} max={numPages} maxLength={maxlength} value={pageNumber} onChange={(e) => changeEnterPage(e)} /> of {numPages || "--"}
             </div>
             {/* <button type="button" disabled={pageNumber <= 1} onClick={prevPage}>

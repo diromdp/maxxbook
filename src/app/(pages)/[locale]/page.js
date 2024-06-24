@@ -1,12 +1,16 @@
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { getLocale } from "next-intl/server";
-
-import Categories from '../../component/categories'
-import HomeSearch from '../../component/homeSearch';
 import { urlAPI } from "../../../lib/constant";
 import { headers } from "next/headers";
 
+const Categories = dynamic(() => import('../../component/categories'), {
+   ssr: false,
+})
+const HomeSearch = dynamic(() => import('../../component/homeSearch'), {
+   ssr: false,
+})
 
 async function getDetails() {
    const data = await fetch(`${urlAPI}backend/settings?keys=seo.title_home,seo.description_home,seo.title_home_id,seo.description_home_id`, {

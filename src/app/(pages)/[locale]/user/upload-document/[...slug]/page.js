@@ -149,7 +149,7 @@ const EditUploadFile = ({ params }) => {
                         message: "Successfully Created Document",
                         description: "Congratulations you have successfully created a new Document"
                     })
-                    router.push(`/${locale}/user/document-own`)
+                    router.push('/${locale}/user/document-own', undefined, { shallow: true })
                 }
             })
             .catch(function (error) {

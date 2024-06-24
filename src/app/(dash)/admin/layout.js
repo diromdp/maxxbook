@@ -33,7 +33,8 @@ export default function AdminLayout({ children }) {
 
     useEffect(() => {
         if (!isLogging || isLogging === "undefined") {
-            router.push('/login-admin');
+            router.push('/login-admin', undefined, { shallow: true })
+
             setIsloggingState(false)
         } else {
           setIsloggingState(true)
