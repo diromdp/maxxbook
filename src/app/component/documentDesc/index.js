@@ -47,11 +47,9 @@ const DocumentDesc = ({ slug }) => {
     const urlShare = window.location.href;
     const router = useRouter();
 
-    const fileDocument = [
-        { uri: documentData ? documentData.url : '' }
-    ]
-
-    console.log(documentData && documentData)
+    // const fileDocument = [
+    //     { uri: documentData ? documentData.url : '' }
+    // ]
 
     const getDocumentbySlugToken = async () => {
         await axios.get(`${urlAPI}backend/customer/documents/detail/${slug}`, {
@@ -114,16 +112,24 @@ const DocumentDesc = ({ slug }) => {
     };
 
     const downloadFile = async (fileUrl, fileName) => {
-        try {
-            const response = await fetch(fileUrl);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+        if(token) {
+            try {
+                const response = await fetch(fileUrl);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const blob = await response.blob();
+                saveAs(blob, fileName);
+            } catch (error) {
+                console.error('Error downloading the file:', error);
             }
-            const blob = await response.blob();
-            saveAs(blob, fileName);
-        } catch (error) {
-            console.error('Error downloading the file:', error);
+        } else {
+            api.info({
+                message: "Information",
+                description: "Please Sign in first to download the File"
+            })
         }
+       
     };
 
     const bookmarkSaved = async () => {
@@ -265,7 +271,7 @@ const DocumentDesc = ({ slug }) => {
                 </div>
             </div>
             <div className="download">
-                <button className="button-download" onClick={() => downloadFile(documentData && documentData.url, documentData && documentData.upload.file_name)}>Download Document</button>
+                <button className="button-download" onClick={() => downloadFile(documentData && documentData.url, documentData && documentData.upload.file_name)}>{t('Download Document')}</button>
             </div>
             {/* {
                 documentData && documentData.upload.extension === 'pdf' && <PDFViewer file={documentData.url}/>

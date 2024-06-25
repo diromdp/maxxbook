@@ -43,7 +43,6 @@ async function getDetails(slug) {
 }
 
 export async function generateMetadata({ params }) {
-    // read route params
     const slug = params.slug;
     const dataDetailDocument = await getDetails(slug);
     const headersList = headers();
@@ -117,7 +116,7 @@ export default async function documentPage({ params }) {
                                                 </div>
                                                 <div className="description">
                                                     <div className="type-totals">
-                                                        <span className="title">Document</span>
+                                                        <span className="title">{t('title')}</span>
                                                         <span className="separator">.</span>
                                                         <span className="title">{item && item.page_count ? item.page_count : 0} {t('pages')}</span>
                                                     </div>
