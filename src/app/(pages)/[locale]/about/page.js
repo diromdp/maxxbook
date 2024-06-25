@@ -71,7 +71,7 @@ const About = () => {
     const detailSEO = use(getDetails());
     const selectedEditor = detailSEO.filter(x => x.key === 'page.description_about')
     const selectedEditorID = detailSEO.filter(x => x.key === 'page.description_about_id');
-    const localeNext = useLocale();
+    const localeNext = use(getLocale());
     const t = useTranslations("Global");
     return (
         <>
@@ -89,7 +89,7 @@ const About = () => {
                                 {
                                     localeNext == "en" ?
                                     <div dangerouslySetInnerHTML={{ __html: selectedEditor && selectedEditor[0].value }} />:
-                                    <div dangerouslySetInnerHTML={{ __html: selectedEditor && selectedEditorID[0].value }} />
+                                    <div dangerouslySetInnerHTML={{ __html: selectedEditorID && selectedEditorID[0].value }} />
                                 }
                             </div>
                         </div>

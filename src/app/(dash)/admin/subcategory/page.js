@@ -19,7 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import axios from "axios";
 
 import { FiEdit, FiTrash2, FiFilePlus } from "react-icons/fi";
-import { Input, Tooltip , Table} from 'antd';
+import { Input, Tooltip, Table } from 'antd';
 import { useCookies } from "react-cookie";
 
 import { urlAPI } from "../../../../lib/constant";
@@ -208,7 +208,7 @@ const Category = () => {
     }
 
     const editData = (next) => {
-        router.push(`/admin/subcategory/${next.id}?id=${next.id}&name=${next.name}&name_id=${next.name_id}&description=${next.description}&description_id=${next.description_id}&category_id=${next.category_id}`);
+        router.push(`/admin/subcategory/${next.id}?id=${next.id}&name=${next.name}&name_id=${next.name_id}&description=${next.description}&description_id=${next.description_id}&category_id=${next.category_id}&published_at=${next.published_at}`);
     }
 
     const deleteData = async () => {
@@ -292,9 +292,11 @@ const Category = () => {
                 </CardHeader>
                 <CardContent>
                     <div className="flex justify-start mb-4 gap-[8px] items-center">
-                        <Button variant="destructive" disabled={selectedRowKeys.length < 1} className="focus:outline-none text-white font-medium rounded-lg text-sm" onClick={deleteData}>
-                            <FiTrash2 />
-                        </Button>
+                        <Tooltip title="Multiple Delete">
+                            <Button variant="destructive" disabled={selectedRowKeys.length < 1} className="focus:outline-none text-white font-medium rounded-lg text-sm" onClick={deleteData}>
+                                <FiTrash2 />
+                            </Button>
+                        </Tooltip>
                         <span className="text-sm">
                             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                         </span>

@@ -1,5 +1,7 @@
 import { Roboto, Montserrat, League_Spartan } from 'next/font/google';
-import { BaseUrl } from '../lib/constant';
+import { GoogleAnalytics } from '@next/third-parties/google';
+import { use } from "react";
+import { BaseUrl, urlAPI } from '../lib/constant';
 import '@/app/scss/style.scss';
 import '@wangeditor/editor/dist/css/style.css' // import css
 
@@ -68,13 +70,28 @@ export const metadata = {
   },
 }
 
+async function getDetails() {
+  const data = await fetch(`${urlAPI}backend/settings?keys=page.google_analytics`, {
+     method: 'get',
+     headers: {
+        'Content-Type': 'application/json',
+        'Accept': "application/json",
+     },
+  });
+  return data.json()
+}
+
 export default function RootLayout({ children }) {
+  const detailSEO = use(getDetails());
+  const seletedGO = detailSEO.filter(x => x.key === 'page.google_analytics');
+
   return (
     <>
       <html lang="en">
         <body className={`${monst.variable} ${roboto.variable} ${league.variable}`}>
           {children}
         </body>
+        <GoogleAnalytics gaId={seletedGO} />
       </html>
     </>
     

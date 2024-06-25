@@ -32,9 +32,6 @@ import { useCookies } from "react-cookie";
 import { useSearchParams, useRouter } from 'next/navigation';
 import { formatDateToDatabaseString } from "../../../../../lib/utils";
 import { urlAPI } from "../../../../../lib/constant";
-
-
-
 import { notification } from 'antd';
 
 
@@ -106,6 +103,7 @@ const AddPages = () => {
                 if (data.status === 200) {
                     console.log(data.status);
                     notificationSuccess();
+                    router.push("/admin/subcategory");
                 }
             })
             .catch(function (error) {
@@ -169,6 +167,7 @@ const AddPages = () => {
 
     useEffect(() => {
         getCategory();
+        setPublish(searchParams.get('published_at') ? searchParams.get('published_at') : "");
     },[])
 
     return (

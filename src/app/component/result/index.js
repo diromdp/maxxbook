@@ -181,7 +181,7 @@ const ResultShow = ({ QureyParams }) => {
                     empatyState &&
                     <div className="content-empty w-full h-full  m-auto">
                         <h1 className="text-[38px] font-bold">{t2('Documents Not Found')}</h1>
-                        <div className="lg:w-[300px] lg:h-[300px]">
+                        <div className="lg:w-[400px] lg:h-[400px]">
                             <Lottie options={defaultOptions}
                                 className="lottie-container "
                                 disabled={true}    

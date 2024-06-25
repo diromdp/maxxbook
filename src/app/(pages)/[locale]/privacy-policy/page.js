@@ -1,6 +1,6 @@
 import Sidebar from "@/app/component/sidebar";
 import { headers } from "next/headers";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { getLocale } from "next-intl/server";
 
 import { urlAPI } from "../../../../lib/constant";
@@ -74,7 +74,7 @@ const PrivacyPolicy = () => {
     const selectedEditor = detailSEO.filter(x => x.key === 'page.description_privacy')
     const selectedEditorID = detailSEO.filter(x => x.key === 'page.description_privacy_id')
     const t = useTranslations("Global");
-    const localeNext = useLocale();
+    const localeNext = use(getLocale());
     return (
         <div className="screen-layer pt-[80px] lg:pt-[120px]">
             <div className="flex flex-col md:flex-row gap-[16px] about-page px-[16px] 1xl:px-0">

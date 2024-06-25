@@ -279,7 +279,7 @@ const Document = () => {
     }
 
     const editData = (data) => {
-        
+
         router.push(`/admin/document/${data.id}?id=${data.id}&title=${data.title}&description=${data.description}&category_id=${data.category_id ? data.category_id : ''}&upload_id=${data.upload ? data.upload.id : ''}&sub_category_id=${data.sub_category_id ? data.sub_category_id : ''}`);
     }
 
@@ -351,9 +351,11 @@ const Document = () => {
             .then((data) => {
                 if (data.status === 200) {
                     const updateDocument = dataFetch.map(document =>
-                        document.id === val.id ? { ...document, approval: {
-                            approval_status: "APPROVED"
-                        }} : document
+                        document.id === val.id ? {
+                            ...document, approval: {
+                                approval_status: "APPROVED"
+                            }
+                        } : document
                     );
                     setDataFetch(updateDocument);
                 }
@@ -424,12 +426,16 @@ const Document = () => {
                 </CardHeader>
                 <CardContent>
                     <div className="flex justify-start mb-4 gap-[8px] items-center">
-                        <Button variant="destructive" disabled={selectedRowKeys.length < 1} className="focus:outline-none text-white font-medium rounded-lg text-sm" onClick={deleteData}>
-                            <FiTrash2 />
-                        </Button>
+                        <Tooltip title="Multiple Delete">
+                            <Button variant="destructive" disabled={selectedRowKeys.length < 1} className="focus:outline-none text-white font-medium rounded-lg text-sm" onClick={deleteData}>
+                                <FiTrash2 />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Multiple Approve">
                         <Button disabled={selectedRowKeys.length < 1} onClick={approvalData} className="focus:outline-none text-white font-medium rounded-lg text-sm" >
                             <FiFeather />
                         </Button>
+                        </Tooltip>
                         <span className="text-sm">
                             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                         </span>

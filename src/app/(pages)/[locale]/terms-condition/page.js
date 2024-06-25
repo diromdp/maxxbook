@@ -52,7 +52,7 @@ const TermCondition = () => {
     const selectedEditorID = detailSEO.filter(x => x.key === 'page.description_term_id');
 
     const t = useTranslations("Global");
-    const localeNext = useLocale();
+    const localeNext = use(getLocale());
 
     return (
         <>

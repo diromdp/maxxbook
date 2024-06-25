@@ -312,9 +312,11 @@ const Users = () => {
                 </CardHeader>
                 <CardContent>
                     <div className="flex justify-start mb-4 gap-[8px] items-center">
-                        <Button variant="destructive" disabled={selectedRowKeys.length < 1} className="focus:outline-none text-white font-medium rounded-lg text-sm" onClick={deleteUser}>
-                            <FiTrash2 />
-                        </Button>
+                        <Tooltip title="Multiple Delete">
+                            <Button variant="destructive" disabled={selectedRowKeys.length < 1} className="focus:outline-none text-white font-medium rounded-lg text-sm" onClick={deleteUser}>
+                                <FiTrash2 />
+                            </Button>
+                        </Tooltip>
                         <span className="text-sm">
                             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                         </span>

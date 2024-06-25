@@ -30,7 +30,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { urlAPI } from "../../../../../lib/constant";
 import { formatDateToDatabaseString } from "../../../../../lib/utils";
-
+import { useRouter } from "next/navigation";
 import { useCookies } from "react-cookie";
 
 import { notification } from 'antd';
@@ -41,6 +41,7 @@ const AddPages = () => {
     const [api, contextHolder] = notification.useNotification();
     const [getCategoryData, setGetCategoryData] = useState([]);
     const [isPublish, setPublish] = useState(null);
+    const router = useRouter();
 
     const openNotification = (val) => {
         api.info({
@@ -102,6 +103,7 @@ const AddPages = () => {
             .then((data) => {
                 if (data.status === 200) {
                     notificationSuccess();
+                    form.reset();
                     router.push("/admin/subcategory")
                 }
             })

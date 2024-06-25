@@ -313,6 +313,12 @@ const Settings = () => {
             mode: 'editor_id',
             value: '',
         },
+        {
+            key: 'page.google_analytics',
+            label: "GA CODE",
+            type: 'string',
+            value: '',
+        },
     ]);
     const [htmlAbout, setHtmlAbout] = useState();
     const [htmlAboutID, setHtmlAboutID] = useState();
@@ -335,6 +341,7 @@ const Settings = () => {
     const [selectedFormPagePrivacy, setSelectedFormPagePrivacy] = useState();
     const [selectedFormPageResult, setSelectedFormPageResult] = useState();
     const [selectedFormPageContact, setSelectedFormPageContact] = useState();
+    const [selectedFormGoogle, setSelectedFormGoogle] = useState();
 
     const [filterUser, setFilterUser] = useState({
         q: "",
@@ -356,6 +363,7 @@ const Settings = () => {
     );
 
     const transaction = ['transactions.approval', 'transactions.min_withdrawal', 'transactions.balance_enabled'];
+    const googleAnalytics = ['page.google_analytics'];
     const seoHome = ['seo.title_home', 'seo.description_home', 'seo.title_home_id', 'seo.description_home_id'];
     const seoCategory = ['seo.title_category', 'seo.description_category', 'seo.title_category_id', 'seo.description_category_id'];
     const seoExplorer = ['seo.title_explorer', 'seo.description_explorer', 'seo.title_explorer_id', 'seo.description_explorer_id'];
@@ -388,6 +396,7 @@ const Settings = () => {
                     setInitForm(join)
                     setTimeout(() => {
                         const foundObject = join.filter(element => transaction.includes(element.key))
+                        const foundObjectGoogle = join.filter(element => googleAnalytics.includes(element.key));
                         const foundObjectSeoHome = join.filter(element => seoHome.includes(element.key));
                         const foundObjectSeoResult = join.filter(element => seoResult.includes(element.key));
                         const foundObjectSeoCategory = join.filter(element => seoCategory.includes(element.key));
@@ -424,6 +433,7 @@ const Settings = () => {
                         setSelectedFormPageTerm(foundObjectPageTerm);
                         setSelectedFormPageResult(foundObjectSeoResult);
                         setSelectedFormPageContact(foundObjectContact);
+                        setSelectedFormGoogle(foundObjectGoogle);
                     }, 500);
                 }
             })
@@ -548,6 +558,10 @@ const Settings = () => {
                 "page.description_seo_contact_id": data.page.description_seo_contact_id,
                 "page.description_contact_id": htmlContactID,
             }
+        } else if (selectForm == 'google_analytics') {
+            formData = {
+                "page.google_analytics": data.page.google_analytics,
+            }
         }
 
         submitToServer(formData);
@@ -566,7 +580,7 @@ const Settings = () => {
             <Card>
                 <CardContent>
                     <Tabs defaultValue="transaction" className="w-full">
-                        <TabsList className="grid w-full grid-cols-9">
+                        <TabsList className="grid w-full grid-cols-10">
                             <TabsTrigger value="transaction" onClick={() => setSelectedForm('transaction')}>Transaction</TabsTrigger>
                             <TabsTrigger value="home" onClick={() => setSelectedForm('home')}>Home</TabsTrigger>
                             <TabsTrigger value="result" onClick={() => setSelectedForm('result')}>Result</TabsTrigger>
@@ -576,6 +590,7 @@ const Settings = () => {
                             <TabsTrigger value="term" onClick={() => setSelectedForm('term')}>Term Condition</TabsTrigger>
                             <TabsTrigger value="privacy" onClick={() => setSelectedForm('privacy')}>Privacy</TabsTrigger>
                             <TabsTrigger value="contact" onClick={() => setSelectedForm('contact')}>Contact Us</TabsTrigger>
+                            <TabsTrigger value="google_analytics" onClick={() => setSelectedForm('google_analytics')}>Google Analytics</TabsTrigger>
                         </TabsList>
                         <TabsContent value="transaction">
                             <Card>
@@ -1011,6 +1026,29 @@ const Settings = () => {
                                                         </div>
                                                     )
                                                 }
+                                            })
+                                        }
+                                        <Button className="mt-[16px]" type="submit">Save</Button>
+                                    </form>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+                        <TabsContent value="google_analytics">
+                            <Card>
+                                <CardContent className="space-y-2">
+                                    <form className="flex flex-col gap-[8px]" onSubmit={handleSubmit(onSubmit)}>
+                                        {
+                                            selectedFormGoogle && selectedFormGoogle.map((item, index) => {
+                                                return (
+                                                    <div key={index} className="space-y-1">
+                                                        <Label htmlFor={item.key}>{item.label}</Label>
+                                                        <Input
+                                                            id={item.key}
+                                                            defaultValue={item.value}
+                                                            {...register(`${item.key}`)}
+                                                        />
+                                                    </div>
+                                                )
                                             })
                                         }
                                         <Button className="mt-[16px]" type="submit">Save</Button>

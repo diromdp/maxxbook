@@ -72,8 +72,7 @@ const ContactUs = () => {
     const selectedEditor = detailSEO.filter(x => x.key === 'page.description_contact')
     const selectedEditorID = detailSEO.filter(x => x.key === 'page.description_contact_id')
     const t = useTranslations("Global");
-    const localeNext = useLocale();
-    console.log()
+    const localeNext = use(getLocale());
     return (
         <div className="screen-layer pt-[120px] min-h-screen">
             <div className="flex flex-col md:flex-row gap-[16px] about-page px-[16px] 1xl:px-0">

@@ -17,7 +17,7 @@ import {
 import { useRouter } from 'next/navigation';
 
 import { FiEdit, FiTrash2, FiFilePlus } from "react-icons/fi";
-import { Input } from 'antd';
+import { Input, Tooltip } from 'antd';
 import { useCookies } from "react-cookie";
 
 import axios from "axios";
@@ -84,12 +84,16 @@ const Category = () => {
             render: (val) => {
                 return (
                     <div className="flex items-center gap-[16px]">
-                        <Button variant="destructive" onClick={() => deleteDataSingle(val.id)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
-                            <FiTrash2 />
-                        </Button>
-                        <Button onClick={() => editData(val)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
-                            <FiEdit />
-                        </Button>
+                        <Tooltip title="Delete">
+                            <Button variant="destructive" onClick={() => deleteDataSingle(val.id)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                                <FiTrash2 />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Edit">
+                            <Button onClick={() => editData(val)} className="focus:outline-none text-white font-medium rounded-lg text-sm">
+                                <FiEdit />
+                            </Button>
+                        </Tooltip>
                     </div>
                 )
             }
@@ -300,9 +304,11 @@ const Category = () => {
                 </CardHeader>
                 <CardContent>
                     <div className="flex justify-start mb-4 gap-[8px] items-center">
-                        <Button variant="destructive" disabled={selectedRowKeys.length < 1} className="focus:outline-none text-white font-medium rounded-lg text-sm" onClick={deleteData}>
-                            <FiTrash2 />
-                        </Button>
+                        <Tooltip title="Delete">
+                            <Button variant="destructive" disabled={selectedRowKeys.length < 1} className="focus:outline-none text-white font-medium rounded-lg text-sm" onClick={deleteData}>
+                                <FiTrash2 />
+                            </Button>
+                        </Tooltip>
                         <span className="text-sm">
                             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                         </span>
