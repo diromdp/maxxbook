@@ -1,9 +1,13 @@
 import Sidebar from "@/app/component/sidebar";
 import { headers } from "next/headers";
-import { use } from "react";
+import dynamic from "next/dynamic";
 import { useTranslations, useLocale } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { urlAPI } from "../../../../lib/constant";
+
+const ContentAbout = dynamic(() => import("../../../component/contentAbout"), {
+    ssr: false,
+});
 
 async function getDetails() {
     const data = await fetch(`${urlAPI}backend/settings?keys=seo.title_about,seo.title_about_id,seo.description_about,seo.description_about_id,page.description_about,page.description_about_id`, {
@@ -68,10 +72,6 @@ export async function generateMetadata() {
 }
 
 const About = () => {
-    const detailSEO = use(getDetails());
-    const selectedEditor = detailSEO.filter(x => x.key === 'page.description_about')
-    const selectedEditorID = detailSEO.filter(x => x.key === 'page.description_about_id');
-    const localeNext = use(getLocale());
     const t = useTranslations("Global");
     return (
         <>
@@ -85,13 +85,7 @@ const About = () => {
                             <div className="title">
                                 <h1>{t('About Maxibook')}</h1>
                             </div>
-                            <div className="desc mb-[32px]">
-                                {
-                                    localeNext == "en" ?
-                                    <div dangerouslySetInnerHTML={{ __html: selectedEditor && selectedEditor[0].value }} />:
-                                    <div dangerouslySetInnerHTML={{ __html: selectedEditorID && selectedEditorID[0].value }} />
-                                }
-                            </div>
+                            <ContentAbout/>
                         </div>
                     </div>
                 </div>

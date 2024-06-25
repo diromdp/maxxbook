@@ -404,15 +404,12 @@ const Settings = () => {
                         const foundObjectSeoAbout = join.filter(element => seoAbout.includes(element.key));
                         const foundEditorAbout = foundObjectSeoAbout.find(element => element.key === 'page.description_about');
                         const foundEditorAboutID = foundObjectSeoAbout.find(element => element.key === 'page.description_about_id');
-
                         const foundObjectPageTerm = join.filter(element => termTerm.includes(element.key));
                         const foundEditorTerm = foundObjectPageTerm.find(element => element.key === 'page.description_term');
                         const foundEditorTermID = foundObjectPageTerm.find(element => element.key === 'page.description_term_id');
-
                         const foundObjectPagePrivacy = join.filter(element => privacy.includes(element.key));
                         const foundEditorPrivacy = foundObjectPagePrivacy.find(element => element.key === 'page.description_privacy');
                         const foundEditorPrivacyID = foundObjectPagePrivacy.find(element => element.key === 'page.description_privacy_id');
-
                         const foundObjectContact = join.filter(element => contact.includes(element.key));
                         const foundEditorContact = foundObjectContact.find(element => element.key === 'page.description_contact');
                         const foundEditorContactID = foundObjectContact.find(element => element.key === 'page.description_contact_id');
@@ -1009,7 +1006,7 @@ const Settings = () => {
                                                                     value={htmlContactID ? htmlContactID : ''}
                                                                     config={config}
                                                                     tabIndex={1}
-                                                                    onBlur={(newContent) => setHtmlContactID(newContent)} // preferred to use only this option to update the content for performance reasons
+                                                                    onBlur={(newContentID) => setHtmlContactID(newContentID)} // preferred to use only this option to update the content for performance reasons
                                                                 />
                                                             </div>
                                                         </div>

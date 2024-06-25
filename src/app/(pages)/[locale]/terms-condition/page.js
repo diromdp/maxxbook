@@ -2,9 +2,12 @@ import Sidebar from "@/app/component/sidebar";
 import { headers } from "next/headers";
 import { useTranslations, useLocale } from "next-intl";
 import { getLocale } from "next-intl/server";
-
+import dynamic from "next/dynamic";
 import { urlAPI } from "../../../../lib/constant";
-import { use } from "react";
+
+const ContentTnc = dynamic(() => import("../../../component/contentTnc"), {
+    ssr: false,
+});
 async function getDetails() {
     const data = await fetch(`${urlAPI}backend/settings?keys=page.title_term,page.description_seo_term,page.description_term,page.title_term_id,page.description_seo_term_id,page.description_term_id`, {
         method: 'get',
@@ -47,16 +50,10 @@ export async function generateMetadata() {
 }
 
 const TermCondition = () => {
-    const detailSEO = use(getDetails());
-    const selectedEditor = detailSEO.filter(x => x.key === 'page.description_term');
-    const selectedEditorID = detailSEO.filter(x => x.key === 'page.description_term_id');
-
     const t = useTranslations("Global");
-    const localeNext = use(getLocale());
-
     return (
         <>
-            <div className="screen-layer pt-[80px] lg:pt-[120px]">
+            <div className="screen-layer pt-[80px] lg:pt-[120px] min-h-screen">
                 <div className="flex flex-col md:flex-row gap-[16px] about-page px-[16px] 1xl:px-0">
                     <div className="md:w-[20%]">
                         <Sidebar />
@@ -66,13 +63,7 @@ const TermCondition = () => {
                             <div className="title">
                                 <h1>{t('Terms of Use')} </h1>
                             </div>
-                            <div className="desc mb-[32px]">
-                                {
-                                    localeNext === "en" ? 
-                                    <div dangerouslySetInnerHTML={{ __html: selectedEditor && selectedEditor[0].value }} />:
-                                    <div dangerouslySetInnerHTML={{ __html: selectedEditorID && selectedEditorID[0].value }} />
-                                }
-                            </div>
+                            <ContentTnc/>
                         </div>
                     </div>
                 </div>

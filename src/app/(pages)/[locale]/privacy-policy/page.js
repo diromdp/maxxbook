@@ -4,7 +4,12 @@ import { useTranslations } from "next-intl";
 import { getLocale } from "next-intl/server";
 
 import { urlAPI } from "../../../../lib/constant";
-import { use } from "react";
+import dynamic from "next/dynamic";
+
+const ContentPrivacy = dynamic(() => import("../../../component/contentPrivacy"), {
+    ssr: false,
+});
+
 
 async function getDetails() {
     const data = await fetch(`${urlAPI}backend/settings?keys=page.title_privacy,page.description_seo_privacy,page.description_privacy,page.title_privacy_id,page.description_seo_privacy_id,page.description_privacy_id`, {
@@ -70,13 +75,9 @@ export async function generateMetadata() {
     
 }
 const PrivacyPolicy = () => {
-    const detailSEO = use(getDetails());
-    const selectedEditor = detailSEO.filter(x => x.key === 'page.description_privacy')
-    const selectedEditorID = detailSEO.filter(x => x.key === 'page.description_privacy_id')
     const t = useTranslations("Global");
-    const localeNext = use(getLocale());
     return (
-        <div className="screen-layer pt-[80px] lg:pt-[120px]">
+        <div className="screen-layer pt-[80px] lg:pt-[120px] min-h-screen">
             <div className="flex flex-col md:flex-row gap-[16px] about-page px-[16px] 1xl:px-0">
                 <div className="md:w-[20%]">
                     <Sidebar/>
@@ -86,13 +87,7 @@ const PrivacyPolicy = () => {
                         <div className="title">
                             <h1>{t('Privacy Policy')}</h1>
                         </div>
-                        <div className="desc mb-[32px]">
-                            {
-                                localeNext === "en" ? 
-                                <div dangerouslySetInnerHTML={{ __html: selectedEditor && selectedEditor[0].value }} />:
-                                <div dangerouslySetInnerHTML={{ __html: selectedEditorID && selectedEditorID[0].value }} />
-                            }
-                        </div>
+                        <ContentPrivacy/>
                     </div>
                 </div>
             </div>
