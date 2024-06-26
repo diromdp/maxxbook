@@ -421,7 +421,9 @@ const Document = () => {
                             allowClear
                             placeholder="Search..."
                             loading={isLoading} />
-                        <Button onClick={() => router.push('/admin/document/add')}><FiFilePlus /></Button>
+                        <Tooltip title="Create">
+                            <Button onClick={() => router.push('/admin/document/add')}><FiFilePlus /></Button>
+                        </Tooltip>
                     </div>
                 </CardHeader>
                 <CardContent>

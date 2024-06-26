@@ -305,8 +305,9 @@ const Users = () => {
                             allowClear
                             placeholder="Search..."
                             loading={isLoading} />
-
-                        <Button onClick={() => router.push('/admin/user/add', undefined, { shallow: true })}><FiFilePlus /></Button>
+                        <Tooltip title="Create">
+                            <Button onClick={() => router.push('/admin/user/add', undefined, { shallow: true })}><FiFilePlus /></Button>
+                        </Tooltip>
                     </div>
 
                 </CardHeader>

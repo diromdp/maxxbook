@@ -293,7 +293,9 @@ const Category = () => {
                             allowClear
                             placeholder="Search..."
                             loading={isLoading} />
-                        <Button onClick={() => router.push('/admin/category/add', undefined, { shallow: true })}><FiFilePlus /></Button>
+                        <Tooltip title="Create">
+                            <Button onClick={() => router.push('/admin/category/add', undefined, { shallow: true })}><FiFilePlus /></Button>
+                        </Tooltip>
                     </div>
                 </CardHeader>
                 <CardContent>

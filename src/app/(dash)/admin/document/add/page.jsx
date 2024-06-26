@@ -1,8 +1,13 @@
 "use client"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { z } from "zod";
+import { useCookies } from "react-cookie";
+import { notification, Spin } from 'antd';
+import { useRouter } from 'next/navigation';
+
 import {
     Card,
     CardContent,
@@ -30,23 +35,29 @@ import { Textarea } from "@/components/ui/textarea";
 
 import axios from "axios";
 import { urlAPI } from "../../../../../lib/constant";
-import { useCookies } from "react-cookie";
-
-import { notification, Spin } from 'antd';
-import { useRouter } from 'next/navigation';
+const JoditEditor = dynamic(() => import("jodit-react"), {
+    ssr: false,
+});
 
 
 const AddPages = () => {
+    const editor = useRef(null);
     const [cookies] = useCookies(["token"])
     const [api, contextHolder] = notification.useNotification();
     const [idCategory, setIdCategory] = useState(null);
     const [getCategoryData, setGetCategoryData] = useState([]);
     const [getSubCategoryData, setSubCategoryData] = useState([]);
+    const [htmlEditor, setHtmlEditor] = useState();
     const [disabled, setDisabled] = useState(true);
     const [disabledUploadButton, setDisabledUploadButton] = useState(true);
     const [isloading, setIsLoading] = useState(false);
     const [uploadId, setUploadId] = useState(null);
     const router = useRouter();
+    const config = useMemo(
+        () => ({
+            readonly: false,
+        }),
+    );
     const openNotification = (val) => {
         api.info({
             message: 'Warning Information',
@@ -72,6 +83,9 @@ const AddPages = () => {
         title: z.string().min(2, {
             message: "Title must be at least 2 characters.",
         }),
+        title_seo: z.string().min(2, {
+            message: "Title must be at least 2 characters.",
+        }),
         description: z.string().min(6, {
             message: "Description must be at least 6 characters.",
         }),
@@ -83,6 +97,7 @@ const AddPages = () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: "",
+            title_seo: "",
             description: "",
             category_id: "",
             sub_category_id: "",
@@ -93,10 +108,11 @@ const AddPages = () => {
         let formData = {
             id: idCategory,
             title: values.title,
-            description: values.description,
+            title_seo: values.title_seo,
+            description: htmlEditor,
+            description_seo: values.description,
             category_id: values.category_id,
-            // sub_category_id: values.sub_category_id,
-            sub_category_id: null,
+            sub_category_id: values.sub_category_id,
             upload_id: uploadId,
             lang: 'id'
         }
@@ -267,13 +283,25 @@ const AddPages = () => {
                                             </FormItem>
                                         )}
                                     />
-
+                                    <FormField
+                                        control={form.control}
+                                        name="title_seo"
+                                        render={({ field }) => (
+                                            <FormItem className="mb-[8px]">
+                                                <FormLabel>Title SEO</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Title Document SEO" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
                                     <FormField
                                         control={form.control}
                                         name="description"
                                         render={({ field }) => (
                                             <FormItem className="mb-[8px]">
-                                                <FormLabel>Description</FormLabel>
+                                                <FormLabel>Description SEO</FormLabel>
                                                 <FormControl>
                                                     <Textarea placeholder="Description" {...field} />
                                                 </FormControl>
@@ -281,6 +309,20 @@ const AddPages = () => {
                                             </FormItem>
                                         )}
                                     />
+                                    <div className="">
+                                        <FormLabel>Description SEO</FormLabel>
+                                        <div className="border border-input rounded-[8px] mt-[8px]">
+                                            <JoditEditor
+                                                ref={editor}
+                                                className="rounded-[8px]"
+                                                value={htmlEditor ? htmlEditor : ''}
+                                                config={config}
+                                                tabIndex={1} // tabIndex of textarea
+                                                onBlur={(newContent) => setHtmlEditor(newContent)} // preferred to use only this option to update the content for performance reasons
+                                            />
+                                        </div>
+                                    </div>
+
                                     <FormField
                                         control={form.control}
                                         name="category_id"
