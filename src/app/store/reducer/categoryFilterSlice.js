@@ -4,7 +4,7 @@ const initialState = {
     categoryFilterState: {
         q: '',
         cursor: "",
-        perPage: "12",
+        perPage: "18",
         sortBy: "title",
         sortDirection: "asc",
         user_id: "",
@@ -13,7 +13,7 @@ const initialState = {
     },
     categoryFilterSingleState: {
         cursor: "",
-        perPage: "12",
+        perPage: "18",
         sortBy: "title",
         sortDirection: "asc",
         user_id: "",

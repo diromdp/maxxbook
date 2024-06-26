@@ -154,7 +154,7 @@ const ResultShow = ({ QureyParams }) => {
             hasFetchedData.current = true;
         }
     }, []);
-
+    console.log(optionsDocument && optionsDocument);
     return (
         <>
             <div className="screen-layer">
@@ -170,7 +170,7 @@ const ResultShow = ({ QureyParams }) => {
                             <div className="result-word">
                                 {
                                     !isLoading && optionsDocument ?
-                                        <p>{optionsDocument.current_page}-{optionsDocument.total} of {optionsDocument.total} {t('results')}</p> :
+                                        <p>{optionsDocument.from}-{optionsDocument.to} of {optionsDocument.total} {t('results')}</p> :
                                         <Skeleton className={"w-[180px] h-[20px]"} />
                                 }
                             </div>
