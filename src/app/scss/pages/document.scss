@@ -2,7 +2,7 @@
     @apply pt-[120px];
     @apply overflow-hidden;
     .another-document {
-        @apply mt-[85%] md:mt-[40%] lg:mt-0;
+        @apply md:mt-[40%] lg:mt-0;
         &-content {
             @apply flex flex-col items-center pt-[24px] mt-[24px] gap-[16px];
             border-top: 1px solid #cfd6e0;
