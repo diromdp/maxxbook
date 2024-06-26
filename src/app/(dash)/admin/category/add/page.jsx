@@ -92,7 +92,7 @@ const AddPages = () => {
             name_id: values.name_id,
             description_id: values.description_text_id,
             icon: null,
-            published_at: isPublish ? isPublish : null,
+            published: isPublish ? isPublish : false,
             is_home: values.select_homepage
         }
 
@@ -159,11 +159,7 @@ const AddPages = () => {
     
     const onChangePublish = async (e) => {
         let formattedDate = formatDateToDatabaseString();
-        if(e === true){
-            setPublish(formattedDate);
-        } else {
-            setPublish(null);
-        }
+        setPublish(e);
     }
 
     return (

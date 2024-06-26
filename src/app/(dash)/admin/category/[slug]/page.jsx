@@ -89,7 +89,7 @@ const EditPages = () => {
             description: values.description_text,
             name_id: values.name_id,
             description_id: values.description_text_id,
-            published_at: isPublish ? isPublish : null,
+            published: isPublish ? isPublish : false,
             icon: null,
             is_home: values.select_homepage
         }
@@ -192,12 +192,7 @@ const EditPages = () => {
     }
 
     const onChangePublish = async (e) => {
-        let formattedDate = formatDateToDatabaseString();
-        if(e === true){
-            setPublish(formattedDate);
-        } else {
-            setPublish(null);
-        }
+        setPublish(e);
     }
 
     useEffect(() => {
@@ -293,7 +288,7 @@ const EditPages = () => {
                                                 <FormLabel>Publish</FormLabel>
                                                 <FormControl>
                                                     <Switch
-                                                        checked={isPublish ? true : false}
+                                                        checked={isPublish}
                                                         onCheckedChange={onChangePublish}
                                                         aria-readonly
                                                         className="!mt-0"
