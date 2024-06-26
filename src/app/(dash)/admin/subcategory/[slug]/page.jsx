@@ -89,7 +89,7 @@ const AddPages = () => {
             name_id: values.name_id,
             description_id: values.description_text_id,
             category_id: values.category_id,
-            published_at: isPublish ? isPublish : null,
+            published: isPublish ? isPublish : false,
         }
 
         await axios.put(`${urlAPI}backend/admin/sub-categories`, formData, {
@@ -157,17 +157,12 @@ const AddPages = () => {
     }
 
     const onChangePublish = async (e) => {
-        let formattedDate = formatDateToDatabaseString();
-        if(e === true){
-            setPublish(formattedDate);
-        } else {
-            setPublish(null);
-        }
+        setPublish(e);
     }
 
     useEffect(() => {
         getCategory();
-        setPublish(searchParams.get('published_at') ? searchParams.get('published_at') : "");
+        setPublish(searchParams.get('published') == 1 ? true : false);
     },[])
 
     return (
@@ -267,7 +262,7 @@ const AddPages = () => {
                                                 <FormLabel>Publish</FormLabel>
                                                 <FormControl>
                                                     <Switch
-                                                        checked={isPublish ? true : false}
+                                                        checked={isPublish}
                                                         onCheckedChange={onChangePublish}
                                                         aria-readonly
                                                         className="!mt-0"

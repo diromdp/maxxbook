@@ -2,18 +2,18 @@ import Link from "next/link";
 import { getLocale, getTranslations } from 'next-intl/server';
 import { headers } from "next/headers";
 import { urlAPI } from "../../../../lib/constant";
+import ListCategory from "../../../component/ListCategory";
 
-
-async function getData() {
-    const data = await fetch(`${urlAPI}backend/categories`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': "application/json",
-        },
-    });
-    return data.json();
-}
+// async function getData() {
+//     const data = await fetch(`${urlAPI}backend/categories`, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': "application/json",
+//         },
+//     });
+//     return data.json();
+// }
 
 async function getDetails() {
     const data = await fetch(`${urlAPI}backend/settings?keys=seo.title_category,seo.description_category,seo.title_category_id,seo.description_category_id`, {
@@ -41,46 +41,44 @@ export async function generateMetadata() {
 
     const locale = await getLocale();
 
-   if( locale === 'en') {
-      return {
-          title: selectedTitle ?  selectedTitle[0].value : '',
-          description: selectedDesc ? selectedDesc[0].value : '',
-          twitter: {
-              card: 'summary_large_image',
-              title: selectedTitle ? selectedTitle[0].value : '',
-              url: pathname,
-              description: selectedDesc ? selectedDesc[0].value : '',
-          },
-          openGraph: {
-              title: selectedTitle ? selectedTitle[0].value : '',
-              description: selectedDesc ? selectedDesc[0].value : '',
-              url: pathname,
-              type: 'website',
-          },
-      }
-  } else {
-      return {
-          title: selectedTitleID ?  selectedTitleID[0].value : '',
-          description: selectedDescID ? selectedDescID[0].value : '',
-          twitter: {
-              card: 'summary_large_image',
-              title: selectedTitleID ? selectedTitleID[0].value : '',
-              url: pathname,
-              description: selectedDescID ? selectedDescID[0].value : '',
-          },
-          openGraph: {
-              title: selectedTitleID ? selectedTitleID[0].value : '',
-              description: selectedDescID ? selectedDescID[0].value : '',
-              url: pathname,
-              type: 'website',
-          },
-      }
-  }
+    if (locale === 'en') {
+        return {
+            title: selectedTitle ? selectedTitle[0].value : '',
+            description: selectedDesc ? selectedDesc[0].value : '',
+            twitter: {
+                card: 'summary_large_image',
+                title: selectedTitle ? selectedTitle[0].value : '',
+                url: pathname,
+                description: selectedDesc ? selectedDesc[0].value : '',
+            },
+            openGraph: {
+                title: selectedTitle ? selectedTitle[0].value : '',
+                description: selectedDesc ? selectedDesc[0].value : '',
+                url: pathname,
+                type: 'website',
+            },
+        }
+    } else {
+        return {
+            title: selectedTitleID ? selectedTitleID[0].value : '',
+            description: selectedDescID ? selectedDescID[0].value : '',
+            twitter: {
+                card: 'summary_large_image',
+                title: selectedTitleID ? selectedTitleID[0].value : '',
+                url: pathname,
+                description: selectedDescID ? selectedDescID[0].value : '',
+            },
+            openGraph: {
+                title: selectedTitleID ? selectedTitleID[0].value : '',
+                description: selectedDescID ? selectedDescID[0].value : '',
+                url: pathname,
+                type: 'website',
+            },
+        }
+    }
 }
 
 export default async function category() {
-    const data = await getData()
-    const localData = await getLocale();
     const t = await getTranslations("Documents");
 
     return <>
@@ -90,36 +88,7 @@ export default async function category() {
                     <h1>{t('title')}</h1>
                     <p>{t('description')}</p>
                 </div>
-                <div className="list-of-category">
-                    {
-                        data && data.map((item, key) => {
-                            if(item.sub_categories.length > 0) {
-                                return (
-                                    <div key={key} className="items">
-                                        <h3>
-                                            <Link href={`/${localData}/catagories/${item.slug}`}>
-                                                { localData == "en" ? item.name : item.name_id}
-                                            </Link>
-                                        </h3>
-                                        <ul>
-                                            {
-                                                item.sub_categories && item.sub_categories.map((sub_category, index) => {
-                                                    return (
-                                                        <li key={index}>
-                                                            <Link href={`/${localData}/subcategory/${sub_category.slug}`}>
-                                                                { localData == "en" ? sub_category.name : sub_category.name_id}
-                                                            </Link>
-                                                        </li>
-                                                    )
-                                                })
-                                            }
-                                        </ul>
-                                    </div>
-                                )
-                            }
-                        })
-                    }
-                </div>
+                <ListCategory />
             </div>
         </div>
     </>

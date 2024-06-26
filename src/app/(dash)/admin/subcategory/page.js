@@ -208,7 +208,7 @@ const Category = () => {
     }
 
     const editData = (next) => {
-        router.push(`/admin/subcategory/${next.id}?id=${next.id}&name=${next.name}&name_id=${next.name_id}&description=${next.description}&description_id=${next.description_id}&category_id=${next.category_id}&published_at=${next.published_at}`);
+       router.push(`/admin/subcategory/${next.id}?id=${next.id}&name=${next.name}&name_id=${next.name_id}&description=${next.description}&description_id=${next.description_id}&category_id=${next.category_id}&published=${next.published}`);
     }
 
     const deleteData = async () => {

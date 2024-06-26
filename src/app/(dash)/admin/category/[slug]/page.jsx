@@ -138,10 +138,10 @@ const EditPages = () => {
                     form.setValue('description_text', data.data.description);
                     form.setValue('description_text_id', data.data.description_id);
                     form.setValue('select_homepage', data.data.is_home == 1 ? true : false);
-                    if(data.data.published_at) {
-                        setPublish(data.data.published_at)
+                    if(data.data.published) {
+                        setPublish(data.data.published)
                     } else {
-                        setPublish(null);
+                        setPublish(false);
                     }
                 }
             })

@@ -89,7 +89,7 @@ const AddPages = () => {
             description: values.description_text,
             name_id: values.name_id,
             description_id: values.description_text_id,
-            published_at: isPublish ? isPublish : null,
+            published: isPublish ? isPublish : false,
             category_id: values.category_id,
         }
 
@@ -158,12 +158,7 @@ const AddPages = () => {
     }
 
     const onChangePublish = async (e) => {
-        let formattedDate = formatDateToDatabaseString();
-        if(e === true){
-            setPublish(formattedDate);
-        } else {
-            setPublish(null);
-        }
+        setPublish(e);
     }
 
     useEffect(() => {
@@ -268,7 +263,7 @@ const AddPages = () => {
                                                 <FormLabel>Publish</FormLabel>
                                                 <FormControl>
                                                     <Switch
-                                                        checked={isPublish ? true : false}
+                                                        checked={isPublish}
                                                         onCheckedChange={onChangePublish}
                                                         aria-readonly
                                                         className="!mt-0"
@@ -278,7 +273,6 @@ const AddPages = () => {
                                             </FormItem>
                                         )}
                                     />
-
                                     <div className="flex items-center gap-[16px]">
                                         <Button className="mt-[16px]" type="submit">Create</Button>
                                         <Button className="mt-[16px]" type="button" onClick={() => form.reset()} variant="secondary">Cancel</Button>
