@@ -76,7 +76,7 @@ const ContactUs = () => {
     const t = useTranslations("Global");
 
     return (
-        <div className="screen-layer pt-[120px] min-h-screen">
+        <div className="screen-layer pt-[80px] lg:pt-[120px] min-h-screen">
             <div className="flex flex-col md:flex-row gap-[16px] about-page px-[16px] 1xl:px-0">
                 <div className="md:w-[20%]">
                     <Sidebar />
