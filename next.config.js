@@ -9,6 +9,14 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
+                hostname: 'imgv2-1-f.scribdassets.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 's-f.scribdassets.com'
+            },
+            {
+                protocol: 'https',
                 hostname: 'usc1.contabostorage.com'
             },
             {

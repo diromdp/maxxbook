@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import BreadCumb from "@/app/component/breadcumb";
+import BreadCumb from "../../component/breadcumb";
 import { useTranslations } from "next-intl";
 
 import ResultShowID from "../../component/resultbyid";

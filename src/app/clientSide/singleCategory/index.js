@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import dynamic from 'next/dynamic';
 import { useTranslations } from "next-intl"
-const BreadCumb = dynamic(() => import('@/app/component/breadcumb'), {
+const BreadCumb = dynamic(() => import('../../component/breadcumb'), {
     ssr: false,
 })
 const SlideSubCategories = dynamic(() => import('@/app/component/slideSubCategories'), {
@@ -68,7 +68,7 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
                     {
                         slug.length < 2 &&
                         <div className="title-more">
-                            <h2>{t('Explore more in')} {detailCategory && locale.value == "en" ? detailCategory[0].name : detailCategory[0].name_id}</h2>
+                            <h2>{t('Explore more in')} {detailCategory && locale == "en" ? detailCategory[0].name : detailCategory[0].name_id}</h2>
                         </div>
                     }
                     <ResultShowID idCategory={detailCategory && detailCategory[0].id} />
