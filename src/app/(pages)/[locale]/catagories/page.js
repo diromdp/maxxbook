@@ -42,38 +42,42 @@ export async function generateMetadata() {
     const locale = await getLocale();
 
     if (locale === 'en') {
-        return {
-            title: selectedTitle ? selectedTitle[0].value : '',
-            description: selectedDesc ? selectedDesc[0].value : '',
-            twitter: {
-                card: 'summary_large_image',
-                title: selectedTitle ? selectedTitle[0].value : '',
-                url: pathname,
-                description: selectedDesc ? selectedDesc[0].value : '',
-            },
-            openGraph: {
-                title: selectedTitle ? selectedTitle[0].value : '',
-                description: selectedDesc ? selectedDesc[0].value : '',
-                url: pathname,
-                type: 'website',
-            },
+        if (selectedTitle.length > 0 && selectedDescID.length > 0) {
+            return {
+                title: selectedTitle[0].value,
+                description: selectedDesc[0].value,
+                twitter: {
+                    card: 'summary_large_image',
+                    title: selectedTitle[0].value,
+                    url: pathname,
+                    description: selectedDesc[0].value,
+                },
+                openGraph: {
+                    title: selectedTitle[0].value,
+                    description: selectedDesc[0].value,
+                    url: pathname,
+                    type: 'website',
+                },
+            }
         }
     } else {
-        return {
-            title: selectedTitleID ? selectedTitleID[0].value : '',
-            description: selectedDescID ? selectedDescID[0].value : '',
-            twitter: {
-                card: 'summary_large_image',
-                title: selectedTitleID ? selectedTitleID[0].value : '',
-                url: pathname,
-                description: selectedDescID ? selectedDescID[0].value : '',
-            },
-            openGraph: {
-                title: selectedTitleID ? selectedTitleID[0].value : '',
-                description: selectedDescID ? selectedDescID[0].value : '',
-                url: pathname,
-                type: 'website',
-            },
+        if (selectedTitleID.length > 0 && selectedDescID.length > 0) {
+            return {
+                title: selectedTitleID[0].value,
+                description: selectedDescID[0].value,
+                twitter: {
+                    card: 'summary_large_image',
+                    title: selectedTitleID[0].value,
+                    url: pathname,
+                    description: selectedDescID[0].value,
+                },
+                openGraph: {
+                    title: selectedTitleID[0].value,
+                    description: selectedDescID[0].value,
+                    url: pathname,
+                    type: 'website',
+                },
+            }
         }
     }
 }

@@ -61,8 +61,8 @@ const ContentPrivacy = () => {
                     <div className="desc">
                         {
                             localeNext === "en" ?
-                                <div dangerouslySetInnerHTML={{ __html: selectedEditor && selectedEditor[0].value }}></div> :
-                                <div dangerouslySetInnerHTML={{ __html: selectedEditorID && selectedEditorID[0].value }}></div>
+                                <div dangerouslySetInnerHTML={{ __html: selectedEditor.length > 0 && selectedEditor[0].value }}></div> :
+                                <div dangerouslySetInnerHTML={{ __html: selectedEditorID.length > 0 && selectedEditorID[0].value }}></div>
                         }
                     </div>
             }

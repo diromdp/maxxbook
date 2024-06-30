@@ -1,7 +1,6 @@
 import Sidebar from "@/app/component/sidebar";
 import { headers } from "next/headers";
 import { useTranslations, useLocale } from "next-intl";
-import { getLocale } from "next-intl/server";
 import dynamic from "next/dynamic";
 import { urlAPI } from "../../../../lib/constant";
 
@@ -31,21 +30,23 @@ export async function generateMetadata() {
     const selectedTitle = detailSEO.filter(x => x.key === 'page.title_term')
     const selectedDesc = detailSEO.filter(x => x.key === 'page.description_seo_term')
 
-    return {
-        title: detailSEO.length > 0 ? selectedTitle[0].value : '',
-        description: detailSEO.length > 0 ? selectedDesc[0].value : '',
-        twitter: {
-            card: 'summary_large_image',
-            title: detailSEO.length > 0 ? selectedTitle[0].value : '',
-            url: pathname,
-            description: detailSEO.length > 0 ? selectedDesc[0].value : '',
-        },
-        openGraph: {
-            title: detailSEO.length > 0 ? selectedTitle[0].value : '',
-            description: detailSEO.length > 0 ? selectedDesc[0].value : '',
-            url: pathname,
-            type: 'website',
-        },
+    if (selectedTitle.length > 0 && selectedDesc.length > 0) {
+        return {
+            title: selectedTitle[0].value,
+            description: selectedDesc[0].value,
+            twitter: {
+                card: 'summary_large_image',
+                title: selectedTitle[0].value,
+                url: pathname,
+                description: selectedDesc[0].value,
+            },
+            openGraph: {
+                title: selectedTitle[0].value,
+                description: selectedDesc[0].value,
+                url: pathname,
+                type: 'website',
+            },
+        }
     }
 }
 
@@ -63,7 +64,7 @@ const TermCondition = () => {
                             <div className="title">
                                 <h1>{t('Terms of Use')} </h1>
                             </div>
-                            <ContentTnc/>
+                            <ContentTnc />
                         </div>
                     </div>
                 </div>

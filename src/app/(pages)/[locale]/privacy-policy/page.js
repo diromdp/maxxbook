@@ -35,44 +35,48 @@ export async function generateMetadata() {
     const selectedDesc = detailSEO.filter(x => x.key === 'page.description_seo_privacy')
     const selectedTitleID = detailSEO.filter(x => x.key === 'page.title_privacy_id')
     const selectedDescID = detailSEO.filter(x => x.key === 'page.description_seo_privacy_id')
-    const locale = await getLocale();    
+    const locale = await getLocale();
 
-    if(locale == "en") {
-        return {
-            title: detailSEO.length > 0 ? selectedTitle[0].value : '',
-            description: detailSEO.length > 0 ? selectedDesc[0].value : '',
-            twitter: {
-                card: 'summary_large_image',
-                title: detailSEO.length > 0 ? selectedTitle[0].value : '',
-                url: pathname,
-                description: detailSEO.length > 0 ? selectedDesc[0].value : '',
-            },
-            openGraph: {
-                title: detailSEO.length > 0 ? selectedTitle[0].value : '',
-                description: detailSEO.length > 0 ? selectedDesc[0].value : '',
-                url: pathname,
-                type: 'website',
-            },
+    if (locale == "en") {
+        if (selectedTitle.length > 0 && selectedDescID.length > 0) {
+            return {
+                title: selectedTitle[0].value,
+                description: selectedDesc[0].value,
+                twitter: {
+                    card: 'summary_large_image',
+                    title: selectedTitle[0].value,
+                    url: pathname,
+                    description: selectedDesc[0].value,
+                },
+                openGraph: {
+                    title: selectedTitle[0].value,
+                    description: selectedDesc[0].value,
+                    url: pathname,
+                    type: 'website',
+                },
+            }
         }
     } else {
-        return {
-            title: detailSEO.length > 0 ? selectedTitleID[0].value : '',
-            description: detailSEO.length > 0 ? selectedDescID[0].value : '',
-            twitter: {
-                card: 'summary_large_image',
-                title: detailSEO.length > 0 ? selectedTitleID[0].value : '',
-                url: pathname,
-                description: detailSEO.length > 0 ? selectedDescID[0].value : '',
-            },
-            openGraph: {
-                title: detailSEO.length > 0 ? selectedTitleID[0].value : '',
-                description: detailSEO.length > 0 ? selectedDescID[0].value : '',
-                url: pathname,
-                type: 'website',
-            },
+        if (selectedTitleID.length > 0 && selectedDescID.length > 0) {
+            return {
+                title: selectedTitleID[0].value,
+                description: selectedDescID[0].value,
+                twitter: {
+                    card: 'summary_large_image',
+                    title: selectedTitleID[0].value,
+                    url: pathname,
+                    description: selectedDescID[0].value,
+                },
+                openGraph: {
+                    title: selectedTitleID[0].value,
+                    description: selectedDescID[0].value,
+                    url: pathname,
+                    type: 'website',
+                },
+            }
         }
     }
-    
+
 }
 const PrivacyPolicy = () => {
     const t = useTranslations("Global");
@@ -80,14 +84,14 @@ const PrivacyPolicy = () => {
         <div className="screen-layer pt-[80px] lg:pt-[120px] min-h-screen">
             <div className="flex flex-col md:flex-row gap-[16px] about-page px-[16px] 1xl:px-0">
                 <div className="md:w-[20%]">
-                    <Sidebar/>
+                    <Sidebar />
                 </div>
                 <div className="md:w-[80%] flex-col items-start">
                     <div className="content mb-[32px]">
                         <div className="title">
                             <h1>{t('Privacy Policy')}</h1>
                         </div>
-                        <ContentPrivacy/>
+                        <ContentPrivacy />
                     </div>
                 </div>
             </div>

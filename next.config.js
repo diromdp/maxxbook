@@ -9,23 +9,19 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'imgv2-1-f.scribdassets.com',
-            },
-            {
-                protocol: 'https',
-                hostname: 's-f.scribdassets.com'
-            },
-            {
-                protocol: 'https',
-                hostname: 'docs.brohim.online'
-            },
-            {
-                protocol: 'https',
                 hostname: 'usc1.contabostorage.com'
             },
             {
                 protocol: 'https',
                 hostname: 'sin1.contabostorage.com'
+            },
+            {
+                protocol: 'https',
+                hostname: 'sgp1.vultrobjects.com'
+            },
+            {
+                protocol: 'http',
+                hostname: 'sgp1.vultrobjects.com'
             }
         ],
     },

@@ -104,7 +104,7 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
             @apply flex gap-[16px] flex-wrap justify-center items-center w-full xl:w-[850px] m-auto pt-[32px];
 
             .item {
-                @apply p-[10px] w-full sm:w-[250px] h-[80px] rounded-[8px] border border-slate-200 relative overflow-hidden;
+                @apply p-[10px] w-full sm:w-[290px] h-[80px] rounded-[8px] border border-slate-200 relative overflow-hidden;
 
                 &:hover {
                     @apply border-blue-500;
