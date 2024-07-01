@@ -45,7 +45,8 @@ const ContentTnc = () => {
 
     useEffect(() => {
         getData();
-    }, [])
+    }, []);
+    
     return (
         <>
             {
