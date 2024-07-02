@@ -47,12 +47,20 @@ export async function generateMetadata() {
                     title: selectedTitle[0].value,
                     url: pathname,
                     description: selectedDesc[0].value,
+                    images: {
+                        url: '/image/maxibook.png',
+                        alt: 'Maxibook Image',
+                    },
                 },
                 openGraph: {
                     title: selectedTitle[0].value,
                     description: selectedDesc[0].value,
                     url: pathname,
                     type: 'website',
+                    images: {
+                        url: '/image/maxibook.png',
+                        alt: 'Maxibook Image',
+                    },
                 },
             }
         }
@@ -66,12 +74,20 @@ export async function generateMetadata() {
                     title: selectedTitleID[0].value,
                     url: pathname,
                     description: selectedDescID[0].value,
+                    images: {
+                        url: '/image/maxibook.png',
+                        alt: 'Maxibook Image',
+                    },
                 },
                 openGraph: {
                     title: selectedTitleID[0].value,
                     description: selectedDescID[0].value,
                     url: pathname,
                     type: 'website',
+                    images: {
+                        url: '/image/maxibook.png',
+                        alt: 'Maxibook Image',
+                    },
                 },
             }
         }

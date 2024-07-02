@@ -32,12 +32,20 @@ export async function generateMetadata({ params }) {
             title: `Maxibook - ${locale == 'en' ? detailSEO[0].name : detailSEO[0].name_id}`,
             description: locale == 'en' ? detailSEO[0].description : detailSEO[0].description_id,
             url: pathname,
+            images: {
+                url: '/image/maxibook.png',
+                alt: 'Maxibook Image',
+            },
         },
         openGraph: {
             title: `Maxibook - ${locale == 'en' ? detailSEO[0].name : detailSEO[0].name_id}`,
             description: locale == 'en' ? detailSEO[0].description : detailSEO[0].description_id,
             url: pathname,
             type: 'website',
+            images: {
+                url: '/image/maxibook.png',
+                alt: 'Maxibook Image',
+            },
         },
     }
 }

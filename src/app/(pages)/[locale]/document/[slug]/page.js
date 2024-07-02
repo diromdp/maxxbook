@@ -58,7 +58,7 @@ export async function generateMetadata({ params }) {
             url: pathname,
             description: dataDetailDocument.description_seo ? dataDetailDocument.description_seo : '',
             images: {
-                url: dataDetailDocument.thumb_url,
+                url: dataDetailDocument.thumb_url ? dataDetailDocument.thumb_url : '/image/maxibook.png',
                 alt: dataDetailDocument.title_seo ? dataDetailDocument.title_seo : dataDetailDocument.title,
             },
         },
