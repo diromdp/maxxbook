@@ -112,14 +112,9 @@ const DocumentDesc = ({ slug }) => {
     };
 
     const downloadFile = async (fileUrl, fileName) => {
-        if(token) {
+        if (token) {
             try {
-                const response = await fetch(fileUrl);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const blob = await response.blob();
-                saveAs(blob, fileName);
+                saveAs(fileUrl, fileName);
             } catch (error) {
                 console.error('Error downloading the file:', error);
             }
@@ -129,7 +124,7 @@ const DocumentDesc = ({ slug }) => {
                 description: "Please Sign in first to download the File"
             })
         }
-       
+
     };
 
     const bookmarkSaved = async () => {
@@ -171,7 +166,7 @@ const DocumentDesc = ({ slug }) => {
 
     useEffect(() => {
         if (!hasFetchedData.current) {
-            if(token) {
+            if (token) {
                 getDocumentbySlugToken();
             } else {
                 getDocumentbySlug();
@@ -276,7 +271,7 @@ const DocumentDesc = ({ slug }) => {
             {/* {
                 documentData && documentData.upload.extension === 'pdf' && <PDFViewer file={documentData.url}/>
             } */}
-           
+
             {/* <div className="pdf-viewer">
                 {
                     documentData &&

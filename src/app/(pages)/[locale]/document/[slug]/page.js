@@ -91,7 +91,7 @@ export default async function documentPage({ params }) {
     const locale = await getLocale();
 
     return (
-        <div className="document-page">
+        <div className="document-page min-h-screen">
             <div className="screen-layer mb-[32px]">
                 <div className="flex flex-col px-[16px] lg:px-0 lg:flex-row gap-[16px]">
                     <div className="w-full lg:w-[70%] flex flex-col items-center relative">
