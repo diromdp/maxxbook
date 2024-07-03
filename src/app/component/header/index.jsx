@@ -3,6 +3,7 @@ import { useEffect, useTransition, useCallback, useState } from 'react';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
 import {
     Avatar,
     AvatarFallback,
@@ -27,6 +28,10 @@ import { getInitials } from "../../../lib/utils";
 import { setAuthSlice } from "../../store/reducer/authSlice";
 
 import { useAppSelector, useAppDispatch } from "../../store";
+
+const HeaderSearch = dynamic(() => import('../../component/headerSearch'), {
+    ssr: false,
+})
 
 const Header = ({ locale }) => {
     const dispatch = useAppDispatch();
@@ -90,6 +95,9 @@ const Header = ({ locale }) => {
                     <Link href={`/${locale}/`} className="header-logo">
                         <span className={`text-[20px] lg:text-[28px] xl:text-[40px] select-none font-league_spartan font-[700] outline-0`}>Maxibook.</span>
                     </Link>
+                    <div className="header-search">
+                        <HeaderSearch/>
+                    </div>
                     <div className="header-login">
                         <label className='label'>
                             <p className='sr-only'>{t('Change Language')}</p>

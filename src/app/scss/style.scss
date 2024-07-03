@@ -160,6 +160,10 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
 .result-page {
     @apply pt-[120px] min-h-screen pb-[32px] relative;
 
+    .search-container{
+        @apply w-[40%] m-auto mb-[32px];
+    }
+
     .result-word {
         @apply pb-[24px] px-[20px] 2xl:px-0;
 

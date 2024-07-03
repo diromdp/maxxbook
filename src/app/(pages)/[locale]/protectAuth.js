@@ -34,7 +34,7 @@ const ProtectAuth = ({children}) => {
                         console.log(error.response.headers);
                         if (error.response.status == 401) {
                             dispatch(setAuthSlice({ ...getToken, access_token: null }))
-                            router.push('/login');
+                            router.push('/');
                         }
                     } else if (error.request) {
                         console.log(error.request);

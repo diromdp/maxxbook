@@ -87,7 +87,7 @@ export default function Home() {
                <div className="content">
                   <h1 className={`text-[1.5rem] lg:text-[2.875rem] font-montserrat font-[700]`}>{t('title')}.</h1>
                   <p className="text-[14px] lg:text-[16px] mt-[8px] lg:mt-[16px]">{t('description')}</p>
-                  <HomeSearch />
+                  <HomeSearch isHome={true} />
                   <span className="text-[14px] lg:text-[20px] font-[600] pt-[16px]">{t('or')}</span>
                   <span className="text-[14px] lg:text-[20px] font-[600] pt-[8px]">{t('browser')}</span>
                </div>

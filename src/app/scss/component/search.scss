@@ -4,3 +4,10 @@
         @apply mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white;
     }
 }
+
+.form-search-header {
+    @apply w-full; 
+    .label {
+        @apply mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white;
+    }
+}

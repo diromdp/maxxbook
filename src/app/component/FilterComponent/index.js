@@ -29,10 +29,10 @@ const FilterComponent = ({ DataFetchCategory, isLoading, getDocument}) => {
         getDocument('');
 
     }
-    const onChange = (value) => {
+    const onChange = async(value) => {
         dispatch(setCategoryFilterState({...categoryFilterState, category_id: value}));
         setSelectedId(value);
-        getDocument(value);
+        await getDocument(value);
     }
 
     return (

@@ -1,4 +1,10 @@
 "use client";
+import axios from "axios";
+import { useTranslations } from 'next-intl';
+import Lottie from 'react-lottie';
+import { useState, useEffect, useRef } from "react";
+import dynamic from 'next/dynamic';
+
 import Card from "@/app/component/cartItem";
 import CardLoading from "@/app/component/cardLoading";
 import React from "react";
@@ -10,14 +16,8 @@ import {
     PaginationPrevious,
     PaginationNext
 } from "@/components/ui/pagination";
-import { Skeleton } from "@/components/ui/skeleton";
-import axios from "axios";
-import { useState, useEffect, useRef } from "react";
 import { urlAPI } from "../../../lib/constant";
-import { useTranslations } from 'next-intl';
-import Lottie from 'react-lottie';
 import * as searchNotFound from '../../../lottie/search-not-found.json';
-
 import FilterComponent from "../FilterComponent";
 import { setCategoryFilterState, setPaginationState, setDocumentdata, setDocumentConfig, setEmpatyState } from "../../store/reducer/categoryFilterSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
@@ -41,13 +41,13 @@ const ResultShow = ({ QureyParams }) => {
     const t2 = useTranslations('Global');
     const hasFetchedData = useRef(false);
 
-    const getDocument = async (val) => {
+    const getDocument = async (categroy_id, query) => {
         if (categoryFilterState && categoryFilterState.category_id == '') {
-            dispatch(setCategoryFilterState({ ...categoryFilterState, category_id: val ? val : '', q: QureyParams != '' ? QureyParams : '' }));
+            dispatch(setCategoryFilterState({ ...categoryFilterState, category_id: categroy_id ? categroy_id : '', q: query ?? '' }));
         }
 
         await setTimeout(() => {
-            axios.get(`${urlAPI}backend/documents?q=${QureyParams}&cursor=${categoryFilterState && categoryFilterState.cursor ? categoryFilterState.cursor : ''}&perPage=${categoryFilterState && categoryFilterState.perPage ? categoryFilterState.perPage : ''}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${val ? val : ''}`, {
+            axios.get(`${urlAPI}backend/documents?q=${query??''}&cursor=${categoryFilterState && categoryFilterState.cursor ? categoryFilterState.cursor : ''}&perPage=${categoryFilterState && categoryFilterState.perPage ? categoryFilterState.perPage : ''}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${categroy_id ??''}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",
@@ -149,33 +149,37 @@ const ResultShow = ({ QureyParams }) => {
     useEffect(() => {
         if (!hasFetchedData.current) {
             dispatch(setCategoryFilterState({ ...categoryFilterState, q: QureyParams != '' ? QureyParams : '' }));
-            getDocument();
+            getDocument('', QureyParams ?? '');
             getCategory();
             hasFetchedData.current = true;
         }
     }, []);
-    console.log(optionsDocument && optionsDocument);
     return (
         <>
             <div className="screen-layer">
+                {/* <div className="search-container">
+                    <HomeSearch
+                        getDocument={(val) => getDocument(null, val)}
+                    />
+                </div> */}
                 {
-                    <>
-                        <FilterComponent
-                            getDocument={(val) => getDocument(val)}
-                            DataFetchCategory={dataFetchCategory}
-                            isLoading={isLoadingSelectCategory}
-                        />
-                        {
-                            !empatyState &&
-                            <div className="result-word">
-                                {
-                                    !isLoading && optionsDocument ?
-                                        <p>{optionsDocument.from}-{optionsDocument.to} of {optionsDocument.total} {t('results')}</p> :
-                                        <Skeleton className={"w-[180px] h-[20px]"} />
-                                }
-                            </div>
-                        }
-                    </>
+                    // <>
+                    //     <FilterComponent
+                    //         getDocument={(val) => getDocument(val, null)}
+                    //         DataFetchCategory={dataFetchCategory}
+                    //         isLoading={isLoadingSelectCategory}
+                    //     />
+                    //     {
+                    //         !empatyState &&
+                    //         <div className="result-word">
+                    //             {
+                    //                 !isLoading && optionsDocument ?
+                    //                     <p>{optionsDocument.from}-{optionsDocument.to} of {optionsDocument.total} {t('results')}</p> :
+                    //                     <Skeleton className={"w-[180px] h-[20px]"} />
+                    //             }
+                    //         </div>
+                    //     }
+                    // </>
                 }
                 {
                     empatyState &&
