@@ -296,6 +296,18 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
     }
 }
 
+.ant-modal-root  {
+    .ant-modal-close {
+        @apply hidden;
+    }
+    .ant-modal-header {
+        @apply hidden;
+    }
+    .ant-modal-footer {
+        @apply hidden;
+    }
+}
+
 @import './component/header.scss';
 @import './component/button.scss';
 @import './component/search.scss';

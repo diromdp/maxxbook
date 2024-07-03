@@ -27,6 +27,12 @@ const UploadDocument = () => {
             }
         }
     }
+
+    const onChangeTabs = () => {
+        if(tabFormDocument == 1) {
+            dispatch(setTabFormatDocument(0))
+        }
+    }
     
     useEffect(() => {
         if (!hasFetchedData.current) {
@@ -41,6 +47,7 @@ const UploadDocument = () => {
                     <div className="px-[16px] lg:px-0">
                         <Steps
                             current={tabFormDocument}
+                            onChange={onChangeTabs}
                             size="small"
                             items={[
                                 {
@@ -53,7 +60,8 @@ const UploadDocument = () => {
                                 },
                                 {
                                     title: t('Upload Finished'),
-                                    icon: <CircleCheckBig />
+                                    icon: <CircleCheckBig />,
+                                    disabled: true,
                                 }
                             ]}
                         />

@@ -248,28 +248,19 @@ const FormUploadDOcument = () => {
                             />
                             <FormField
                                 control={form.control}
-                                name="description"
+                                name="description_seo"
                                 render={({ field }) => (
-                                    <div className="pt-[16px] form-item">
-                                        <FormLabel>{t('Description')}</FormLabel>
-                                        <div className="border border-slate-700 rounded-[8px]">
-                                            <Toolbar
-                                                editor={editor}
-                                                defaultConfig={toolbarConfig}
-                                                mode="default"
-                                                className="border-b mt-[5px] border-slate-700 rounded-tl-[10px] rounded-tr-[8px] "
+                                    <div className="form-item mt-[16px]">
+                                        <FormLabel>{t('Title Description')}</FormLabel>
+                                        <FormItem>
+                                            <TextArea
+                                                className="!min-h-[200px]"
+                                                rows={5}
+                                                {...field}
                                             />
-                                            <Editor
-                                                defaultConfig={editorConfig}
-                                                value={html}
-                                                onCreated={setEditor}
-                                                onChange={editor => setHtml(editor.getHtml())}
-                                                mode="default"
-                                                className="mb-[5px]"
-                                                style={{ height: '500px', overflowY: 'hidden' }}
-                                            />
-                                        </div>
+                                        </FormItem>
                                     </div>
+
                                 )}
                             />
                             <FormField
@@ -315,41 +306,7 @@ const FormUploadDOcument = () => {
                                         </FormItem>
                                     </div>
                                 )}
-                            />
-                            <Separator className="my-[32px]" />
-                            <FormField
-                                control={form.control}
-                                name="title_seo"
-                                render={({ field }) => (
-                                    <div className="form-item">
-                                        <FormLabel>{t('Title Page SEO')}</FormLabel>
-                                        <FormItem>
-                                            <Input
-                                                placeholder={t('Title Page SEO')}
-                                                {...field}
-                                            />
-                                        </FormItem>
-                                    </div>
-
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="description_seo"
-                                render={({ field }) => (
-                                    <div className="form-item mt-[16px]">
-                                        <FormLabel>{t('Title Description SEO')}</FormLabel>
-                                        <FormItem>
-                                            <TextArea
-                                                className="!min-h-[200px]"
-                                                rows={5}
-                                                {...field}
-                                            />
-                                        </FormItem>
-                                    </div>
-
-                                )}
-                            />
+                            />                            
                             <div className="flex items-center gap-[16px]">
                                 <Button className="mt-[32px] w-[150px] bg-blue-700 hover:bg-blue-800" type="submit">{t('Submit')}</Button>
                             </div>

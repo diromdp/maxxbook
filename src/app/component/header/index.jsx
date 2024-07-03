@@ -3,6 +3,7 @@ import { useEffect, useTransition, useCallback, useState } from 'react';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import {
     Avatar,
@@ -44,6 +45,8 @@ const Header = ({ locale }) => {
     // const t = useTranslations("userLogins");
     const router = useRouter();
     const localActive = useLocale();
+    const pathname = usePathname();
+    const isHome = pathname === `/${localActive}` || pathname === `/${localActive}/`;
     const t = useTranslations("Global");
 
     const onSelectChange = (e) => {
@@ -95,9 +98,9 @@ const Header = ({ locale }) => {
                     <Link href={`/${locale}/`} className="header-logo">
                         <span className={`text-[20px] lg:text-[28px] xl:text-[40px] select-none font-league_spartan font-[700] outline-0`}>Maxibook.</span>
                     </Link>
-                    <div className="header-search">
-                        <HeaderSearch/>
-                    </div>
+                    {
+                        !isHome && <HeaderSearch />
+                    }
                     <div className="header-login">
                         <label className='label'>
                             <p className='sr-only'>{t('Change Language')}</p>
@@ -108,12 +111,12 @@ const Header = ({ locale }) => {
                                 disabled={isPending}
                             >
                                 <option value='en'>English</option>
-                                <option value='id'>Indonesian</option>
+                                <option value='id'>Indonesia</option>
                             </select>
                         </label>
                         {
                             getToken.access_token == '' || getToken.access_token == null ?
-                                <Link href={"/login"} className="btn-primary text-[18px] h-[40px]">Sign In <div className="animation"></div></Link> :
+                                <Link href={"/login"} className="btn-primary text-[18px] w-[84px] h-[40px]">Sign In <div className="animation"></div></Link> :
                                 <>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
