@@ -12,11 +12,8 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef } from "react";
-import { Editor, Toolbar } from '@wangeditor/editor-for-react';
-import { i18nChangeLanguage } from '@wangeditor/editor'
 import axios from "axios";
 import { urlAPI } from "../../../lib/constant";
-import { Separator } from "@/components/ui/separator";
 import { useLocale } from "next-intl";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setTabFormatDocument, setDocumentUpload } from "../../store/reducer/categoryFilterSlice";
@@ -31,7 +28,6 @@ import {
     notification
 } from 'antd';
 
-i18nChangeLanguage('en')
 const { TextArea } = Input;
 
 
@@ -65,11 +61,10 @@ const FormUploadDOcument = () => {
     const filterOption = (input, option) =>
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
     const formSchema = z.object({
-        title: z.string().min(2, 'Title document is required'),
+        title: z.string().min(10, 'Title minumum 10 characters').max(70, 'Title maximal 70 characters'),
         category: z.string().nonempty({ message: 'Categories are required' }),
         subcategory: z.string().optional(),
-        title_seo: z.string().min(2, 'Title Seo document is required'),
-        description_seo: z.string().min(2, 'Description Seo document is required'),
+        description_seo: z.string().min(160, 'Description document minimum Characters is 160').max(300, 'Description document maximum Characters is 300'),
     });
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -77,7 +72,6 @@ const FormUploadDOcument = () => {
             title: "",
             category: "",
             subcategory: "",
-            title_seo: "",
             description_seo: "",
         },
     });
@@ -87,8 +81,8 @@ const FormUploadDOcument = () => {
             "id": null,
             "slug": null,
             "title": values.title,
-            "description": html,
-            "title_seo": values.title_seo,
+            "description": values.description_seo,
+            "title_seo": values.title,
             "description_seo": values.description_seo,
             "category_id": idCategory,
             "sub_category_id": values.subcategory,
@@ -238,12 +232,12 @@ const FormUploadDOcument = () => {
                                         <FormItem>
                                             <Input
                                                 placeholder={t('Title Document')}
+                                                maxLength={71}
                                                 {...field}
                                             />
                                             <FormMessage />
                                         </FormItem>
                                     </div>
-
                                 )}
                             />
                             <FormField
@@ -255,12 +249,12 @@ const FormUploadDOcument = () => {
                                         <FormItem>
                                             <TextArea
                                                 className="!min-h-[200px]"
+                                                maxLength={300}
                                                 rows={5}
                                                 {...field}
                                             />
                                         </FormItem>
                                     </div>
-
                                 )}
                             />
                             <FormField

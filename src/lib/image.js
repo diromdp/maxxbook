@@ -1,0 +1,1 @@
+export const MetaImageDefault = '/public/image/maxibook.png';

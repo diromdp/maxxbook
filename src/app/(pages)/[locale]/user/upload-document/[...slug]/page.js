@@ -1,4 +1,5 @@
 "use client";
+import { useDebounce } from "@uidotdev/usehooks";
 import {
     Form,
     FormField,
@@ -21,15 +22,14 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef } from "react";
-import { Editor, Toolbar } from '@wangeditor/editor-for-react';
 import { i18nChangeLanguage } from '@wangeditor/editor';
 import axios from "axios";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { Separator } from "@/components/ui/separator";
 import { urlAPI } from "../../../../../../lib/constant";
 import { useAppSelector, useAppDispatch } from "../../../../../store";
 import { setUploadId } from "../../../../../store/reducer/categoryFilterSlice";
+
 
 i18nChangeLanguage('en')
 const { TextArea } = Input;
@@ -37,8 +37,6 @@ const { TextArea } = Input;
 const EditUploadFile = ({ params }) => {
     const dispatch = useAppDispatch();
     const { slug } = params;
-    const [editor, setEditor] = useState(null);
-    const [html, setHtml] = useState('');
     const [categories, setCategories] = useState([]);
     const [idCategory, setIdCategory] = useState();
     const [subCategories, setSubCategories] = useState([]);
@@ -68,11 +66,10 @@ const EditUploadFile = ({ params }) => {
     const filterOption = (input, option) =>
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
     const formSchema = z.object({
-        title: z.string().min(2, 'Title document is required'),
+        title: z.string().min(10, 'Title minumum 10 characters').max(70, 'Title maximal 70 characters'),
         category: z.string().optional(),
         subcategory: z.string().optional(),
-        title_seo: z.string().min(2, 'Title Seo document is required'),
-        description_seo: z.string().min(2, 'Description Seo document is required'),
+        description_seo: z.string().min(160, 'Description document minimum Characters is 160').max(300, 'Description document maximum Characters is 300'),
     });
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -80,7 +77,6 @@ const EditUploadFile = ({ params }) => {
             title: "",
             category: "",
             subcategory: "",
-            title_seo: "",
             description_seo: "",
         },
     });
@@ -128,8 +124,8 @@ const EditUploadFile = ({ params }) => {
             "id": documentOwn && documentOwn.id,
             "slug": documentOwn && documentOwn.slug,
             "title": values.title,
-            "description": html,
-            "title_seo": values.title_seo,
+            "description": values.description_seo,
+            "title_seo": values.title,
             "description_seo": values.description_seo,
             "category_id": idCategory ? idCategory : documentOwn.category_id,
             "sub_category_id": values.subcategory ? values.subcategory : documentOwn.sub_category_id,
@@ -149,7 +145,7 @@ const EditUploadFile = ({ params }) => {
                         message: "Successfully Created Document",
                         description: "Congratulations you have successfully created a new Document"
                     })
-                    router.push('/${locale}/user/document-own', undefined, { shallow: true })
+                    router.push(`/${locale}/user/document-own`, undefined, { shallow: true })
                 }
             })
             .catch(function (error) {
@@ -219,7 +215,8 @@ const EditUploadFile = ({ params }) => {
                     dataJson.map((item) => {
                         const items = {
                             value: item.slug,
-                            label: item.name
+                            label: item.name,
+                            id: item.id
                         }
                         extractData.push(items);
                     })
@@ -253,14 +250,23 @@ const EditUploadFile = ({ params }) => {
                     const dataJson = data.data;
                     setLoading(false);
                     setDocumentOwn(dataJson);
-                    form.setValue("title", dataJson && dataJson.title);
-                    form.setValue("title_seo", dataJson && dataJson.title_seo);
-                    form.setValue("description_seo", dataJson && dataJson.description_seo);
-                    setHtml(dataJson && dataJson.description)
                     if (dataJson && dataJson.category_id) {
                         setDisabled(false);
                         getSubCategories(dataJson && dataJson.category_id);
                     }
+                    console.log('masuk');
+                    console.log(categories &&  categories)
+
+                    if(categories) {
+                        const filterCategory = categories.filter(item => item.id === dataJson.category_id);
+                        console.log(filterCategory);
+                    }
+                    setTimeout(() => {
+                        form.setValue("title", dataJson && dataJson.title);
+                        form.setValue("title_seo", dataJson && dataJson.title_seo);
+                        form.setValue("description_seo", dataJson && dataJson.description_seo);
+                        form.setValue("category", dataJson && dataJson.category_id); 
+                    }, 250);
                 }
             })
             .catch(function (error) {
@@ -278,20 +284,18 @@ const EditUploadFile = ({ params }) => {
     }
 
     useEffect(() => {
+
+        const fetchData = async () => {
+            await getCategories();
+            await getDetailDocumentOwn();
+
+
+        }
         if (!hasFetchedData.current) {
-            getDetailDocumentOwn();
-            getCategories();
+            fetchData();
             hasFetchedData.current = true;
         }
     }, [])
-    useEffect(() => {
-        return () => {
-            if (editor == null) return
-            editor.destroy()
-            setEditor(null)
-        }
-    }, [editor])
-
     return (
         <>
             <div className="upload-document--form">
@@ -320,30 +324,23 @@ const EditUploadFile = ({ params }) => {
 
                                                 )}
                                             />
+
                                             <FormField
                                                 control={form.control}
-                                                name="description"
+                                                name="description_seo"
                                                 render={({ field }) => (
-                                                    <div className="pt-[16px] form-item">
-                                                        <FormLabel>{t('Description')}</FormLabel>
-                                                        <div className="border border-slate-700 rounded-[8px]">
-                                                            <Toolbar
-                                                                editor={editor}
-                                                                defaultConfig={toolbarConfig}
-                                                                mode="default"
-                                                                className="border-b mt-[5px] border-slate-700 rounded-tl-[10px] rounded-tr-[8px] "
+                                                    <div className="form-item mt-[16px]">
+                                                        <FormLabel>{t('Title Description SEO')}</FormLabel>
+                                                        <FormItem>
+                                                            <TextArea
+                                                                className="!min-h-[200px]"
+                                                                rows={5}
+                                                                {...field}
                                                             />
-                                                            <Editor
-                                                                defaultConfig={editorConfig}
-                                                                value={html}
-                                                                onCreated={setEditor}
-                                                                onChange={editor => setHtml(editor.getHtml())}
-                                                                mode="default"
-                                                                className="mb-[5px]"
-                                                                style={{ height: '500px', overflowY: 'hidden' }}
-                                                            />
-                                                        </div>
+                                                            <FormMessage />
+                                                        </FormItem>
                                                     </div>
+
                                                 )}
                                             />
                                             <FormField
@@ -358,6 +355,8 @@ const EditUploadFile = ({ params }) => {
                                                                 placeholder={t('Select a category')}
                                                                 optionFilterProp="children"
                                                                 onSelect={onChange}
+                                                                defaultValue={field.value}
+                                                                defaultActiveFirstOption
                                                                 filterOption={filterOption}
                                                                 options={categories}
                                                                 className="form-select"
@@ -371,60 +370,29 @@ const EditUploadFile = ({ params }) => {
                                             <FormField
                                                 control={form.control}
                                                 name="subcategory"
-                                                render={({ field }) => (
-                                                    <div className="pt-[16px] form-item">
-                                                        <FormLabel>{t('Sub Category')}</FormLabel>
-                                                        <FormItem>
-                                                            <Select
-                                                                showSearch
-                                                                placeholder={t('Select a sub category')}
-                                                                optionFilterProp="children"
-                                                                filterOption={filterOption}
-                                                                disabled={disabled}
-                                                                options={subCategories}
-                                                                className="form-select"
-                                                                {...field}
-                                                            />
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    </div>
-                                                )}
+                                                render={({ field }) => {
+                                                    return (
+                                                        <div className="pt-[16px] form-item">
+                                                            <FormLabel>{t('Sub Category')}</FormLabel>
+                                                            <FormItem>
+                                                                <Select
+                                                                    showSearch
+                                                                    placeholder={t('Select a sub category')}
+                                                                    optionFilterProp="children"
+                                                                    filterOption={filterOption}
+                                                                    disabled={disabled}
+                                                                    defaultValue={field.value}
+                                                                    defaultActiveFirstOption
+                                                                    options={subCategories}
+                                                                    className="form-select"
+                                                                    {...field}
+                                                                />
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        </div>
+                                                    )
+                                                }}
                                             />
-                                            <Separator className="my-[32px]" />
-                                            <FormField
-                                                control={form.control}
-                                                name="title_seo"
-                                                render={({ field }) => (
-                                                    <div className="form-item">
-                                                        <FormLabel>{t('Title Page SEO')}</FormLabel>
-                                                        <FormItem>
-                                                            <Input
-                                                                placeholder={t('Title Page SEO')}
-                                                                {...field}
-                                                            />
-                                                        </FormItem>
-                                                    </div>
-
-                                                )}
-                                            />
-                                            <FormField
-                                                control={form.control}
-                                                name="description_seo"
-                                                render={({ field }) => (
-                                                    <div className="form-item mt-[16px]">
-                                                        <FormLabel>{t('Title Description SEO')}</FormLabel>
-                                                        <FormItem>
-                                                            <TextArea
-                                                                className="!min-h-[200px]"
-                                                                rows={5}
-                                                                {...field}
-                                                            />
-                                                        </FormItem>
-                                                    </div>
-
-                                                )}
-                                            />
-
                                             <div className="mt-[32px] flex flex-col gap-[32px]">
                                                 <Upload {...props}>
                                                     <Button type="button" icon={<Upload />}>{t('Click to Upload')}</Button>
