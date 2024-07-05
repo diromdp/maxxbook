@@ -80,27 +80,19 @@ const AddPages = () => {
         api.error({ message: "Upload Failed", description: val.message });
     }
     const formSchema = z.object({
-        title: z.string().min(2, {
-            message: "Title must be at least 2 characters.",
-        }),
-        title_seo: z.string().min(2, {
-            message: "Title must be at least 2 characters.",
-        }),
-        description: z.string().min(6, {
-            message: "Description must be at least 6 characters.",
-        }),
-        category_id: z.string().trim().nonempty({ message: "Category is required" }),
-        sub_category_id: z.string().trim().nonempty({ message: "Category is required" })
+        title: z.string().min(10, 'Title minumum 10 characters').max(70, 'Title maximal 70 characters'),
+        description_seo: z.string().min(160, 'Description document minimum Characters is 160').max(300, 'Description document maximum Characters is 300'),
+        category: z.string().nonempty({ message: 'Categories are required' }),
+        subcategory: z.string().optional(),
     });
 
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: "",
-            title_seo: "",
-            description: "",
-            category_id: "",
-            sub_category_id: "",
+            category: "",
+            subcategory: "",
+            description_seo: "",
         },
     });
 
@@ -108,11 +100,11 @@ const AddPages = () => {
         let formData = {
             id: idCategory,
             title: values.title,
-            title_seo: values.title_seo,
-            description: htmlEditor,
+            title_seo: values.title,
+            description: values.description,
             description_seo: values.description,
-            category_id: values.category_id,
-            sub_category_id: values.sub_category_id,
+            category_id: values.category,
+            sub_category_id: values.subcategory,
             upload_id: uploadId,
             lang: 'id'
         }
@@ -283,22 +275,10 @@ const AddPages = () => {
                                             </FormItem>
                                         )}
                                     />
+                                  
                                     <FormField
                                         control={form.control}
-                                        name="title_seo"
-                                        render={({ field }) => (
-                                            <FormItem className="mb-[8px]">
-                                                <FormLabel>Title SEO</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="Title Document SEO" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="description"
+                                        name="description_seo"
                                         render={({ field }) => (
                                             <FormItem className="mb-[8px]">
                                                 <FormLabel>Description SEO</FormLabel>
@@ -309,23 +289,9 @@ const AddPages = () => {
                                             </FormItem>
                                         )}
                                     />
-                                    <div className="">
-                                        <FormLabel>Description SEO</FormLabel>
-                                        <div className="border border-input rounded-[8px] mt-[8px]">
-                                            <JoditEditor
-                                                ref={editor}
-                                                className="rounded-[8px]"
-                                                value={htmlEditor ? htmlEditor : ''}
-                                                config={config}
-                                                tabIndex={1} // tabIndex of textarea
-                                                onBlur={(newContent) => setHtmlEditor(newContent)} // preferred to use only this option to update the content for performance reasons
-                                            />
-                                        </div>
-                                    </div>
-
                                     <FormField
                                         control={form.control}
-                                        name="category_id"
+                                        name="category"
                                         render={({ field }) => (
                                             <FormItem className="mb-[8px]">
                                                 <FormLabel>Select Category</FormLabel>
@@ -353,7 +319,7 @@ const AddPages = () => {
                                     />
                                     <FormField
                                         control={form.control}
-                                        name="sub_category_id"
+                                        name="subcategory"
                                         render={({ field }) => (
                                             <FormItem className="mb-[8px]">
                                                 <FormLabel>Select Sub Category</FormLabel>

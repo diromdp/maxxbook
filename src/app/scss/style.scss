@@ -220,6 +220,16 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
             line-height: 20px;
         }
 
+        div {
+            @apply font-roboto font-[500] text-[0.8rem] 2xl:text-[1rem] text-[#596280];
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            font-style: normal;
+            line-height: 20px;
+        }
+
         p {
             @apply font-roboto font-[500] text-[0.8rem] 2xl:text-[1rem] text-[#596280];
             display: -webkit-box;

@@ -59,9 +59,6 @@ const EditUploadFile = ({ params }) => {
         'group-image',
         'group-video'
     ]
-    const editorConfig = {
-        placeholder: 'Type here...',
-    }
 
     const filterOption = (input, option) =>
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
@@ -265,7 +262,9 @@ const EditUploadFile = ({ params }) => {
                         form.setValue("title", dataJson && dataJson.title);
                         form.setValue("title_seo", dataJson && dataJson.title_seo);
                         form.setValue("description_seo", dataJson && dataJson.description_seo);
-                        form.setValue("category", dataJson && dataJson.category_id); 
+                        form.setValue("category", dataJson && dataJson.category.name); 
+                        form.setValue("subcategory", dataJson && dataJson.sub_category.name); 
+
                     }, 250);
                 }
             })

@@ -35,7 +35,6 @@ const FormUploadDOcument = () => {
     const dispatch = useAppDispatch();
     const [api] = notification.useNotification();
     const [editor, setEditor] = useState(null);
-    const [html, setHtml] = useState('');
     const [categories, setCategories] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
     const [idCategory, setIdCategory] = useState();
@@ -171,7 +170,6 @@ const FormUploadDOcument = () => {
             .then((data) => {
                 if (data.status === 200) {
                     const dataJson = data.data;
-                    console.log(dataJson);
                     let extractData = []
                     dataJson.map((item) => {
                         const items = {

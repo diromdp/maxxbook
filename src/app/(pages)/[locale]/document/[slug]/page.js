@@ -13,7 +13,7 @@ const DocumentDesc = dynamic(() => import('../../../../component/documentDesc'),
 })
 
 async function getData() {
-    const data = await fetch(`${urlAPI}backend/documents?perPage=${10}&sortBy=${'id'}&sortDirection=${'desc'}&is_random=${1}`, {
+    const data = await fetch(`${urlAPI}backend/documents?perPage=${10}&is_random=${1}&sortBy=title&sortDirection=asc`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -21,9 +21,6 @@ async function getData() {
         },
     });
 
-    if (!data.ok) {
-        throw new Error('Failed to fetch data')
-    }
     return data.json()
 }
 
@@ -122,7 +119,7 @@ export default async function documentPage({ params }) {
                                                     </div>
                                                     <div className="title-document">
                                                         <h4>{item.title}</h4>
-                                                        <span className="people-name">{item.user && item.user.name}</span>
+                                                        <span className="people-name">{item.user.name ?? 'Admin'}</span>
                                                     </div>
                                                 </div>
                                             </Link>
