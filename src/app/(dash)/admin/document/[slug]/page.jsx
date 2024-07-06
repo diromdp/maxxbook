@@ -109,9 +109,9 @@ const EditPages = () => {
         let formData = {
             id: searchParams.get('id'),
             title: values.title,
-            title_seo: values.title_seo,
+            title_seo: values.title,
             description: values.description,
-            description_seo: htmlEditor,
+            description_seo: values.description,
             category_id: values.category_id,
             sub_category_id: values.sub_category_id,
             upload_id: uploadId ? uploadId : searchParams.get('upload_id') ? searchParams.get('upload_id') : null,
@@ -314,21 +314,6 @@ const EditPages = () => {
                                             </FormItem>
                                         )}
                                     />
-
-                                    <FormField
-                                        control={form.control}
-                                        name="title_seo"
-                                        render={({ field }) => (
-                                            <FormItem className="mb-[8px]">
-                                                <FormLabel>Title SEO</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="Title Document SEO" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-
                                     <FormField
                                         control={form.control}
                                         name="description"
@@ -342,19 +327,6 @@ const EditPages = () => {
                                             </FormItem>
                                         )}
                                     />
-                                    <div className="">
-                                        <FormLabel>Description SEO</FormLabel>
-                                        <div className="border border-input rounded-[8px] mt-[8px]">
-                                            <JoditEditor
-                                                ref={editor}
-                                                className="rounded-[8px]"
-                                                value={htmlEditor ? htmlEditor : ''}
-                                                config={config}
-                                                tabIndex={1} // tabIndex of textarea
-                                                onBlur={(newContent) => setHtmlEditor(newContent)} // preferred to use only this option to update the content for performance reasons
-                                            />
-                                        </div>
-                                    </div>
                                     <FormField
                                         control={form.control}
                                         name="category_id"

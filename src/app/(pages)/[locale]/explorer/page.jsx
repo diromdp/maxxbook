@@ -13,7 +13,7 @@ import imgBanner2 from "@/app/assets/images/img-banner-2.svg";
 
 
 async function getData() {
-    const data = await fetch(`${urlAPI}backend/documents?perPage=${10}&sortBy=${'id'}&sortDirection=${'desc'}&is_random=${1}`, {
+    const data = await fetch(`${urlAPI}backend/documents?perPage=${20}&sortBy=${'id'}&sortDirection=${'desc'}&is_random=${1}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

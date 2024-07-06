@@ -59,7 +59,6 @@ const EditUploadFile = ({ params }) => {
         'group-image',
         'group-video'
     ]
-
     const filterOption = (input, option) =>
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
     const formSchema = z.object({
@@ -251,8 +250,6 @@ const EditUploadFile = ({ params }) => {
                         setDisabled(false);
                         getSubCategories(dataJson && dataJson.category_id);
                     }
-                    console.log('masuk');
-                    console.log(categories &&  categories)
 
                     if(categories) {
                         const filterCategory = categories.filter(item => item.id === dataJson.category_id);
@@ -262,9 +259,8 @@ const EditUploadFile = ({ params }) => {
                         form.setValue("title", dataJson && dataJson.title);
                         form.setValue("title_seo", dataJson && dataJson.title_seo);
                         form.setValue("description_seo", dataJson && dataJson.description_seo);
-                        form.setValue("category", dataJson && dataJson.category.name); 
-                        form.setValue("subcategory", dataJson && dataJson.sub_category.name); 
-
+                        form.setValue("category", dataJson && dataJson.category && dataJson.category.name ); 
+                        form.setValue("subcategory", dataJson && dataJson.sub_category && dataJson.sub_category.name); 
                     }, 250);
                 }
             })

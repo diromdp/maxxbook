@@ -169,7 +169,7 @@
     @apply mb-[16px];
 }
 .look-user-detail {
-    @apply pt-[90px] pb-[32px];
+    @apply pt-[70px] xl:pt-[90px] pb-[32px];
     .user-info {
         @apply flex flex-row gap-[24px] items-center;
         .circle {

@@ -106,7 +106,7 @@ const LookUserDetail = ({ params }) => {
     return (
         <>
             <div className="look-user-detail">
-                <div className="bg-sky-700 py-[50px] min-h-[130px]">
+                <div className="bg-sky-700 py-[50px] min-h-[130px] px-[16px] lg:px-0">
                     <div className="screen-layer user-info">
                         <div className="circle">
                             {getUserUploadInfo && getInitials(getUserUploadInfo.name)}

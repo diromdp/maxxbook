@@ -251,6 +251,7 @@ const FormUploadDOcument = () => {
                                                 rows={5}
                                                 {...field}
                                             />
+                                            <FormMessage />
                                         </FormItem>
                                     </div>
                                 )}
@@ -298,7 +299,7 @@ const FormUploadDOcument = () => {
                                         </FormItem>
                                     </div>
                                 )}
-                            />                            
+                            />
                             <div className="flex items-center gap-[16px]">
                                 <Button className="mt-[32px] w-[150px] bg-blue-700 hover:bg-blue-800" type="submit">{t('Submit')}</Button>
                             </div>

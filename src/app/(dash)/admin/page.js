@@ -49,6 +49,7 @@ const AdmninDashboard = () => {
     useEffect(() => {
         getDataDashboard();
     }, [])
+    console.log(data && data);
     return (
         <div className="admin-home">
             <div className="content-item">

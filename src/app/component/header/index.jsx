@@ -110,8 +110,8 @@ const Header = ({ locale }) => {
                                 onChange={onSelectChange}
                                 disabled={isPending}
                             >
-                                <option value='en'>English</option>
-                                <option value='id'>Indonesia</option>
+                                <option value='en'>EN</option>
+                                <option value='id'>ID</option>
                             </select>
                         </label>
                         {
