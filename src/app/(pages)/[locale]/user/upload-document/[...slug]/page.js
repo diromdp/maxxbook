@@ -1,5 +1,4 @@
 "use client";
-import { useDebounce } from "@uidotdev/usehooks";
 import {
     Form,
     FormField,
@@ -29,6 +28,8 @@ import { useRouter } from "next/navigation";
 import { urlAPI } from "../../../../../../lib/constant";
 import { useAppSelector, useAppDispatch } from "../../../../../store";
 import { setUploadId } from "../../../../../store/reducer/categoryFilterSlice";
+import { setAuthSlice } from "../../../../../store/reducer/authSlice";
+
 
 
 i18nChangeLanguage('en')
@@ -59,6 +60,10 @@ const EditUploadFile = ({ params }) => {
         'group-image',
         'group-video'
     ]
+    const logoutUser = () => {
+        dispatch(setAuthSlice({ ...getToken, access_token: null, expires_at: null }))
+        router.push('/');
+    }
     const filterOption = (input, option) =>
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
     const formSchema = z.object({
@@ -146,6 +151,9 @@ const EditUploadFile = ({ params }) => {
             })
             .catch(function (error) {
                 if (error.response) {
+                    if(error.response.status === 401) {
+                        logoutUser();
+                    }
                     api.error({
                         message: "Error Submitted Document",
                         description: error.response.data.message
@@ -186,6 +194,9 @@ const EditUploadFile = ({ params }) => {
             })
             .catch(function (error) {
                 if (error.response) {
+                    if(error.response.status === 401) {
+                        logoutUser();
+                    }
                     console.log(error.response.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
@@ -221,6 +232,9 @@ const EditUploadFile = ({ params }) => {
             })
             .catch(function (error) {
                 if (error.response) {
+                    if(error.response.status === 401) {
+                        logoutUser();
+                    }
                     console.log(error.response.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
@@ -266,6 +280,9 @@ const EditUploadFile = ({ params }) => {
             })
             .catch(function (error) {
                 if (error.response) {
+                    if(error.response.status === 401) {
+                        logoutUser();
+                    }
                     console.log(error.response.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);

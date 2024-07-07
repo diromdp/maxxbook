@@ -23,12 +23,15 @@ import { useLocale } from "next-intl";
 import { Empty } from 'antd';
 import { useRouter } from "next/navigation";
 import { urlAPI } from "../../../../../lib/constant";
-import { useAppSelector } from "../../../../store";
+import { setAuthSlice } from "../../../../store/reducer/authSlice";
+
+import { useAppSelector, useAppDispatch } from "../../../../store";
 
 
 dayjs.extend(localeData);
 dayjs.locale('id');
 const DocumentOwn = () => {
+    const dispatch = useAppDispatch();
     const [listDocument, setLisDocument] = useState([]);
     const [dataPagination, setDataPagination] = useState([]);
     const [isLoading, setLoading] = useState(true);
@@ -44,6 +47,11 @@ const DocumentOwn = () => {
     const token = getToken.access_token;
     const locale = useLocale();
     const router = useRouter();
+
+    const logoutUser = () => {
+        dispatch(setAuthSlice({ ...getToken, access_token: null, expires_at: null }))
+        router.push('/');
+    }
     
     const getData = async () => {
         await axios.get(`${urlAPI}backend/customer/documents/own?cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}`, {
@@ -63,6 +71,9 @@ const DocumentOwn = () => {
             })
             .catch(function (error) {
                 if (error.response) {
+                    if(error.response.status === 401) {
+                        logoutUser();
+                    }
                     console.log(error.response.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
@@ -98,6 +109,9 @@ const DocumentOwn = () => {
                 })
                 .catch(function (error) {
                     if (error.response) {
+                        if(error.response.status === 401) {
+                            logoutUser();
+                        }
                         console.log(error.response.data.data);
                         console.log(error.response.status);
                         console.log(error.response.headers);
@@ -127,6 +141,9 @@ const DocumentOwn = () => {
             })
             .catch(function (error) {
                 if (error.response) {
+                    if(error.response.status === 401) {
+                        logoutUser();
+                    }
                     console.log(error.response.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);

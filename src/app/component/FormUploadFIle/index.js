@@ -1,6 +1,8 @@
 "use client";
 import { Upload } from 'antd';
 import { CloudUpload } from 'lucide-react';
+import { notification } from 'antd';
+import { useTranslations, useLocale } from 'next-intl';
 import {
     Card,
     CardContent,
@@ -8,8 +10,7 @@ import {
 import { urlAPI } from "../../../lib/constant";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setUploadId, setTabFormatDocument} from '../../store/reducer/categoryFilterSlice';
-import { notification } from 'antd';
-import { useTranslations, useLocale } from 'next-intl';
+
 
 const { Dragger } = Upload;
 
@@ -21,6 +22,7 @@ const FormUploadFile = () => {
     const dispatch = useAppDispatch();
     const t = useTranslations('Global');
     const locale = useLocale();
+
 
     const props = {
         name: 'file',

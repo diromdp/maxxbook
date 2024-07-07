@@ -27,8 +27,11 @@ import {
 } from "@/components/ui/form";
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button";
+import { useRouter } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from "../../../../store";
 import { urlAPI } from "../../../../../lib/constant";
+import { setAuthSlice } from "../../../../store/reducer/authSlice";
+
 import { setAuthInfoSlice } from '../../../../store/reducer/authSlice';
 import { getInitials } from "../../../../../lib/utils";
 
@@ -43,6 +46,7 @@ const ProfileUser = () => {
     const getAuth = useAppSelector((state) => state.authUserStorage.authUser);
     const getInfoUser = useAppSelector((state) => state.authUserStorage.authInfoUser);
     const getToken = getAuth ? getAuth.access_token : null;
+    const router = useRouter();
     const t = useTranslations("User");
     const formSchema = z.object({
         password: z.string().min(8, 'Password must be at least 8 characters long')
@@ -56,6 +60,11 @@ const ProfileUser = () => {
         path: ['confirmPassword'],
         message: 'Passwords does not match'
     });
+
+    const logoutUser = () => {
+        dispatch(setAuthSlice({ ...getToken, access_token: null, expires_at: null }))
+        router.push('/');
+    }
 
     const openNotification = (val) => {
         api.info({
@@ -109,6 +118,9 @@ const ProfileUser = () => {
                 .catch(function (error) {
                     if (error.response) {
                         openNotification(error.response.data.message)
+                        if(error.response.status === 401) {
+                            logoutUser();
+                        }
                         console.log(error.response.data);
                         console.log(error.response.status);
                         console.log(error.response.headers);
@@ -140,7 +152,10 @@ const ProfileUser = () => {
             })
             .catch(function (error) {
                 if (error.response) {
-                    openNotification(error.response.data.message)
+                    openNotification(error.response.data.message);
+                    if(error.response.status === 401) {
+                        logoutUser();
+                    }
                     console.log(error.response.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
@@ -176,7 +191,10 @@ const ProfileUser = () => {
             })
             .catch(function (error) {
                 if (error.response) {
-                    openNotification(error.response.data.message)
+                    openNotification(error.response.data.message);
+                    if(error.response.status === 401) {
+                        logoutUser();
+                    }
                     console.log(error.response.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
@@ -207,11 +225,13 @@ const ProfileUser = () => {
                     dispatch(setAuthInfoSlice({...getInfoUser, avatar: dataJSOn}));
                     setIsLoading(false);
                     notificationUploadfile();
-                    
                 }
             })
             .catch(function (error) {
                 if (error.response) {
+                    if(error.response.status === 401) {
+                        logoutUser();
+                    }
                     console.log(error.response.data.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);

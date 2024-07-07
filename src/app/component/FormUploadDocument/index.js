@@ -15,8 +15,11 @@ import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { urlAPI } from "../../../lib/constant";
 import { useLocale } from "next-intl";
+import { useRouter } from 'next/navigation';
+
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setTabFormatDocument, setDocumentUpload } from "../../store/reducer/categoryFilterSlice";
+import { setAuthSlice } from "../../store/reducer/authSlice";
 import { useTranslations } from "next-intl";
 import {
     Card,
@@ -45,6 +48,7 @@ const FormUploadDOcument = () => {
     const t = useTranslations("Documents");
     const token = getToken.access_token;
     const toolbarConfig = {};
+    const router = useRouter();
     const locale = useLocale();
     toolbarConfig.excludeKeys = [
         'headerSelect',
@@ -53,8 +57,10 @@ const FormUploadDOcument = () => {
         'group-image',
         'group-video'
     ]
-    const editorConfig = {
-        placeholder: 'Type here...',
+
+    const logoutUser = () => {
+        dispatch(setAuthSlice({ ...getToken, access_token: null, expires_at: null }))
+        router.push('/');
     }
 
     const filterOption = (input, option) =>
@@ -108,6 +114,9 @@ const FormUploadDOcument = () => {
             })
             .catch(function (error) {
                 if (error.response) {
+                    if(error.response.status === 401) {
+                        logoutUser();
+                    }
                     api.error({
                         message: "Error Submitted Document",
                         description: error.response.data.message
@@ -133,7 +142,6 @@ const FormUploadDOcument = () => {
             .then((data) => {
                 if (data.status === 200) {
                     const dataJson = data.data;
-                    console.log(dataJson);
                     setIdCategory(dataJson[0].id);
                     let extractData = []
                     dataJson[0].sub_categories.map((item) => {
@@ -149,6 +157,9 @@ const FormUploadDOcument = () => {
             })
             .catch(function (error) {
                 if (error.response) {
+                    if(error.response.status === 401) {
+                        logoutUser();
+                    }
                     console.log(error.response.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
@@ -183,6 +194,9 @@ const FormUploadDOcument = () => {
             })
             .catch(function (error) {
                 if (error.response) {
+                    if(error.response.status === 401) {
+                        logoutUser();
+                    }
                     console.log(error.response.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
