@@ -119,7 +119,7 @@ export default async function documentPage({ params }) {
                                                     </div>
                                                     <div className="title-document">
                                                         <h4>{item.title}</h4>
-                                                        <span className="people-name">{item.user.name ?? 'Admin'}</span>
+                                                        <span className="people-name">{item.user && item.user.name ? item.user.name : 'Admin'}</span>
                                                     </div>
                                                 </div>
                                             </Link>
