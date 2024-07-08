@@ -20,30 +20,30 @@
             display: block;
             display: -webkit-box;
             overflow: hidden;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
-            font-size: 42px;
             line-height: 1em;
             max-height: 3em;
             line-height: normal;
-            max-height: 3.8em;
-            @apply font-[700];
+            max-height: 10.8em;
+            @apply font-[700] lg:text-[42px] text-[21px];
         }
     }
     .uploadBy {
         @apply mb-[16px];
         p {
-            @apply text-[#57617a] font-[400] text-[16px];
+            @apply text-[#57617a] font-[400] text-[14px] lg:text-[16px];
             a {
                 @apply font-[700] text-blue-700;
             }
         }
     }
     .content-description {
+        @apply text-[#000514] text-[14px] lg:text-[16px];
         font-family: "Roboto", sans-serif;
-        p {
-            @apply text-[#000514] text-[16px];
-            font-family: "Roboto", sans-serif;
+        div {
+            @apply text-[#000514] text-[14px] lg:text-[16px];
+            font-family: "Roboto", sans-serif;    
         }
         .info {
             @apply block text-[#000514] text-[16px] ;

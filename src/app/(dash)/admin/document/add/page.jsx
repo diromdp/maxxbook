@@ -41,23 +41,16 @@ const JoditEditor = dynamic(() => import("jodit-react"), {
 
 
 const AddPages = () => {
-    const editor = useRef(null);
     const [cookies] = useCookies(["token"])
     const [api, contextHolder] = notification.useNotification();
     const [idCategory, setIdCategory] = useState(null);
     const [getCategoryData, setGetCategoryData] = useState([]);
     const [getSubCategoryData, setSubCategoryData] = useState([]);
-    const [htmlEditor, setHtmlEditor] = useState();
     const [disabled, setDisabled] = useState(true);
     const [disabledUploadButton, setDisabledUploadButton] = useState(true);
     const [isloading, setIsLoading] = useState(false);
     const [uploadId, setUploadId] = useState(null);
     const router = useRouter();
-    const config = useMemo(
-        () => ({
-            readonly: false,
-        }),
-    );
     const openNotification = (val) => {
         api.info({
             message: 'Warning Information',
@@ -80,8 +73,8 @@ const AddPages = () => {
         api.error({ message: "Upload Failed", description: val.message });
     }
     const formSchema = z.object({
-        title: z.string().min(10, 'Title minumum 10 characters').max(70, 'Title maximal 70 characters'),
-        description_seo: z.string().min(160, 'Description document minimum Characters is 160').max(300, 'Description document maximum Characters is 300'),
+        title: z.string().min(10, 'Title minumum 10 characters'),
+        description_seo: z.string().min(160, 'Description document minimum 160 characters'),
         category: z.string().nonempty({ message: 'Categories are required' }),
         subcategory: z.string().optional(),
     });

@@ -66,10 +66,10 @@ const FormUploadDOcument = () => {
     const filterOption = (input, option) =>
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
     const formSchema = z.object({
-        title: z.string().min(10, 'Title minumum 10 characters').max(70, 'Title maximal 70 characters'),
+        title: z.string().min(10, 'Title minumum 10 characters'),
         category: z.string().nonempty({ message: 'Categories are required' }),
         subcategory: z.string().optional(),
-        description_seo: z.string().min(160, 'Description document minimum Characters is 160').max(300, 'Description document maximum Characters is 300'),
+        description_seo: z.string().min(160, 'Description document minimum 160 characters'),
     });
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -244,7 +244,6 @@ const FormUploadDOcument = () => {
                                         <FormItem>
                                             <Input
                                                 placeholder={t('Title Document')}
-                                                maxLength={71}
                                                 {...field}
                                             />
                                             <FormMessage />
@@ -257,11 +256,10 @@ const FormUploadDOcument = () => {
                                 name="description_seo"
                                 render={({ field }) => (
                                     <div className="form-item mt-[16px]">
-                                        <FormLabel>{t('Title Description')}</FormLabel>
+                                        <FormLabel>{t('Title Description SEO')}</FormLabel>
                                         <FormItem>
                                             <TextArea
                                                 className="!min-h-[200px]"
-                                                maxLength={300}
                                                 rows={5}
                                                 {...field}
                                             />

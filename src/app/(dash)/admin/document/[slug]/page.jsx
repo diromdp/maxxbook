@@ -81,24 +81,16 @@ const EditPages = () => {
         });
     }
     const formSchema = z.object({
-        title: z.string().min(2, {
-            message: "Title must be at least 2 characters.",
-        }),
-        title_seo: z.string().min(2, {
-            message: "Title must be at least 2 characters.",
-        }),
-        description: z.string().min(6, {
-            message: "Description must be at least 6 characters.",
-        }),
-        category_id: z.string().trim().nonempty({ message: "Category is required" }),
-        sub_category_id: z.string().trim().nonempty({ message: "Category is required" })
+        title: z.string().min(10, 'Title minumum 10 characters'),
+        description_seo: z.string().min(160, 'Description document minimum 160 characters'),
+        category_id: z.string().optional(),
+        sub_category_id: z.string().optional(),
     });
 
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: searchParams.get('title') ? searchParams.get('title') : "",
-            title_seo: getDetail && getDetail.title_seo,
             description: searchParams.get('description') ? searchParams.get('description') : "",
             category_id: searchParams.get('category_id') ? searchParams.get('category_id') : "",
             sub_category_id: getDetail && getDetail.sub_category_id,

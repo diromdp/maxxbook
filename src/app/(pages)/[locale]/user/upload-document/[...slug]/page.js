@@ -67,10 +67,10 @@ const EditUploadFile = ({ params }) => {
     const filterOption = (input, option) =>
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
     const formSchema = z.object({
-        title: z.string().min(10, 'Title minumum 10 characters').max(70, 'Title maximal 70 characters'),
+        title: z.string().min(10, 'Title minumum 10 characters'),
         category: z.string().optional(),
         subcategory: z.string().optional(),
-        description_seo: z.string().min(160, 'Description document minimum Characters is 160').max(300, 'Description document maximum Characters is 300'),
+        description_seo: z.string().min(160, 'Description document minimum 160 characters'),
     });
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -128,8 +128,8 @@ const EditUploadFile = ({ params }) => {
             "description": values.description_seo,
             "title_seo": values.title,
             "description_seo": values.description_seo,
-            "category_id": idCategory ? idCategory : documentOwn.category_id,
-            "sub_category_id": values.subcategory ? values.subcategory : documentOwn.sub_category_id,
+            "category_id": idCategory ? idCategory : values.category,
+            "sub_category_id": documentOwn.sub_category_id ? documentOwn.sub_category_id : values.subcategory ,
             "upload_id": getUplaodID,
             "lang": locale
         }
