@@ -14,8 +14,6 @@ import Image from "next/image";
 const SlideSubCategories = ({ isLoading, subCategory, locale }) => {
     let newStr = locale && locale.replace(/["]/g, '');  
 
-    console.log(subCategory && subCategory);
-
     return (
         <Carousel
             opts={{

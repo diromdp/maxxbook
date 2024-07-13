@@ -1,7 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import dynamic from 'next/dynamic';
-import { useTranslations } from "next-intl"
+import { useTranslations } from "next-intl";
+import axios from "axios";
+import { urlAPI } from "../../../lib/constant";
+
+
 const BreadCumb = dynamic(() => import('../../component/breadcumb'), {
     ssr: false,
 })
@@ -23,11 +27,38 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
         }
     ]);
     const [isLoading, setLoading] = useState(true);
+    const [detailSubCategoryClient, setDetailSubCategory] = useState([]);
+
+    const getData = async () => {
+        await axios.get(`${urlAPI}backend/customer/categories/detail/${slug}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': "application/json",
+            }
+        })
+            .then((data) => {
+                if (data.status === 200) {
+                    const subCategory = data.data;
+                    setLoading(false);
+                    setDetailSubCategory(subCategory[0].sub_categories);
+                }
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+    }
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(!isLoading);
-        }, 1000)
+        getData();
         if (slug && slug.length == 2) {
             const data = [
                 {
@@ -53,7 +84,7 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
             setMenu([...menu, ...data]);
         }
     }, []);
-    console.log(detailCategory[0].sub_categories && detailCategory[0].sub_categories)
+
     return (
         <div className="categories-page">
             <div className="screen-layer min-h-screen">
@@ -63,7 +94,7 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
                     <p>{detailCategory && locale == "en" ? detailCategory[0].description : detailCategory[0].description_id}.</p>
                 </div>
                 {
-                    detailCategory[0].sub_categories.length > 0 && <SlideSubCategories locale={locale} subCategory={detailCategory[0].sub_categories} isLoading={isLoading} />
+                    detailSubCategoryClient.length > 0 && <SlideSubCategories locale={locale} subCategory={detailSubCategoryClient} isLoading={isLoading} />
                 }
                 <div className="epxlore-more">
                     {
