@@ -112,13 +112,9 @@ const DocumentDesc = ({ slug }) => {
     };
 
     const downloadFile = async (fileUrl, fileName) => {
-        console.log(fileName);
+        console.log(fileUrl);
         if (token) {
-            try {
-                saveAs(fileUrl, fileName);
-            } catch (error) {
-                console.error('Error downloading the file:', error);
-            }
+            window.open(fileUrl, '_blank');
         } else {
             api.info({
                 message: "Information",

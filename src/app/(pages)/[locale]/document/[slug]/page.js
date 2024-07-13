@@ -33,7 +33,7 @@ async function getDetails(slug) {
         },
     });
 
-    if (!data.ok) {
+    if (!data) {
         throw new Error('Failed to fetch data')
     }
     return data.json()
