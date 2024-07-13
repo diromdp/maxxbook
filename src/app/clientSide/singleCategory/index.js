@@ -53,6 +53,7 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
             setMenu([...menu, ...data]);
         }
     }, []);
+    console.log(detailCategory[0].sub_categories && detailCategory[0].sub_categories)
     return (
         <div className="categories-page">
             <div className="screen-layer min-h-screen">

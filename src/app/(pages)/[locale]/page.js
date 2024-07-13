@@ -1,9 +1,9 @@
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { urlAPI } from "../../../lib/constant";
-import { headers } from "next/headers";
 
 const Categories = dynamic(() => import('../../component/categories'), {
    ssr: false,

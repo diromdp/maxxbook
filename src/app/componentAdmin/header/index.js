@@ -32,12 +32,10 @@ const HeaderContent = () => {
                 }
             })
                 .then(function (response) {
-                    console.log(response);
                     cookiesUniversal.remove("token", {path: "/"})  
                     router.push('/login-admin');
                 })
                 .catch(function (error) {
-                    console.log(error);  
                     cookiesUniversal.remove("token", {path: "/"})  
                     router.push('/login-admin');
 

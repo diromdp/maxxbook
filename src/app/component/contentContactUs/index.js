@@ -20,7 +20,6 @@ const ContentContactUs = () => {
         })
             .then((data) => {
                 if (data.status === 200) {
-                    console.log(data.data);
                     setDetailSeo(data.data);
                     setLoading(false);
                 }

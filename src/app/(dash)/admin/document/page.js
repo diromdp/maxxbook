@@ -212,8 +212,9 @@ const Document = () => {
         if (url_string) {
             var url = new URL(url_string);
             var page = url.searchParams.get("page");
+            console.log(page)
             setFilterData({ ...filterData, page: page });
-            await axios.get(`${urlAPI}backend/admin/documents?q=${filterData.q}&cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}&user_id=${filterData.user_id}&category_id=${filterData.category_id}&sub_category_id=${filterData.sub_category_id}&approval_status=${filterData.approval_status}`, {
+            await axios.get(`${urlAPI}backend/admin/documents?q=${filterData.q}&page=${page}&cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}&user_id=${filterData.user_id}&category_id=${filterData.category_id}&sub_category_id=${filterData.sub_category_id}&approval_status=${filterData.approval_status}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",
@@ -222,7 +223,6 @@ const Document = () => {
             })
                 .then((data) => {
                     if (data.status === 200) {
-
                         setIsLoading(false)
                         setDataFetch(data.data.data)
                         setDataPagination(data.data.links)

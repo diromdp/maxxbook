@@ -23,7 +23,6 @@ const Callback = () => {
             expires_at: expires,
             message: 'ok'
         }
-        console.log(data);
         dispatch(setAuthSlice(data))
         router.push('/');
     }
@@ -41,10 +40,8 @@ const Callback = () => {
     useEffect(() => {
         if (errMsg == null) {
             redirect();
-            console.log('direct redirect')
         } else {
             errorPages();
-            console.log('erorr redirect')
         }
     }, [])
 

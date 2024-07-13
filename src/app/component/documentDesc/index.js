@@ -112,6 +112,7 @@ const DocumentDesc = ({ slug }) => {
     };
 
     const downloadFile = async (fileUrl, fileName) => {
+        console.log(fileName);
         if (token) {
             try {
                 saveAs(fileUrl, fileName);

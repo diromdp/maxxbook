@@ -2,8 +2,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter, useSearchParams } from "next/navigation";
+import { useAppDispatch } from "../../store";
+import { setTabFormatDocument } from "../../store/reducer/categoryFilterSlice";
 
 const HomeSearch = ({ isHome }) => {
+    const dispatch = useAppDispatch();
     const [inputSearch, setInputSearch] = useState('');
     const hasFetchedData = useRef(false);
     const searchParams = useSearchParams();
@@ -22,6 +25,7 @@ const HomeSearch = ({ isHome }) => {
         if (!hasFetchedData.current) {
             setInputSearch(search);
             hasFetchedData.current = true;
+            dispatch(setTabFormatDocument(0))
         }
     })
 

@@ -49,7 +49,6 @@ const AdmninDashboard = () => {
     useEffect(() => {
         getDataDashboard();
     }, [])
-    console.log(data && data);
     return (
         <div className="admin-home">
             <div className="content-item">
@@ -102,7 +101,7 @@ const AdmninDashboard = () => {
                         <CardContent>
                             {
                                 !loading ? <Skeleton className="h-6 w-[150px]" /> :
-                                    <span className="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white">{kFormatter(data.total_visitors)}</span>
+                                    <span className="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white">{kFormatter(data.total_downloaded)}</span>
 
                             }
                         </CardContent>

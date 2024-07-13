@@ -46,7 +46,6 @@ const LoginUser = () => {
     }
 
     const checkedRemmber = (val) => {
-        console.log(val.target.checked);
         setRemember(val.target.checked);
     }
 

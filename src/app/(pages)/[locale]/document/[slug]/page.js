@@ -107,7 +107,7 @@ export default async function documentPage({ params }) {
                                 {
                                     dataDocument && dataDocument.data.map((item, index) => {
                                         return (
-                                            <Link key={index} href={`/${locale}/document/${item.slug}`} className="item-content">
+                                            <Link key={index} href={`/${locale}/document/${item.slug}`} target="_blank" className="item-content">
                                                 <div className="img">
                                                     <Image alt={item.slug} fill priority src={item.thumb_url ? item.thumb_url : 'https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1'} />
                                                 </div>

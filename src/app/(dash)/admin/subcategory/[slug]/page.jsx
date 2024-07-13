@@ -30,7 +30,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useCookies } from "react-cookie";
 import { useSearchParams, useRouter } from 'next/navigation';
-import { formatDateToDatabaseString } from "../../../../../lib/utils";
 import { urlAPI } from "../../../../../lib/constant";
 import { notification } from 'antd';
 
@@ -101,7 +100,6 @@ const AddPages = () => {
         })
             .then((data) => {
                 if (data.status === 200) {
-                    console.log(data.status);
                     notificationSuccess();
                     router.push("/admin/subcategory");
                 }
