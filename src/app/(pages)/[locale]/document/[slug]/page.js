@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
 import dynamic from 'next/dynamic';
 import { urlAPI } from "../../../../../lib/constant";
 import { getTranslations, getLocale } from "next-intl/server";
@@ -11,6 +9,9 @@ const PlaceAdsance = dynamic(() => import('@/app/component/placeAdsence'), {
 const DocumentDesc = dynamic(() => import('../../../../component/documentDesc'), {
     ssr: false,
 })
+const ListDataDetailDocument = dynamic(() => import('../../../../component/ListDataDetailDocument'), {
+    ssr: false,
+});
 
 async function getData() {
     const data = await fetch(`${urlAPI}backend/documents?perPage=${10}&is_random=${1}&sortBy=title&sortDirection=asc`, {
@@ -83,9 +84,7 @@ export async function generateMetadata({ params }) {
 
 export default async function documentPage({ params }) {
     const slug = params.slug || "";
-    const dataDocument = await getData();
     const t = await getTranslations("Documents");
-    const locale = await getLocale();
 
     return (
         <div className="document-page min-h-screen">
@@ -104,28 +103,7 @@ export default async function documentPage({ params }) {
                                 <div className="title-document-content">
                                     <h2>{t('other documents')}</h2>
                                 </div>
-                                {
-                                    dataDocument && dataDocument.data.map((item, index) => {
-                                        return (
-                                            <Link key={index} href={`/${locale}/document/${item.slug}`} target="_blank" className="item-content">
-                                                <div className="img">
-                                                    <Image alt={item.slug} fill priority src={item.thumb_url ? item.thumb_url : 'https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1'} />
-                                                </div>
-                                                <div className="description">
-                                                    <div className="type-totals">
-                                                        <span className="title">{t('title')}</span>
-                                                        <span className="separator">.</span>
-                                                        <span className="title">{item && item.page_count ? item.page_count : 0} {t('pages')}</span>
-                                                    </div>
-                                                    <div className="title-document">
-                                                        <h4>{item.title}</h4>
-                                                        <span className="people-name">{item.user && item.user.name ? item.user.name : 'Admin'}</span>
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                        )
-                                    })
-                                }
+                                <ListDataDetailDocument/>
                             </div>
                         </div>
                     </div>
