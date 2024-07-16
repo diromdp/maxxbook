@@ -68,6 +68,35 @@ export const metadata = {
       },
     ],
   },
+  openGraph: {
+    title: 'Maxibook - All you can read anything',
+    description: 'Maxibook is place to find documents or materials than can help to solve your problem',
+    url: 'https://maxibook.co',
+    siteName: 'Next.js',
+    images: [
+      {
+        url: 'https://maxibook.co/image/og-image.png', // Must be an absolute URL
+        width: 1200,
+        height: 630,
+        alt: 'Maxibook Default Image'
+      },
+      {
+        url: 'https://maxibook.co/image/og-image.png', // Must be an absolute URL
+        width: 1800,
+        height: 1600,
+        alt: 'Maxibook Default Image'
+      },
+    ],
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Maxibook - All you can read anything',
+      description: 'Maxibook is place to find documents or materials than can help to solve your problem',
+      creator: '@maxibook',
+      images: ['https://maxibook.co/image/og-image.png'], // Must be an absolute URL
+    },
+    locale: 'EN',
+    type: 'website',
+  },
 }
 
 async function getDetails() {
