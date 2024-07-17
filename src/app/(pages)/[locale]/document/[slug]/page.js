@@ -13,17 +13,6 @@ const ListDataDetailDocument = dynamic(() => import('../../../../component/ListD
     ssr: false,
 });
 
-async function getData() {
-    const data = await fetch(`${urlAPI}backend/documents?perPage=${10}&is_random=${1}&sortBy=title&sortDirection=asc`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': "application/json",
-        },
-    });
-
-    return data.json()
-}
 
 async function getDetails(slug) {
     const data = await fetch(`${urlAPI}backend/documents/detail/${slug}`, {

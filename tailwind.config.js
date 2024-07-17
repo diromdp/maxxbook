@@ -20,7 +20,7 @@ module.exports = {
         "md2": "800px",
         lg: "1000px",
         xl: "1025px",
-        '1xl': "1100px",
+        "1xl": "1100px",
         "2xl": "1280px",
         "3xl": "1366px",
         "4xl": "1536px",

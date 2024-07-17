@@ -86,7 +86,7 @@ export default async function category() {
     const t = await getTranslations("Documents");
 
     return <>
-        <div className="categories-page">
+        <div className="categories-page px-[24px] 3xl:px-0">
             <div className="screen-layer">
                 <div className="title-pages">
                     <h1>{t('title')}</h1>

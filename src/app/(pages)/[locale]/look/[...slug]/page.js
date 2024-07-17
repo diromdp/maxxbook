@@ -68,31 +68,32 @@ const LookUserDetail = ({ params }) => {
             var url = new URL(url_string);
             var page = url.searchParams.get("page");
             setFilterData({ ...filterData, page: page });
-            await axios.get(`${urlAPI}backend/documents?cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}&user_id=${slug}`, {
+            await axios.get(`${urlAPI}backend/documents?cursor=${filterData.cursor}&page=${page}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}&user_id=${slug}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",
                 }
             })
-                .then((data) => {
-                    if (data.status === 200) {
-                        setLoading(false)
-                        setDataFetch(data.data.data)
-                        setDataPagination(data.data.links)
-                    }
-                })
-                .catch(function (error) {
-                    if (error.response) {
-                        console.log(error.response.data.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                    console.log(error.config);
-                });
+            .then((data) => {
+                if (data.status === 200) {
+                    const dataJson = data.data.data;
+                    setIsloading(false)
+                    setDataDocument(dataJson);
+                    setDataPagination(data.data.links)
+                }
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
         }
     }
 
@@ -106,7 +107,7 @@ const LookUserDetail = ({ params }) => {
     return (
         <>
             <div className="look-user-detail">
-                <div className="bg-sky-700 py-[50px] min-h-[130px] px-[16px] lg:px-0">
+                <div className="bg-sky-700 py-[50px] min-h-[130px] px-[24px] 3xl:px-0">
                     <div className="screen-layer user-info">
                         <div className="circle">
                             {getUserUploadInfo && getInitials(getUserUploadInfo.name)}
@@ -118,7 +119,7 @@ const LookUserDetail = ({ params }) => {
                 </div>
                 <div className="list-document">
                     <div className="screen-layer">
-                        <div className="result-show">
+                        <div className="result-show px-[24px] 3xl:px-0">
                             {
                                 !isLoading ? dataDocument && dataDocument.map((item, index) => {
                                     return (
@@ -143,7 +144,7 @@ const LookUserDetail = ({ params }) => {
                             <Pagination>
                                 <PaginationContent>
                                     {
-                                        dataDocument.length > 0 && dataPagination.map((data,index) => {
+                                        dataDocument.length > 0 && dataPagination.map((data, index) => {
                                             if (data.label === "&laquo; Previous") {
                                                 return (
                                                     <PaginationItem key={index}>

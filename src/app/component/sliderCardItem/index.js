@@ -21,13 +21,13 @@ const SliderCardItem = ({ data }) => {
                 {data && data.map((item, index) => {
                     if (item.slug) {
                         return (
-                            <CarouselItem key={index} className="first:ml-0 basis-1/2 lg:basis-1/6 cursor-pointer">
+                            <CarouselItem key={index} className="first:ml-0 basis-1/2 md:basis-1/4 2xl:basis-1/5 cursor-pointer">
                                 <Card
                                     key={index}
                                     colorImage={item.color}
                                     imagePath={item.thumb_url}
                                     title={item.title}
-                                    className="!w-full md:!w-[200px]"
+                                    className="w-fit"
                                     description={item.description}
                                     slug={item.slug}
                                 />
@@ -39,8 +39,8 @@ const SliderCardItem = ({ data }) => {
                 )}
             </CarouselContent>
             <div className="flex flex-row items-center justify-center mt-[40px]">
-                <CarouselPrevious className="relative -left-[5px] sm:-left-[20px] lg:-left-[3.0rem] lg:absolute" />
-                <CarouselNext className="relative -right-[5px] sm:-right-[20px] lg:-right-[3.0rem] lg:absolute" />
+                <CarouselPrevious className="relative -left-[5px] sm:-left-[20px] xl:-left-[3.0rem] xl:absolute" />
+                <CarouselNext className="relative -right-[5px] sm:-right-[20px] xl:-right-[3.0rem] xl:absolute" />
             </div>
         </Carousel>
     );

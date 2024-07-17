@@ -1,5 +1,5 @@
 .header {
-    @apply flex justify-between items-center px-[16px] gap-[16px] lg:px-0 py-[16px];
+    @apply flex justify-between items-center gap-[16px] py-[16px];
     .header-search {
         @apply ml-[20px] md:ml-0 md:w-[450px];
     }

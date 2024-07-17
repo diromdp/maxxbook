@@ -128,7 +128,7 @@ const ExplorerPages = () => {
                     <Image alt="banner-2" src={imgBanner2} width={300} height={225} />
                 </div>
             </div>
-            <div className="screen-layer px-[16px] lg:px-0">
+            <div className="screen-layer px-[24px] 3xl:px-0 md:h-screen">
                 <SavedComponent />
                 <div className="item-view">
                     <div className="flex justify-between items-center mb-[16px]">

@@ -154,6 +154,7 @@ const ResultShow = ({ QureyParams }) => {
             hasFetchedData.current = true;
         }
     }, []);
+    console.log(dataDocument && dataDocument);
     return (
         <>
             <div className="screen-layer">
@@ -195,7 +196,7 @@ const ResultShow = ({ QureyParams }) => {
                 }
                 {
                     !empatyState &&
-                    <div className="result-show">
+                    <div className="result-show px-[24px] 3xl:px-0">
                         {
                             !isLoading ? dataDocument && dataDocument.map((item, index) => {
                                 if(item.slug) {

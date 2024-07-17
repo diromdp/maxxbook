@@ -86,7 +86,7 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
     }, []);
 
     return (
-        <div className="categories-page">
+        <div className="categories-page px-[24px] 3xl:px-0">
             <div className="screen-layer min-h-screen">
                 <BreadCumb menu={menu} />
                 <div className="title-pages">

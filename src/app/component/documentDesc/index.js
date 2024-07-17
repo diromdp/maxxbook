@@ -19,7 +19,6 @@ import { urlAPI } from "../../../lib/constant";
 import axios from "axios";
 import 'dayjs/locale/id';
 import localeData from 'dayjs/plugin/localeData';
-import { saveAs } from 'file-saver';
 import { formatNumber } from "../../../lib/utils";
 import { useTranslations } from "next-intl";
 import {

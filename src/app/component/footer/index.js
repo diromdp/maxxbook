@@ -6,7 +6,7 @@ const Footer = () => {
 
     return (
         <footer className="bg-[#F4F8FE] border border-t border-[#e3e6ef]">
-            <div className="screen-layer p-4 py-6 lg:py-8">
+            <div className="screen-layer px-[24px] py-6 lg:py-8">
                 <div className="md:flex md:justify-between">
                     <div className="mb-6 md:mb-0">
                         <a href="/" className="flex items-center">

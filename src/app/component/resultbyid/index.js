@@ -26,7 +26,7 @@ const CardLoading = dynamic(() => import('@/app/component/cardLoading'), {
     ssr: false,
 })
 
-const ResultShowID = ({ idCategory, idSubCategory }) => {
+const ResultShowID = ({ idSubCategory }) => {
     const dispatch = useAppDispatch();
     const [isLoading, setLoading] = useState(true);
     const categoryFilterState = useAppSelector((state) => state.documents.categoryFilterSingleState);
@@ -45,7 +45,7 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
     const hasFetchedData = useRef(false);
 
     const getDocument = async () => {
-        await axios.get(`${urlAPI}backend/documents?cursor=${categoryFilterState && categoryFilterState.cursor ? categoryFilterState.cursor : ''}&perPage=${categoryFilterState && categoryFilterState.perPage ? categoryFilterState.perPage : ''}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&sub_category_id=${idSubCategory ? idSubCategory : ''}&category_id=${idCategory ? idCategory : ''}`, {
+        await axios.get(`${urlAPI}backend/documents?cursor=${categoryFilterState && categoryFilterState.cursor ? categoryFilterState.cursor : ''}&perPage=${categoryFilterState && categoryFilterState.perPage ? categoryFilterState.perPage : ''}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&sub_category_id=${idSubCategory ?? ''}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': "application/json",
@@ -87,7 +87,7 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
 
             dispatch(setCategoryFilterState({ ...categoryFilterState, page: page }));
 
-            await axios.get(`${urlAPI}backend/documents?page=${page}&cursor=${categoryFilterState && categoryFilterState.cursor ? categoryFilterState.cursor : ''}&perPage=${categoryFilterState && categoryFilterState.perPage ? categoryFilterState.perPage : ''}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${idCategory}`, {
+            await axios.get(`${urlAPI}backend/documents?cursor=${categoryFilterState && categoryFilterState.cursor ? categoryFilterState.cursor : ''}&page=${page}&perPage=${categoryFilterState && categoryFilterState.perPage ? categoryFilterState.perPage : ''}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&sub_category_id=${idSubCategory ?? ''}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",
@@ -95,7 +95,6 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
             })
                 .then((data) => {
                     if (data.status === 200) {
-                        console.log('asdasdasd')
                         setLoading(false)
                         dispatch(setDocumentCategorySingle(data.data.data))
                         dispatch(setDocumentCategoryPagination(data.data.links))

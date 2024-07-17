@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 const CardLoading = () => {
     return ( 
-        <div className="result-show-item w-[184px]">
+        <div className="result-show-item">
             <div className={`image-cover`}>
                 <Skeleton className="h-[174px] w-[132px] mt-[24px]" />
             </div>

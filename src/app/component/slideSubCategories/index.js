@@ -27,7 +27,7 @@ const SlideSubCategories = ({ isLoading, subCategory, locale }) => {
                         <>
                             {subCategory && subCategory.map((item, index) => {
                                 return (
-                                    <CarouselItem key={index} className="first:ml-0 lg:ml-[32px] sm:basis-1/2 md:basis-1/5 cursor-pointer">
+                                    <CarouselItem key={index} className="first:ml-0 xl:ml-[32px] sm:basis-1/2 md:basis-80 xl:basis-1/5 cursor-pointer">
                                         <Link href={`/${newStr}/subcategory/${item.slug}`}>
                                             <Card className="p-1 w-full md:w-[280px] h-[90px]">
                                                 <CardContent className="flex card-content aspect-square items-center relative p-6 w-full h-[90px] z-10">

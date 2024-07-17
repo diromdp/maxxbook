@@ -186,11 +186,11 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
 }
 
 .result-show {
-    @apply flex items-center gap-[16px] flex-wrap w-full m-auto justify-start px-[16px] lg:px-0;
+    @apply gap-[16px] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 w-full m-auto;
 }
 
 .result-show-item {
-    @apply border-[#e3e6ef] border rounded-[10px] relative w-[47%] md:w-[200px] flex flex-col;
+    @apply border-[#e3e6ef] border rounded-[10px] relative min-w-fit w-full flex flex-col;
     &:hover {
         box-shadow: 0 2px 10px rgba(0,0,0,.1);
     }
@@ -208,12 +208,12 @@ p, span, a, input, label, b, div, select, textarea, h2, h3, h4, h6, button{
     }
 
     .description {
-        @apply h-[115px] p-[16px];
+        @apply min-h-[115px] p-[16px];
 
         h6 {
-            @apply font-roboto font-[700] text-[1rem] 2xl:text-[1.25rem] text-primarytext;
+            @apply font-roboto font-[700] text-[1rem] text-primarytext;
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 3;
             overflow: hidden;
             -webkit-box-orient: vertical;
             font-style: normal;
