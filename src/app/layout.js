@@ -119,7 +119,7 @@ export default function RootLayout({ children }) {
         <body className={`${monst.variable} ${roboto.variable} ${league.variable}`}>
           {children}
         </body>
-        <GoogleAnalytics gaId={seletedGO && seletedGO[0].value} />
+        <GoogleAnalytics gaId={'G-778ZK1T3GN'} />
       </html>
     </>
     
