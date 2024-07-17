@@ -113,14 +113,13 @@ async function getDetails() {
 export default function RootLayout({ children }) {
   const detailSEO = use(getDetails());
   const seletedGO = detailSEO.filter(x => x.key === 'page.google_analytics');
-
   return (
     <>
       <html lang="en">
         <body className={`${monst.variable} ${roboto.variable} ${league.variable}`}>
           {children}
         </body>
-        <GoogleAnalytics gaId={seletedGO} />
+        <GoogleAnalytics gaId={seletedGO && seletedGO[0].value} />
       </html>
     </>
     
