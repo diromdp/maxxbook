@@ -31,9 +31,20 @@ const league = League_Spartan({
 })
 
 export const metadata = {
-  title: 'Maxibook - All you can read anything',
+  title: 'Maxibook - Get millions of documents you need here',
   manifest: '/manifest.json',
   description: 'Maxibook is place to find documents or materials than can help to solve your problem',
+  openGraph: {
+    title: `Maxibook - Get millions of documents you need here`,
+    description: `Get millions of documents you need here from a global community, share information, and find inspiration`,
+    images: '/image/og-image.png',
+  },
+  twitter: {
+    title: `Maxibook - Get millions of documents you need here`,
+    description: `Get millions of documents you need here from a global community, share information, and find inspiration`,
+    card: `summary_large_image`,
+    image: '/image/og-image.png',
+  },
   alternates: {
     canonical: BaseUrl,
     languages: {
@@ -67,17 +78,6 @@ export const metadata = {
         url: '/icon/apple-icon-precomposed.png',
       },
     ],
-  },
-  openGraph: {
-    title: `Maxibook - Get millions of documents you need here`,
-    description: `Get millions of documents you need here from a global community, share information, and find inspiration`,
-    images: '/image/og-image.png',
-  },
-  twitter: {
-    title: `Maxibook - Get millions of documents you need here`,
-    description: `Get millions of documents you need here from a global community, share information, and find inspiration`,
-    card: `summary_large_image`,
-    image: '/image/og-image.png',
   },
 }
 
