@@ -26,6 +26,7 @@ async function getDetails() {
 export async function generateMetadata() {
    const headersList = headers();
    const pathname = headersList.get("referer");
+   const ogImage = '/image/og-image.png'; // Or use a dynamic path
 
    const detailSEO = await getDetails();
    const selectedTitle = detailSEO.filter(x => x.key === 'seo.title_home')
@@ -44,10 +45,12 @@ export async function generateMetadata() {
                title: selectedTitle[0].value,
                url: pathname,
                description: selectedDesc[0].value,
+               images: [{ url: ogImage }],
             },
             openGraph: {
                title: selectedTitle[0].value,
                description: selectedDesc[0].value,
+               images: [{ url: ogImage }],
                url: pathname,
                type: 'website',
             },
@@ -63,12 +66,14 @@ export async function generateMetadata() {
                title: selectedTitleID[0].value,
                url: pathname,
                description: selectedDescID[0].value,
+               images: [{ url: ogImage }],
             },
             openGraph: {
                title: selectedTitleID[0].value,
                description: selectedDescID[0].value,
                url: pathname,
                type: 'website',
+               images: [{ url: ogImage }],
             },
          }
       }

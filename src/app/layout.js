@@ -30,57 +30,60 @@ const league = League_Spartan({
 
 })
 
-export const metadata = {
-  title: 'Maxibook - Get millions of documents you need here',
-  manifest: '/manifest.json',
-  description: 'Maxibook is place to find documents or materials than can help to solve your problem',
-  openGraph: {
-    title: `Maxibook - Get millions of documents you need here`,
-    description: `Get millions of documents you need here from a global community, share information, and find inspiration`,
-    images: '/image/og-image.png',
-  },
-  twitter: {
-    title: `Maxibook - Get millions of documents you need here`,
-    description: `Get millions of documents you need here from a global community, share information, and find inspiration`,
-    card: `summary_large_image`,
-    image: '/image/og-image.png',
-  },
-  alternates: {
-    canonical: BaseUrl,
-    languages: {
-      'en': '/en',
-      'id': '/id',
-    },
-  },
-  verification: {
-    google: 'google',
-    yandex: 'yandex',
-    yahoo: 'yahoo',
-    bing: 'bing',
-  },
-  icons: {
-    icon: [
-      { url: '/icon/favicon-16x16.png', sizes: '16x16' },
-      { url: '/icon/favicon-32x32.png', sizes: '32x32' },
-      { url: '/icon/favicon-96x96.png', sizes: '96x96' },
-    ],
-    shortcut: ['/icon/apple-icon.png'],
-    apple: [
-      { url: '/icon/apple-icon.png' },
-      { url: '/icon/apple-icon-114x114.png', sizes: '114x114', type: 'image/png' },
-      { url: '/icon/apple-icon-114x114.png', sizes: '114x114', type: 'image/png' },
-      { url: '/icon/apple-icon-144x144.png', sizes: '144x144', type: 'image/png' },
-      { url: '/icon/apple-icon-180x180.png', sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      {
-        rel: 'apple-touch-icon-precomposed',
-        url: '/icon/apple-icon-precomposed.png',
-      },
-    ],
-  },
-}
+export async function generateMetadata() {
+  const ogImage = '/image/og-image.png'; // Or use a dynamic path
+  return {
+    title: 'Maxibook - Get millions of documents you need here',
+    manifest: '/manifest.json',
+    description: 'Maxibook is place to find documents or materials than can help to solve your problem',
+    openGraph: {
+      title: `Maxibook - Get millions of documents you need here`,
+      description: `Get millions of documents you need here from a global community, share information, and find inspiration`,
+      images: [{ url: ogImage }],
 
+    },
+    twitter: {
+      title: `Maxibook - Get millions of documents you need here`,
+      description: `Get millions of documents you need here from a global community, share information, and find inspiration`,
+      card: `summary_large_image`,
+      images: [{ url: ogImage }],
+    },
+    alternates: {
+      canonical: BaseUrl,
+      languages: {
+        'en': '/en',
+        'id': '/id',
+      },
+    },
+    verification: {
+      google: 'google',
+      yandex: 'yandex',
+      yahoo: 'yahoo',
+      bing: 'bing',
+    },
+    icons: {
+      icon: [
+        { url: '/icon/favicon-16x16.png', sizes: '16x16' },
+        { url: '/icon/favicon-32x32.png', sizes: '32x32' },
+        { url: '/icon/favicon-96x96.png', sizes: '96x96' },
+      ],
+      shortcut: ['/icon/apple-icon.png'],
+      apple: [
+        { url: '/icon/apple-icon.png' },
+        { url: '/icon/apple-icon-114x114.png', sizes: '114x114', type: 'image/png' },
+        { url: '/icon/apple-icon-114x114.png', sizes: '114x114', type: 'image/png' },
+        { url: '/icon/apple-icon-144x144.png', sizes: '144x144', type: 'image/png' },
+        { url: '/icon/apple-icon-180x180.png', sizes: '180x180', type: 'image/png' },
+      ],
+      other: [
+        {
+          rel: 'apple-touch-icon-precomposed',
+          url: '/icon/apple-icon-precomposed.png',
+        },
+      ],
+    },
+  };
+}
 async function getDetails() {
   const data = await fetch(`${urlAPI}backend/settings?keys=page.google_analytics`, {
     method: 'get',
