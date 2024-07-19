@@ -98,65 +98,68 @@ const Header = ({ locale }) => {
                     <Link href={`/${locale}/`} className="header-logo">
                         <span className={`text-[20px] lg:text-[28px] xl:text-[40px] select-none font-league_spartan font-[700] outline-0`}>Maxibook.</span>
                     </Link>
-                    {
-                        !isHome && <HeaderSearch />
-                    }
-                    <div className="header-login">
-                        <label className='label'>
-                            <p className='sr-only'>{t('Change Language')}</p>
-                            <select
-                                defaultValue={localActive}
-                                className='bg-transparent py-2'
-                                onChange={onSelectChange}
-                                disabled={isPending}
-                            >
-                                <option value='en'>EN</option>
-                                <option value='id'>ID</option>
-                            </select>
-                        </label>
+                    <div className="flex flex-row justify-center items-center gap-[8px]">
                         {
-                            getToken.access_token == '' || getToken.access_token == null ?
-                                <Link href={"/login"} className="btn-primary text-[18px] w-[84px] h-[40px]">Sign In <div className="animation"></div></Link> :
-                                <>
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <Avatar className="cursor-pointer">
-                                                <AvatarImage src={`${getInfoUser && getInfoUser.avatar ? getInfoUser.avatar.url : "https://github.com/shadcn.png"}`} />
-                                                <AvatarFallback>{getInitials(getInfoUser && getInfoUser.name)}</AvatarFallback>
-                                            </Avatar>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent className="w-56">
-                                            <DropdownMenuGroup>
-                                                <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/profile`, undefined, { shallow: true })}>
-                                                    <User className="mr-2 h-4 w-4" />
-                                                    <span>{t('Profile')}</span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/saved`, undefined, { shallow: true })}>
-                                                    <Bookmark className="mr-2 h-4 w-4" />
-                                                    <span>{t('Saved')}</span>
-                                                </DropdownMenuItem>
-                                            </DropdownMenuGroup>
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuGroup>
-                                                <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/upload-document`, undefined, { shallow: true })}>
-                                                    <CloudUpload className="mr-2 h-4 w-4" />
-                                                    <span>{t('Upload')}</span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/document-own`, undefined, { shallow: true })}>
-                                                    <FileInput className="mr-2 h-4 w-4" />
-                                                    <span>{t('List Document Uploads')}</span>
-                                                </DropdownMenuItem>
-                                            </DropdownMenuGroup>
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuItem className={"cursor-pointer"} onClick={() => logoutUser()}>
-                                                <LogOut className="mr-2 h-4 w-4" />
-                                                <span>{t('Log out')}</span>
-                                            </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </>
+                            !isHome && <HeaderSearch />
                         }
+                        <div className="header-login">
+                            <label className='label'>
+                                <p className='sr-only'>{t('Change Language')}</p>
+                                <select
+                                    defaultValue={localActive}
+                                    className='bg-transparent py-2'
+                                    onChange={onSelectChange}
+                                    disabled={isPending}
+                                >
+                                    <option value='en'>EN</option>
+                                    <option value='id'>ID</option>
+                                </select>
+                            </label>
+                            {
+                                getToken.access_token == '' || getToken.access_token == null ?
+                                    <Link href={"/login"} className="btn-primary text-[18px] w-fit h-[40px]">Sign In <div className="animation"></div></Link> :
+                                    <>
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger asChild>
+                                                <Avatar className="cursor-pointer">
+                                                    <AvatarImage src={`${getInfoUser && getInfoUser.avatar ? getInfoUser.avatar.url : "https://github.com/shadcn.png"}`} />
+                                                    <AvatarFallback>{getInitials(getInfoUser && getInfoUser.name)}</AvatarFallback>
+                                                </Avatar>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent className="w-56">
+                                                <DropdownMenuGroup>
+                                                    <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/profile`, undefined, { shallow: true })}>
+                                                        <User className="mr-2 h-4 w-4" />
+                                                        <span>{t('Profile')}</span>
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/saved`, undefined, { shallow: true })}>
+                                                        <Bookmark className="mr-2 h-4 w-4" />
+                                                        <span>{t('Saved')}</span>
+                                                    </DropdownMenuItem>
+                                                </DropdownMenuGroup>
+                                                <DropdownMenuSeparator />
+                                                <DropdownMenuGroup>
+                                                    <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/upload-document`, undefined, { shallow: true })}>
+                                                        <CloudUpload className="mr-2 h-4 w-4" />
+                                                        <span>{t('Upload')}</span>
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem className={"cursor-pointer"} onClick={() => router.push(`/${localActive}/user/document-own`, undefined, { shallow: true })}>
+                                                        <FileInput className="mr-2 h-4 w-4" />
+                                                        <span>{t('List Document Uploads')}</span>
+                                                    </DropdownMenuItem>
+                                                </DropdownMenuGroup>
+                                                <DropdownMenuSeparator />
+                                                <DropdownMenuItem className={"cursor-pointer"} onClick={() => logoutUser()}>
+                                                    <LogOut className="mr-2 h-4 w-4" />
+                                                    <span>{t('Log out')}</span>
+                                                </DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
+                                    </>
+                            }
+                        </div>
                     </div>
+                   
                 </div>
             </div>
         </div>
