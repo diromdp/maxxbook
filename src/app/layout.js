@@ -49,9 +49,9 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: '/icon/favicon-16x16.png', sizes: '16x16'},
-      { url: '/icon/favicon-32x32.png', sizes: '32x32'},
-      { url: '/icon/favicon-96x96.png', sizes: '96x96'},
+      { url: '/icon/favicon-16x16.png', sizes: '16x16' },
+      { url: '/icon/favicon-32x32.png', sizes: '32x32' },
+      { url: '/icon/favicon-96x96.png', sizes: '96x96' },
     ],
     shortcut: ['/icon/apple-icon.png'],
     apple: [
@@ -69,50 +69,31 @@ export const metadata = {
     ],
   },
   openGraph: {
-    title: 'Maxibook - All you can read anything',
-    description: 'Maxibook is place to find documents or materials than can help to solve your problem',
-    url: 'https://maxibook.co',
-    siteName: 'Next.js',
-    images: [
-      {
-        url: 'https://maxibook.co/image/og-image.png', // Must be an absolute URL
-        width: 1200,
-        height: 630,
-        alt: 'Maxibook Default Image'
-      },
-      {
-        url: 'https://maxibook.co/image/og-image.png', // Must be an absolute URL
-        width: 1800,
-        height: 1600,
-        alt: 'Maxibook Default Image'
-      },
-    ],
-    twitter: {
-      card: 'summary_large_image',
-      title: 'Maxibook - All you can read anything',
-      description: 'Maxibook is place to find documents or materials than can help to solve your problem',
-      creator: '@maxibook',
-      images: ['https://maxibook.co/image/og-image.png'], // Must be an absolute URL
-    },
-    locale: 'EN',
-    type: 'website',
+    title: `Maxibook - Get millions of documents you need here`,
+    description: `Get millions of documents you need here from a global community, share information, and find inspiration`,
+    images: '/image/og-image.png',
+  },
+  twitter: {
+    title: `Maxibook - Get millions of documents you need here`,
+    description: `Get millions of documents you need here from a global community, share information, and find inspiration`,
+    card: `summary_large_image`,
+    image: '/image/og-image.png',
   },
 }
 
 async function getDetails() {
   const data = await fetch(`${urlAPI}backend/settings?keys=page.google_analytics`, {
-     method: 'get',
-     headers: {
-        'Content-Type': 'application/json',
-        'Accept': "application/json",
-     },
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': "application/json",
+    },
   });
   return data.json()
 }
 
 export default function RootLayout({ children }) {
   const detailSEO = use(getDetails());
-  const seletedGO = detailSEO.filter(x => x.key === 'page.google_analytics');
   return (
     <>
       <html lang="en">
@@ -122,6 +103,6 @@ export default function RootLayout({ children }) {
         <GoogleAnalytics gaId={'G-778ZK1T3GN'} />
       </html>
     </>
-    
+
   )
 }
