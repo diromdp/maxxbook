@@ -1,7 +1,7 @@
 {
     "Homepage": {
         "title": "Welcome to Maxibook",
-        "description": "All you can read is free! Get millions of documents you need here",
+        "description": "Get millions of documents you need here from a global community, share information, and find inspiration",
         "or": "or",
         "browser": "Browse categories",
         "see category": "See All Categories",
@@ -43,7 +43,7 @@
     },
     "Exporler": {
         "heading":"Read anytime. Anywhere.",
-        "leading": "All you can read is free! Get millions of documents you need here",
+        "leading": "Get millions of documents you need here from a global community, share information, and find inspiration",
         "saved documents": "Saved documents",
         "View more": "View more",
         "documents": "Documents"
