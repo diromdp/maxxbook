@@ -26,7 +26,7 @@ const CardLoading = dynamic(() => import('@/app/component/cardLoading'), {
     ssr: false,
 })
 
-const ResultShowID = ({ idSubCategory }) => {
+const ResultShowID = ({ idCategory, idSubCategory }) => {
     const dispatch = useAppDispatch();
     const [isLoading, setLoading] = useState(true);
     const categoryFilterState = useAppSelector((state) => state.documents.categoryFilterSingleState);
@@ -45,7 +45,7 @@ const ResultShowID = ({ idSubCategory }) => {
     const hasFetchedData = useRef(false);
 
     const getDocument = async () => {
-        await axios.get(`${urlAPI}backend/documents?cursor=${categoryFilterState && categoryFilterState.cursor ? categoryFilterState.cursor : ''}&perPage=${categoryFilterState && categoryFilterState.perPage ? categoryFilterState.perPage : ''}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&sub_category_id=${idSubCategory ?? ''}`, {
+        await axios.get(`${urlAPI}backend/documents?cursor=${categoryFilterState.cursor ?? ''}&perPage=${categoryFilterState.perPage ?? ''}&sortBy=${categoryFilterState.sortBy ?? ''}&sortDirection=${categoryFilterState.sortDirection ?? ''}&category_id=${idCategory ?? ''}&sub_category_id=${idSubCategory ?? ''}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': "application/json",
@@ -87,7 +87,7 @@ const ResultShowID = ({ idSubCategory }) => {
 
             dispatch(setCategoryFilterState({ ...categoryFilterState, page: page }));
 
-            await axios.get(`${urlAPI}backend/documents?cursor=${categoryFilterState && categoryFilterState.cursor ? categoryFilterState.cursor : ''}&page=${page}&perPage=${categoryFilterState && categoryFilterState.perPage ? categoryFilterState.perPage : ''}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&sub_category_id=${idSubCategory ?? ''}`, {
+            await axios.get(`${urlAPI}backend/documents?cursor=${categoryFilterState.cursor ?? ''}&page=${page}&perPage=${categoryFilterState.perPage ?? ''}&sortBy=${categoryFilterState.sortBy ?? ''}&sortDirection=${categoryFilterState.sortDirection ?? ''}&category_id=${idCategory ?? ''}&sub_category_id=${idSubCategory ?? ''}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",

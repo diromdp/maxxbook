@@ -85,6 +85,8 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
         }
     }, []);
 
+    console.log(detailCategory && detailCategory)
+
     return (
         <div className="categories-page px-[24px] 3xl:px-0">
             <div className="screen-layer min-h-screen">
