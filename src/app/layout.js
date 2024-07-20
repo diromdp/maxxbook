@@ -84,7 +84,6 @@ async function getDetails() {
 }
 
 export default function RootLayout({ children }) {
-  const detailSEO = use(getDetails());
   return (
     <>
       <html lang="en">

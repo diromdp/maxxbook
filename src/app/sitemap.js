@@ -17,8 +17,6 @@ export default async function sitemap() {
   const documents = await getData();
   const documentsData = documents.data;
 
-  console.log(documentsData.length)
-
   const AllDocumentEnglish = documentsData.map((document) => ({
     url: `https://maxibook.co/en/document/${document.slug}`,
     lastModified: new Date(),

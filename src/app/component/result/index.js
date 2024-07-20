@@ -25,19 +25,15 @@ import { useAppDispatch, useAppSelector } from "../../store";
 const ResultShow = ({ QureyParams }) => {
     const dispatch = useAppDispatch();
     const categoryFilterState = useAppSelector((state) => state.documents.categoryFilterState);
-    const optionsDocument = useAppSelector((state) => state.documents.documentConfig);
-    const dataPaginationState = useAppSelector((state) => state.documents.documentPagination);
     const dataDocument = useAppSelector((state) => state.documents.documentData);
     const empatyState = useAppSelector((state) => state.documents.empatyState);
-    const [isLoading, setLoading] = useState(true);
-    const [isLoadingSelectCategory, setIsLoadingSelectCategory] = useState(true);
-    const [dataFetchCategory, setDataFetchCategory] = useState();
+    const [isLoading, setLoading] = useState(false);
+    const [config, setConfig] = useState({});
     const defaultOptions = {
         loop: true,
         autoplay: true,
         animationData: searchNotFound,
     };
-    const t = useTranslations('Documents');
     const t2 = useTranslations('Global');
     const hasFetchedData = useRef(false);
 
@@ -45,9 +41,9 @@ const ResultShow = ({ QureyParams }) => {
         if (categoryFilterState && categoryFilterState.category_id == '') {
             dispatch(setCategoryFilterState({ ...categoryFilterState, category_id: categroy_id ? categroy_id : '', q: query ?? '' }));
         }
-
+        setLoading(true);
         await setTimeout(() => {
-            axios.get(`${urlAPI}backend/documents?q=${query??''}&cursor=${categoryFilterState && categoryFilterState.cursor ? categoryFilterState.cursor : ''}&perPage=${categoryFilterState && categoryFilterState.perPage ? categoryFilterState.perPage : ''}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${categroy_id ??''}`, {
+            axios.get(`${urlAPI}backend/documents?q=${query ?? ''}&cursorEnabled=1&perPage=${categoryFilterState && categoryFilterState.perPage ? categoryFilterState.perPage : ''}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${categroy_id ?? ''}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",
@@ -56,10 +52,11 @@ const ResultShow = ({ QureyParams }) => {
                 .then((data) => {
                     if (data.status === 200) {
                         const checkLength = data.data.data.length;
-                        setLoading(false)
+                        setLoading(false);
                         dispatch(setDocumentdata(data.data.data))
                         dispatch(setPaginationState(data.data.links))
-                        dispatch(setDocumentConfig(data.data));
+                        setConfig(data.data);
+
                         if (checkLength > 0) {
                             dispatch(setEmpatyState(false))
                         } else {
@@ -82,16 +79,16 @@ const ResultShow = ({ QureyParams }) => {
         }, 100);
     }
 
-    const updatePagination = async (val) => {
-        var url_string = val;
-
+    const updatePagination = async () => {
+        var url_string = config ? config.next_page_url : '';
+        setLoading(true);
         if (url_string) {
             var url = new URL(url_string);
             var page = url.searchParams.get("page");
 
             dispatch(setCategoryFilterState({ ...categoryFilterState, page: page }));
 
-            await axios.get(`${urlAPI}backend/documents?q=${categoryFilterState && categoryFilterState.q ? categoryFilterState.q : ''}&page=${page}&cursor=${categoryFilterState && categoryFilterState.cursor ? categoryFilterState.cursor : ''}&perPage=${categoryFilterState && categoryFilterState.perPage ? categoryFilterState.perPage : ''}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${categoryFilterState && categoryFilterState.category_id ? categoryFilterState.category_id : ''}`, {
+            await axios.get(`${urlAPI}backend/documents?q=${categoryFilterState.q ?? ''}&cursor=1&page=${page}&perPage=${categoryFilterState.perPage ?? ''}&sortBy=${categoryFilterState.sortBy ?? ''}&sortDirection=${categoryFilterState.sortDirection ?? ''}&category_id=${categoryFilterState.category_id ?? ''}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",
@@ -99,10 +96,12 @@ const ResultShow = ({ QureyParams }) => {
             })
                 .then((data) => {
                     if (data.status === 200) {
+                        const NextDocument = data.data.data;
                         setLoading(false)
-                        dispatch(setDocumentdata(data.data.data))
+                        dispatch(setDocumentdata([...NextDocument, dataDocument]))
                         dispatch(setPaginationState(data.data.links))
                         dispatch(setDocumentConfig(data.data));
+
                     }
                 })
                 .catch(function (error) {
@@ -119,69 +118,29 @@ const ResultShow = ({ QureyParams }) => {
         }
     }
 
-    const getCategory = async () => {
-        await axios.get(`${urlAPI}backend/customer/categories`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': "application/json",
-            }
-        })
-            .then((data) => {
-                if (data.status === 200) {
-                    setIsLoadingSelectCategory(false)
-                    setDataFetchCategory(data.data)
-                }
-            })
-            .catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
-                }
-                console.log(error.config);
-            });
-    }
+    const handleScroll = () => {
+        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isLoading) return;
+
+        updatePagination();
+    };
 
     useEffect(() => {
         if (!hasFetchedData.current) {
             dispatch(setCategoryFilterState({ ...categoryFilterState, q: QureyParams != '' ? QureyParams : '' }));
             getDocument('', QureyParams ?? '');
-            getCategory();
             hasFetchedData.current = true;
         }
+        // Attach the scroll event listener
+        window.addEventListener('scroll', handleScroll);
+        
+        // Clean up the event listener
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
-    console.log(dataDocument && dataDocument);
     return (
         <>
             <div className="screen-layer">
-                {/* <div className="search-container">
-                    <HomeSearch
-                        getDocument={(val) => getDocument(null, val)}
-                    />
-                </div> */}
-                {
-                    // <>
-                    //     <FilterComponent
-                    //         getDocument={(val) => getDocument(val, null)}
-                    //         DataFetchCategory={dataFetchCategory}
-                    //         isLoading={isLoadingSelectCategory}
-                    //     />
-                    //     {
-                    //         !empatyState &&
-                    //         <div className="result-word">
-                    //             {
-                    //                 !isLoading && optionsDocument ?
-                    //                     <p>{optionsDocument.from}-{optionsDocument.to} of {optionsDocument.total} {t('results')}</p> :
-                    //                     <Skeleton className={"w-[180px] h-[20px]"} />
-                    //             }
-                    //         </div>
-                    //     }
-                    // </>
-                }
                 {
                     empatyState &&
                     <div className="content-empty w-full h-full  m-auto">
@@ -189,7 +148,7 @@ const ResultShow = ({ QureyParams }) => {
                         <div className="lg:w-[400px] lg:h-[400px]">
                             <Lottie options={defaultOptions}
                                 className="lottie-container "
-                                disabled={true}    
+                                disabled={true}
                             />
                         </div>
                     </div>
@@ -199,7 +158,7 @@ const ResultShow = ({ QureyParams }) => {
                     <div className="result-show px-[24px] 3xl:px-0">
                         {
                             !isLoading ? dataDocument && dataDocument.map((item, index) => {
-                                if(item.slug) {
+                                if (item.slug) {
                                     return (
                                         <Card
                                             key={index}
@@ -210,7 +169,7 @@ const ResultShow = ({ QureyParams }) => {
                                             slug={`${item.slug}`} />
                                     )
                                 }
-                               
+
                             }) :
                                 <>
                                     {[...Array(12)].map((x, i) =>
@@ -219,48 +178,6 @@ const ResultShow = ({ QureyParams }) => {
                                 </>
                         }
 
-                    </div>
-                }
-                {
-                    !empatyState &&
-                    <div className="mt-[32px] flex justify-between">
-                        <Pagination>
-                            <PaginationContent>
-                                {
-                                    dataPaginationState && dataPaginationState.map((data, index) => {
-                                        if (data.label === "&laquo; Previous") {
-                                            return (
-                                                <>
-                                                    {
-                                                        <PaginationItem key={index}>
-                                                            <PaginationPrevious disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
-                                                        </PaginationItem>
-                                                    }
-                                                </>
-                                            )
-                                        } else if (data.label === "Next &raquo;") {
-                                            return (
-                                                <>
-                                                    {
-                                                        <PaginationItem key={index}>
-                                                            <PaginationNext disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
-                                                        </PaginationItem>
-                                                    }
-                                                </>
-                                            )
-                                        } else {
-                                            return (
-                                                <PaginationItem key={index}>
-                                                    <PaginationLink className="cursor-pointer" data-url={data.url} isActive={data.active} onClick={() => updatePagination(data.url)}>
-                                                        {data.label}
-                                                    </PaginationLink>
-                                                </PaginationItem>
-                                            )
-                                        }
-                                    })
-                                }
-                            </PaginationContent>
-                        </Pagination>
                     </div>
                 }
             </div>
