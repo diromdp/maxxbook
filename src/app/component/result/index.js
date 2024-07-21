@@ -4,15 +4,10 @@ import { useTranslations } from 'next-intl';
 import Lottie from 'react-lottie';
 import { useState, useEffect, useRef } from "react";
 import Card from "@/app/component/cartItem";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import CardLoading from "@/app/component/cardLoading";
 import React from "react";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationLink,
-} from "@/components/ui/pagination";
+import { Button } from "@/components/ui/button"
+
 import { urlAPI } from "../../../lib/constant";
 import * as searchNotFound from '../../../lottie/search-not-found.json';
 import { setCategoryFilterState, setPaginationState, setDocumentdata, setDocumentConfig, setEmpatyState } from "../../store/reducer/categoryFilterSlice";
@@ -21,7 +16,6 @@ import { useAppDispatch, useAppSelector } from "../../store";
 const ResultShow = ({ QureyParams }) => {
     const dispatch = useAppDispatch();
     const categoryFilterState = useAppSelector((state) => state.documents.categoryFilterState);
-    const dataPaginationState = useAppSelector((state) => state.documents.documentPagination);
     const documentConfig = useAppSelector((state) => state.documents.documentConfig);
     const dataDocument = useAppSelector((state) => state.documents.documentData);
     const empatyState = useAppSelector((state) => state.documents.empatyState);
@@ -41,7 +35,7 @@ const ResultShow = ({ QureyParams }) => {
         }
 
         await setTimeout(() => {
-            axios.get(`${urlAPI}backend/documents?q=${query ?? ''}&cursor=${categoryFilterState.cursor ?? ''}&perPage=${5}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${categroy_id ?? ''}`, {
+            axios.get(`${urlAPI}backend/documents?q=${query ?? ''}&cursorEnabled=1&perPage=${20}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${categroy_id ?? ''}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",
@@ -79,41 +73,36 @@ const ResultShow = ({ QureyParams }) => {
         }, 100);
     }
 
-    const updatePagination = async (val) => {
-        var url_string = val;
+    const updatePagination = async () => {
 
-        if (url_string) {
-            var url = new URL(url_string);
-            var page = url.searchParams.get("page");
+        const nextPage = documentConfig.current_page + 1;
 
-            dispatch(setCategoryFilterState({ ...categoryFilterState, page: page }));
-
-            await axios.get(`${urlAPI}backend/documents?q=${categoryFilterState && categoryFilterState.q ? categoryFilterState.q : ''}&page=${page}&cursor=${categoryFilterState && categoryFilterState.cursor ? categoryFilterState.cursor : ''}&perPage=${5}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${categoryFilterState && categoryFilterState.category_id ? categoryFilterState.category_id : ''}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': "application/json",
+        await axios.get(`${urlAPI}backend/documents?q=${categoryFilterState && categoryFilterState.q ? categoryFilterState.q : ''}&page=${nextPage}&cursorEnabled=1&perPage=${20}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${categoryFilterState && categoryFilterState.category_id ? categoryFilterState.category_id : ''}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': "application/json",
+            }
+        })
+            .then((data) => {
+                if (data.status === 200) {
+                    const listDocument = data.data.data;
+                    setLoading(false)
+                    dispatch(setDocumentdata([...listDocument, ...dataDocument]))
+                    dispatch(setPaginationState(data.data.links))
+                    dispatch(setDocumentConfig(data.data));
                 }
             })
-                .then((data) => {
-                    if (data.status === 200) {
-                        setLoading(false)
-                        dispatch(setDocumentdata(data.data.data))
-                        dispatch(setPaginationState(data.data.links))
-                        dispatch(setDocumentConfig(data.data));
-                    }
-                })
-                .catch(function (error) {
-                    if (error.response) {
-                        console.log(error.response.data.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                });
-        }
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+            });
     }
 
     useEffect(() => {
@@ -123,9 +112,6 @@ const ResultShow = ({ QureyParams }) => {
             hasFetchedData.current = true;
         }
     }, []);
-
-
-    console.log(dataPaginationState && dataPaginationState)
 
     return (
         <>
@@ -170,52 +156,10 @@ const ResultShow = ({ QureyParams }) => {
 
                     </div>
                 }
-                {
-                    !empatyState &&
-                    <div className="mt-[32px] flex justify-between">
-                        <Pagination>
-                            <PaginationContent>
-                                {
-                                    dataPaginationState && dataPaginationState.map((data, index) => {
-                                        if (data.label === "&laquo; Previous") {
-                                            return (
-                                                <>
-                                                    {
-                                                        <PaginationItem key={index}>
-                                                            <div disabled={data.url != null ? false : true} className={data.url != null ? "cursor-pointer" : 'pointer-events-none opacity-50'} onClick={() => updatePagination(data.url)}>
-                                                                <FaAngleLeft />
-                                                            </div>
-                                                        </PaginationItem>
-                                                    }
-                                                </>
-                                            )
-                                        } else if (data.label === "Next &raquo;") {
-                                            return (
-                                                <>
-                                                    {
-                                                        <PaginationItem key={index}>
-                                                            <div disabled={data.url != null ? false : true} className={data.url != null ? "cursor-pointer" : 'pointer-events-none opacity-50'} onClick={() => updatePagination(data.url)}>
-                                                                <FaAngleRight />
-                                                            </div>
-                                                        </PaginationItem>
-                                                    }
-                                                </>
-                                            )
-                                        } else {
-                                            return (
-                                                <PaginationItem key={index}>
-                                                    <PaginationLink className="cursor-pointer" data-url={data.url} isActive={data.active} onClick={() => updatePagination(data.url)}>
-                                                        {data.label}
-                                                    </PaginationLink>
-                                                </PaginationItem>
-                                            )
-                                        }
-                                    })
-                                }
-                            </PaginationContent>
-                        </Pagination>
-                    </div>
-                }
+
+                <div className="Load-more py-[32px] flex justify-center items-center">
+                    <Button className={`btn-primary text-[18px] w-fit h-[40px] ${documentConfig.current_page === documentConfig.last_page ? "pointer-events-none opacity-50" : ""}`} disabled={documentConfig.current_page === documentConfig.last_page} onClick={() => updatePagination()}>Load More</Button>
+                </div>
             </div>
         </>
 

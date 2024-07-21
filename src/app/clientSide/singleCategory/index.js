@@ -24,7 +24,7 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
             name: t('Home'),
             urlPath: '/',
             isIcon: false
-        }
+        },
     ]);
     const [isLoading, setLoading] = useState(true);
     const [detailSubCategoryClient, setDetailSubCategory] = useState([]);
@@ -84,8 +84,6 @@ const SingleCategory = ({detailCategory, slug, locale}) => {
             setMenu([...menu, ...data]);
         }
     }, []);
-
-    console.log(detailCategory && detailCategory)
 
     return (
         <div className="categories-page px-[24px] 3xl:px-0">

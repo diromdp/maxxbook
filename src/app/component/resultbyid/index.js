@@ -1,22 +1,15 @@
 "use client";
 import dynamic from 'next/dynamic';
 import React from "react";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationLink,
-    PaginationPrevious,
-    PaginationNext
-} from "@/components/ui/pagination";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button"
 import { useTranslations } from 'next-intl';
 import Lottie from 'react-lottie';
 import * as searchNotFound from '../../../lottie/search-not-found.json';
 import { urlAPI } from "../../../lib/constant";
 
-import { setDocumentCategoryPagination, setCategoryFilterState, setDocumentCategorySingle, setEmptyStateDocumentCategory } from "../../store/reducer/categoryFilterSlice";
+import { setDocumentCategoryPagination, setDocumentCategorySingle, setEmptyStateDocumentCategory, setDocumentConfigSingle } from "../../store/reducer/categoryFilterSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 
 const Card = dynamic(() => import('@/app/component/cartItem'), {
@@ -30,7 +23,8 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
     const dispatch = useAppDispatch();
     const [isLoading, setLoading] = useState(true);
     const categoryFilterState = useAppSelector((state) => state.documents.categoryFilterSingleState);
-    const dataPaginationState = useAppSelector((state) => state.documents.documentCategoryPagination);
+    const documentConfigSingle = useAppSelector((state) => state.documents.documentConfigSingle);
+
     const dataDocument = useAppSelector((state) => state.documents.documentCategorySingle);
     const emptyState = useAppSelector((state) => state.documents.emptyStateDocumentCategory);
     const defaultOptions = {
@@ -38,14 +32,12 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
         autoplay: true,
         animationData: searchNotFound,
     };
-
-    const t = useTranslations('Documents');
     const t2 = useTranslations('Global');
 
     const hasFetchedData = useRef(false);
 
     const getDocument = async () => {
-        await axios.get(`${urlAPI}backend/documents?cursor=${categoryFilterState.cursor ?? ''}&perPage=${categoryFilterState.perPage ?? ''}&sortBy=${categoryFilterState.sortBy ?? ''}&sortDirection=${categoryFilterState.sortDirection ?? ''}&category_id=${idCategory ?? ''}&sub_category_id=${idSubCategory ?? ''}`, {
+        await axios.get(`${urlAPI}backend/documents?cursorEnabled=1&perPage=${20}&sortBy=${categoryFilterState.sortBy ?? ''}&sortDirection=${categoryFilterState.sortDirection ?? ''}&category_id=${idCategory ?? ''}&sub_category_id=${idSubCategory ?? ''}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': "application/json",
@@ -57,6 +49,7 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
                     setLoading(false)
                     dispatch(setDocumentCategorySingle(data.data.data))
                     dispatch(setDocumentCategoryPagination(data.data.links))
+                    dispatch(setDocumentConfigSingle(data.data));
                     if (checkLength > 0) {
                         dispatch(setEmptyStateDocumentCategory(false))
                     } else {
@@ -78,40 +71,36 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
             });
     }
 
-    const updatePagination = async (val) => {
-        var url_string = val;
+    const updatePagination = async () => {
+        const nextPage = documentConfigSingle.current_page + 1;
 
-        if (url_string) {
-            var url = new URL(url_string);
-            var page = url.searchParams.get("page");
+        await axios.get(`${urlAPI}backend/documents?q=${categoryFilterState && categoryFilterState.q ? categoryFilterState.q : ''}&page=${nextPage}&cursorEnabled=1&perPage=${20}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${categoryFilterState && categoryFilterState.category_id ? categoryFilterState.category_id : ''}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': "application/json",
+            }
+        })
+            .then((data) => {
+                if (data.status === 200) {
+                    const listDocument = data.data.data;
+                    setLoading(false)
+                    dispatch(setDocumentCategorySingle([...listDocument, ...dataDocument]))
+                    dispatch(setDocumentCategoryPagination(data.data.links))
+                    dispatch(setDocumentConfigSingle(data.data));
 
-            dispatch(setCategoryFilterState({ ...categoryFilterState, page: page }));
-
-            await axios.get(`${urlAPI}backend/documents?cursor=${categoryFilterState.cursor ?? ''}&page=${page}&perPage=${categoryFilterState.perPage ?? ''}&sortBy=${categoryFilterState.sortBy ?? ''}&sortDirection=${categoryFilterState.sortDirection ?? ''}&category_id=${idCategory ?? ''}&sub_category_id=${idSubCategory ?? ''}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': "application/json",
                 }
             })
-                .then((data) => {
-                    if (data.status === 200) {
-                        setLoading(false)
-                        dispatch(setDocumentCategorySingle(data.data.data))
-                        dispatch(setDocumentCategoryPagination(data.data.links))
-                    }
-                })
-                .catch(function (error) {
-                    if (error.response) {
-                        console.log(error.response.data.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                });
-        }
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+            });
     }
 
     useEffect(() => {
@@ -120,6 +109,8 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
             hasFetchedData.current = true;
         }
     }, []);
+
+    console.log(documentConfigSingle && documentConfigSingle)
 
     return (
         <>
@@ -131,7 +122,7 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
                         <div className="lg:w-[400px] lg:h-[400px]">
                             <Lottie options={defaultOptions}
                                 className="lottie-container "
-                                disabled={true}    
+                                disabled={true}
                             />
                         </div>
                     </div>
@@ -148,7 +139,8 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
                                         imagePath={item.thumb_url}
                                         title={item.title}
                                         description={item.description}
-                                        slug={item.slug} />
+                                        slug={item.slug} 
+                                    />
                                 )
                             }) :
                                 <>
@@ -157,53 +149,11 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
                                     )}
                                 </>
                         }
-
                     </div>
                 }
-
-                {
-                    !emptyState &&
-                    <div className="mt-[32px] flex justify-between">
-                        <Pagination>
-                            <PaginationContent>
-                                {
-                                    dataPaginationState && dataPaginationState.map((data, index) => {
-                                        if (data.label === "&laquo; Previous") {
-                                            return (
-                                                <>
-                                                    {
-                                                        <PaginationItem key={index}>
-                                                            <PaginationPrevious disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
-                                                        </PaginationItem>
-                                                    }
-                                                </>
-                                            )
-                                        } else if (data.label === "Next &raquo;") {
-                                            return (
-                                                <>
-                                                    {
-                                                        <PaginationItem key={index}>
-                                                            <PaginationNext disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
-                                                        </PaginationItem>
-                                                    }
-                                                </>
-                                            )
-                                        } else {
-                                            return (
-                                                <PaginationItem key={index}>
-                                                    <PaginationLink className="cursor-pointer" data-url={data.url} isActive={data.active} onClick={() => updatePagination(data.url)}>
-                                                        {data.label}
-                                                    </PaginationLink>
-                                                </PaginationItem>
-                                            )
-                                        }
-                                    })
-                                }
-
-                            </PaginationContent>
-                        </Pagination>
-                    </div>
-                }
+                <div className="Load-more py-[32px] flex justify-center items-center">
+                    <Button className={`btn-primary text-[18px] w-fit h-[40px] ${documentConfigSingle.current_page === documentConfigSingle.last_page ? "pointer-events-none opacity-50" : ""}`} disabled={documentConfigSingle.current_page === documentConfigSingle.last_page} onClick={() => updatePagination()}>Load More</Button>
+                </div>
             </div>
         </>
 

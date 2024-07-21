@@ -24,6 +24,7 @@ const initialState = {
     documentPagination: [],
     documentCategoryPagination: [],
     documentConfig: {},
+    documentConfigSingle:{},
     empatyState: false,
     emptyStateDocumentCategory: false,
     tabFormDocuments: 0,
@@ -47,6 +48,9 @@ export const documentSlice = createSlice({
         },
         setDocumentConfig: (state, action) => {
             state.documentConfig = action.payload;
+        },
+        setDocumentConfigSingle: (state, action) => {
+            state.documentConfigSingle = action.payload;
         },
         setEmpatyState: (state, action) => {
             state.empatyState = action.payload;
@@ -81,6 +85,7 @@ export const documentSlice = createSlice({
 export const {
     setCategoryFilterState,
     setDocumentConfig,
+    setDocumentConfigSingle,
     setDocumentdata,
     setPaginationState,
     setEmpatyState,
