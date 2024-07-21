@@ -13,7 +13,7 @@ const initialState = {
     },
     categoryFilterSingleState: {
         cursor: "",
-        perPage: "18",
+        perPage: "20",
         sortBy: "created_at",
         sortDirection: "desc",
         user_id: "",
