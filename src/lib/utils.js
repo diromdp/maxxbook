@@ -1,6 +1,7 @@
 import { clsx } from "clsx"
 import { twMerge } from "tailwind-merge";
-
+import axios from 'axios';
+import { urlAPI } from "./constant";
 
 export function cn(...inputs) {
    return twMerge(clsx(inputs))
@@ -9,7 +10,7 @@ export function cn(...inputs) {
 
 export function kFormatter(num) {
    if (num > 999 && num < 1000000) {
-      return (num / 1000).toFixed(1) + 'K';
+      return (num / 2000).toFixed(1) + 'K';
    } else if (num > 1000000) {
       return (num / 1000000).toFixed(1) + 'M';
    } else if (num < 900) {
@@ -94,3 +95,11 @@ export function formatNumber(num) {
    }
    return num.toString();
 }
+
+export const axiosInstance = axios.create({
+   baseURL: urlAPI,
+   timeout: 3000,
+   headers: {
+      'Content-Type': 'application/json',
+   },
+});

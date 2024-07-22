@@ -63,7 +63,7 @@ const ForgotPassword = ({params}) => {
                         })
                         setTimeout(() => {
                             router.push('/')
-                        }, 1000)
+                        }, 2000)
                     }
                 })
                 .catch(function (error) {

@@ -79,6 +79,8 @@
         "Explore more in" : "Explore More in",
         "Documents": "Documents",
         "Documents Not Found": "Documents Not Found",
-        "Home": "Home"
+        "Home": "Home",
+        "Category": "Category",
+        "SubCategory": "Sub category"
     }
 }

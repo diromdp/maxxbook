@@ -1,33 +1,24 @@
-import Link from "next/link";
 import { getLocale, getTranslations } from 'next-intl/server';
 import { headers } from "next/headers";
 import { urlAPI } from "../../../../lib/constant";
 import ListCategory from "../../../component/ListCategory";
-
-// async function getData() {
-//     const data = await fetch(`${urlAPI}backend/categories`, {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Accept': "application/json",
-//         },
-//     });
-//     return data.json();
-// }
+import { axiosInstance } from "../../../../lib/utils";
 
 async function getDetails() {
-    const data = await fetch(`${urlAPI}backend/settings?keys=seo.title_category,seo.description_category,seo.title_category_id,seo.description_category_id`, {
-        method: 'get',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': "application/json",
-        },
-    });
-
-    if (!data.ok) {
-        throw new Error('Failed to fetch data')
+    try {
+        const response = await axiosInstance(`${urlAPI}backend/settings?keys=seo.title_category,seo.description_category,seo.title_category_id,seo.description_category_id`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': "application/json",
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error retrieving data:', error);
+        throw new Error('Could not get data');
     }
-    return data.json()
 }
 
 export async function generateMetadata() {
@@ -35,10 +26,10 @@ export async function generateMetadata() {
     const pathname = headersList.get("referer");
     const ogImage = '/image/og-image.png';
     const detailSEO = await getDetails();
-    const selectedTitle = detailSEO.filter(x => x.key === 'seo.title_category')
-    const selectedDesc = detailSEO.filter(x => x.key === 'seo.description_category')
-    const selectedTitleID = detailSEO.filter(x => x.key === 'seo.title_category_id')
-    const selectedDescID = detailSEO.filter(x => x.key === 'seo.description_category_id')
+    const selectedTitle = detailSEO && detailSEO.filter(x => x.key === 'seo.title_category')
+    const selectedDesc = detailSEO && detailSEO.filter(x => x.key === 'seo.description_category')
+    const selectedTitleID = detailSEO && detailSEO.filter(x => x.key === 'seo.title_category_id')
+    const selectedDescID = detailSEO && detailSEO.filter(x => x.key === 'seo.description_category_id')
 
     const locale = await getLocale();
 

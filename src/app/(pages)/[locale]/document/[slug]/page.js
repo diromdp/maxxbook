@@ -1,6 +1,8 @@
 import dynamic from 'next/dynamic';
 import { urlAPI } from "../../../../../lib/constant";
-import { getTranslations, getLocale } from "next-intl/server";
+import { axiosInstance } from "../../../../../lib/utils";
+
+import { getTranslations } from "next-intl/server";
 import { headers } from "next/headers";
 
 const PlaceAdsance = dynamic(() => import('@/app/component/placeAdsence'), {
@@ -15,18 +17,20 @@ const ListDataDetailDocument = dynamic(() => import('../../../../component/ListD
 
 
 async function getDetails(slug) {
-    const data = await fetch(`${urlAPI}backend/documents/detail/${slug}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': "application/json",
-        },
-    });
-
-    if (!data) {
-        throw new Error('Failed to fetch data')
+    try {
+        const response = await axiosInstance(`${urlAPI}backend/documents/detail/${slug}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': "application/json",
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error retrieving data:', error);
+        throw new Error('Could not get data');
     }
-    return data.json()
 }
 
 export async function generateMetadata({ params }) {
@@ -92,7 +96,7 @@ export default async function documentPage({ params }) {
                                 <div className="title-document-content">
                                     <h2>{t('other documents')}</h2>
                                 </div>
-                                <ListDataDetailDocument/>
+                                <ListDataDetailDocument />
                             </div>
                         </div>
                     </div>

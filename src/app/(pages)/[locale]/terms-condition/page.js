@@ -1,25 +1,28 @@
 import Sidebar from "@/app/component/sidebar";
 import { headers } from "next/headers";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import { urlAPI } from "../../../../lib/constant";
+import { axiosInstance } from "../../../../lib/utils";
 
 const ContentTnc = dynamic(() => import("../../../component/contentTnc"), {
     ssr: false,
 });
 async function getDetails() {
-    const data = await fetch(`${urlAPI}backend/settings?keys=page.title_term,page.description_seo_term,page.description_term,page.title_term_id,page.description_seo_term_id,page.description_term_id`, {
-        method: 'get',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': "application/json",
-        },
-    });
-
-    if (!data.ok) {
-        throw new Error('Failed to fetch data')
+    try {
+        const response = await axiosInstance(`${urlAPI}backend/settings?keys=page.title_term,page.description_seo_term,page.description_term,page.title_term_id,page.description_seo_term_id,page.description_term_id`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': "application/json",
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error retrieving data:', error);
+        throw new Error('Could not get data');
     }
-    return data.json()
 }
 
 export async function generateMetadata() {
@@ -27,8 +30,8 @@ export async function generateMetadata() {
     const pathname = headersList.get("referer");
 
     const detailSEO = await getDetails();
-    const selectedTitle = detailSEO.filter(x => x.key === 'page.title_term')
-    const selectedDesc = detailSEO.filter(x => x.key === 'page.description_seo_term')
+    const selectedTitle = detailSEO && detailSEO.filter(x => x.key === 'page.title_term')
+    const selectedDesc = detailSEO && detailSEO.filter(x => x.key === 'page.description_seo_term')
 
     if (selectedTitle.length > 0 && selectedDesc.length > 0) {
         return {

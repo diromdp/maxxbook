@@ -1,7 +1,6 @@
 import { Roboto, Montserrat, League_Spartan } from 'next/font/google';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { use } from "react";
-import { BaseUrl, urlAPI } from '../lib/constant';
+import { BaseUrl } from '../lib/constant';
 import '@/app/scss/style.scss';
 import '@wangeditor/editor/dist/css/style.css' // import css
 
@@ -71,16 +70,6 @@ export async function generateMetadata() {
       ],
     },
   };
-}
-async function getDetails() {
-  const data = await fetch(`${urlAPI}backend/settings?keys=page.google_analytics`, {
-    method: 'get',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': "application/json",
-    },
-  });
-  return data.json()
 }
 
 export default function RootLayout({ children }) {

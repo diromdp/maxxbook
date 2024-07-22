@@ -34,7 +34,7 @@ const Callback = () => {
         })
         setTimeout(() => {
            router.push('/login');
-        }, 4000)
+        }, 3000)
     }
 
     useEffect(() => {

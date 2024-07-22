@@ -2,20 +2,28 @@ import { getLocale } from "next-intl/server";
 import { headers } from "next/headers";
 import dynamic from 'next/dynamic';
 import { urlAPI } from "../../../../../lib/constant";
+import { axiosInstance } from "../../../../../lib/utils";
+
 
 const SingleCategory = dynamic(() => import('../../../../clientSide/singleCategory'), {
     ssr: false,
 })
 
 async function getData(val) {
-    const data = await fetch(`${urlAPI}backend/customer/categories/detail/${val}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': "application/json",
-        },
-    });
-    return data.json();
+    try {
+        const response = await axiosInstance(`${urlAPI}backend/customer/categories/detail/${val}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': "application/json",
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error retrieving data:', error);
+        throw new Error('Could not get data');
+    }
 }
 
 export async function generateMetadata({ params }) {

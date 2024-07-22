@@ -1,29 +1,32 @@
-import Sidebar from "@/app/component/sidebar";
+import dynamic from "next/dynamic";
+
 import { headers } from "next/headers";
 import { useTranslations } from "next-intl";
 import { getLocale } from "next-intl/server";
-
+import Sidebar from "@/app/component/sidebar";
 import { urlAPI } from "../../../../lib/constant";
-import dynamic from "next/dynamic";
+import { axiosInstance } from "../../../../lib/utils";
+
 
 const ContentPrivacy = dynamic(() => import("../../../component/contentPrivacy"), {
     ssr: false,
 });
 
-
 async function getDetails() {
-    const data = await fetch(`${urlAPI}backend/settings?keys=page.title_privacy,page.description_seo_privacy,page.description_privacy,page.title_privacy_id,page.description_seo_privacy_id,page.description_privacy_id`, {
-        method: 'get',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': "application/json",
-        },
-    });
-
-    if (!data.ok) {
-        throw new Error('Failed to fetch data')
+    try {
+        const response = await axiosInstance(`${urlAPI}backend/settings?keys=page.title_privacy,page.description_seo_privacy,page.description_privacy,page.title_privacy_id,page.description_seo_privacy_id,page.description_privacy_id`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': "application/json",
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error retrieving data:', error);
+        throw new Error('Could not get data');
     }
-    return data.json()
 }
 
 export async function generateMetadata() {
@@ -31,10 +34,10 @@ export async function generateMetadata() {
     const pathname = headersList.get("referer");
 
     const detailSEO = await getDetails();
-    const selectedTitle = detailSEO.filter(x => x.key === 'page.title_privacy')
-    const selectedDesc = detailSEO.filter(x => x.key === 'page.description_seo_privacy')
-    const selectedTitleID = detailSEO.filter(x => x.key === 'page.title_privacy_id')
-    const selectedDescID = detailSEO.filter(x => x.key === 'page.description_seo_privacy_id')
+    const selectedTitle = detailSEO && detailSEO.filter(x => x.key === 'page.title_privacy')
+    const selectedDesc = detailSEO && detailSEO.filter(x => x.key === 'page.description_seo_privacy')
+    const selectedTitleID = detailSEO && detailSEO.filter(x => x.key === 'page.title_privacy_id')
+    const selectedDescID = detailSEO && detailSEO.filter(x => x.key === 'page.description_seo_privacy_id')
     const locale = await getLocale();
 
     if (locale == "en") {

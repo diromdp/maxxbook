@@ -3,7 +3,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
-import { urlAPI } from "../../../lib/constant";
+import { axiosInstance } from '../../../lib/utils';
 
 const Categories = dynamic(() => import('../../component/categories'), {
    ssr: false,
@@ -13,14 +13,21 @@ const HomeSearch = dynamic(() => import('../../component/homeSearch'), {
 })
 
 async function getDetails() {
-   const data = await fetch(`${urlAPI}backend/settings?keys=seo.title_home,seo.description_home,seo.title_home_id,seo.description_home_id`, {
-      method: 'get',
-      headers: {
-         'Content-Type': 'application/json',
-         'Accept': "application/json",
-      },
-   });
-   return data.json()
+   try {
+      const response = await axiosInstance(`backend/settings?keys=seo.title_home,seo.description_home,seo.title_home_id,seo.description_home_id`,
+         {
+            headers: {
+               'Content-Type': 'application/json',
+               'Accept': "application/json",
+            },
+         }
+      );
+      return response.data;
+
+   } catch (error) {
+      console.error('Error retrieving data:', error);
+      throw new Error('Could not get data');
+   }
 }
 
 export async function generateMetadata() {
@@ -29,10 +36,11 @@ export async function generateMetadata() {
    const ogImage = '/image/og-image.png'; // Or use a dynamic path
 
    const detailSEO = await getDetails();
-   const selectedTitle = detailSEO.filter(x => x.key === 'seo.title_home')
-   const selectedDesc = detailSEO.filter(x => x.key === 'seo.description_home')
-   const selectedTitleID = detailSEO.filter(x => x.key === 'seo.title_home_id')
-   const selectedDescID = detailSEO.filter(x => x.key === 'seo.description_home_id')
+
+   const selectedTitle = detailSEO && detailSEO.filter(x => x.key === 'seo.title_home')
+   const selectedDesc =  detailSEO && detailSEO.filter(x => x.key === 'seo.description_home')
+   const selectedTitleID = detailSEO && detailSEO.filter(x => x.key === 'seo.title_home_id')
+   const selectedDescID =  detailSEO && detailSEO.filter(x => x.key === 'seo.description_home_id')
    const locale = await getLocale();
 
    if (locale === 'en') {

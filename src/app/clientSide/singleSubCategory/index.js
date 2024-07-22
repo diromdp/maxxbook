@@ -19,7 +19,7 @@ const SingleSubCategory = ({ slug, locale, detailSubCategory }) => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(!isLoading);
-        }, 1000)
+        }, 2000)
         if (slug && slug.length == 2) {
             const data = [
                 {
