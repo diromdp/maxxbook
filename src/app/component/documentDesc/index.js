@@ -56,6 +56,11 @@ const DocumentDesc = ({ slug }) => {
                 'Content-Type': 'application/json',
                 'Accept': "application/json",
                 "Authorization": `Bearer ${token}`
+            },
+            proxy: {
+                protocol: "https",
+                host: "139.180.215.200",
+                port: "80"
             }
         })
             .then((data) => {
@@ -86,6 +91,11 @@ const DocumentDesc = ({ slug }) => {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': "application/json",
+            },
+            proxy: {
+                protocol: "https",
+                host: "139.180.215.200",
+                port: "80"
             }
         })
             .then((data) => {
@@ -112,10 +122,6 @@ const DocumentDesc = ({ slug }) => {
 
     const downloadFile = async (fileUrl, fileName) => {
         const url = new URL(fileUrl);
-        const pathname = url.pathname;
-        const params = url.searchParams
-        const getHash = params.get('hash');
-
         if (token) {
             try {
                   const redirectUrl = url;
@@ -144,6 +150,11 @@ const DocumentDesc = ({ slug }) => {
                 'Content-Type': 'application/json',
                 'Accept': "application/json",
                 "Authorization": `Bearer ${token}`
+            },
+            proxy: {
+                protocol: "https",
+                host: "139.180.215.200",
+                port: "80"
             }
         })
             .then((data) => {
