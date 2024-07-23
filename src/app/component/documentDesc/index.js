@@ -225,7 +225,8 @@ const DocumentDesc = ({ slug }) => {
                             <Skeleton className="h-8 mb-[10px] w-[80%]" />
                         </> :
                         <>
-                            <div dangerouslySetInnerHTML={{ __html: documentData && documentData.description }}>
+                            <div>
+                                {documentData && documentData.description}
                             </div>
                         </>
                 }

@@ -48,8 +48,8 @@ const SingleSubCategory = ({ slug, locale, detailSubCategory }) => {
 
     return (
         <>
-            <div className="categories-page px-[24px] 3xl:px-0">
-                <div className="screen-layer">
+            <div className="categories-page">
+                <div className="screen-layer px-[16px] lg:px-[24px]">
                     <BreadCumb menu={menu} />
                     {
                         detailSubCategory.length > 0 &&

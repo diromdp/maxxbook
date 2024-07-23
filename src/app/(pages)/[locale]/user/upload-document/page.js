@@ -1,15 +1,22 @@
 "use client"
-import {
-    Steps
-} from 'antd';
 import { FilePlus, Upload, CircleCheckBig } from 'lucide-react';
-import FormUploadDOcument from '../../../../component/FormUploadDocument';
-import FormUploadFile from '../../../../component/FormUploadFIle';
-import FormUrlShare from '../../../../component/FormUrlShare';
 import { useAppSelector, useAppDispatch } from '../../../../store';
 import { setTabFormatDocument } from '../../../../store/reducer/categoryFilterSlice';
 import { useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
+import Steps from 'antd/es/steps';
+
+const FormUploadDOcument = dynamic(() => import("../../../../component/FormUploadDocument"), {
+    ssr: false
+});
+const FormUploadFile = dynamic(() => import("../../../../component/FormUploadFIle"), {
+    ssr: false
+});
+const FormUrlShare = dynamic(() => import("../../../../component/FormUrlShare"), {
+    ssr: false
+});
+
+
 
 const UploadDocument = () => {
     const dispatch = useAppDispatch();

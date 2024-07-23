@@ -82,7 +82,7 @@ export default async function documentPage({ params }) {
     return (
         <div className="document-page min-h-screen">
             <div className="screen-layer mb-[32px]">
-                <div className="flex flex-col px-[16px] lg:px-0 lg:flex-row gap-[16px]">
+                <div className="flex flex-col px-[16px] lg:px-[24px] lg:flex-row gap-[16px]">
                     <div className="w-full lg:w-[70%] flex flex-col items-center relative">
                         {/* <PlaceAdsance className="my-[16px] hidden md:block w-full " type={'Leaderboard'} /> */}
                         <DocumentDesc slug={slug} />

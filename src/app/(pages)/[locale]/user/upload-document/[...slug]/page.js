@@ -21,7 +21,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef } from "react";
-import { i18nChangeLanguage } from '@wangeditor/editor';
 import axios from "axios";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -29,10 +28,6 @@ import { urlAPI } from "../../../../../../lib/constant";
 import { useAppSelector, useAppDispatch } from "../../../../../store";
 import { setUploadId } from "../../../../../store/reducer/categoryFilterSlice";
 import { setAuthSlice } from "../../../../../store/reducer/authSlice";
-
-
-
-i18nChangeLanguage('en')
 const { TextArea } = Input;
 
 const EditUploadFile = ({ params }) => {
