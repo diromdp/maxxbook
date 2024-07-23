@@ -118,17 +118,11 @@ const DocumentDesc = ({ slug }) => {
 
         if (token) {
             try {
-                const response = await fetch(`https://api.maxibook.co${pathname}?hash=${getHash}`, {
-                    method: 'HEAD', // Using HEAD to only fetch headers
-                    redirect: 'follow' // Follow redirects
-                });
-              
-                  // Get the redirect URL from the Location header
-                  const redirectUrl = response.url;
-                  console.log('Redirect URL:', redirectUrl);
+                  const redirectUrl = url;
                   const a = document.createElement('a');
                   a.href = redirectUrl;
-                  a.download = fileName; // Suggest a filename for the download
+                  a.target = '_blank';
+                  a.download = fileName;
                   document.body.appendChild(a);
                   a.click();
                   document.body.removeChild(a);
