@@ -111,16 +111,34 @@ const DocumentDesc = ({ slug }) => {
     };
 
     const downloadFile = async (fileUrl, fileName) => {
-        console.log(fileUrl);
         if (token) {
-            window.open(fileUrl, '_blank');
+            await axios.get(`${fileUrl}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': "application/json",
+                }
+            })
+                .then((data) => {
+                  console.log(data);
+                })
+                .catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        console.log(error.request);
+                    } else {
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                });
         } else {
             api.info({
                 message: "Information",
                 description: "Please Sign in first to download the File"
             })
         }
-
     };
 
     const bookmarkSaved = async () => {
@@ -225,8 +243,7 @@ const DocumentDesc = ({ slug }) => {
                             <Skeleton className="h-8 mb-[10px] w-[80%]" />
                         </> :
                         <>
-                            <div>
-                                {documentData && documentData.description}
+                            <div dangerouslySetInnerHTML={{ __html: documentData && documentData.description }}>
                             </div>
                         </>
                 }
