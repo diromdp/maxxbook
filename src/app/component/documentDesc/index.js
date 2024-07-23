@@ -15,7 +15,7 @@ import {
 import { useLocale } from "next-intl";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { urlAPI } from "../../../lib/constant";
+import { urlAPI, downloadUrl } from "../../../lib/constant";
 import axios from "axios";
 import 'dayjs/locale/id';
 import localeData from 'dayjs/plugin/localeData';
@@ -111,28 +111,25 @@ const DocumentDesc = ({ slug }) => {
     };
 
     const downloadFile = async (fileUrl, fileName) => {
+        const url = new URL(fileUrl);
+        const pathname = url.pathname;
+        const params = url.searchParams
+        const getHash = params.get('hash');
+
         if (token) {
-            await axios.get(`${fileUrl}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': "application/json",
-                }
-            })
-                .then((data) => {
-                  console.log(data);
-                })
-                .catch(function (error) {
-                    if (error.response) {
-                        console.log(error.response.data.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                    console.log(error.config);
+            try {
+                const response = await fetch(`${downloadUrl}${pathname}?hash=${getHash}`, {
+                    method: 'HEAD', // Using HEAD to only fetch headers
+                    redirect: 'follow' // Follow redirects
                 });
+              
+                  // Get the redirect URL from the Location header
+                  const redirectUrl = response.url;
+                  console.log('Redirect URL:', redirectUrl);
+            } catch (error) {
+                console.error('Error downloading the PDF:', error);
+            }
+
         } else {
             api.info({
                 message: "Information",

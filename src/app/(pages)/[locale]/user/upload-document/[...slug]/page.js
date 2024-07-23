@@ -306,7 +306,7 @@ const EditUploadFile = ({ params }) => {
     return (
         <>
             <div className="upload-document--form">
-                <div className="screen-layer">
+                <div className="screen-layer px-[16px] lg:px-[24px]">
                     {contextHolder}
                     <Card>
                         <CardContent>

@@ -1,5 +1,6 @@
 "use client"
 import { FilePlus, Upload, CircleCheckBig } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import { useAppSelector, useAppDispatch } from '../../../../store';
 import { setTabFormatDocument } from '../../../../store/reducer/categoryFilterSlice';
 import { useEffect, useRef } from 'react';
@@ -50,8 +51,8 @@ const UploadDocument = () => {
     return (
         <>
             <div className="upload-document--form">
-                <div className="screen-layer min-h-dvh">
-                    <div className="px-[16px] lg:px-0">
+                <div className="screen-layer min-h-dvh px-[16px] lg:px-[24px]">
+                    <div className="">
                         <Steps
                             current={tabFormDocument}
                             onChange={onChangeTabs}
