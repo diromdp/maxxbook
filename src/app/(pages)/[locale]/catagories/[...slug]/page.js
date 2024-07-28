@@ -22,7 +22,6 @@ async function getData(val) {
         return response.data;
     } catch (error) {
         console.error('Error retrieving data:', error);
-        throw new Error('Could not get data');
     }
 }
 
@@ -31,24 +30,26 @@ export async function generateMetadata({ params }) {
     const headersList = headers();
     const pathname = headersList.get("referer");
     const detailSEO = await getData(slug);
-    return {
-        title: `Maxibook - ${locale == 'en' ? detailSEO[0].name : detailSEO[0].name_id}`,
-        description: locale == 'en' ? detailSEO[0].description : detailSEO[0].description_id,
-        canonical: pathname,
-        twitter: {
-            card: 'summary_large_image',
+    if (detailSEO != undefined || detailSEO && detailSEO.length > 0) {
+        return {
             title: `Maxibook - ${locale == 'en' ? detailSEO[0].name : detailSEO[0].name_id}`,
             description: locale == 'en' ? detailSEO[0].description : detailSEO[0].description_id,
-            url: pathname,
-            images: [{ url: '/image/og-image.png' }],
-        },
-        openGraph: {
-            title: `Maxibook - ${locale == 'en' ? detailSEO[0].name : detailSEO[0].name_id}`,
-            description: locale == 'en' ? detailSEO[0].description : detailSEO[0].description_id,
-            url: pathname,
-            type: 'website',
-            images: [{ url: '/image/og-image.png' }],
-        },
+            canonical: pathname,
+            twitter: {
+                card: 'summary_large_image',
+                title: `Maxibook - ${locale == 'en' ? detailSEO[0].name : detailSEO[0].name_id}`,
+                description: locale == 'en' ? detailSEO[0].description : detailSEO[0].description_id,
+                url: pathname,
+                images: [{ url: '/image/og-image.png' }],
+            },
+            openGraph: {
+                title: `Maxibook - ${locale == 'en' ? detailSEO[0].name : detailSEO[0].name_id}`,
+                description: locale == 'en' ? detailSEO[0].description : detailSEO[0].description_id,
+                url: pathname,
+                type: 'website',
+                images: [{ url: '/image/og-image.png' }],
+            },
+        }
     }
 }
 
