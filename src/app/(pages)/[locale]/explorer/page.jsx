@@ -120,7 +120,7 @@ const ExplorerPages = () => {
                 <div className="banner-1">
                     <Image alt="banner-1" src={imgBanner1} width={300} height={225} />
                 </div>
-                <div className="screen-layer relative top-[110px] lg:top-[160px] ">
+                <div className="screen-layer relative top-[110px] px-[16px] lg:w-[50%] lg:top-[160px] ">
                     <h1>{t('heading')}</h1>
                     <p>{t('leading')}</p>
                 </div>
