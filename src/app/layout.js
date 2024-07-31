@@ -1,8 +1,7 @@
 import { Roboto, Montserrat, League_Spartan } from 'next/font/google';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { BaseUrl } from '../lib/constant';
-import '@/app/scss/style.scss';
-
+import '@/scss/style.scss';
 
 const roboto = Roboto({
   weight: ['400', '700'],

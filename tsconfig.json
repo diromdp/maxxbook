@@ -31,7 +31,7 @@
     "**/*.ts",
     "**/*.tsx",
     "src"
-, "src/app/(dash)/admin/user/page.js", "src/app/(dash)/admin/category/page.js", "src/app/(pages)/[locale]/layout.jsx", "src/app/(dash)/admin/bank/add/page.jsx", "src/app/(dash)/admin/bank/[slug]/page.jsx", "src/app/(dash)/admin/user/add/page.jsx", "src/app/(dash)/admin/category/add/page.jsx", "src/app/(dash)/admin/user/[slug]/page.jsx", "src/app/(dash)/admin/subcategory/add/page.jsx", "src/app/(dash)/admin/subcategory/[slug]/page.jsx", "src/app/(dash)/admin/document/add/page.jsx", "src/app/(dash)/admin/document/[slug]/page.jsx", "src/app/(dash)/admin/category/[slug]/page.jsx" ],
+, "src/app/(cms)/admin/user/page.js", "src/app/(cms)/admin/category/page.js", "src/app/(pages)/[locale]/layout.jsx", "src/app/(cms)/admin/bank/add/page.jsx", "src/app/(cms)/admin/bank/[slug]/page.jsx", "src/app/(cms)/admin/user/add/page.jsx", "src/app/(cms)/admin/category/add/page.jsx", "src/app/(cms)/admin/user/[slug]/page.jsx", "src/app/(cms)/admin/subcategory/add/page.jsx", "src/app/(cms)/admin/subcategory/[slug]/page.jsx", "src/app/(cms)/admin/document/add/page.jsx", "src/app/(cms)/admin/document/[slug]/page.jsx", "src/app/(cms)/admin/category/[slug]/page.jsx" ],
   "exclude": [
     "node_modules"
   ]

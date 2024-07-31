@@ -25,9 +25,9 @@ import axios from "axios";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { urlAPI } from "../../../../../../lib/constant";
-import { useAppSelector, useAppDispatch } from "../../../../../store";
-import { setUploadId } from "../../../../../store/reducer/categoryFilterSlice";
-import { setAuthSlice } from "../../../../../store/reducer/authSlice";
+import { useAppSelector, useAppDispatch } from "@/store";
+import { setUploadId } from "@/store/reducer/categoryFilterSlice";
+import { setAuthSlice } from "@/store/reducer/authSlice";
 const { TextArea } = Input;
 
 const EditUploadFile = ({ params }) => {

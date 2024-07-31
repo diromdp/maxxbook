@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import { urlAPI } from "../../../../../lib/constant";
 import { axiosInstance } from "../../../../../lib/utils";
 
-import SingleSubCategory from "../../../../clientSide/singleSubCategory";
+import SingleSubCategory from "../../../../../components/clientSide/singleSubCategory";
 
 
 async function getData(val) {

@@ -4,14 +4,14 @@ import Link from "next/link";
 import { use } from "react";
 import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
-import SavedComponent from "../../../component/savedComponent";
+import SavedComponent from "@/components/component/savedComponent";
 import { useTranslations, useLocale } from "next-intl";
-import SliderCardItem from "@/app/component/sliderCardItem";
+import SliderCardItem from "@/components/component/sliderCardItem";
 import { BaseUrl, urlAPI } from "../../../../lib/constant";
 import { axiosInstance } from "../../../../lib/utils";
 
-import imgBanner1 from "@/app/assets/images/img-banner-1.svg";
-import imgBanner2 from "@/app/assets/images/img-banner-2.svg";
+import imgBanner1 from "@/assets/images/img-banner-1.svg";
+import imgBanner2 from "@/assets/images/img-banner-2.svg";
 
 async function getData() {
     try {

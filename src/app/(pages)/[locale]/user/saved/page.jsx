@@ -22,8 +22,8 @@ import {
     Bookmark,
 } from "lucide-react";
 import { urlAPI } from "../../../../../lib/constant";
-import { useAppSelector, useAppDispatch } from "../../../../store";
-import { setAuthSlice } from "../../../../store/reducer/authSlice";
+import { useAppSelector, useAppDispatch } from "@/store";
+import { setAuthSlice } from "@/store/reducer/authSlice";
 
 
 dayjs.extend(localeData);

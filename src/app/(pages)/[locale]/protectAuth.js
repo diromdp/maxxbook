@@ -3,8 +3,8 @@ import { useEffect, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { urlAPI } from "../../../lib/constant";
-import { setAuthInfoSlice, setAuthSlice } from "../../store/reducer/authSlice";
-import { useAppSelector, useAppDispatch } from "../../store";
+import { setAuthInfoSlice, setAuthSlice } from "@/store/reducer/authSlice";
+import { useAppSelector, useAppDispatch } from "@/store";
 
 const ProtectAuth = ({children}) => {
     const dispatch = useAppDispatch();

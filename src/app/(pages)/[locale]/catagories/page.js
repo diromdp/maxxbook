@@ -1,7 +1,7 @@
 import { getLocale, getTranslations } from 'next-intl/server';
 import { headers } from "next/headers";
 import { BaseUrl } from "../../../../lib/constant";
-import ListCategory from "../../../component/ListCategory";
+import ListCategory from "@/components/component/ListCategory";
 
 export async function generateMetadata() {
     const headersList = headers();

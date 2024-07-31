@@ -5,13 +5,13 @@ import { axiosInstance } from "../../../../../lib/utils";
 import { getTranslations } from "next-intl/server";
 import { headers } from "next/headers";
 
-const PlaceAdsance = dynamic(() => import('@/app/component/placeAdsence'), {
+const PlaceAdsance = dynamic(() => import('@/components/component/placeAdsence'), {
     ssr: false,
 })
-const DocumentDesc = dynamic(() => import('../../../../component/documentDesc'), {
+const DocumentDesc = dynamic(() => import('@/components/component/documentDesc'), {
     ssr: false,
 })
-const ListDataDetailDocument = dynamic(() => import('../../../../component/ListDataDetailDocument'), {
+const ListDataDetailDocument = dynamic(() => import('@/components/component/ListDataDetailDocument'), {
     ssr: false,
 });
 

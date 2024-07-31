@@ -23,9 +23,9 @@ import { useLocale } from "next-intl";
 import { Empty } from 'antd';
 import { useRouter } from "next/navigation";
 import { urlAPI } from "../../../../../lib/constant";
-import { setAuthSlice } from "../../../../store/reducer/authSlice";
+import { setAuthSlice } from "@/store/reducer/authSlice";
 
-import { useAppSelector, useAppDispatch } from "../../../../store";
+import { useAppSelector, useAppDispatch } from "@/store";
 
 
 dayjs.extend(localeData);

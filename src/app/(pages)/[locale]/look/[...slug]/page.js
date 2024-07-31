@@ -1,6 +1,6 @@
 "use client";
-import Card from "@/app/component/cartItem";
-import CardLoading from "@/app/component/cardLoading";
+import Card from "@/components/component/cartItem";
+import CardLoading from "@/components/component/cardLoading";
 import { useState, useEffect, useRef } from "react";
 import {
     Pagination,
@@ -13,7 +13,7 @@ import {
 import axios from "axios";
 import { urlAPI } from "../../../../../lib/constant";
 import { getInitials } from "../../../../../lib/utils";
-import { useAppSelector } from "../../../../store";
+import { useAppSelector } from "@/store";
 
 const LookUserDetail = ({ params }) => {
     const [isLoading, setIsloading] = useState(true);

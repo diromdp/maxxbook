@@ -1,11 +1,11 @@
-import Sidebar from "@/app/component/sidebar";
+import Sidebar from "@/components/component/sidebar";
 import { headers } from "next/headers";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { BaseUrl } from "../../../../lib/constant";
 
-const ContentAbout = dynamic(() => import("../../../component/contentAbout"), {
+const ContentAbout = dynamic(() => import("@/components/component/contentAbout"), {
     ssr: false,
 });
 

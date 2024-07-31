@@ -5,7 +5,7 @@ import { urlAPI } from "../../../../../lib/constant";
 import { axiosInstance } from "../../../../../lib/utils";
 
 
-const SingleCategory = dynamic(() => import('../../../../clientSide/singleCategory'), {
+const SingleCategory = dynamic(() => import('../../../../../components/clientSide/singleCategory'), {
     ssr: false,
 })
 

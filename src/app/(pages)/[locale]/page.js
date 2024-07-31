@@ -3,13 +3,12 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
-import { urlAPI, BaseUrl } from "@/lib/constant";
+import { BaseUrl } from "@/lib/constant";
 
-
-const Categories = dynamic(() => import('../../component/categories'), {
+const Categories = dynamic(() => import('@/components/component/categories'), {
    ssr: false,
 })
-const HomeSearch = dynamic(() => import('../../component/homeSearch'), {
+const HomeSearch = dynamic(() => import('@/components/component/homeSearch'), {
    ssr: false,
 })
 

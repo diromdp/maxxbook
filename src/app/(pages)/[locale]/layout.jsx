@@ -1,10 +1,10 @@
-import Header from "../../component/header"
-import Footer from '../../component/footer';
+import Header from "@/components/component/header"
+import Footer from '@/components/component/footer';
 import { NextIntlClientProvider } from 'next-intl';
 import { useTranslations, useMessages } from "next-intl";
 import dynamic from "next/dynamic";
 import ProtectAuth  from "./protectAuth";
-const ReduxProvider = dynamic(() => import("../../store/redux-provider"), {
+const ReduxProvider = dynamic(() => import("@/store/redux-provider"), {
     ssr: false
 });
 

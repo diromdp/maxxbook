@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { useAppSelector } from "../../store";
+import { useAppSelector } from "@/store";
 import { useRouter } from "next/navigation";
 const ProtectLogin = ({ children }) => {
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
