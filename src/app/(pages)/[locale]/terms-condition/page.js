@@ -2,58 +2,56 @@ import Sidebar from "@/app/component/sidebar";
 import { headers } from "next/headers";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
-import { urlAPI } from "../../../../lib/constant";
-import { axiosInstance } from "../../../../lib/utils";
+import { BaseUrl } from "../../../../lib/constant";
 
 const ContentTnc = dynamic(() => import("../../../component/contentTnc"), {
     ssr: false,
 });
-async function getDetails() {
-    try {
-        const response = await axiosInstance(`${urlAPI}backend/settings?keys=page.title_term,page.description_seo_term,page.description_term,page.title_term_id,page.description_seo_term_id,page.description_term_id`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': "application/json",
-                },
-            }
-        );
-        return response.data;
-    } catch (error) {
-        console.error('Error retrieving data:', error);
-        throw new Error('Could not get data');
-    }
-}
 
 export async function generateMetadata() {
     const headersList = headers();
     const pathname = headersList.get("referer");
 
-    const detailSEO = await getDetails();
-    const selectedTitle = detailSEO && detailSEO.filter(x => x.key === 'page.title_term')
-    const selectedDesc = detailSEO && detailSEO.filter(x => x.key === 'page.description_seo_term')
+    try {
+        const response = await fetch(`${BaseUrl}/api/public/settings?keys=page.title_term,page.description_seo_term,page.description_term,page.title_term_id,page.description_seo_term_id,page.description_term_id`,
+            {
+               headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': "application/json",
+               }, 
+            }
+         );
+      
+         const data = await response.json();
+         const detailSEO = data.data;
+    
+         if (detailSEO != undefined || detailSEO && detailSEO.length > 0) {
+            const selectedTitle = detailSEO && detailSEO.filter(x => x.key === 'page.title_term')
+            const selectedDesc = detailSEO && detailSEO.filter(x => x.key === 'page.description_seo_term')
 
-    if (selectedTitle.length > 0 && selectedDesc.length > 0) {
-        return {
-            title: selectedTitle[0].value,
-            description: selectedDesc[0].value,
-            twitter: {
-                card: 'summary_large_image',
+            return {
                 title: selectedTitle[0].value,
-                url: pathname,
                 description: selectedDesc[0].value,
-                images: [{ url: '/image/og-image.png' }],
-
-            },
-            openGraph: {
-                title: selectedTitle[0].value,
-                description: selectedDesc[0].value,
-                url: pathname,
-                type: 'website',
-                images: [{ url: '/image/og-image.png' }],
-
-            },
+                twitter: {
+                    card: 'summary_large_image',
+                    title: selectedTitle[0].value,
+                    url: pathname,
+                    description: selectedDesc[0].value,
+                    images: [{ url: '/image/og-image.png' }],
+    
+                },
+                openGraph: {
+                    title: selectedTitle[0].value,
+                    description: selectedDesc[0].value,
+                    url: pathname,
+                    type: 'website',
+                    images: [{ url: '/image/og-image.png' }],
+    
+                },
+            }
         }
+    } catch (error) {
+        console.log(error);
     }
 }
 

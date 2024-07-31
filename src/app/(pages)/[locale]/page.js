@@ -3,7 +3,8 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
-import { axiosInstance } from '../../../lib/utils';
+import { urlAPI, BaseUrl } from "@/lib/constant";
+
 
 const Categories = dynamic(() => import('../../component/categories'), {
    ssr: false,
@@ -12,9 +13,13 @@ const HomeSearch = dynamic(() => import('../../component/homeSearch'), {
    ssr: false,
 })
 
-async function getDetails() {
+export async function generateMetadata() {
+   const headersList = headers();
+   const pathname = headersList.get("referer");
+   const ogImage = '/image/og-image.png'; // Or use a dynamic path
+
    try {
-      const response = await axiosInstance(`backend/settings?keys=seo.title_home,seo.description_home,seo.title_home_id,seo.description_home_id`,
+      const response = await fetch(`${BaseUrl}/api/public/settings?keys=seo.title_home,seo.description_home,seo.title_home_id,seo.description_home_id`,
          {
             headers: {
                'Content-Type': 'application/json',
@@ -22,75 +27,67 @@ async function getDetails() {
             },
          }
       );
-      return response.data;
+
+      const data = await response.json();
+      const detailSEO = data.data;
+      
+      if (detailSEO != undefined || detailSEO && detailSEO.length > 0) {
+         const selectedTitle = detailSEO && detailSEO.filter(x => x.key === 'seo.title_home')
+         const selectedDesc = detailSEO && detailSEO.filter(x => x.key === 'seo.description_home')
+         const selectedTitleID = detailSEO && detailSEO.filter(x => x.key === 'seo.title_home_id')
+         const selectedDescID = detailSEO && detailSEO.filter(x => x.key === 'seo.description_home_id')
+         const locale = await getLocale();
+
+         if (locale === 'en') {
+            if (selectedTitle.length > 0 && selectedDescID.length > 0) {
+               return {
+                  title: selectedTitle[0].value,
+                  description: selectedDesc[0].value,
+                  twitter: {
+                     card: 'summary_large_image',
+                     title: selectedTitle[0].value,
+                     url: pathname,
+                     description: selectedDesc[0].value,
+                     images: [{ url: ogImage }],
+                  },
+                  openGraph: {
+                     title: selectedTitle[0].value,
+                     description: selectedDesc[0].value,
+                     images: [{ url: ogImage }],
+                     url: pathname,
+                     type: 'website',
+                  },
+               }
+            }
+         } else {
+            if (selectedTitleID.length > 0 && selectedDescID.length > 0) {
+               return {
+                  title: selectedTitleID[0].value,
+                  description: selectedDescID[0].value,
+                  twitter: {
+                     card: 'summary_large_image',
+                     title: selectedTitleID[0].value,
+                     url: pathname,
+                     description: selectedDescID[0].value,
+                     images: [{ url: ogImage }],
+                  },
+                  openGraph: {
+                     title: selectedTitleID[0].value,
+                     description: selectedDescID[0].value,
+                     url: pathname,
+                     type: 'website',
+                     images: [{ url: ogImage }],
+                  },
+               }
+            }
+
+         }
+      }
 
    } catch (error) {
-      console.error('Error retrieving data:', error);
+      console.log(error)
    }
 }
-
-export async function generateMetadata() {
-   const headersList = headers();
-   const pathname = headersList.get("referer");
-   const ogImage = '/image/og-image.png'; // Or use a dynamic path
-
-   const detailSEO = await getDetails();
-
-   if(detailSEO != undefined ||  detailSEO && detailSEO.length > 0) {
-      const selectedTitle = detailSEO && detailSEO.filter(x => x.key === 'seo.title_home')
-      const selectedDesc =  detailSEO && detailSEO.filter(x => x.key === 'seo.description_home')
-      const selectedTitleID = detailSEO && detailSEO.filter(x => x.key === 'seo.title_home_id')
-      const selectedDescID =  detailSEO && detailSEO.filter(x => x.key === 'seo.description_home_id')
-      const locale = await getLocale();
-   
-      if (locale === 'en') {
-         if (selectedTitle.length > 0 && selectedDescID.length > 0) {
-            return {
-               title: selectedTitle[0].value,
-               description: selectedDesc[0].value,
-               twitter: {
-                  card: 'summary_large_image',
-                  title: selectedTitle[0].value,
-                  url: pathname,
-                  description: selectedDesc[0].value,
-                  images: [{ url: ogImage }],
-               },
-               openGraph: {
-                  title: selectedTitle[0].value,
-                  description: selectedDesc[0].value,
-                  images: [{ url: ogImage }],
-                  url: pathname,
-                  type: 'website',
-               },
-            }
-         }
-      } else {
-         if (selectedTitleID.length > 0 && selectedDescID.length > 0) {
-            return {
-               title: selectedTitleID[0].value,
-               description: selectedDescID[0].value,
-               twitter: {
-                  card: 'summary_large_image',
-                  title: selectedTitleID[0].value,
-                  url: pathname,
-                  description: selectedDescID[0].value,
-                  images: [{ url: ogImage }],
-               },
-               openGraph: {
-                  title: selectedTitleID[0].value,
-                  description: selectedDescID[0].value,
-                  url: pathname,
-                  type: 'website',
-                  images: [{ url: ogImage }],
-               },
-            }
-         }
-   
-      }
-   }
-   
-}
-
 
 export default function Home() {
    const t = useTranslations('Homepage');

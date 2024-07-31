@@ -1,84 +1,82 @@
 import { getLocale, getTranslations } from 'next-intl/server';
 import { headers } from "next/headers";
-import { urlAPI } from "../../../../lib/constant";
+import { BaseUrl } from "../../../../lib/constant";
 import ListCategory from "../../../component/ListCategory";
-import { axiosInstance } from "../../../../lib/utils";
-
-async function getDetails() {
-    try {
-        const response = await axiosInstance(`${urlAPI}backend/settings?keys=seo.title_category,seo.description_category,seo.title_category_id,seo.description_category_id`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': "application/json",
-                },
-            }
-        );
-        return response.data;
-    } catch (error) {
-        console.error('Error retrieving data:', error);
-    }
-}
 
 export async function generateMetadata() {
     const headersList = headers();
     const pathname = headersList.get("referer");
     const ogImage = '/image/og-image.png';
-    const detailSEO = await getDetails();
 
-    if (detailSEO != undefined || detailSEO && detailSEO.length > 0) {
-
-        const selectedTitle = detailSEO && detailSEO.filter(x => x.key === 'seo.title_category')
-        const selectedDesc = detailSEO && detailSEO.filter(x => x.key === 'seo.description_category')
-        const selectedTitleID = detailSEO && detailSEO.filter(x => x.key === 'seo.title_category_id')
-        const selectedDescID = detailSEO && detailSEO.filter(x => x.key === 'seo.description_category_id')
-
-        const locale = await getLocale();
-
-        if (locale === 'en') {
-            if (selectedTitle.length > 0 && selectedDescID.length > 0) {
-                return {
-                    title: selectedTitle[0].value,
-                    description: selectedDesc[0].value,
-                    twitter: {
-                        card: 'summary_large_image',
-                        title: selectedTitle[0].value,
-                        url: pathname,
-                        description: selectedDesc[0].value,
-                        images: [{ url: ogImage }],
-                    },
-                    openGraph: {
-                        title: selectedTitle[0].value,
-                        description: selectedDesc[0].value,
-                        images: [{ url: ogImage }],
-                        url: pathname,
-                        type: 'website',
-                    },
-                }
+    try {
+        const response = await fetch(`${BaseUrl}/api/public/settings?keys=seo.title_category,seo.description_category,seo.title_category_id,seo.description_category_id`,
+            {
+               headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': "application/json",
+               }, 
             }
-        } else {
-            if (selectedTitleID.length > 0 && selectedDescID.length > 0) {
-                return {
-                    title: selectedTitleID[0].value,
-                    description: selectedDescID[0].value,
-                    twitter: {
-                        card: 'summary_large_image',
+         );
+      
+         const data = await response.json();
+         const detailSEO = data.data;
+    
+         if (detailSEO != undefined || detailSEO && detailSEO.length > 0) {
+
+            const selectedTitle = detailSEO && detailSEO.filter(x => x.key === 'seo.title_category')
+            const selectedDesc = detailSEO && detailSEO.filter(x => x.key === 'seo.description_category')
+            const selectedTitleID = detailSEO && detailSEO.filter(x => x.key === 'seo.title_category_id')
+            const selectedDescID = detailSEO && detailSEO.filter(x => x.key === 'seo.description_category_id')
+    
+            const locale = await getLocale();
+    
+            if (locale === 'en') {
+                if (selectedTitle.length > 0 && selectedDescID.length > 0) {
+                    return {
+                        title: selectedTitle[0].value,
+                        description: selectedDesc[0].value,
+                        twitter: {
+                            card: 'summary_large_image',
+                            title: selectedTitle[0].value,
+                            url: pathname,
+                            description: selectedDesc[0].value,
+                            images: [{ url: ogImage }],
+                        },
+                        openGraph: {
+                            title: selectedTitle[0].value,
+                            description: selectedDesc[0].value,
+                            images: [{ url: ogImage }],
+                            url: pathname,
+                            type: 'website',
+                        },
+                    }
+                }
+            } else {
+                if (selectedTitleID.length > 0 && selectedDescID.length > 0) {
+                    return {
                         title: selectedTitleID[0].value,
-                        url: pathname,
                         description: selectedDescID[0].value,
-                        images: [{ url: ogImage }],
-                    },
-                    openGraph: {
-                        title: selectedTitleID[0].value,
-                        description: selectedDescID[0].value,
-                        images: [{ url: ogImage }],
-                        url: pathname,
-                        type: 'website',
-                        images: [{ url: '/image/og-image.png' }],
-                    },
+                        twitter: {
+                            card: 'summary_large_image',
+                            title: selectedTitleID[0].value,
+                            url: pathname,
+                            description: selectedDescID[0].value,
+                            images: [{ url: ogImage }],
+                        },
+                        openGraph: {
+                            title: selectedTitleID[0].value,
+                            description: selectedDescID[0].value,
+                            images: [{ url: ogImage }],
+                            url: pathname,
+                            type: 'website',
+                            images: [{ url: '/image/og-image.png' }],
+                        },
+                    }
                 }
             }
         }
+    } catch (error) {
+        console.log(error);
     }
 }
 

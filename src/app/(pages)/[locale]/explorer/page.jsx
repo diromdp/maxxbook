@@ -7,12 +7,11 @@ import { getLocale } from "next-intl/server";
 import SavedComponent from "../../../component/savedComponent";
 import { useTranslations, useLocale } from "next-intl";
 import SliderCardItem from "@/app/component/sliderCardItem";
-import { urlAPI } from "../../../../lib/constant";
+import { BaseUrl, urlAPI } from "../../../../lib/constant";
 import { axiosInstance } from "../../../../lib/utils";
 
 import imgBanner1 from "@/app/assets/images/img-banner-1.svg";
 import imgBanner2 from "@/app/assets/images/img-banner-2.svg";
-
 
 async function getData() {
     try {
@@ -30,9 +29,12 @@ async function getData() {
     }
 }
 
-async function getDetails() {
+export async function generateMetadata() {
+    const headersList = headers();
+    const pathname = headersList.get("referer");
+
     try {
-        const response = await axiosInstance(`${urlAPI}backend/settings?keys=seo.title_result,seo.description_seo_result,seo.title_result_id,seo.description_seo_result_id`,
+        const response = await fetch(`${BaseUrl}/api/public/settings?keys=seo.title_result,seo.description_seo_result,seo.title_result_id,seo.description_seo_result_id`,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,72 +42,68 @@ async function getDetails() {
                 },
             }
         );
-        return response.data;
-    } catch (error) {
-        console.error('Error retrieving data:', error);
-    }
-}
 
-export async function generateMetadata() {
-    const headersList = headers();
-    const pathname = headersList.get("referer");
-    const detailSEO = await getDetails();
+        const data = await response.json();
+        const detailSEO = data.data;
 
-    if (detailSEO != undefined || detailSEO && detailSEO.length > 0) {
+        if (detailSEO != undefined || detailSEO && detailSEO.length > 0) {
 
-        const selectedTitle = detailSEO && detailSEO.filter(x => x.key === 'seo.title_result');
-        const selectedDesc = detailSEO && detailSEO.filter(x => x.key === 'seo.description_seo_result');
-        const selectedTitleID = detailSEO && detailSEO.filter(x => x.key === 'seo.title_result_id');
-        const selectedDescID = detailSEO && detailSEO.filter(x => x.key === 'seo.description_seo_result_id');
-        const locale = await getLocale();
+            const selectedTitle = detailSEO && detailSEO.filter(x => x.key === 'seo.title_result');
+            const selectedDesc = detailSEO && detailSEO.filter(x => x.key === 'seo.description_seo_result');
+            const selectedTitleID = detailSEO && detailSEO.filter(x => x.key === 'seo.title_result_id');
+            const selectedDescID = detailSEO && detailSEO.filter(x => x.key === 'seo.description_seo_result_id');
+            const locale = await getLocale();
 
-        if (locale === 'en') {
-            if (selectedTitle.length > 0 && selectedDescID.length > 0) {
-                return {
-                    title: selectedTitle[0].value,
-                    description: selectedDesc[0].value,
-                    twitter: {
-                        card: 'summary_large_image',
-                        title: selectedTitle[0].value,
-                        url: pathname,
-                        description: selectedDesc[0].value,
-                        images: [{ url: '/image/og-image.png' }],
-
-                    },
-                    openGraph: {
+            if (locale === 'en') {
+                if (selectedTitle.length > 0 && selectedDescID.length > 0) {
+                    return {
                         title: selectedTitle[0].value,
                         description: selectedDesc[0].value,
-                        url: pathname,
-                        type: 'website',
-                        images: [{ url: '/image/og-image.png' }],
+                        twitter: {
+                            card: 'summary_large_image',
+                            title: selectedTitle[0].value,
+                            url: pathname,
+                            description: selectedDesc[0].value,
+                            images: [{ url: '/image/og-image.png' }],
 
-                    },
+                        },
+                        openGraph: {
+                            title: selectedTitle[0].value,
+                            description: selectedDesc[0].value,
+                            url: pathname,
+                            type: 'website',
+                            images: [{ url: '/image/og-image.png' }],
+
+                        },
+                    }
                 }
-            }
-        } else {
-            if (selectedTitleID.length > 0 && selectedDescID.length > 0) {
-                return {
-                    title: selectedTitleID[0].value,
-                    description: selectedDescID[0].value,
-                    twitter: {
-                        card: 'summary_large_image',
-                        title: selectedTitleID[0].value,
-                        url: pathname,
-                        description: selectedDescID[0].value,
-                        images: [{ url: '/image/og-image.png' }],
-
-                    },
-                    openGraph: {
+            } else {
+                if (selectedTitleID.length > 0 && selectedDescID.length > 0) {
+                    return {
                         title: selectedTitleID[0].value,
                         description: selectedDescID[0].value,
-                        url: pathname,
-                        type: 'website',
-                        images: [{ url: '/image/og-image.png' }],
+                        twitter: {
+                            card: 'summary_large_image',
+                            title: selectedTitleID[0].value,
+                            url: pathname,
+                            description: selectedDescID[0].value,
+                            images: [{ url: '/image/og-image.png' }],
 
-                    },
+                        },
+                        openGraph: {
+                            title: selectedTitleID[0].value,
+                            description: selectedDescID[0].value,
+                            url: pathname,
+                            type: 'website',
+                            images: [{ url: '/image/og-image.png' }],
+
+                        },
+                    }
                 }
             }
         }
+    } catch (error) {
+        console.log(error);
     }
 }
 

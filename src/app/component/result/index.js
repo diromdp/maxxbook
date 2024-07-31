@@ -25,7 +25,6 @@ const ResultShow = ({ QureyParams }) => {
         autoplay: true,
         animationData: searchNotFound,
     };
-    const t = useTranslations('Documents');
     const t2 = useTranslations('Global');
     const hasFetchedData = useRef(false);
 
@@ -158,7 +157,7 @@ const ResultShow = ({ QureyParams }) => {
                 }
 
                 <div className="Load-more py-[32px] flex justify-center items-center">
-                    <Button className={`btn-primary text-[18px] w-fit h-[40px] ${documentConfig.current_page === documentConfig.last_page ? "pointer-events-none opacity-50" : ""}`} disabled={documentConfig.current_page === documentConfig.last_page} onClick={() => updatePagination()}>Load More</Button>
+                    <Button className={`btn-primary text-[18px] w-fit h-[40px] ${documentConfig.current_page === documentConfig.last_page ? "pointer-events-none opacity-50" : ""}`} disabled={documentConfig.current_page === documentConfig.last_page} onClick={() => updatePagination()}>{t2('Load more')}</Button>
                 </div>
             </div>
         </>

@@ -2,4 +2,4 @@
 export const urlAPI = "https://api.maxibook.co/";
 export const downloadUrl = "https://api.maxibook.co";
 export const BaseUrl = "https://maxibook.co";
-// export const BaseUrl = "http://localhost:3000";
+//export const BaseUrl = "http://localhost:3000";

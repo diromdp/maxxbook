@@ -152,7 +152,7 @@ const ResultShowID = ({ idCategory, idSubCategory }) => {
                     </div>
                 }
                 <div className="Load-more py-[32px] flex justify-center items-center">
-                    <Button className={`btn-primary text-[18px] w-fit h-[40px] ${documentConfigSingle.current_page === documentConfigSingle.last_page ? "pointer-events-none opacity-50" : ""}`} disabled={documentConfigSingle.current_page === documentConfigSingle.last_page} onClick={() => updatePagination()}>Load More</Button>
+                    <Button className={`btn-primary text-[18px] w-fit h-[40px] ${documentConfigSingle.current_page === documentConfigSingle.last_page ? "pointer-events-none opacity-50" : ""}`} disabled={documentConfigSingle.current_page === documentConfigSingle.last_page} onClick={() => updatePagination()}>{t2('Load more')}</Button>
                 </div>
             </div>
         </>
