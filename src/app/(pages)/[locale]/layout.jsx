@@ -1,12 +1,11 @@
-import Header from "@/components/component/header"
-import Footer from '@/components/component/footer';
+import { lazy } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { useTranslations, useMessages } from "next-intl";
-import dynamic from "next/dynamic";
 import ProtectAuth  from "./protectAuth";
-const ReduxProvider = dynamic(() => import("@/store/redux-provider"), {
-    ssr: false
-});
+
+const ReduxProvider = lazy(() => import("@/store/redux-provider"));
+const Header = lazy(() => import("@/components/component/header"));
+const Footer = lazy(() => import("@/components/component/footer"));
 
 export default function PagesLayout({
     children,

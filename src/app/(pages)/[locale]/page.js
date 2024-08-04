@@ -1,16 +1,12 @@
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
+import { lazy } from 'react';
 import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { BaseUrl } from "@/lib/constant";
 
-const Categories = dynamic(() => import('@/components/component/categories'), {
-   ssr: false,
-})
-const HomeSearch = dynamic(() => import('@/components/component/homeSearch'), {
-   ssr: false,
-})
+const Categories = lazy(() => import('@/components/component/categories'));
+const HomeSearch = lazy(() => import('@/components/component/homeSearch'));
 
 export async function generateMetadata() {
    const headersList = headers();

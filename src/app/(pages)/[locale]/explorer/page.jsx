@@ -1,5 +1,4 @@
 
-import Image from "next/image";
 import Link from "next/link";
 import { use } from "react";
 import { headers } from "next/headers";
@@ -9,9 +8,6 @@ import { useTranslations, useLocale } from "next-intl";
 import SliderCardItem from "@/components/component/sliderCardItem";
 import { BaseUrl, urlAPI } from "../../../../lib/constant";
 import { axiosInstance } from "../../../../lib/utils";
-
-import imgBanner1 from "@/assets/images/img-banner-1.svg";
-import imgBanner2 from "@/assets/images/img-banner-2.svg";
 
 async function getData() {
     try {
@@ -115,15 +111,9 @@ const ExplorerPages = () => {
     return (
         <div className="explorer-pages">
             <div className="banner-explorer">
-                <div className="banner-1">
-                    <Image alt="banner-1" src={imgBanner1} width={300} height={225} />
-                </div>
                 <div className="screen-layer relative top-[110px] px-[16px] lg:w-[50%] lg:top-[160px] ">
                     <h1>{t('heading')}</h1>
                     <p>{t('leading')}</p>
-                </div>
-                <div className="banner-2">
-                    <Image alt="banner-2" src={imgBanner2} width={300} height={225} />
                 </div>
             </div>
             <div className="screen-layer px-[24px] 3xl:px-0 md:h-screen">
