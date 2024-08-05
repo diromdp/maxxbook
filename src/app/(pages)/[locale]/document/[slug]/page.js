@@ -4,6 +4,7 @@ import { axiosInstance } from "@/lib/utils";
 
 import { getTranslations } from "next-intl/server";
 import { headers } from "next/headers";
+import { Suspense } from 'react';
 
 const PlaceAdsance = dynamic(() => import('@/components/component/placeAdsence'), {
     ssr: false,
@@ -84,7 +85,9 @@ export default async function documentPage({ params }) {
                 <div className="flex flex-col px-[16px] lg:px-[24px] lg:flex-row gap-[16px]">
                     <div className="w-full lg:w-[70%] flex flex-col items-center relative">
                         {/* <PlaceAdsance className="my-[16px] hidden md:block w-full " type={'Leaderboard'} /> */}
-                        <DocumentDesc slug={slug} />
+                        <Suspense fallback={<></>}>
+                            <DocumentDesc slug={slug} />
+                        </Suspense>
                     </div>
                     <div className="w-full lg:w-[30%]">
                         <div className="another-document">
@@ -95,7 +98,9 @@ export default async function documentPage({ params }) {
                                 <div className="title-document-content">
                                     <h2>{t('other documents')}</h2>
                                 </div>
-                                <ListDataDetailDocument />
+                                <Suspense fallback={<></>}>
+                                    <ListDataDetailDocument />
+                                </Suspense>
                             </div>
                         </div>
                     </div>

@@ -2,6 +2,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { headers } from "next/headers";
 import { BaseUrl } from "@/lib/constant";
 import dynamic from "next/dynamic";
+import { Suspense } from 'react';
 
 const ListCategory = dynamic(() => import("@/components/component/ListCategory"), {
     ssr: false,
@@ -94,7 +95,9 @@ export default async function category() {
                     <h1>{t('title')}</h1>
                     <p>{t('description')}</p>
                 </div>
-                <ListCategory />
+                <Suspense fallback={<></>}>
+                    <ListCategory />
+                </Suspense>
             </div>
         </div>
     </>

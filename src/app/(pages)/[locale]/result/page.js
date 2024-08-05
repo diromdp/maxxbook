@@ -3,6 +3,7 @@ import { getLocale } from "next-intl/server";
 import { headers } from "next/headers";
 import ResultShow from '@/components/component/result';
 import { BaseUrl } from "@/lib/constant";
+import { Suspense } from 'react';
 
 export async function generateMetadata() {
     const headersList = headers();
@@ -87,7 +88,9 @@ export default function result({ searchParams }) {
     return (
         <>
             <div className="result-page">
-                <ResultShow QureyParams={query} />
+                <Suspense fallback={<></>}>
+                    <ResultShow QureyParams={query} />
+                </Suspense>
             </div>
         </>
     );

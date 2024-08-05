@@ -1,11 +1,9 @@
 import { getLocale } from "next-intl/server";
-import { headers } from "next/headers";
-
 import { urlAPI } from "@/lib/constant";
 import { axiosInstance } from "@/lib/utils";
 
 import SingleSubCategory from "@/components/clientSide/singleSubCategory";
-
+import { Suspense } from "react";
 
 async function getData(val) {
     try {
@@ -24,19 +22,15 @@ async function getData(val) {
     }
 }
 
-export async function generateMetadata({ params }) {
-    const { slug, locale } = params;
-    const headersList = headers();
-}
-
-
 export default async function SubCategory({ params }) {
     const { slug } = params;    
     const data = await getData(slug)
     const locale = await getLocale();
     return (
         <>
-            <SingleSubCategory locale={locale} detailSubCategory={data} slug={slug} />
+            <Suspense fallback={<></>}>
+                <SingleSubCategory locale={locale} detailSubCategory={data} slug={slug} />
+            </Suspense>
         </>
     );
 }

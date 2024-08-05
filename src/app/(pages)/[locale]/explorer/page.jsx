@@ -7,6 +7,7 @@ import { getLocale } from "next-intl/server";
 import { useTranslations, useLocale } from "next-intl";
 import { BaseUrl, urlAPI } from "@/lib/constant";
 import { axiosInstance } from "@/lib/utils";
+import { Suspense } from "react";
 
 const SavedComponent = dynamic(() => import('@/components/component/savedComponent'), {
     ssr: false
@@ -121,13 +122,17 @@ const ExplorerPages = () => {
                 </div>
             </div>
             <div className="screen-layer px-[24px] 3xl:px-0 md:h-screen">
-                <SavedComponent />
+                <Suspense fallback={<></>}>
+                    <SavedComponent />
+                </Suspense>
                 <div className="item-view">
                     <div className="flex justify-between items-center mb-[16px]">
                         <h2>{t('documents')}</h2>
                         <Link className="view-more" href={`/${locale}/result`}>{t('View more')}</Link>
                     </div>
-                    <SliderCardItem data={cardItems} />
+                    <Suspense fallback={<></>}>
+                        <SliderCardItem data={cardItems} />
+                    </Suspense>
                 </div>
             </div>
         </div>

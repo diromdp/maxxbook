@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import dynamic from 'next/dynamic';
 import { urlAPI } from "@/lib/constant";
 import { axiosInstance } from "@/lib/utils";
+import { Suspense } from "react";
 
 
 const SingleCategory = dynamic(() => import('@/components/clientSide/singleCategory'), {
@@ -59,7 +60,9 @@ export default async function CategoriesAndSubCategories({ params }) {
     const locale = await getLocale();
     return (
         <>
-            <SingleCategory locale={locale} detailCategory={data} slug={slug} />
+            <Suspense fallback={<></>}>
+                <SingleCategory locale={locale} detailCategory={data} slug={slug} />
+            </Suspense>
         </>
     );
 }

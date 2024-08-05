@@ -4,6 +4,7 @@ import { lazy } from 'react';
 import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { BaseUrl } from "@/lib/constant";
+import { Suspense } from "react";
 
 const Categories = lazy(() => import('@/components/component/categories'));
 const HomeSearch = lazy(() => import('@/components/component/homeSearch'));
@@ -100,7 +101,9 @@ export default function Home() {
                </div>
             </div>
          </div>
-         <Categories />
+         <Suspense fallback={<></>}>
+            <Categories />
+         </Suspense>
          <div className="start-to-search">
             <div className="container m-auto">
                <div className="content">

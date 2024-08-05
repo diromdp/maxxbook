@@ -5,6 +5,7 @@ import axios from "axios";
 import { urlAPI } from "@/lib/constant";
 import { getInitials } from "@/lib/utils";
 import { useAppSelector } from "@/store";
+import { Suspense } from "react";
 
 const Card = dynamic(() => import("@/components/component/cartItem"), {
     ssr: false,
@@ -121,6 +122,7 @@ const LookUserDetail = ({ params }) => {
                 <div className="list-document">
                     <div className="screen-layer">
                         <div className="result-show px-[24px] 3xl:px-0">
+                        <Suspense fallback={<></>}>
                             {
                                 !isLoading ? dataDocument && dataDocument.map((item, index) => {
                                     return (
@@ -139,6 +141,7 @@ const LookUserDetail = ({ params }) => {
                                         )}
                                     </>
                             }
+                        </Suspense>
                         </div>
                     </div>
                 </div>
