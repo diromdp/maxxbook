@@ -24,7 +24,7 @@ import axios from "axios";
 import { Table, Tooltip } from 'antd';
 import Image from "next/image";
 
-import { urlAPI } from "../../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 
 const { Search } = Input;
 

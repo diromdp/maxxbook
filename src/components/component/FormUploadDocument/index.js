@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { urlAPI } from "../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import { useLocale } from "next-intl";
 import { useRouter } from 'next/navigation';
 

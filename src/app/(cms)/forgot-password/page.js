@@ -7,7 +7,7 @@ import { Loader2, Eye, EyeOff } from "lucide-react";
 import { notification } from "antd";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { urlAPI } from "../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import { useSearchParams } from 'next/navigation'
 
 const ForgotPassword = ({params}) => {

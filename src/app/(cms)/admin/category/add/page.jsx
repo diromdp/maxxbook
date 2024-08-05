@@ -24,8 +24,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 
 import axios from "axios";
-import { urlAPI } from "../../../../../lib/constant";
-import { formatDateToDatabaseString } from "../../../../../lib/utils";
+import { urlAPI } from "@/lib/constant";
+import { formatDateToDatabaseString } from "@/lib/utils";
 import { useCookies } from "react-cookie";
 
 import { notification, Image } from 'antd';

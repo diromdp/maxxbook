@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { useAppSelector } from "@/store";
 
-import * as verificationData from '../../../../lottie/verification.json';
-import { urlAPI } from "../../../../lib/constant";
+import * as verificationData from '@/lottie/verification.json';
+import { urlAPI } from "@/lib/constant";
 
 const VerifyEmail = () => {
     const searchParams = useSearchParams();

@@ -15,11 +15,11 @@ import {
 import { useLocale } from "next-intl";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { urlAPI, downloadUrl } from "../../../lib/constant";
+import { urlAPI, downloadUrl } from "@/lib/constant";
 import axios from "axios";
 import 'dayjs/locale/id';
 import localeData from 'dayjs/plugin/localeData';
-import { formatNumber } from "../../../lib/utils";
+import { formatNumber } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import {
     Bookmark

@@ -1,24 +1,23 @@
 "use client";
-import Card from "@/components/component/cartItem";
-import CardLoading from "@/components/component/cardLoading";
+import dynamic from "next/dynamic";
 import { useState, useEffect, useRef } from "react";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination";
 import axios from "axios";
-import { urlAPI } from "../../../../../lib/constant";
-import { getInitials } from "../../../../../lib/utils";
+import { urlAPI } from "@/lib/constant";
+import { getInitials } from "@/lib/utils";
 import { useAppSelector } from "@/store";
+
+const Card = dynamic(() => import("@/components/component/cartItem"), {
+    ssr: false,
+});
+
+const CardLoading = dynamic(() => import("@/components/component/cardLoading"), {
+    ssr: false,
+});
 
 const LookUserDetail = ({ params }) => {
     const [isLoading, setIsloading] = useState(true);
     const [dataDocument, setDataDocument] = useState([]);
-    const [dataPagination, setDataPagination] = useState([]);
+    const [documentConfig, setDocumentConfig] = useState({});
     const [filterData, setFilterData] = useState({
         q: "",
         cursor: "",
@@ -42,9 +41,10 @@ const LookUserDetail = ({ params }) => {
             .then((data) => {
                 if (data.status === 200) {
                     const dataJson = data.data.data;
+                    const config = data.data;
                     setIsloading(false);
                     setDataDocument(dataJson);
-                    setDataPagination(data.data.links)
+                    setDocumentConfig(config);
                 }
             })
             .catch(function (error) {
@@ -77,9 +77,10 @@ const LookUserDetail = ({ params }) => {
             .then((data) => {
                 if (data.status === 200) {
                     const dataJson = data.data.data;
+                    const config = data.data;
                     setIsloading(false)
                     setDataDocument(dataJson);
-                    setDataPagination(data.data.links)
+                    setDocumentConfig(config);
                 }
             })
             .catch(function (error) {
@@ -138,39 +139,6 @@ const LookUserDetail = ({ params }) => {
                                         )}
                                     </>
                             }
-
-                        </div>
-                        <div className="my-[32px] flex justify-between">
-                            <Pagination>
-                                <PaginationContent>
-                                    {
-                                        dataDocument.length > 0 && dataPagination.map((data, index) => {
-                                            if (data.label === "&laquo; Previous") {
-                                                return (
-                                                    <PaginationItem key={index}>
-                                                        <PaginationPrevious disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
-                                                    </PaginationItem>
-
-                                                )
-                                            } else if (data.label === "Next &raquo;") {
-                                                return (
-                                                    <PaginationItem key={index}>
-                                                        <PaginationNext disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
-                                                    </PaginationItem>
-                                                )
-                                            } else {
-                                                return (
-                                                    <PaginationItem key={index}>
-                                                        <PaginationLink className="cursor-pointer" data-url={data.url} isActive={data.active} onClick={() => updatePagination(data.url)}>
-                                                            {data.label}
-                                                        </PaginationLink>
-                                                    </PaginationItem>
-                                                )
-                                            }
-                                        })
-                                    }
-                                </PaginationContent>
-                            </Pagination>
                         </div>
                     </div>
                 </div>

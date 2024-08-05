@@ -5,35 +5,27 @@ import {
     Pencil,
     Trash2
 } from "lucide-react";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import dayjs from "dayjs";
 import localeData from 'dayjs/plugin/localeData';
 import 'dayjs/locale/id';
 import axios from "axios";
 import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Empty } from 'antd';
 import { useRouter } from "next/navigation";
-import { urlAPI } from "../../../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import { setAuthSlice } from "@/store/reducer/authSlice";
-
+import { Button } from "@/components/ui/button"
+import { Loader2 } from "lucide-react"
 import { useAppSelector, useAppDispatch } from "@/store";
-
 
 dayjs.extend(localeData);
 dayjs.locale('id');
 const DocumentOwn = () => {
     const dispatch = useAppDispatch();
     const [listDocument, setLisDocument] = useState([]);
-    const [dataPagination, setDataPagination] = useState([]);
+    const [documentConfig, setDocumentConfig] = useState({});
     const [isLoading, setLoading] = useState(true);
     const hasFetchedData = useRef(false);
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);
@@ -47,13 +39,16 @@ const DocumentOwn = () => {
     const token = getToken.access_token;
     const locale = useLocale();
     const router = useRouter();
+    const t2 = useTranslations('Global');
+
 
     const logoutUser = () => {
         dispatch(setAuthSlice({ ...getToken, access_token: null, expires_at: null }))
         router.push('/');
     }
-    
+
     const getData = async () => {
+        setLoading(true);
         await axios.get(`${urlAPI}backend/customer/documents/own?cursor=${filterData.cursor}&perPage=${filterData.perPage}&sortBy=${filterData.sortBy}&sortDirection=${filterData.sortDirection}`, {
             headers: {
                 "Content-Type": "application/json",
@@ -64,14 +59,16 @@ const DocumentOwn = () => {
             .then((data) => {
                 if (data.status === 200) {
                     const dataJson = data.data.data;
+                    const config = data.data;
                     setLoading(false);
                     setLisDocument(dataJson);
-                    setDataPagination(data.data.links)
+                    setDataPagination(data.data.links);
+                    setDocumentConfig(config);
                 }
             })
             .catch(function (error) {
                 if (error.response) {
-                    if(error.response.status === 401) {
+                    if (error.response.status === 401) {
                         logoutUser();
                     }
                     console.log(error.response.data);
@@ -88,7 +85,7 @@ const DocumentOwn = () => {
 
     const updatePagination = async (val) => {
         var url_string = val;
-
+        setLoading(true);
         if (url_string) {
             var url = new URL(url_string);
             var page = url.searchParams.get("page");
@@ -102,14 +99,16 @@ const DocumentOwn = () => {
             })
                 .then((data) => {
                     if (data.status === 200) {
+                        const config = data.data;
                         setLoading(false)
-                        setDataFetch(data.data.data)
+                        setLisDocument(data.data.data)
                         setDataPagination(data.data.links)
+                        setDocumentConfig(config);
                     }
                 })
                 .catch(function (error) {
                     if (error.response) {
-                        if(error.response.status === 401) {
+                        if (error.response.status === 401) {
                             logoutUser();
                         }
                         console.log(error.response.data.data);
@@ -141,7 +140,7 @@ const DocumentOwn = () => {
             })
             .catch(function (error) {
                 if (error.response) {
-                    if(error.response.status === 401) {
+                    if (error.response.status === 401) {
                         logoutUser();
                     }
                     console.log(error.response.data);
@@ -219,9 +218,9 @@ const DocumentOwn = () => {
                                                                 </li>
                                                                 <li>
                                                                     <span>
-                                                                        Status: 
+                                                                        Status:
                                                                         <>
-                                                                        {item.approval && item.approval.approval_status == "PENDING" ? <b className="text-red-800">{ item.approval && item.approval.approval_status}</b> : <b className="text-green-800">{item.approval && item.approval.approval_status}</b>}
+                                                                            {item.approval && item.approval.approval_status == "PENDING" ? <b className="text-red-800">{item.approval && item.approval.approval_status}</b> : <b className="text-green-800">{item.approval && item.approval.approval_status}</b>}
                                                                         </>
                                                                     </span>
                                                                 </li>
@@ -240,38 +239,15 @@ const DocumentOwn = () => {
                                     }
                                 </>
                         }
-                    </div>
-                    <div className="my-[32px] flex justify-between">
-                        <Pagination>
-                            <PaginationContent>
+                        <div className="Load-more py-[32px] flex justify-center items-center">
+                            <Button className={`btn-primary text-[18px] w-fit h-[40px] ${documentConfig.current_page === documentConfig.last_page ? "pointer-events-none opacity-50" : ""}`} disabled={documentConfig.current_page === documentConfig.last_page} onClick={() => updatePagination()}>
                                 {
-                                    listDocument.length > 0 && dataPagination.map((data, index) => {
-                                        if (data.label === "&laquo; Previous") {
-                                            return (
-                                                <PaginationItem key={index}>
-                                                    <PaginationPrevious disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
-                                                </PaginationItem>
+                                    isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />
 
-                                            )
-                                        } else if (data.label === "Next &raquo;") {
-                                            return (
-                                                <PaginationItem key={index}>
-                                                    <PaginationNext disabled={data.url != null ? false : true} className="cursor-pointer" data-url={data.url} onClick={() => updatePagination(data.url)} />
-                                                </PaginationItem>
-                                            )
-                                        } else {
-                                            return (
-                                                <PaginationItem key={index}>
-                                                    <PaginationLink className="cursor-pointer" data-url={data.url} isActive={data.active} onClick={() => updatePagination(data.url)}>
-                                                        {data.label}
-                                                    </PaginationLink>
-                                                </PaginationItem>
-                                            )
-                                        }
-                                    })
                                 }
-                            </PaginationContent>
-                        </Pagination>
+                                {t2('Load more')}
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>

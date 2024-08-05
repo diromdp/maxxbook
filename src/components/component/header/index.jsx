@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useTransition, useCallback, useState } from 'react';
-import Link from 'next/link'
+import Link from 'next/link';
+import { memo } from 'react';
+
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
@@ -9,7 +11,7 @@ import {
     Avatar,
     AvatarFallback,
     AvatarImage,
-} from "../../../components/ui/avatar";
+} from "@/components/ui/avatar";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -25,7 +27,7 @@ import {
     CloudUpload,
     Bookmark,
 } from "lucide-react";
-import { getInitials } from "../../../lib/utils";
+import { getInitials } from "@/lib/utils";
 import { setAuthSlice } from "@/store/reducer/authSlice";
 
 import { useAppSelector, useAppDispatch } from "@/store";

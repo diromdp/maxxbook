@@ -1,13 +1,16 @@
-import Sidebar from "@/components/component/sidebar";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { headers } from "next/headers";
-import { BaseUrl } from "../../../../lib/constant";
+import { BaseUrl } from "@/lib/constant";
 
 const ContentContactUs = dynamic(() => import("@/components/component/contentContactUs"), {
     ssr: false,
 });
+const Sidebar = dynamic(() => import("@/components/component/sidebar"), {
+    ssr: false,
+});
+
 
 export async function generateMetadata() {
     const headersList = headers();

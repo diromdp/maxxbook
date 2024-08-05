@@ -21,8 +21,8 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import dayjs from "dayjs";
 
-import { urlAPI } from "../../../../lib/constant";
-import { formatRupiah } from "../../../../lib/utils";
+import { urlAPI } from "@/lib/constant";
+import { formatRupiah } from "@/lib/utils";
 
 const { Search } = Input;
 

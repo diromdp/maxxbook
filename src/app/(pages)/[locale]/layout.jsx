@@ -1,11 +1,14 @@
-import { lazy } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { useTranslations, useMessages } from "next-intl";
-import ProtectAuth  from "./protectAuth";
-
-const ReduxProvider = lazy(() => import("@/store/redux-provider"));
-const Header = lazy(() => import("@/components/component/header"));
-const Footer = lazy(() => import("@/components/component/footer"));
+import dynamic from "next/dynamic";
+const ReduxProvider = dynamic(() => import("@/store/redux-provider"), {
+    ssr: false
+});
+const ProtectAuth = dynamic(() => import("./protectAuth"), {
+    ssr: false
+});
+const Header = dynamic(() => import("@/components/component/header"), {ssr: false});
+const Footer = dynamic(() => import("@/components/component/footer"), {ssr: false});
 
 export default function PagesLayout({
     children,
@@ -13,6 +16,7 @@ export default function PagesLayout({
 }) {
     const messages = useMessages();
     const t = useTranslations('Homepage');
+    
     return (
         <>
             <ReduxProvider>

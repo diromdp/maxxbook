@@ -106,7 +106,7 @@ export default function Home() {
                <div className="content">
                   <h2 className="font-montserrat">{t('start explore')}</h2>
                   <p>{t('start desc')}</p>
-                  <Link href={`/${locale}/explorer`} className="btn-light text-center mt-[16px] w-[180px] font-[700] text-[16px] text-black">{t('btn start')}</Link>
+                  <Link href={`/${locale}/explorer`} prefetch={false} className="btn-light text-center mt-[16px] w-[180px] font-[700] text-[16px] text-black">{t('btn start')}</Link>
                </div>
             </div>
          </div>

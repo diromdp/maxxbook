@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import dynamic from 'next/dynamic';
 import { useTranslations } from "next-intl";
 import axios from "axios";
-import { urlAPI } from "../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 
 
 const BreadCumb = dynamic(() => import('@/components/component/breadcumb'), {

@@ -24,8 +24,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { urlAPI } from "../../../../../lib/constant";
-import { formatDateToDatabaseString } from "../../../../../lib/utils";
+import { urlAPI } from "@/lib/constant";
+import { formatDateToDatabaseString } from "@/lib/utils";
 
 
 const EditPages = () => {

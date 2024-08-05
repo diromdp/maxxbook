@@ -2,7 +2,7 @@ import React from 'react';
 import { getLocale } from "next-intl/server";
 import { headers } from "next/headers";
 import ResultShow from '@/components/component/result';
-import { BaseUrl } from "../../../../lib/constant";
+import { BaseUrl } from "@/lib/constant";
 
 export async function generateMetadata() {
     const headersList = headers();

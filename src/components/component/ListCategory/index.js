@@ -4,7 +4,7 @@ import { useLocale } from "next-intl";
 import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
 import Link from "next/link";
-import { urlAPI } from "../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 
 const ListCategory = () => {
     const [data, setData] = useState([]);

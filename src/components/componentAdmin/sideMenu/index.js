@@ -12,7 +12,7 @@ import {
 
 import { Menu } from 'antd';
 import { useRouter } from 'next/navigation';
-import {BaseUrl} from '../../../lib/constant';
+import {BaseUrl} from '@/lib/constant';
 
 const SideMenu = () => {
     const router = useRouter();

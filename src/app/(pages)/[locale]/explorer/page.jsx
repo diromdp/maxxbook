@@ -1,13 +1,17 @@
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { use } from "react";
 import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
-import SavedComponent from "@/components/component/savedComponent";
 import { useTranslations, useLocale } from "next-intl";
-import SliderCardItem from "@/components/component/sliderCardItem";
-import { BaseUrl, urlAPI } from "../../../../lib/constant";
-import { axiosInstance } from "../../../../lib/utils";
+import { BaseUrl, urlAPI } from "@/lib/constant";
+import { axiosInstance } from "@/lib/utils";
+
+const SavedComponent = dynamic(() => import('@/components/component/savedComponent'), {
+    ssr: false
+});
+const SliderCardItem = dynamic(() => import('@/components/component/sliderCardItem'), { ssr: false });
 
 async function getData() {
     try {
