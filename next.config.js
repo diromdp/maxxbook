@@ -46,6 +46,9 @@ const nextConfig = {
 
         return config;
     },
+    experimental: {
+        isrMemoryCacheSize: 0
+    }
 }
 
 module.exports = withNextIntl(nextConfig);
