@@ -53,7 +53,7 @@ export default async function Categories() {
         <div className="categories">
             <div className="container m-auto">
                 <div className="content">
-                    <Suspense fallback={<Loading />}>
+                    <Suspense fallback={<></>}>
                     {
                         isLoading ?
                             <>
