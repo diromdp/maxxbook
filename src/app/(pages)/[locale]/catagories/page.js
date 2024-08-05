@@ -1,7 +1,11 @@
 import { getLocale, getTranslations } from 'next-intl/server';
 import { headers } from "next/headers";
-import { BaseUrl } from "../../../../lib/constant";
-import ListCategory from "@/components/component/ListCategory";
+import { BaseUrl } from "@/lib/constant";
+import dynamic from "next/dynamic";
+
+const ListCategory = dynamic(() => import("@/components/component/ListCategory"), {
+    ssr: false,
+});
 
 export async function generateMetadata() {
     const headersList = headers();

@@ -6,8 +6,8 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button"
 import { useTranslations } from 'next-intl';
 import Lottie from 'react-lottie';
-import * as searchNotFound from '../../../lottie/search-not-found.json';
-import { urlAPI } from "../../../lib/constant";
+import * as searchNotFound from '@/lottie/search-not-found.json';
+import { urlAPI } from "@/lib/constant";
 
 import { setDocumentCategoryPagination, setDocumentCategorySingle, setEmptyStateDocumentCategory, setDocumentConfigSingle } from "@/store/reducer/categoryFilterSlice";
 import { useAppDispatch, useAppSelector } from "@/store";

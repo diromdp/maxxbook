@@ -7,10 +7,10 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useRouter } from 'next/navigation'
 import { Checkbox } from "@/components/ui/checkbox"
-import { urlAPI } from "../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import { Loader2 } from "lucide-react";
 import Lottie from 'react-lottie';
-import * as loadingData from '../../../lottie/loading-2.json';
+import * as loadingData from '@/lottie/loading-2.json';
 
 const Login = () => {
     const router = useRouter()

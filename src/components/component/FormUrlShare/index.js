@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { BaseUrl } from "../../../lib/constant";
+import { BaseUrl } from "@/lib/constant";
 import { useAppSelector } from "@/store";
 import { useRouter } from "next/navigation";
 import {

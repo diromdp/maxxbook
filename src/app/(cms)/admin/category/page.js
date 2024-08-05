@@ -24,7 +24,7 @@ import { useCookies } from "react-cookie";
 
 import axios from "axios";
 import { Table } from 'antd';
-import { urlAPI } from "../../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 
 const { Search } = Input;
 

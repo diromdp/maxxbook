@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import axios from "axios";
 import { useRouter } from 'next/navigation';
-import { urlAPI } from "../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import { notification } from 'antd';
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 

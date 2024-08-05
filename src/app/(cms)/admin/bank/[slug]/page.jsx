@@ -6,7 +6,7 @@ import { z } from "zod";
 import {
     Card,
     CardContent,
-} from "../../../../../components/ui/card";
+} from "@/components/ui/card";
 
 import {
     Form,
@@ -15,10 +15,10 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "../../../../../components/ui/form";
-import { Button } from "../../../../../components/ui/button";
-import { Input } from "../../../../../components/ui/input";
-import { urlAPI } from "../../../../../lib/constant";
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { urlAPI } from "@/lib/constant";
 import { useCookies } from "react-cookie";
 import { useSearchParams, useRouter } from 'next/navigation'
 

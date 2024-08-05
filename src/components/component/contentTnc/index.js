@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useLocale } from "next-intl";
 import { Skeleton } from "@/components/ui/skeleton"
-import { urlAPI } from "../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import axios from "axios";
 
 

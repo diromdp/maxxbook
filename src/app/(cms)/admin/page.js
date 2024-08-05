@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
 import { useCookies } from "react-cookie"
-import { urlAPI } from "../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 
 const AdmninDashboard = () => {
     const [loading, setLoading] = useState(false);

@@ -1,4 +1,4 @@
-import { urlAPI, BaseUrl } from "../lib/constant";
+import { urlAPI, BaseUrl } from "@/lib/constant";
 
 
 async function getData() {

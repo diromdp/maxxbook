@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
-import { urlAPI } from "../../../../../lib/constant";
-import { axiosInstance } from "../../../../../lib/utils";
+import { urlAPI } from "@/lib/constant";
+import { axiosInstance } from "@/lib/utils";
 
 import { getTranslations } from "next-intl/server";
 import { headers } from "next/headers";

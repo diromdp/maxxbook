@@ -6,9 +6,10 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-
-import Card from "../cartItem";
-
+import dynamic from "next/dynamic";
+const Card = dynamic(() => import('@/components/component/cartItem'), {
+    ssr: false
+});
 const SliderCardItem = ({ data }) => {
     return (
         <Carousel
