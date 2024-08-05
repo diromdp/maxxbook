@@ -1,5 +1,5 @@
 "use client";
-
+import { Suspense } from "react";
 import {
     Pagination,
     PaginationContent,
@@ -166,69 +166,71 @@ const Saved = () => {
             <div className="saved-container">
                 <div className="screen-layer">
                     <div className="content-owner">
-                        {
-                            isLoading ?
-                                <>
-                                    {Array.from({ length: 12 }).map((_, index) => (
-                                        <div key={index} className="item-document">
-                                            <div className="left-side">
-                                                <Skeleton className="image-placeholder" />
-                                                <div className="description">
-                                                    <Skeleton className="h-[30px] w-[150px] mb-[16px]" />
-                                                    <Skeleton className="h-[100px] w-[360px]" />
+                        <Suspense fallback={<></>}>
+                            {
+                                isLoading ?
+                                    <>
+                                        {Array.from({ length: 12 }).map((_, index) => (
+                                            <div key={index} className="item-document">
+                                                <div className="left-side">
+                                                    <Skeleton className="image-placeholder" />
+                                                    <div className="description">
+                                                        <Skeleton className="h-[30px] w-[150px] mb-[16px]" />
+                                                        <Skeleton className="h-[100px] w-[360px]" />
+                                                    </div>
+                                                </div>
+                                                <div className="right-side">
+                                                    <Skeleton className="h-[40px] w-[100px]" />
                                                 </div>
                                             </div>
-                                            <div className="right-side">
-                                                <Skeleton className="h-[40px] w-[100px]" />
-                                            </div>
-                                        </div>
-                                    ))}
-                                </>
-                                :
-                                <>
-                                    {
-                                        listDocument.length > 0 ? listDocument.map((item, index) => {
-                                            return (
-                                                <div className="item-document" key={index}>
-                                                    <div className="left-side">
-                                                        <img alt={item.title ? item.title : ''} src={`${item.thumb_url ? item.thumb_url : "https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1"}`} width={132} height={174} />
-                                                        <Link href={`/${locale}/document/${item.slug}`} className="description">
-                                                            <h3>{item.title ? item.title : ''}</h3>
-                                                            {
-                                                                item.description_seo &&
-                                                                <div className="paragraph" dangerouslySetInnerHTML={{ __html: `${item.description_seo}` }}>
+                                        ))}
+                                    </>
+                                    :
+                                    <>
+                                        {
+                                            listDocument.length > 0 ? listDocument.map((item, index) => {
+                                                return (
+                                                    <div className="item-document" key={index}>
+                                                        <div className="left-side">
+                                                            <img alt={item.title ? item.title : ''} src={`${item.thumb_url ? item.thumb_url : "https://imgv2-1-f.scribdassets.com/img/document/698827662/298x396/91da6ea0cc/0?v=1"}`} width={132} height={174} />
+                                                            <Link href={`/${locale}/document/${item.slug}`} className="description">
+                                                                <h3>{item.title ? item.title : ''}</h3>
+                                                                {
+                                                                    item.description_seo &&
+                                                                    <div className="paragraph" dangerouslySetInnerHTML={{ __html: `${item.description_seo}` }}>
+                                                                    </div>
+                                                                }
+                                                            </Link>
+                                                        </div>
+                                                        <div className="right-side">
+                                                            <div className="content-editor">
+                                                                <div className="cursor-pointer" onClick={() => onUnsaved(item.id)}>
+                                                                    <Bookmark className="cursor-pointer text-slate-600" />
                                                                 </div>
-                                                            }
-                                                        </Link>
-                                                    </div>
-                                                    <div className="right-side">
-                                                        <div className="content-editor">
-                                                            <div className="cursor-pointer" onClick={() => onUnsaved(item.id)}>
-                                                                <Bookmark className="cursor-pointer text-slate-600" />
+                                                            </div>
+                                                            <div className="desciption">
+                                                                <ul>
+                                                                    <li>
+                                                                        <span>
+                                                                            Name File: {item.upload.file_name && item.upload.file_name}
+                                                                        </span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <span>
+                                                                            Date: {dayjs(item.upload.created_at).format("D MMMM YYYY")}
+                                                                        </span>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
                                                         </div>
-                                                        <div className="desciption">
-                                                            <ul>
-                                                                <li>
-                                                                    <span>
-                                                                        Name File: {item.upload.file_name && item.upload.file_name}
-                                                                    </span>
-                                                                </li>
-                                                                <li>
-                                                                    <span>
-                                                                        Date: {dayjs(item.upload.created_at).format("D MMMM YYYY")}
-                                                                    </span>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
                                                     </div>
-                                                </div>
-                                            )
-                                        }) :
-                                            <Empty className="mt-[120px]" description="Data Not Found" />
-                                    }
-                                </>
-                        }
+                                                )
+                                            }) :
+                                                <Empty className="mt-[120px]" description="Data Not Found" />
+                                        }
+                                    </>
+                            }
+                        </Suspense>
                     </div>
                     <div className="my-[32px] flex justify-between">
                         <Pagination>

@@ -19,6 +19,7 @@ import { setAuthSlice } from "@/store/reducer/authSlice";
 import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
 import { useAppSelector, useAppDispatch } from "@/store";
+import { Suspense } from "react";
 
 dayjs.extend(localeData);
 dayjs.locale('id');
@@ -167,6 +168,9 @@ const DocumentOwn = () => {
             <div className="document-owner">
                 <div className="screen-layer">
                     <div className="content-owner">
+                        <Suspense fallback={<></>}>
+
+                        
                         {
                             isLoading ?
                                 <>
@@ -239,6 +243,7 @@ const DocumentOwn = () => {
                                     }
                                 </>
                         }
+                        </Suspense>
                         <div className="Load-more py-[32px] flex justify-center items-center">
                             <Button className={`btn-primary text-[18px] w-fit h-[40px] ${documentConfig.current_page === documentConfig.last_page ? "pointer-events-none opacity-50" : ""}`} disabled={documentConfig.current_page === documentConfig.last_page} onClick={() => updatePagination()}>
                                 {
