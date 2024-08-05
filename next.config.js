@@ -33,7 +33,7 @@ const nextConfig = {
             }
         ],
     },
-    webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    webpack: (config) => {
         config.externals = [...config.externals, { canvas: "canvas" }];
         config.module.rules.push({
             test: /\.pdf$/i,
@@ -46,10 +46,6 @@ const nextConfig = {
 
         return config;
     },
-    experimental: {
-        isrMemoryCacheSize: 0
-    }
 }
 
 module.exports = withNextIntl(nextConfig);
-
