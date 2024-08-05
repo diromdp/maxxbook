@@ -1,6 +1,6 @@
 module.exports = {
     apps: [{
-        name: 'Airwield',
+        name: 'Maxibook',
         script: 'node_modules/.bin/next',
         args: 'start',
         cwd: "/var/www/maxxbook",
