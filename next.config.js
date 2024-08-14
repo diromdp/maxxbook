@@ -45,9 +45,6 @@ const nextConfig = {
         };
 
         return config;
-    },
-    experimental: {
-        isrMemoryCacheSize: 0
     }
 }
 
