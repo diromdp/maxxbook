@@ -5,8 +5,8 @@ import Image from 'next/image';
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useTranslations, useLocale } from 'next-intl';
-import { urlAPI } from "../../../lib/constant";
-import { Skeleton } from "@/components/ui/skeleton";
+import { urlAPI } from "@/lib/constant";
+import { Skeleton } from "@/components/ui/skeleton"
 
 export default async function Categories() {
     const t = useTranslations('Homepage');
@@ -67,7 +67,7 @@ export default async function Categories() {
                                 {
                                     categoryData && categoryData.length > 0 && categoryData.map((item, index) => {
                                         return (
-                                            <Link key={index} href={`/${localData}/catagories/${item.slug}`} className="item">
+                                            <Link prefetch={false} key={index} href={`/${localData}/catagories/${item.slug}`} className="item">
                                                 <span>{localData == 'en' ? item.name : item.name_id}</span>
                                                 <Image alt={item.name ? item.name : ''} className="image" width={96} height={96} src={item.icon_url ? item.icon_url : ''} />
                                             </Link>
@@ -78,7 +78,7 @@ export default async function Categories() {
                     }
                 </div>
                 <div className="see-more">
-                    <Link href={`/${localData}/catagories`}>{t('see category')}</Link>
+                    <Link prefetch={false} href={`/${localData}/catagories`}>{t('see category')}</Link>
                 </div>
             </div>
         </div>

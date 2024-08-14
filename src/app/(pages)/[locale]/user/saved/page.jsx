@@ -21,7 +21,7 @@ import Link from "next/link";
 import {
     Bookmark,
 } from "lucide-react";
-import { urlAPI } from "../../../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import { useAppSelector, useAppDispatch } from "@/store";
 import { setAuthSlice } from "@/store/reducer/authSlice";
 

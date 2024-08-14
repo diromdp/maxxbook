@@ -14,7 +14,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { notification } from 'antd';
 
-import { urlAPI } from "../../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import {
     Tabs,
     TabsContent,

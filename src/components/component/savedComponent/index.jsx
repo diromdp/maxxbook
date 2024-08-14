@@ -1,11 +1,15 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import SliderCardItem from "@/components/component/sliderCardItem";
+import dynamic from "next/dynamic";
 import { useTranslations, useLocale } from "next-intl";
-import { urlAPI } from "../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import { useAppSelector } from "@/store";
 import Link from "next/link";
+
+const SliderCardItem = dynamic(() => import('@/components/component/sliderCardItem'), {
+    ssr: false
+});
 
 const SavedComponent = () => {
     const getToken = useAppSelector((state) => state.authUserStorage.authUser);

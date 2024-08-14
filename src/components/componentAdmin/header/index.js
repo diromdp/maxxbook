@@ -13,7 +13,7 @@ import { urlAPI } from "@/lib/constant";
 import { useMapContext } from "@/app/(cms)/admin/adminContex";
 import Cookies from 'universal-cookie';
 import { useCookies } from "react-cookie";
-import { getInitials } from "../../../lib/utils";
+import { getInitials } from "@/lib/utils";
 
 
 const HeaderContent = () => {

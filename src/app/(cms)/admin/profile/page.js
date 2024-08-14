@@ -9,7 +9,7 @@ import { useCookies } from "react-cookie"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { urlAPI } from "../../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import { Image } from 'antd';
 import { useMapContext } from "../adminContex";
 import { notification } from "antd";

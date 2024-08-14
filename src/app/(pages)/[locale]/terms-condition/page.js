@@ -2,7 +2,7 @@ import Sidebar from "@/components/component/sidebar";
 import { headers } from "next/headers";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
-import { BaseUrl } from "../../../../lib/constant";
+import { BaseUrl } from "@/lib/constant";
 
 const ContentTnc = dynamic(() => import("@/components/component/contentTnc"), {
     ssr: false,

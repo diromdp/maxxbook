@@ -7,7 +7,7 @@ import {
     Card,
     CardContent,
 } from "@/components/ui/card";
-import { urlAPI } from "../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { setUploadId, setTabFormatDocument} from '@/store/reducer/categoryFilterSlice';
 

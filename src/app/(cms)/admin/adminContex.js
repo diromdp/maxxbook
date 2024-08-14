@@ -7,7 +7,7 @@ import React, {
     useRef
 } from "react";
 import { useCookies } from "react-cookie"
-import { urlAPI } from "../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import { notification } from 'antd';
 
 import axios from "axios";

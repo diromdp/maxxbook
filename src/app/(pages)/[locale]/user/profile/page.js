@@ -29,11 +29,11 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from "@/store";
-import { urlAPI } from "../../../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import { setAuthSlice } from "@/store/reducer/authSlice";
 
 import { setAuthInfoSlice } from '@/store/reducer/authSlice';
-import { getInitials } from "../../../../../lib/utils";
+import { getInitials } from "@/lib/utils";
 
 const ProfileUser = () => {
     const dispatch = useAppDispatch();

@@ -1,11 +1,11 @@
 import { getLocale } from "next-intl/server";
 import { headers } from "next/headers";
 import dynamic from 'next/dynamic';
-import { urlAPI } from "../../../../../lib/constant";
-import { axiosInstance } from "../../../../../lib/utils";
+import { urlAPI } from "@/lib/constant";
+import { axiosInstance } from "@/lib/utils";
 
 
-const SingleCategory = dynamic(() => import('../../../../../components/clientSide/singleCategory'), {
+const SingleCategory = dynamic(() => import('@/components/clientSide/singleCategory'), {
     ssr: false,
 })
 

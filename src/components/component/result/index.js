@@ -8,8 +8,8 @@ import CardLoading from "@/components/component/cardLoading";
 import React from "react";
 import { Button } from "@/components/ui/button"
 
-import { urlAPI } from "../../../lib/constant";
-import * as searchNotFound from '../../../lottie/search-not-found.json';
+import { urlAPI } from "@/lib/constant";
+import * as searchNotFound from '@/lottie/search-not-found.json';
 import { setCategoryFilterState, setPaginationState, setDocumentdata, setDocumentConfig, setEmpatyState } from "@/store/reducer/categoryFilterSlice";
 import { useAppDispatch, useAppSelector } from "@/store";
 

@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { notification } from 'antd';
 import axios from "axios";
-import { urlAPI } from "../../../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import { useCookies } from "react-cookie";
 import { useRouter, useSearchParams } from 'next/navigation'
 

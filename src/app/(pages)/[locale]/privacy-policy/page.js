@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import { useTranslations } from "next-intl";
 import { getLocale } from "next-intl/server";
 import Sidebar from "@/components/component/sidebar";
-import { BaseUrl } from "../../../../lib/constant";
+import { BaseUrl } from "@/lib/constant";
 
 
 const ContentPrivacy = dynamic(() => import("@/components/component/contentPrivacy"), {

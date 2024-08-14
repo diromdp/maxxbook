@@ -30,7 +30,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useCookies } from "react-cookie";
 import { useSearchParams, useRouter } from 'next/navigation';
-import { urlAPI } from "../../../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 import { notification } from 'antd';
 
 

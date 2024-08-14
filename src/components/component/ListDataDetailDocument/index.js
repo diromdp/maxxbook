@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { urlAPI } from "../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 
 
 const ListDataDetailDocument = () => {

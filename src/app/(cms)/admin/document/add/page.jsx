@@ -34,7 +34,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import axios from "axios";
-import { urlAPI } from "../../../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 const JoditEditor = dynamic(() => import("jodit-react"), {
     ssr: false,
 });

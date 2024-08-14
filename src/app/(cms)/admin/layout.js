@@ -12,7 +12,7 @@ import {
 } from '@ant-design/icons';
 import { Layout, Button } from 'antd';
 import Lottie from 'react-lottie';
-import * as loadingData from '../../../lottie/loading-3.json';
+import * as loadingData from '@/lottie/loading-3.json';
 
 
 const { Header, Sider, Content } = Layout;

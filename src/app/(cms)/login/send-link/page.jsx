@@ -7,7 +7,7 @@ import { Loader2 } from "lucide-react";
 import { notification } from "antd";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { urlAPI } from "../../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 
 const SendLink = () => {
     const [isDisabled, setIsdisabled] = useState(false);

@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export const metadata = {
     title: 'Maxibook - 404 Not Found',
     description: '404 Not Found',

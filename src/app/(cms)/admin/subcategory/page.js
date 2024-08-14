@@ -22,7 +22,7 @@ import { FiEdit, FiTrash2, FiFilePlus } from "react-icons/fi";
 import { Input, Tooltip, Table } from 'antd';
 import { useCookies } from "react-cookie";
 
-import { urlAPI } from "../../../../lib/constant";
+import { urlAPI } from "@/lib/constant";
 
 const { Search } = Input;
 
