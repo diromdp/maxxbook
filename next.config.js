@@ -34,7 +34,7 @@ const nextConfig = {
         ],
     },
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-        config.externals = [...config.externals, { canvas: "canvas" }];
+        config.externals = [...config.externals];
         config.module.rules.push({
             test: /\.pdf$/i,
             type: 'asset/source'

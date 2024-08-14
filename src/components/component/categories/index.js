@@ -6,21 +6,8 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useTranslations, useLocale } from 'next-intl';
 import { urlAPI } from "../../../lib/constant";
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/components/ui/skeleton";
 
-
-async function getCategory() {
-    // Fetch data from external API
-    const data = await fetch(`${urlAPI}backend/categories/home`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': "application/json",
-        },
-    });
-    // Pass data to the page via props
-    return data.json();
-}
 export default async function Categories() {
     const t = useTranslations('Homepage');
     const [categoryData, setCategoryData] = useState([]);
