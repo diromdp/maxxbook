@@ -109,9 +109,9 @@ const AddPages = () => {
             .catch(function (error) {
                 if (error.response) {
                     openNotification(error.response.data.message)
-                    console.log(error.response.data);
+                    
                     console.log(error.response.status);
-                    console.log(error.response.headers);
+                    
                 } else if (error.request) {
                     console.log(error.request);
                 } else {
@@ -146,7 +146,7 @@ const AddPages = () => {
                 if (error.response) {
                     console.log(error.response.data.data);
                     console.log(error.response.status);
-                    console.log(error.response.headers);
+                    
                 } else if (error.request) {
                     console.log(error.request);
                 } else {

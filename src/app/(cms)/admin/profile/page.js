@@ -94,9 +94,9 @@ const ProfileForm = () => {
                         message: `Error updating profile`,
                         description:`${error.response.data.message}`
                     })
-                    console.log(error.response.data);
+                    
                     console.log(error.response.status);
-                    console.log(error.response.headers);
+                    
                 } else if (error.request) {
                     console.log(error.request);
                 } else {
@@ -129,7 +129,7 @@ const ProfileForm = () => {
                 if (error.response) {
                     console.log(error.response.data.data);
                     console.log(error.response.status);
-                    console.log(error.response.headers);
+                    
                 } else if (error.request) {
                     console.log(error.request);
                 } else {

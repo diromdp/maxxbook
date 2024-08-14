@@ -115,7 +115,7 @@ const ExplorerPages = () => {
     const t = useTranslations('Exporler');
     const locale = useLocale();
     const data = use(getData());
-    const cardItems = data.data;
+    const cardItems = data && data.data;
     return (
         <div className="explorer-pages">
             <div className="banner-explorer">

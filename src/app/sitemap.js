@@ -17,13 +17,13 @@ export default async function sitemap() {
   const documents = await getData();
   const documentsData = documents.data;
 
-  const AllDocumentEnglish = documentsData.map((document) => ({
+  const AllDocumentEnglish = documentsData && documentsData.map((document) => ({
     url: `https://maxibook.co/en/document/${document.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly',
     priority: 0.6,
   }))
-  const AllDocumentIndonesia = documentsData.map((document) => ({
+  const AllDocumentIndonesia = documentsData && documentsData.map((document) => ({
     url: `https://maxibook.co/id/document/${document.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly',
