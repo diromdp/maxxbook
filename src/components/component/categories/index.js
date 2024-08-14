@@ -6,12 +6,10 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useTranslations, useLocale } from 'next-intl';
 import { urlAPI } from "@/lib/constant";
-import { Skeleton } from "@/components/ui/skeleton"
 
 export default async function Categories() {
     const t = useTranslations('Homepage');
     const [categoryData, setCategoryData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const localData = useLocale();
     const hasFetchedData = useRef(false);
 
@@ -24,7 +22,6 @@ export default async function Categories() {
         })
             .then((data) => {
                 if (data.status === 200) {
-                    setIsLoading(false);
                     setCategoryData(data.data);
                 }
             })
@@ -54,27 +51,14 @@ export default async function Categories() {
             <div className="container m-auto">
                 <div className="content">
                     {
-                        isLoading ?
-                            <>
-                                {[...Array(4)].map((x, i) =>
-                                    <div key={i} className="item">
-                                        <Skeleton className="h-4 w-[120px]" />
-                                        <Skeleton className="h-[96px] w-[96px] image" />
-                                    </div>
-                                )}
-                            </> :
-                            <>
-                                {
-                                    categoryData && categoryData.length > 0 && categoryData.map((item, index) => {
-                                        return (
-                                            <Link prefetch={false} key={index} href={`/${localData}/catagories/${item.slug}`} className="item">
-                                                <span>{localData == 'en' ? item.name : item.name_id}</span>
-                                                <Image alt={item.name ? item.name : ''} className="image" width={96} height={96} src={item.icon_url ? item.icon_url : ''} />
-                                            </Link>
-                                        )
-                                    })
-                                }
-                            </>
+                        categoryData && categoryData.length > 0 && categoryData.map((item, index) => {
+                            return (
+                                <Link prefetch={false} key={index} href={`/${localData}/catagories/${item.slug}`} className="item">
+                                    <span>{localData == 'en' ? item.name : item.name_id}</span>
+                                    <Image alt={item.name ? item.name : ''} className="image" width={96} height={96} src={item.icon_url ? item.icon_url : ''} />
+                                </Link>
+                            )
+                        })
                     }
                 </div>
                 <div className="see-more">

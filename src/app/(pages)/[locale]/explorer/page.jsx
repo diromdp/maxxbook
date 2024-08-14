@@ -1,16 +1,12 @@
 
-import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { use } from "react";
+import { use, Suspense } from "react";
 import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { useTranslations, useLocale } from "next-intl";
 import { BaseUrl, urlAPI } from "@/lib/constant";
 import { axiosInstance } from "@/lib/utils";
-
-import imgBanner1 from "@/assets/images/img-banner-1.svg";
-import imgBanner2 from "@/assets/images/img-banner-2.svg";
 
 const SavedComponent = dynamic(() => import('@/components/component/savedComponent'), {
     ssr: false
@@ -119,25 +115,23 @@ const ExplorerPages = () => {
     return (
         <div className="explorer-pages">
             <div className="banner-explorer">
-                <div className="banner-1">
-                    <Image alt="banner-1" src={imgBanner1} width={300} height={225} />
-                </div>
                 <div className="screen-layer relative top-[110px] px-[16px] lg:w-[50%] lg:top-[160px] ">
                     <h1>{t('heading')}</h1>
                     <p>{t('leading')}</p>
                 </div>
-                <div className="banner-2">
-                    <Image alt="banner-2" src={imgBanner2} width={300} height={225} />
-                </div>
             </div>
             <div className="screen-layer px-[24px] 3xl:px-0 md:h-screen">
-                <SavedComponent />
+                <Suspense fallback={null}>
+                    <SavedComponent />
+                </Suspense>
                 <div className="item-view">
                     <div className="flex justify-between items-center mb-[16px]">
                         <h2>{t('documents')}</h2>
-                        <Link className="view-more" href={`/${locale}/result`}>{t('View more')}</Link>
+                        <Link className="view-more" href={`/${locale}/result`} prefetch>{t('View more')}</Link>
                     </div>
-                    <SliderCardItem data={cardItems} />
+                    <Suspense fallback={null}>
+                        <SliderCardItem data={cardItems} />
+                    </Suspense>
                 </div>
             </div>
         </div>

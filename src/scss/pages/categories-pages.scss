@@ -31,9 +31,9 @@
       }
    }
    .list-of-category {
-      @apply flex flex-row flex-wrap gap-y-[20px] gap-x-[20px] xl:gap-x-0 justify-center mt-[32px] sm:mt-[50px];
+      @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-[20px] gap-x-[20px] xl:gap-x-0 justify-center mt-[32px] sm:mt-[50px];
       .items {
-         @apply w-full md:w-[33%];
+         @apply w-full;
          h3 {
             @apply mb-[8px];
             a {

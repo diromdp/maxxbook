@@ -1,9 +1,11 @@
 import { useTranslations, useLocale } from 'next-intl';
+import { Suspense } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { BaseUrl } from "@/lib/constant";
+import Loading from './loading';
 
 const Categories = dynamic(() => import('@/components/component/categories'), {
    ssr: false,
@@ -104,13 +106,15 @@ export default function Home() {
                </div>
             </div>
          </div>
-         <Categories />
+         <Suspense fallback={<Loading />}>
+            <Categories />
+         </Suspense>
          <div className="start-to-search">
             <div className="container m-auto">
                <div className="content">
                   <h2 className="font-montserrat">{t('start explore')}</h2>
                   <p>{t('start desc')}</p>
-                  <Link href={`/${locale}/explorer`} prefetch={false} className="btn-light text-center mt-[16px] w-[180px] font-[700] text-[16px] text-black">{t('btn start')}</Link>
+                  <Link href={`/${locale}/explorer`} prefetch className="btn-light text-center mt-[16px] w-[180px] font-[700] text-[16px] text-black">{t('btn start')}</Link>
                </div>
             </div>
          </div>
