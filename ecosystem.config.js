@@ -6,9 +6,9 @@ module.exports = {
         cwd: "/var/www/maxxbook",
         autorestart: true,
         watch: false,
-        instances: '4',
+        instances: '1',
         exec_mode: 'cluster',
-        max_memory_restart: '1G',
+        max_memory_restart: '2G',
         env: {
             NODE_ENV: "production",
             PORT: 3000
