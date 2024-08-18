@@ -5,11 +5,7 @@ import { lazy } from 'react';
 import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { BaseUrl } from "@/lib/constant";
-<<<<<<< HEAD
-import { Suspense } from "react";
-=======
 import Loading from './loading';
->>>>>>> e8b4df74c222514c298bf7df20085a5a4c418462
 
 const Categories = lazy(() => import('@/components/component/categories'));
 const HomeSearch = lazy(() => import('@/components/component/homeSearch'));

@@ -121,11 +121,7 @@ const ExplorerPages = () => {
                 </div>
             </div>
             <div className="screen-layer px-[24px] 3xl:px-0 md:h-screen">
-<<<<<<< HEAD
-                <Suspense fallback={<></>}>
-=======
                 <Suspense fallback={null}>
->>>>>>> e8b4df74c222514c298bf7df20085a5a4c418462
                     <SavedComponent />
                 </Suspense>
                 <div className="item-view">
@@ -133,11 +129,7 @@ const ExplorerPages = () => {
                         <h2>{t('documents')}</h2>
                         <Link className="view-more" href={`/${locale}/result`} prefetch>{t('View more')}</Link>
                     </div>
-<<<<<<< HEAD
-                    <Suspense fallback={<></>}>
-=======
                     <Suspense fallback={null}>
->>>>>>> e8b4df74c222514c298bf7df20085a5a4c418462
                         <SliderCardItem data={cardItems} />
                     </Suspense>
                 </div>
