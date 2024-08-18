@@ -34,7 +34,7 @@ const ResultShow = ({ QureyParams }) => {
         }
 
         await setTimeout(() => {
-            axios.get(`${urlAPI}backend/documents?q=${query ?? ''}&cursorEnabled=1&perPage=${20}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${categroy_id ?? ''}`, {
+            axios.get(`${urlAPI}backend/documents?q=${query ?? ''}&cursorEnabled=1&perPage=${15}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${categroy_id ?? ''}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': "application/json",
@@ -61,7 +61,7 @@ const ResultShow = ({ QureyParams }) => {
                     if (error.response) {
                         console.log(error.response.data.data);
                         console.log(error.response.status);
-                        console.log(error.response.headers);
+                        
                     } else if (error.request) {
                         console.log(error.request);
                     } else {
@@ -76,7 +76,7 @@ const ResultShow = ({ QureyParams }) => {
 
         const nextPage = documentConfig.current_page + 1;
 
-        await axios.get(`${urlAPI}backend/documents?q=${categoryFilterState && categoryFilterState.q ? categoryFilterState.q : ''}&page=${nextPage}&cursorEnabled=1&perPage=${20}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${categoryFilterState && categoryFilterState.category_id ? categoryFilterState.category_id : ''}`, {
+        await axios.get(`${urlAPI}backend/documents?q=${categoryFilterState && categoryFilterState.q ? categoryFilterState.q : ''}&page=${nextPage}&cursorEnabled=1&perPage=${categoryFilterState.perPage}&sortBy=${categoryFilterState && categoryFilterState.sortBy ? categoryFilterState.sortBy : ''}&sortDirection=${categoryFilterState && categoryFilterState.sortDirection ? categoryFilterState.sortDirection : ''}&user_id=${categoryFilterState && categoryFilterState.user_id ? categoryFilterState.user_id : ''}&category_id=${categoryFilterState && categoryFilterState.category_id ? categoryFilterState.category_id : ''}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': "application/json",
@@ -95,7 +95,7 @@ const ResultShow = ({ QureyParams }) => {
                 if (error.response) {
                     console.log(error.response.data.data);
                     console.log(error.response.status);
-                    console.log(error.response.headers);
+                    
                 } else if (error.request) {
                     console.log(error.request);
                 } else {
@@ -140,6 +140,7 @@ const ResultShow = ({ QureyParams }) => {
                                             colorImage={item.color}
                                             imagePath={item.thumb_url}
                                             title={item.title}
+                                            priority={index < 4}
                                             description={item.description}
                                             slug={`${item.slug}`} />
                                     )

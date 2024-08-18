@@ -1,15 +1,6 @@
 import { NextResponse } from "next/server";
 import { urlAPI } from '@/lib/constant';
 
-
-interface ResponseData {
-    id: number;
-    key: string;
-    label: string;
-    type: string;
-    value: string;
-}
-
 export const GET = async (request: Request) => {
   try {
     const { searchParams } = new URL(request.url);

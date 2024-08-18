@@ -33,8 +33,13 @@ const nextConfig = {
             }
         ],
     },
+<<<<<<< HEAD
     webpack: (config) => {
         config.externals = [...config.externals, { canvas: "canvas" }];
+=======
+    webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+        config.externals = [...config.externals];
+>>>>>>> e8b4df74c222514c298bf7df20085a5a4c418462
         config.module.rules.push({
             test: /\.pdf$/i,
             type: 'asset/source'
@@ -45,7 +50,7 @@ const nextConfig = {
         };
 
         return config;
-    },
+    }
 }
 
 module.exports = withNextIntl(nextConfig);

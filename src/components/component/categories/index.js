@@ -6,12 +6,10 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useTranslations, useLocale } from 'next-intl';
 import { urlAPI } from "@/lib/constant";
-import { Skeleton } from "@/components/ui/skeleton"
 
 export default async function Categories() {
     const t = useTranslations('Homepage');
     const [categoryData, setCategoryData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const localData = useLocale();
     const hasFetchedData = useRef(false);
 
@@ -24,7 +22,6 @@ export default async function Categories() {
         })
             .then((data) => {
                 if (data.status === 200) {
-                    setIsLoading(false);
                     setCategoryData(data.data);
                 }
             })
@@ -32,7 +29,7 @@ export default async function Categories() {
                 if (error.response) {
                     console.log(error.response.data.data);
                     console.log(error.response.status);
-                    console.log(error.response.headers);
+                    
                 } else if (error.request) {
                     console.log(error.request);
                 } else {
@@ -55,6 +52,7 @@ export default async function Categories() {
                 <div className="content">
                     <Suspense fallback={<></>}>
                     {
+<<<<<<< HEAD
                         isLoading ?
                             <>
                                 {[...Array(4)].map((x, i) =>
@@ -76,6 +74,16 @@ export default async function Categories() {
                                     })
                                 }
                             </>
+=======
+                        categoryData && categoryData.length > 0 && categoryData.map((item, index) => {
+                            return (
+                                <Link prefetch={false} key={index} href={`/${localData}/catagories/${item.slug}`} className="item">
+                                    <span>{localData == 'en' ? item.name : item.name_id}</span>
+                                    <Image alt={item.name ? item.name : ''} className="image" width={96} height={96} src={item.icon_url ? item.icon_url : ''} />
+                                </Link>
+                            )
+                        })
+>>>>>>> e8b4df74c222514c298bf7df20085a5a4c418462
                     }
                     </Suspense>
                 </div>

@@ -72,9 +72,9 @@ const Saved = () => {
                     if(error.response.status === 401) {
                         logoutUser();
                     }
-                    console.log(error.response.data);
+                    
                     console.log(error.response.status);
-                    console.log(error.response.headers);
+                    
                 } else if (error.request) {
                     console.log(error.request);
                 } else {
@@ -112,7 +112,7 @@ const Saved = () => {
                         }
                         console.log(error.response.data.data);
                         console.log(error.response.status);
-                        console.log(error.response.headers);
+                        
                     } else if (error.request) {
                         console.log(error.request);
                     } else {
@@ -142,9 +142,9 @@ const Saved = () => {
                     if(error.response.status === 401) {
                         logoutUser();
                     }
-                    console.log(error.response.data);
+                    
                     console.log(error.response.status);
-                    console.log(error.response.headers);
+                    
                 } else if (error.request) {
                     console.log(error.request);
                 } else {

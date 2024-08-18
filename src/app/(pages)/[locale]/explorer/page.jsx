@@ -1,13 +1,12 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { use } from "react";
+import { use, Suspense } from "react";
 import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { useTranslations, useLocale } from "next-intl";
 import { BaseUrl, urlAPI } from "@/lib/constant";
 import { axiosInstance } from "@/lib/utils";
-import { Suspense } from "react";
 
 const SavedComponent = dynamic(() => import('@/components/component/savedComponent'), {
     ssr: false
@@ -112,7 +111,7 @@ const ExplorerPages = () => {
     const t = useTranslations('Exporler');
     const locale = useLocale();
     const data = use(getData());
-    const cardItems = data.data;
+    const cardItems = data && data.data;
     return (
         <div className="explorer-pages">
             <div className="banner-explorer">
@@ -122,15 +121,23 @@ const ExplorerPages = () => {
                 </div>
             </div>
             <div className="screen-layer px-[24px] 3xl:px-0 md:h-screen">
+<<<<<<< HEAD
                 <Suspense fallback={<></>}>
+=======
+                <Suspense fallback={null}>
+>>>>>>> e8b4df74c222514c298bf7df20085a5a4c418462
                     <SavedComponent />
                 </Suspense>
                 <div className="item-view">
                     <div className="flex justify-between items-center mb-[16px]">
                         <h2>{t('documents')}</h2>
-                        <Link className="view-more" href={`/${locale}/result`}>{t('View more')}</Link>
+                        <Link className="view-more" href={`/${locale}/result`} prefetch>{t('View more')}</Link>
                     </div>
+<<<<<<< HEAD
                     <Suspense fallback={<></>}>
+=======
+                    <Suspense fallback={null}>
+>>>>>>> e8b4df74c222514c298bf7df20085a5a4c418462
                         <SliderCardItem data={cardItems} />
                     </Suspense>
                 </div>

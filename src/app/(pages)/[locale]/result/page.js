@@ -1,5 +1,6 @@
 import React from 'react';
 import { getLocale } from "next-intl/server";
+import { Suspense } from 'react';
 import { headers } from "next/headers";
 import ResultShow from '@/components/component/result';
 import { BaseUrl } from "@/lib/constant";
@@ -88,7 +89,7 @@ export default function result({ searchParams }) {
     return (
         <>
             <div className="result-page">
-                <Suspense fallback={<></>}>
+                <Suspense fallback={null}>
                     <ResultShow QureyParams={query} />
                 </Suspense>
             </div>
